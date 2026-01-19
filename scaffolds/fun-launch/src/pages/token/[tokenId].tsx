@@ -30,7 +30,7 @@ const SwapWidget = () => {
 
 export const TokenPageWithContext = () => {
   const tokenId = useTokenAddress();
-  const { data: poolId } = useTokenInfo((data) => data?.id);
+  const { data: poolId, isLoading: isLoadingToken } = useTokenInfo((data) => data?.id);
   const { subscribeTxns, unsubscribeTxns, subscribePools, unsubscribePools } = useDataStream();
   const { publicKey } = useWallet();
   const [isBotModalOpen, setIsBotModalOpen] = useState(false);
@@ -57,6 +57,20 @@ export const TokenPageWithContext = () => {
     };
     // dont track tokenId to prevent data mismatch
   }, [poolId, subscribePools, unsubscribePools]);
+
+  // Show loading state while router is hydrating or token is loading
+  if (!tokenId || isLoadingToken) {
+    return (
+      <Page>
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-12 h-12 border-4 border-ritual-amber-500/30 border-t-ritual-amber-500 rounded-full animate-spin" />
+            <p className="text-gray-400 font-body">Loading token...</p>
+          </div>
+        </div>
+      </Page>
+    );
+  }
 
   return (
     <Page>

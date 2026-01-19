@@ -120,7 +120,7 @@ export function AskKogaion() {
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="fixed bottom-6 right-6 w-full max-w-md h-[600px] bg-ritual-bgElevated border-2 border-ritual-amber-500/40 rounded-lg shadow-2xl z-50 flex flex-col"
+              className="fixed inset-4 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-full sm:max-w-sm md:max-w-md h-auto max-h-[80vh] sm:h-[450px] md:h-[500px] bg-ritual-bgElevated border-2 border-ritual-amber-500/40 rounded-lg shadow-2xl z-50 flex flex-col"
             >
               {/* Header */}
               <div className="p-4 border-b border-ritual-amber-500/20 flex items-center justify-between">

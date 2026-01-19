@@ -6,7 +6,19 @@ import { formatPoolAsTokenInfo } from '@/components/Explore/pool-utils';
 
 export function useTokenAddress() {
   const router = useRouter();
-  const { tokenId = NATIVE_MINT.toString() } = router.query;
+  
+  // Wait for router to be ready (fixes mobile hydration issues)
+  if (!router.isReady) {
+    return undefined;
+  }
+  
+  const { tokenId } = router.query;
+  
+  // Only return address if we have a valid tokenId from the route
+  if (!tokenId) {
+    return undefined;
+  }
+  
   const address = Array.isArray(tokenId) ? tokenId[0] : tokenId;
   return address;
 }
