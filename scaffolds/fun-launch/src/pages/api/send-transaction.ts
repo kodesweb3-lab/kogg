@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { Connection, Keypair, sendAndConfirmRawTransaction, Transaction } from '@solana/web3.js';
+import { logger } from '@/lib/logger';
 
 const RPC_URL = process.env.RPC_URL as string;
 
@@ -17,7 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  console.log('req.body', req.body);
   try {
     const { signedTransaction, additionalSigners } = req.body as SendTransactionRequest;
 
@@ -60,7 +60,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       signature: txSignature,
     });
   } catch (error) {
-    console.error('Transaction error:', error);
+    logger.error('Transaction error', error instanceof Error ? error : new Error(String(error)), {
+      endpoint: '/api/send-transaction',
+    });
     res.status(500).json({ error: error instanceof Error ? error.message : 'Unknown error' });
   }
 }

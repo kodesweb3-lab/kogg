@@ -14,14 +14,17 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
   return (
     <div
       className={cn(
-        'flex min-h-screen flex-col justify-between bg-black text-white',
+        'flex min-h-screen flex-col justify-between bg-ritual-bg text-gray-100 relative',
         pageClassName
       )}
     >
+      {/* Mountain silhouette background */}
+      <div className="mountain-bg" />
+      
       <Header />
       <div
         className={cn(
-          'flex flex-1 flex-col items-center px-1 md:px-3 pt-4 pb-16',
+          'flex flex-1 flex-col items-center px-1 md:px-3 pt-4 pb-16 relative z-10',
           containerClassName
         )}
       >

@@ -6,6 +6,7 @@ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adap
 import { useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useWindowWidthListener } from '@/lib/device';
+import { AskKogaion } from '@/components/AskKogaion';
 
 export default function App({ Component, pageProps }: AppProps) {
   const wallets: Adapter[] = useMemo(() => {
@@ -26,10 +27,10 @@ export default function App({ Component, pageProps }: AppProps) {
           env: 'mainnet-beta',
           autoConnect: true,
           metadata: {
-            name: 'UnifiedWallet',
-            description: 'UnifiedWallet',
-            url: 'https://jup.ag',
-            iconUrls: ['https://jup.ag/favicon.ico'],
+            name: 'Kogaion',
+            description: 'The most based token launchpad on Solana',
+            url: 'https://kogaion.io',
+            iconUrls: ['/favicon.ico'],
           },
           // notificationCallback: WalletNotification,
           theme: 'dark',
@@ -38,6 +39,7 @@ export default function App({ Component, pageProps }: AppProps) {
       >
         <Toaster />
         <Component {...pageProps} />
+        <AskKogaion />
       </UnifiedWalletProvider>
     </QueryClientProvider>
   );

@@ -1,12 +1,11 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
-import { categorySortBy, categorySortDir, createPoolSorter } from '@/components/Explore/pool-utils';
-import { ApeQueries, GemsTokenListQueryArgs, QueryData } from '@/components/Explore/queries';
-import { ExploreTab, TokenListSortByField, normalizeSortByField } from '@/components/Explore/types';
+import { GemsTokenListQueryArgs } from '@/components/Explore/queries';
+import { ExploreTab } from '@/components/Explore/types';
 import { TokenCardList } from '@/components/TokenCard/TokenCardList';
-import { useExploreGemsTokenList } from '@/hooks/useExploreGemsTokenList';
+import { useLocalTokens } from '@/hooks/useLocalTokens';
+import { transformDbTokenToPool } from '@/lib/tokenTransform';
 import { EXPLORE_FIXED_TIMEFRAME, useExplore } from '@/contexts/ExploreProvider';
 import { Pool } from '@/contexts/types';
 import { isHoverableDevice, useBreakpoint } from '@/lib/device';
@@ -65,28 +64,49 @@ const timeframe = EXPLORE_FIXED_TIMEFRAME;
 
 const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
   ({ tab, request, isPaused, setIsPaused }) => {
-    const queryClient = useQueryClient();
     const breakpoint = useBreakpoint();
     const isMobile = breakpoint === 'md' || breakpoint === 'sm' || breakpoint === 'xs';
 
     const listRef = useRef<HTMLDivElement>(null);
 
-    const { data: currentData, status } = useExploreGemsTokenList((data) => data[tab]);
+    // Use local tokens from database (not global Solana)
+    const { data: localTokensData, status: localStatus, error: localError } = useLocalTokens({
+      page: 1,
+      limit: 50,
+      sortBy: 'createdAt',
+      sortOrder: 'desc',
+    });
+
+    // Debug logging
+    if (process.env.NODE_ENV === 'development') {
+      if (localTokensData) {
+        console.log('[ExploreColumn] Tokens loaded:', localTokensData.data?.length || 0, 'tokens');
+      }
+      if (localError) {
+        console.error('[ExploreColumn] Error loading tokens:', localError);
+      }
+    }
+
+    // Transform DB tokens to Pool format
+    const finalData = localTokensData?.data
+      ? localTokensData.data.map(transformDbTokenToPool)
+      : undefined;
+    const finalStatus = localStatus;
 
     const [snapshotData, setSnapshotData] = useState<Pool[]>();
 
     const handleMouseEnter = useCallback(() => {
-      if (!isHoverableDevice() || status !== 'success') {
+      if (!isHoverableDevice() || finalStatus !== 'success') {
         return;
       }
 
       // When clicking elements (copyable) it triggers mouse enter again
       // We don't want to re-snapshot data if already paused
       if (!isPaused) {
-        setSnapshotData(currentData?.pools);
+        setSnapshotData(finalData);
       }
       setIsPaused(true);
-    }, [currentData?.pools, isPaused, setIsPaused, status]);
+    }, [finalData, isPaused, setIsPaused, finalStatus]);
 
     const handleMouseLeave = useCallback(() => {
       if (!isHoverableDevice()) return;
@@ -94,51 +114,8 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
       setIsPaused(false);
     }, [setIsPaused]);
 
-    // Mutate the args so stream sorts by timeframe
-    useEffect(() => {
-      queryClient.setQueriesData(
-        {
-          type: 'active',
-          queryKey: ApeQueries.gemsTokenList(request).queryKey,
-        },
-        (prev?: QueryData<typeof ApeQueries.gemsTokenList>) => {
-          const prevPools = prev?.[tab]?.pools;
-          if (!prevPools) return;
-
-          const pools = [...prevPools];
-
-          // Re-sort
-          const sortDir = categorySortDir(tab);
-          let sortBy: TokenListSortByField | undefined;
-          const defaultSortBy = categorySortBy(tab, timeframe);
-          if (defaultSortBy) {
-            sortBy = normalizeSortByField(defaultSortBy);
-          }
-          if (sortBy) {
-            const sorter = createPoolSorter(
-              {
-                sortBy,
-                sortDir,
-              },
-              timeframe
-            );
-            pools.sort(sorter);
-          }
-
-          return {
-            ...prev,
-            [tab]: {
-              ...prev[tab],
-              pools,
-            },
-            args: {
-              ...prev?.args,
-              timeframe,
-            },
-          };
-        }
-      );
-    }, [queryClient, tab, request]);
+    // Note: Removed stream mutation logic since we're using local DB tokens
+    // If you need real-time updates, consider implementing WebSocket updates for DB tokens
 
     const handleScroll = useCallback(() => {
       if (!isMobile || !listRef.current) return;
@@ -148,13 +125,13 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
       if (top <= 0) {
         // Only snapshot on initial pause
         if (!isPaused) {
-          setSnapshotData(currentData?.pools);
+          setSnapshotData(finalData);
         }
         setIsPaused(true);
       } else {
         setIsPaused(false);
       }
-    }, [currentData?.pools, isPaused, setIsPaused, isMobile]);
+    }, [finalData, isPaused, setIsPaused, isMobile]);
 
     // Handle scroll pausing on mobile
     useEffect(() => {
@@ -173,7 +150,7 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
     // Map snapshot data to current data for most recent updated data
     const displayData = isPaused
       ? snapshotData?.map((snapshotPool) => {
-          const current = currentData?.pools.find(
+          const current = finalData?.find(
             (p) => p.baseAsset.id === snapshotPool.baseAsset.id
           );
           if (current) {
@@ -181,13 +158,13 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
           }
           return snapshotPool;
         })
-      : currentData?.pools;
+      : finalData;
 
     return (
       <TokenCardList
         ref={listRef}
         data={displayData}
-        status={status}
+          status={finalStatus}
         timeframe={timeframe}
         trackPools
         className="lg:h-0 lg:min-h-full"

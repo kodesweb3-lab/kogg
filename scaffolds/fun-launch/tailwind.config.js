@@ -14,9 +14,48 @@ export default {
         '2xs': ['0.625rem', { lineHeight: '0.75rem' }],
         xxs: ['0.5rem', { lineHeight: '0.625rem' }],
       },
+      fontFamily: {
+        heading: ['Cinzel', 'serif'],
+        body: ['Inter', 'system-ui', 'sans-serif'],
+      },
 
       colors: {
-        // Redesign
+        // Kogaion Dark Ritual Palette
+        ritual: {
+          // Background: #020617
+          bg: '#020617',
+          bgElevated: '#0a0f1f',
+          bgHover: '#111827',
+          // Amber/Gold accents
+          amber: {
+            50: '#fffbeb',
+            100: '#fef3c6',
+            200: '#fee685',
+            300: '#fcd34d',
+            400: '#fbbf24',
+            DEFAULT: '#f59e0b',
+            500: '#d97706',
+            600: '#b45309',
+            700: '#92400e',
+            800: '#78350f',
+            900: '#451a03',
+          },
+          // Rust red
+          rust: {
+            50: '#fff1f2',
+            100: '#ffe4e6',
+            200: '#fecdd3',
+            300: '#fda4af',
+            400: '#fb7185',
+            DEFAULT: '#dc2626',
+            500: '#b91c1c',
+            600: '#991b1b',
+            700: '#7f1d1d',
+            800: '#6b1d1d',
+            900: '#4c1d1d',
+          },
+        },
+        // Legacy colors (keeping for compatibility)
         neutral: {
           50: '#f8fafc',
           100: '#f1f5f9',

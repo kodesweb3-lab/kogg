@@ -8,8 +8,11 @@ import Page from '@/components/ui/Page/Page';
 import { DataStreamProvider, useDataStream } from '@/contexts/DataStreamProvider';
 import { TokenChartProvider } from '@/contexts/TokenChartProvider';
 import { useTokenAddress, useTokenInfo } from '@/hooks/queries';
+import { BotActivationModal } from '@/components/BotActivationModal';
+import { Button } from '@/components/ui/button';
 import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useWallet } from '@jup-ag/wallet-adapter';
 
 const Terminal = dynamic(() => import('@/components/Terminal'), { ssr: false });
 
@@ -27,6 +30,8 @@ export const TokenPageWithContext = () => {
   const tokenId = useTokenAddress();
   const { data: poolId } = useTokenInfo((data) => data?.id);
   const { subscribeTxns, unsubscribeTxns, subscribePools, unsubscribePools } = useDataStream();
+  const { publicKey } = useWallet();
+  const [isBotModalOpen, setIsBotModalOpen] = useState(false);
 
   // Subscribe to token txns
   useEffect(() => {
@@ -66,6 +71,17 @@ export const TokenPageWithContext = () => {
             <div>
               <SwapWidget />
             </div>
+            {publicKey && tokenId && (
+              <div className="mt-4">
+                <Button
+                  onClick={() => setIsBotModalOpen(true)}
+                  className="w-full"
+                  variant="outline"
+                >
+                  🐺 Activate Token Bot
+                </Button>
+              </div>
+            )}
           </div>
 
           <div className={'border-neutral-850 w-full max-sm:order-2'}>
@@ -88,6 +104,18 @@ export const TokenPageWithContext = () => {
           </div>
         </div>
       </div>
+
+      {/* Bot Activation Modal */}
+      {tokenId && (
+        <BotActivationModal
+          tokenMint={tokenId}
+          isOpen={isBotModalOpen}
+          onClose={() => setIsBotModalOpen(false)}
+          onSuccess={() => {
+            // Refresh or show success message
+          }}
+        />
+      )}
     </Page>
   );
 };

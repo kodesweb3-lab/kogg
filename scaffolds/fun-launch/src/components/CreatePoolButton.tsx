@@ -11,7 +11,7 @@ export const CreatePoolButton = ({ className }: CreatePoolButtonProps) => {
     <Button>
       <Link href="/create-pool" className="flex items-center gap-1">
         <span className="iconify ph--rocket-bold w-4 h-4" />
-        <span>Create Pool</span>
+        <span>Launch</span>
       </Link>
     </Button>
   );

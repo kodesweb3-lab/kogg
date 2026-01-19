@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Token {
+  id          String   @id @default(uuid())
+  mint        String   @unique
+  name        String
+  symbol      String
+  imageUrl    String?
+  metadataUri String
+  dbcPool     String?  // DBC pool address
+  creatorWallet String
+  configKey   String
+  createdAt   DateTime @default(now())
+  
+  metrics     Metric[]
+  
+  @@index([mint])
+  @@index([creatorWallet])
+  @@index([createdAt])
+}
+
+model Metric {
+  id         String   @id @default(uuid())
+  tokenMint  String
+  price      Float?   @default(0)
+  mcap       Float?   @default(0)
+  vol24h     Float?   @default(0)
+  holders    Int?     @default(0)
+  updatedAt  DateTime @default(now()) @updatedAt
+  
+  token      Token    @relation(fields: [tokenMint], references: [mint], onDelete: Cascade)
+  
+  @@unique([tokenMint])
+  @@index([tokenMint])
+  @@index([updatedAt])
+}
+
+model BotPersona {
+  id          String   @id @default(uuid())
+  tokenMint   String   @unique
+  systemPrompt String  // Final user-owned system prompt
+  traitsJson  String   // JSON string of traits array
+  allowed     String?  // JSON string of allowed topics/words
+  forbidden   String?  // JSON string of forbidden topics/words
+  tone        String   // e.g., "meme", "professional", "shill", etc.
+  // Extended persona fields (user-owned)
+  personaStyleJson String? // JSON: { chaos, friendliness, formality, aggression, humor } (0-100)
+  brandingJson String?     // JSON: { catchphrases, emojis, voiceStyle, doList, dontList }
+  presetUsed String?        // Which preset was used (Fire/Frost/Blood/Moon/Stone) or "custom"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  
+  telegramBot TelegramBot?
+  
+  @@index([tokenMint])
+}
+
+model TelegramBot {
+  id            String      @id @default(uuid())
+  tokenMint     String      @unique
+  encryptedToken String     // AES-GCM encrypted BotFather token
+  status        BotStatus   @default(PENDING)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @default(now()) @updatedAt
+  
+  persona       BotPersona  @relation(fields: [tokenMint], references: [tokenMint], onDelete: Cascade)
+  
+  @@index([tokenMint])
+  @@index([status])
+}
+
+enum BotStatus {
+  PENDING
+  ACTIVE
+  INACTIVE
+  ERROR
+}

@@ -10,6 +10,7 @@ import {
   resolveTokenListFilters,
 } from './types';
 import { ExtractQueryData } from '@/types/fancytypes';
+import ky from 'ky';
 
 export type QueryData<T> = T extends (...args: infer OptionsArgs) => {
   queryFn: (...args: infer Args) => Promise<infer R>;
@@ -126,6 +127,40 @@ export const ApeQueries = {
           offset: lastPage?.next,
           offsetTs: lastTs,
         };
+      },
+    };
+  },
+  // Local database tokens query
+  localTokens: (args: {
+    page?: number;
+    limit?: number;
+    sortBy?: 'createdAt' | 'name' | 'symbol' | 'mint';
+    sortOrder?: 'asc' | 'desc';
+    search?: string;
+    creatorWallet?: string;
+  }) => {
+    return {
+      queryKey: ['explore', 'local-tokens', args],
+      queryFn: async () => {
+        const params = new URLSearchParams();
+        if (args.page) params.set('page', args.page.toString());
+        if (args.limit) params.set('limit', args.limit.toString());
+        if (args.sortBy) params.set('sortBy', args.sortBy);
+        if (args.sortOrder) params.set('sortOrder', args.sortOrder);
+        if (args.search) params.set('search', args.search);
+        if (args.creatorWallet) params.set('creatorWallet', args.creatorWallet);
+
+        const res = await ky.get(`/api/tokens?${params.toString()}`).json<{
+          success: boolean;
+          data: any[];
+          pagination: {
+            page: number;
+            limit: number;
+            total: number;
+            totalPages: number;
+          };
+        }>();
+        return Object.assign(res, { args });
       },
     };
   },
