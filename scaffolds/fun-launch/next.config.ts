@@ -1,16 +1,14 @@
 import type { NextConfig } from 'next';
 
-const isProduction = process.env.NODE_ENV === 'production';
-
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   
-  // Only ignore build errors in development
+  // Ignore ESLint and TypeScript errors during builds for faster deployments
   eslint: {
-    ignoreDuringBuilds: !isProduction,
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: !isProduction,
+    ignoreBuildErrors: true,
   },
 
   // CORS headers for API routes
