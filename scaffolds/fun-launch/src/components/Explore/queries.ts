@@ -67,13 +67,34 @@ export const ApeQueries = {
       queryKey: ['explore', 'token', args.id, 'info'],
       queryFn: async () => {
         const info = await ApeClient.getToken({ id: args.id });
-        if (!info?.pools[0]) {
-          throw new Error('No token info found');
+        if (!info?.pools?.[0]) {
+          // Return a minimal placeholder instead of throwing
+          // This allows the page to render with partial data
+          console.warn('[tokenInfo] No pool data found for:', args.id);
+          return {
+            id: args.id,
+            chain: 'solana',
+            dex: 'met-dbc',
+            type: 'bonding-curve',
+            createdAt: new Date().toISOString(),
+            bondingCurve: undefined,
+            volume24h: undefined,
+            isUnreliable: false,
+            updatedAt: new Date().toISOString(),
+            baseAsset: {
+              id: args.id,
+              name: 'Loading...',
+              symbol: '...',
+              decimals: 9,
+              tokenProgram: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
+              organicScoreLabel: 'medium' as const,
+            },
+            bondingCurveId: null as any,
+          };
         }
-        const pool = info?.pools[0];
+        const pool = info.pools[0];
 
         // Add frontend fields
-
         return {
           ...pool,
           bondingCurveId: null as any,
