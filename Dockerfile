@@ -34,5 +34,5 @@ EXPOSE 3000
 
 ENV NODE_ENV=production
 
-# Start the Next.js application with dynamic port
-CMD ["sh", "-c", "cd scaffolds/fun-launch && pnpm start -p ${PORT:-3000}"]
+# Run migrations and start the application
+CMD ["sh", "-c", "cd scaffolds/fun-launch && pnpm db:migrate && pnpm start -p ${PORT:-3000}"]
