@@ -25,7 +25,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const apiKey = process.env.HUGGINGFACE_API_KEY;
     if (!apiKey) {
-      return res.status(500).json({ error: 'HuggingFace API key not configured' });
+      // Fallback response when API key is not configured
+      const fallbackResponses = [
+        "Welcome to Kogaion! I'm the platform guide. To launch a token, connect your wallet and click 'Launch Token'. You'll need to provide a name, symbol, and logo for your token.",
+        "The Dynamic Bonding Curve (DBC) is how tokens are priced during the bonding phase. As more people buy, the price goes up. Once the curve reaches 100%, your token graduates to DAMM v2.",
+        "To get started, connect your Solana wallet using the button in the top right. Then visit the 'Launch' page to create your first token.",
+        "Each token on Kogaion can have its own AI personality for Telegram. After launching, activate your token's bot to engage with your community automatically.",
+        "The 'Pack' refers to the community of holders. As your pack grows, so does the strength of your token. Welcome to the mountain!",
+      ];
+      const randomResponse = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
+      return res.status(200).json({ response: randomResponse });
     }
 
     // Build chat messages in OpenAI format

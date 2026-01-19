@@ -93,6 +93,35 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
       ? localTokensData.data.map(transformDbTokenToPool)
       : undefined;
 
+    // Filter by tab - tokens without graduation data go to NEW
+    // In the future when we have bonding curve data, we can filter properly
+    if (finalData) {
+      switch (tab) {
+        case ExploreTab.NEW:
+          // Show tokens that are NOT graduated
+          finalData = finalData.filter(
+            (pool) => !pool.baseAsset.graduatedAt
+          );
+          break;
+        case ExploreTab.GRADUATING:
+          // Show tokens with high bonding curve but not yet graduated
+          // Currently we don't have this data, so show empty
+          finalData = finalData.filter(
+            (pool) => 
+              pool.bondingCurve !== undefined && 
+              pool.bondingCurve >= 50 && 
+              !pool.baseAsset.graduatedAt
+          );
+          break;
+        case ExploreTab.GRADUATED:
+          // Show graduated tokens only
+          finalData = finalData.filter(
+            (pool) => !!pool.baseAsset.graduatedAt
+          );
+          break;
+      }
+    }
+
     // Apply search filter
     if (finalData && searchQuery.trim()) {
       const query = searchQuery.toLowerCase().trim();
