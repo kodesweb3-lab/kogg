@@ -29,6 +29,8 @@
   },
   "dependencies": {
     "@coral-xyz/anchor": "^0.31.1",
+    "@prisma/adapter-pg": "^7.2.0",
+    "pg": "^8.14.0",
     "@iconify-json/ic": "^1.2.2",
     "@iconify-json/ph": "^1.2.2",
     "@iconify-json/solar": "^1.2.2",
@@ -71,6 +73,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@types/pg": "^8.11.6",
     "@meteora-invent/config-eslint": "workspace:*",
     "@meteora-invent/config-prettier": "workspace:*",
     "@meteora-invent/config-typescript": "workspace:*",
