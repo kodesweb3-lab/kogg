@@ -1,15 +1,20 @@
 // Using native fetch in Node.js 18+
 
-const HUGGINGFACE_API_URL = 'https://router.huggingface.co/hf-inference/models';
-const DEFAULT_MODEL = 'microsoft/DialoGPT-medium';
+// Use HuggingFace's chat completions API
+const HUGGINGFACE_API_URL = 'https://router.huggingface.co/v1/chat/completions';
+const DEFAULT_MODEL = 'mistralai/Mistral-7B-Instruct-v0.3';
 
-interface HuggingFaceResponse {
-  generated_text?: string;
+interface ChatCompletionResponse {
+  choices?: Array<{
+    message?: {
+      content?: string;
+    };
+  }>;
   error?: string;
 }
 
 /**
- * Generate AI response using HuggingFace API
+ * Generate AI response using HuggingFace Chat Completions API
  */
 export async function generateResponse(
   prompt: string,
@@ -21,10 +26,14 @@ export async function generateResponse(
     throw new Error('HUGGINGFACE_API_KEY environment variable is required');
   }
 
-  const fullPrompt = `${context}\n\nUser: ${prompt}\nAssistant:`;
+  // Build chat messages in OpenAI format
+  const messages = [
+    { role: 'system', content: context },
+    { role: 'user', content: prompt },
+  ];
 
   const maxRetries = 3;
-  const timeoutMs = 30000; // 30 seconds
+  const timeoutMs = 30000;
   let lastError: Error | null = null;
 
   for (let attempt = 0; attempt < maxRetries; attempt++) {
@@ -32,74 +41,59 @@ export async function generateResponse(
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-      const response = await globalThis.fetch(`${HUGGINGFACE_API_URL}/${model}`, {
+      const response = await globalThis.fetch(HUGGINGFACE_API_URL, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          inputs: fullPrompt,
-          parameters: {
-            max_length: 200,
-            temperature: 0.7,
-            top_p: 0.9,
-            do_sample: true,
-          },
+          model,
+          messages,
+          max_tokens: 200,
+          temperature: 0.7,
+          top_p: 0.9,
         }),
         signal: controller.signal,
       });
 
       clearTimeout(timeoutId);
 
-      // Handle 503 (model loading) - retry after delay
       if (response.status === 503) {
-        const errorData = await response.json().catch(() => ({}));
-        const estimatedTime = (errorData.estimated_time || 20) * 1000; // Convert to ms
         if (attempt < maxRetries - 1) {
-          await new Promise((resolve) => setTimeout(resolve, Math.min(estimatedTime, 30000)));
+          await new Promise((resolve) => setTimeout(resolve, 10000));
           continue;
         }
-        throw new Error('HuggingFace model is loading. Please try again later.');
+        throw new Error('AI service is loading. Please try again later.');
       }
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`HuggingFace API error: ${response.status} - ${errorText}`);
+        throw new Error(`AI API error: ${response.status} - ${errorText}`);
       }
 
-      const data = (await response.json()) as HuggingFaceResponse | HuggingFaceResponse[];
+      const data = (await response.json()) as ChatCompletionResponse;
 
-      // Handle array response (some models return arrays)
-      const result = Array.isArray(data) ? data[0] : data;
-
-      if (result.error) {
-        throw new Error(`HuggingFace API error: ${result.error}`);
+      if (data.error) {
+        throw new Error(`AI API error: ${data.error}`);
       }
 
-      if (!result.generated_text) {
-        throw new Error('No generated text in HuggingFace response');
+      const responseText = data.choices?.[0]?.message?.content;
+
+      if (!responseText) {
+        throw new Error('No response generated');
       }
 
-      // Extract just the assistant's response
-      const generated = result.generated_text;
-      const assistantIndex = generated.indexOf('Assistant:');
-      if (assistantIndex !== -1) {
-        return generated.substring(assistantIndex + 'Assistant:'.length).trim();
-      }
-
-      return generated.trim();
+      return responseText.trim();
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
       
-      // Don't retry on abort (timeout) or client errors (4xx)
-      if (lastError.name === 'AbortError' || (error instanceof Error && error.message.includes('4'))) {
+      if (lastError.name === 'AbortError') {
         throw lastError;
       }
 
-      // Retry with exponential backoff
       if (attempt < maxRetries - 1) {
-        const delay = Math.min(1000 * Math.pow(2, attempt), 10000); // Max 10s
+        const delay = Math.min(1000 * Math.pow(2, attempt), 10000);
         await new Promise((resolve) => setTimeout(resolve, delay));
         continue;
       }

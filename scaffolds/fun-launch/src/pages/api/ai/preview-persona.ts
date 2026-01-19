@@ -24,8 +24,9 @@ function buildSystemPrompt(
   return prompt;
 }
 
-const HUGGINGFACE_API_URL = 'https://router.huggingface.co/hf-inference/models';
-const DEFAULT_MODEL = 'microsoft/DialoGPT-medium';
+// Use HuggingFace's chat completions API
+const HUGGINGFACE_API_URL = 'https://router.huggingface.co/v1/chat/completions';
+const DEFAULT_MODEL = 'mistralai/Mistral-7B-Instruct-v0.3';
 
 type PreviewRequest = {
   message: string;
@@ -65,36 +66,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       persona.forbidden
     );
 
-    // Build context
-    const history = conversationHistory
-      .slice(-4)
-      .map((m) => `${m.role === 'user' ? 'User' : 'Bot'}: ${m.content}`)
-      .join('\n');
-    const context = `${systemPrompt}\n\n${history}\nUser: ${message}\nBot:`;
+    // Build chat messages in OpenAI format
+    const chatMessages = [
+      { role: 'system', content: systemPrompt },
+      ...conversationHistory.slice(-4).map((m) => ({
+        role: m.role === 'user' ? 'user' : 'assistant',
+        content: m.content,
+      })),
+      { role: 'user', content: message },
+    ];
 
-    // Call HuggingFace API
+    // Call HuggingFace Chat Completions API
     const maxRetries = 2;
     let lastError: Error | null = null;
 
     for (let attempt = 0; attempt < maxRetries; attempt++) {
       try {
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 20000); // 20s timeout for preview
+        const timeoutId = setTimeout(() => controller.abort(), 20000);
 
-        const response = await fetch(`${HUGGINGFACE_API_URL}/${DEFAULT_MODEL}`, {
+        const response = await fetch(HUGGINGFACE_API_URL, {
           method: 'POST',
           headers: {
             Authorization: `Bearer ${apiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            inputs: context,
-            parameters: {
-              max_length: 150,
-              temperature: 0.7,
-              top_p: 0.9,
-              do_sample: true,
-            },
+            model: DEFAULT_MODEL,
+            messages: chatMessages,
+            max_tokens: 150,
+            temperature: 0.7,
+            top_p: 0.9,
           }),
           signal: controller.signal,
         });
@@ -110,27 +112,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
 
         if (!response.ok) {
-          throw new Error(`API error: ${response.status}`);
+          const errorText = await response.text();
+          throw new Error(`API error: ${response.status} - ${errorText}`);
         }
 
-        const data = (await response.json()) as { generated_text?: string; error?: string } | Array<{ generated_text?: string }>;
-        const result = Array.isArray(data) ? data[0] : data;
+        const data = await response.json();
+        const responseText = data.choices?.[0]?.message?.content;
 
-        if (result.error) {
-          throw new Error(result.error);
-        }
-
-        if (!result.generated_text) {
+        if (!responseText) {
           throw new Error('No response generated');
         }
 
-        const generated = result.generated_text;
-        const botIndex = generated.indexOf('Bot:');
-        const responseText = botIndex !== -1
-          ? generated.substring(botIndex + 'Bot:'.length).trim()
-          : generated.trim();
-
-        return res.status(200).json({ response: responseText });
+        return res.status(200).json({ response: responseText.trim() });
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error));
 
