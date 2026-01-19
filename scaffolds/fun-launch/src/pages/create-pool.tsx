@@ -19,6 +19,7 @@ const poolSchema = z.object({
   website: z.string().url({ message: 'Please enter a valid URL' }).optional().or(z.literal('')),
   twitter: z.string().url({ message: 'Please enter a valid URL' }).optional().or(z.literal('')),
   telegram: z.string().url({ message: 'Please enter a valid URL' }).optional().or(z.literal('')),
+  devBuyAmount: z.number().min(0).max(10).optional(),
 });
 
 interface FormValues {
@@ -29,6 +30,7 @@ interface FormValues {
   website?: string;
   twitter?: string;
   telegram?: string;
+  devBuyAmount?: number;
 }
 
 export default function CreatePool() {
@@ -48,6 +50,7 @@ export default function CreatePool() {
       website: '',
       twitter: '',
       telegram: '',
+      devBuyAmount: 0,
     } as FormValues,
     onSubmit: async ({ value }) => {
       try {
@@ -183,24 +186,75 @@ export default function CreatePool() {
                 imageUrl: imageUrl,
                 metadataUri: metadataUri,
                 creatorWallet: address,
-                // dbcPool will be set later when we can derive it from the transaction
               }),
             });
 
             if (!saveTokenResponse.ok) {
               const error = await saveTokenResponse.json();
               console.error('Failed to save token to database:', error);
-              // Don't throw - token is already launched, just log the error
               toast.error('Token launched but failed to save to database', { id: 'save-token' });
             } else {
               toast.success('Token saved successfully', { id: 'save-token' });
-              // Invalidate React Query cache to refresh Discover page
               queryClient.invalidateQueries({ queryKey: ['explore', 'local-tokens'] });
             }
           } catch (dbError) {
             console.error('Error saving token to database:', dbError);
-            // Don't throw - token is already launched
             toast.error('Token launched but failed to save to database', { id: 'save-token' });
+          }
+
+          // Step 8: Dev Buy (if amount > 0)
+          const devBuyAmount = value.devBuyAmount || 0;
+          if (devBuyAmount > 0) {
+            toast.loading(`Buying ${devBuyAmount} SOL worth of tokens...`, { id: 'dev-buy' });
+            try {
+              // Get swap transaction
+              const swapTxResponse = await fetch('/api/swap-transaction', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  mint: keyPair.publicKey.toBase58(),
+                  amountSol: devBuyAmount,
+                  userWallet: address,
+                  isBuy: true,
+                }),
+              });
+
+              if (!swapTxResponse.ok) {
+                const error = await swapTxResponse.json();
+                toast.error(error.error || 'Failed to create swap transaction', { id: 'dev-buy' });
+                // Don't throw - pool is already created
+              } else {
+                const { swapTx } = await swapTxResponse.json();
+                const swapTransaction = Transaction.from(Buffer.from(swapTx, 'base64'));
+
+                // Sign swap transaction
+                toast.loading('Please sign the buy transaction...', { id: 'dev-buy' });
+                const signedSwapTx = await signTransaction(swapTransaction);
+
+                // Send swap transaction
+                const swapSendResponse = await fetch('/api/send-transaction', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    signedTransaction: signedSwapTx.serialize().toString('base64'),
+                  }),
+                });
+
+                if (!swapSendResponse.ok) {
+                  const error = await swapSendResponse.json();
+                  toast.error(error.error || 'Failed to send buy transaction', { id: 'dev-buy' });
+                } else {
+                  toast.success(`Successfully bought ${devBuyAmount} SOL worth of tokens! 🎉`, { id: 'dev-buy' });
+                }
+              }
+            } catch (swapError) {
+              console.error('Dev buy error:', swapError);
+              toast.error('Dev buy failed, but your token was created successfully', { id: 'dev-buy' });
+            }
           }
 
           toast.success('The ritual is complete! Token summoned successfully. 🐺', { id: 'send-tx' });
@@ -390,6 +444,45 @@ export default function CreatePool() {
                       },
                     })}
                   </div>
+                </div>
+              </div>
+
+              {/* Dev Buy Section */}
+              <div className="bg-ritual-bgElevated rounded-xl p-8 border border-ritual-amber-500/20">
+                <h2 className="text-2xl font-heading font-bold mb-4 text-ritual-amber-400">Initial Buy (Optional)</h2>
+                <p className="text-gray-400 text-sm mb-4 font-body">
+                  Buy tokens immediately after launch. Be the first holder of your own token.
+                </p>
+
+                <div className="max-w-xs">
+                  <label
+                    htmlFor="devBuyAmount"
+                    className="block text-sm font-body font-medium text-gray-300 mb-1"
+                  >
+                    Amount (SOL)
+                  </label>
+                  {form.Field({
+                    name: 'devBuyAmount',
+                    children: (field) => (
+                      <div>
+                        <input
+                          id="devBuyAmount"
+                          name={field.name}
+                          type="number"
+                          step="0.01"
+                          min="0"
+                          max="10"
+                          className="w-full p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-ritual-amber-500"
+                          placeholder="0.1"
+                          value={field.state.value || ''}
+                          onChange={(e) => field.handleChange(parseFloat(e.target.value) || 0)}
+                        />
+                        <p className="text-xs text-gray-500 mt-1 font-body">
+                          Leave at 0 to skip initial buy. Max 10 SOL.
+                        </p>
+                      </div>
+                    ),
+                  })}
                 </div>
               </div>
 
