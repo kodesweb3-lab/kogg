@@ -1,0 +1,39 @@
+# Worker Dockerfile - Use Node 20.19 for @prisma/client compatibility
+FROM node:20.19-alpine AS base
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@10.27.0 --activate
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY turbo.json ./
+COPY scaffolds ./scaffolds
+COPY packages ./packages
+COPY apps ./apps
+
+# Install dependencies
+RUN pnpm install --frozen-lockfile
+
+# Build the worker
+WORKDIR /app/scaffolds/fun-launch/apps/worker-bots
+RUN pnpm build
+
+# Production stage
+FROM node:20.19-alpine AS runner
+
+RUN corepack enable && corepack prepare pnpm@10.27.0 --activate
+
+WORKDIR /app
+
+# Copy built application
+COPY --from=base /app ./
+
+WORKDIR /app/scaffolds/fun-launch/apps/worker-bots
+
+ENV NODE_ENV=production
+
+# Start the worker
+CMD ["pnpm", "start"]
