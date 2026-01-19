@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
+import { useWallet } from '@jup-ag/wallet-adapter';
+import { Transaction } from '@solana/web3.js';
+import { toast } from 'sonner';
 
 import { Pool, TokenListTimeframe } from '../Explore/types';
 
@@ -20,6 +23,97 @@ type TokenCardProps = {
 
 export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef }) => {
   const stats = pool.baseAsset[`stats${timeframe}`];
+  const { publicKey, signTransaction, connected } = useWallet();
+  const [buyingAmount, setBuyingAmount] = useState<number | null>(null);
+
+  const handleQuickBuy = useCallback(async (e: React.MouseEvent, amount: number) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!publicKey || !signTransaction) {
+      toast.error('Please connect your wallet first');
+      return;
+    }
+
+    setBuyingAmount(amount);
+    const toastId = `quick-buy-${pool.baseAsset.id}-${amount}`;
+
+    try {
+      toast.loading(`Buying ${amount} SOL of ${pool.baseAsset.symbol}...`, { id: toastId });
+
+      const swapResponse = await fetch('/api/swap-transaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mint: pool.baseAsset.id,
+          amount,
+          userWallet: publicKey.toBase58(),
+          isBuy: true,
+        }),
+      });
+
+      if (!swapResponse.ok) {
+        const error = await swapResponse.json();
+        throw new Error(error.error || 'Failed to create transaction');
+      }
+
+      const { swapTx } = await swapResponse.json();
+      const transaction = Transaction.from(Buffer.from(swapTx, 'base64'));
+
+      toast.loading('Please sign the transaction...', { id: toastId });
+      const signedTx = await signTransaction(transaction);
+
+      toast.loading('Sending transaction...', { id: toastId });
+      const sendResponse = await fetch('/api/send-transaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          signedTransaction: signedTx.serialize().toString('base64'),
+        }),
+      });
+
+      if (!sendResponse.ok) {
+        const error = await sendResponse.json();
+        throw new Error(error.error || 'Failed to send transaction');
+      }
+
+      const { signature } = await sendResponse.json();
+      
+      const tweetText = `I just bought $${pool.baseAsset.symbol} on @KogaionSol! Join the pack.`;
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(`${window.location.origin}/token/${pool.baseAsset.id}`)}`;
+      
+      toast.success(
+        <div className="flex flex-col gap-2">
+          <span>Bought {pool.baseAsset.symbol}!</span>
+          <div className="flex items-center gap-2">
+            <a 
+              href={`https://solscan.io/tx/${signature}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-ritual-amber-400 hover:underline"
+            >
+              Solscan
+            </a>
+            <span className="text-gray-500">|</span>
+            <a
+              href={tweetUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-blue-400 hover:underline"
+            >
+              Share on X
+            </a>
+          </div>
+        </div>,
+        { id: toastId, duration: 8000 }
+      );
+    } catch (error) {
+      console.error('Quick buy error:', error);
+      toast.error(error instanceof Error ? error.message : 'Buy failed', { id: toastId });
+    } finally {
+      setBuyingAmount(null);
+    }
+  }, [publicKey, signTransaction, pool.baseAsset.id, pool.baseAsset.symbol]);
 
   return (
     <div
@@ -35,7 +129,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
       <div className="flex w-full flex-col gap-1 overflow-hidden">
         {/* 1st row */}
         <div className="flex w-full items-center justify-between">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden flex-1">
             <div className="flex items-center gap-0.5 xl:gap-1">
               <div
                 className="whitespace-nowrap text-sm font-semibold"
@@ -65,13 +159,28 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
                 </Copyable>
               </div>
             </div>
-
-            {/* Interesting metrics */}
-            {/* <div className="flex items-center gap-1 pt-0.5 text-neutral-500 sm:gap-1.5">
-              <TokenCardTopHoldersMetric audit={pool.baseAsset.audit} />
-              <TokenCardHoldersMetric holderCount={pool.baseAsset.holderCount} />
-            </div> */}
           </div>
+
+          {/* Quick Buy Buttons */}
+          {connected && (
+            <div className="flex items-center gap-1 z-10 ml-2">
+              {[0.1, 0.5, 1].map((amount) => (
+                <button
+                  key={amount}
+                  onClick={(e) => handleQuickBuy(e, amount)}
+                  disabled={buyingAmount !== null}
+                  className={cn(
+                    "px-2 py-1 text-[10px] font-medium rounded transition-all",
+                    "bg-green-600/80 hover:bg-green-500 text-white",
+                    "disabled:opacity-50 disabled:cursor-not-allowed",
+                    buyingAmount === amount && "animate-pulse"
+                  )}
+                >
+                  {buyingAmount === amount ? '...' : `${amount}`}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* 2nd row */}

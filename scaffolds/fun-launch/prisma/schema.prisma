@@ -84,3 +84,25 @@ enum BotStatus {
   INACTIVE
   ERROR
 }
+
+model Comment {
+  id          String   @id @default(uuid())
+  tokenMint   String
+  wallet      String
+  content     String
+  createdAt   DateTime @default(now())
+  
+  @@index([tokenMint])
+  @@index([createdAt])
+}
+
+model Referral {
+  id            String   @id @default(uuid())
+  referrerWallet String
+  referredWallet String
+  createdAt     DateTime @default(now())
+  
+  @@unique([referrerWallet, referredWallet])
+  @@index([referrerWallet])
+  @@index([referredWallet])
+}

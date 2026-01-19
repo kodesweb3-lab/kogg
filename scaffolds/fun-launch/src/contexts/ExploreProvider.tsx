@@ -11,6 +11,8 @@ import { StorageKey } from '@/constants';
 export const EXPLORE_FIXED_TIMEFRAME: TokenListTimeframe = '24h';
 const DEFAULT_TAB: ExploreTab = ExploreTab.NEW;
 
+export type SortOption = 'newest' | 'oldest' | 'mcap_high' | 'mcap_low';
+
 type FiltersConfig = {
   [tab in ExploreTab]?: TokenListFilters;
 };
@@ -23,6 +25,10 @@ type ExploreContextType = {
   request: Required<GemsTokenListQueryArgs>;
   pausedTabs: Record<ExploreTab, boolean>;
   setTabPaused: (tab: ExploreTab, isPaused: boolean) => void;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
+  sortOption: SortOption;
+  setSortOption: (option: SortOption) => void;
 };
 
 const ExploreContext = createContext<ExploreContextType>({
@@ -47,6 +53,10 @@ const ExploreContext = createContext<ExploreContextType>({
     [ExploreTab.GRADUATED]: false,
   },
   setTabPaused: () => {},
+  searchQuery: '',
+  setSearchQuery: () => {},
+  sortOption: 'newest',
+  setSortOption: () => {},
 });
 
 const ExploreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -61,6 +71,8 @@ const ExploreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
     [ExploreTab.GRADUATING]: false,
     [ExploreTab.GRADUATED]: false,
   });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortOption, setSortOption] = useState<SortOption>('newest');
 
   // Store all filters in an object to avoid tab -> filter state sync issues
   const [filtersConfig, setFiltersConfig] = useLocalStorage<FiltersConfig>(
@@ -110,6 +122,10 @@ const ExploreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
         request,
         pausedTabs,
         setTabPaused,
+        searchQuery,
+        setSearchQuery,
+        sortOption,
+        setSortOption,
       }}
     >
       {children}

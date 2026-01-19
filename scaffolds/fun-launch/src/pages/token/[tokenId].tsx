@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { useWallet } from '@jup-ag/wallet-adapter';
 
 const SwapPanel = dynamic(() => import('@/components/SwapPanel'), { ssr: false });
+const TokenChat = dynamic(() => import('@/components/TokenChat'), { ssr: false });
 
 const SwapWidget = () => {
   const tokenId = useTokenAddress();
@@ -72,6 +73,11 @@ export const TokenPageWithContext = () => {
             <div>
               <SwapWidget />
             </div>
+            {tokenId && (
+              <div className="mt-4">
+                <TokenChat tokenMint={tokenId} />
+              </div>
+            )}
             {publicKey && tokenId && (
               <div className="mt-4">
                 <Button

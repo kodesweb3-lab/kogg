@@ -66,6 +66,7 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
   ({ tab, request, isPaused, setIsPaused }) => {
     const breakpoint = useBreakpoint();
     const isMobile = breakpoint === 'md' || breakpoint === 'sm' || breakpoint === 'xs';
+    const { searchQuery, sortOption } = useExplore();
 
     const listRef = useRef<HTMLDivElement>(null);
 
@@ -88,9 +89,39 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
     }
 
     // Transform DB tokens to Pool format
-    const finalData = localTokensData?.data
+    let finalData = localTokensData?.data
       ? localTokensData.data.map(transformDbTokenToPool)
       : undefined;
+
+    // Apply search filter
+    if (finalData && searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      finalData = finalData.filter(
+        (pool) =>
+          pool.baseAsset.name.toLowerCase().includes(query) ||
+          pool.baseAsset.symbol.toLowerCase().includes(query) ||
+          pool.baseAsset.id.toLowerCase().includes(query)
+      );
+    }
+
+    // Apply sort
+    if (finalData) {
+      finalData = [...finalData].sort((a, b) => {
+        switch (sortOption) {
+          case 'newest':
+            return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          case 'oldest':
+            return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          case 'mcap_high':
+            return (b.baseAsset.mcap || 0) - (a.baseAsset.mcap || 0);
+          case 'mcap_low':
+            return (a.baseAsset.mcap || 0) - (b.baseAsset.mcap || 0);
+          default:
+            return 0;
+        }
+      });
+    }
+
     const finalStatus = localStatus;
 
     const [snapshotData, setSnapshotData] = useState<Pool[]>();

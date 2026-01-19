@@ -156,19 +156,35 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
 
       const { signature } = await sendResponse.json();
       
+      const tweetText = mode === 'buy' 
+        ? `I just bought $${tokenSymbol} on @KogaionSol! Join the pack.`
+        : `I just sold $${tokenSymbol} on @KogaionSol!`;
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(window.location.href)}`;
+      
       toast.success(
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2">
           <span>{mode === 'buy' ? 'Bought' : 'Sold'} successfully!</span>
-          <a 
-            href={`https://solscan.io/tx/${signature}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-ritual-amber-400 hover:underline"
-          >
-            View on Solscan
-          </a>
+          <div className="flex items-center gap-2">
+            <a 
+              href={`https://solscan.io/tx/${signature}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-ritual-amber-400 hover:underline"
+            >
+              Solscan
+            </a>
+            <span className="text-gray-500">|</span>
+            <a
+              href={tweetUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-blue-400 hover:underline flex items-center gap-1"
+            >
+              Share on X
+            </a>
+          </div>
         </div>,
-        { id: toastId, duration: 5000 }
+        { id: toastId, duration: 8000 }
       );
 
       // Reset form

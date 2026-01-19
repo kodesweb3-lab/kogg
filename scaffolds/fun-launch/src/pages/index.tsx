@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { useUnifiedWalletContext } from '@jup-ag/wallet-adapter';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
+
+const LiveFeed = dynamic(() => import('@/components/LiveFeed'), { ssr: false });
 
 export default function LandingPage() {
   const { setShowModal } = useUnifiedWalletContext();
@@ -93,6 +96,13 @@ export default function LandingPage() {
               Explore the Pack
             </Button>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Live Feed Section */}
+      <section className="py-12 px-4 relative z-10">
+        <div className="max-w-md mx-auto">
+          <LiveFeed />
         </div>
       </section>
 

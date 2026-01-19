@@ -10,6 +10,9 @@ import { Button } from '@/components/ui/button';
 import { Keypair, Transaction } from '@solana/web3.js';
 import { useUnifiedWalletContext, useWallet } from '@jup-ag/wallet-adapter';
 import { toast } from 'sonner';
+import dynamic from 'next/dynamic';
+
+const Confetti = dynamic(() => import('@/components/Confetti'), { ssr: false });
 
 // Define the schema for form validation
 const poolSchema = z.object({
@@ -40,6 +43,7 @@ export default function CreatePool() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [poolCreated, setPoolCreated] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -257,7 +261,34 @@ export default function CreatePool() {
             }
           }
 
-          toast.success('The ritual is complete! Token summoned successfully. 🐺', { id: 'send-tx' });
+          const tokenMint = keyPair.publicKey.toBase58();
+          const tweetText = `I just launched $${value.tokenSymbol} on @KogaionSol! The ritual is complete. Join the pack!`;
+          const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(`${window.location.origin}/token/${tokenMint}`)}`;
+          
+          toast.success(
+            <div className="flex flex-col gap-2">
+              <span>The ritual is complete! Token summoned successfully.</span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={`/token/${tokenMint}`}
+                  className="text-xs text-ritual-amber-400 hover:underline"
+                >
+                  View Token
+                </a>
+                <span className="text-gray-500">|</span>
+                <a
+                  href={tweetUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-blue-400 hover:underline"
+                >
+                  Share on X
+                </a>
+              </div>
+            </div>,
+            { id: 'send-tx', duration: 10000 }
+          );
+          setShowConfetti(true);
           setPoolCreated(true);
         }
       } catch (error) {
@@ -288,6 +319,8 @@ export default function CreatePool() {
           content="Launch your meme token on Kogaion. The most based launchpad on Solana. No cap."
         />
       </Head>
+
+      <Confetti trigger={showConfetti} />
 
       <div className="min-h-screen bg-ritual-bg text-gray-100 relative">
         {/* Mountain silhouette background */}
