@@ -7,12 +7,11 @@ RUN corepack enable && corepack prepare pnpm@10.27.0 --activate
 # Set working directory
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY turbo.json ./
-COPY scaffolds ./scaffolds
+# Copy all necessary files
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml turbo.json ./
 COPY packages ./packages
-COPY apps ./apps
+COPY scaffolds ./scaffolds
+COPY studio ./studio
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
