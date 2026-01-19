@@ -29,11 +29,10 @@ WORKDIR /app
 # Copy built application
 COPY --from=base /app ./
 
-# Expose port
+# Expose port (Railway will override with dynamic port)
 EXPOSE 3000
 
 ENV NODE_ENV=production
-ENV PORT=3000
 
-# Start the Next.js application
-CMD ["pnpm", "--filter", "@meteora-invent/scaffold/fun-launch", "start"]
+# Start the Next.js application with dynamic port
+CMD ["sh", "-c", "cd scaffolds/fun-launch && pnpm start -p ${PORT:-3000}"]
