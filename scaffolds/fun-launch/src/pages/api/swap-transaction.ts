@@ -17,9 +17,11 @@ try {
 // Types
 type SwapTransactionRequest = {
   mint: string;        // Token mint address
-  amountSol: number;   // Amount of SOL to swap
+  amount: number;      // Amount to swap (SOL for buy, tokens for sell)
   userWallet: string;  // User's wallet address
   isBuy: boolean;      // true = buy tokens with SOL, false = sell tokens for SOL
+  // Legacy support
+  amountSol?: number;  // Deprecated, use amount instead
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -28,19 +30,30 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { mint, amountSol, userWallet, isBuy } = req.body as SwapTransactionRequest;
+    const { mint, amount, amountSol, userWallet, isBuy } = req.body as SwapTransactionRequest;
+
+    // Support both 'amount' and legacy 'amountSol'
+    const swapAmount = amount ?? amountSol;
 
     // Validate required fields
-    if (!mint || !amountSol || !userWallet) {
+    if (!mint || !swapAmount || !userWallet) {
       return res.status(400).json({ 
-        error: 'Missing required fields: mint, amountSol, and userWallet are required' 
+        error: 'Missing required fields: mint, amount, and userWallet are required' 
       });
     }
 
     // Validate amount
-    if (amountSol <= 0 || amountSol > 10) {
+    if (swapAmount <= 0) {
       return res.status(400).json({ 
-        error: 'Amount must be between 0 and 10 SOL' 
+        error: 'Amount must be greater than 0' 
+      });
+    }
+
+    // For buy, limit to 10 SOL
+    const isBuyMode = isBuy !== false;
+    if (isBuyMode && swapAmount > 10) {
+      return res.status(400).json({ 
+        error: 'Maximum buy amount is 10 SOL' 
       });
     }
 
@@ -57,9 +70,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Create swap transaction
     const swapTx = await createSwapTransaction({
       mint,
-      amountSol,
+      amount: swapAmount,
       userWallet,
-      isBuy: isBuy !== false, // Default to buy
+      isBuy: isBuyMode,
     });
 
     res.status(200).json({
@@ -96,18 +109,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 /**
  * Create DBC swap transaction
  * 
- * For dev buy:
- * - swapBaseForQuote = false (swap SOL for tokens)
- * - amountIn = SOL amount in lamports
+ * In Meteora DBC:
+ * - Base = the token we created (our token)
+ * - Quote = SOL (the currency)
+ * 
+ * swapBaseForQuote:
+ * - true = sell tokens for SOL (base -> quote)
+ * - false = buy tokens with SOL (quote -> base)
  */
 async function createSwapTransaction({
   mint,
-  amountSol,
+  amount,
   userWallet,
   isBuy,
 }: {
   mint: string;
-  amountSol: number;
+  amount: number;
   userWallet: string;
   isBuy: boolean;
 }) {
@@ -129,8 +146,15 @@ async function createSwapTransaction({
     throw new Error(`Pool config not found for ${dbcConfigAddress.toString()}`);
   }
 
-  // Convert SOL to lamports (SOL has 9 decimals)
-  const amountIn = new BN(Math.floor(amountSol * 1e9));
+  // Decimals:
+  // - SOL (quote) = 9 decimals
+  // - Token (base) = 6 decimals (standard for Meteora DBC tokens)
+  const SOL_DECIMALS = 9;
+  const TOKEN_DECIMALS = 6;
+
+  // For buy: input is SOL, for sell: input is token
+  const inputDecimals = isBuy ? SOL_DECIMALS : TOKEN_DECIMALS;
+  const amountIn = new BN(Math.floor(amount * Math.pow(10, inputDecimals)));
 
   // Get current point for swap quote
   let currentPoint: number | null;
@@ -145,7 +169,9 @@ async function createSwapTransaction({
     throw new Error('Failed to get current block time');
   }
 
-  // swapBaseForQuote: false = buy tokens with SOL, true = sell tokens for SOL
+  // swapBaseForQuote:
+  // - isBuy = true -> we want to buy tokens with SOL -> swapBaseForQuote = false
+  // - isBuy = false -> we want to sell tokens for SOL -> swapBaseForQuote = true
   const swapBaseForQuote = !isBuy;
 
   // Get swap quote

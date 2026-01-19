@@ -19,6 +19,41 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
   const [quote, setQuote] = useState<string | null>(null);
   const [isLoadingQuote, setIsLoadingQuote] = useState(false);
   const [isSwapping, setIsSwapping] = useState(false);
+  const [tokenBalance, setTokenBalance] = useState<string>('0');
+  const [isLoadingBalance, setIsLoadingBalance] = useState(false);
+
+  // Fetch token balance when wallet connects or mode changes
+  useEffect(() => {
+    if (!publicKey || !mint) {
+      setTokenBalance('0');
+      return;
+    }
+
+    const fetchBalance = async () => {
+      setIsLoadingBalance(true);
+      try {
+        const response = await fetch('/api/token-balance', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            mint,
+            wallet: publicKey.toBase58(),
+          }),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setTokenBalance(data.balance);
+        }
+      } catch (error) {
+        console.error('Failed to fetch token balance:', error);
+      } finally {
+        setIsLoadingBalance(false);
+      }
+    };
+
+    fetchBalance();
+  }, [publicKey, mint, mode]);
 
   // Debounced quote fetch
   useEffect(() => {
@@ -86,7 +121,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           mint,
-          amountSol: amountNum,
+          amount: amountNum,
           userWallet: publicKey.toBase58(),
           isBuy: mode === 'buy',
         }),
@@ -198,7 +233,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
           />
           <span className="text-gray-400 font-body font-medium">{inputLabel}</span>
         </div>
-        {mode === 'buy' && (
+        {mode === 'buy' ? (
           <div className="flex gap-2 mt-2">
             {[0.1, 0.5, 1, 2].map((val) => (
               <button
@@ -209,6 +244,35 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
                 {val} SOL
               </button>
             ))}
+          </div>
+        ) : (
+          <div className="flex items-center justify-between mt-2">
+            <div className="flex items-center gap-1 text-xs text-gray-400 font-body">
+              <span>Balance:</span>
+              {isLoadingBalance ? (
+                <Skeleton className="h-4 w-16" />
+              ) : (
+                <span className="text-white">
+                  {parseFloat(tokenBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {tokenSymbol}
+                </span>
+              )}
+            </div>
+            <div className="flex gap-2">
+              {[25, 50, 100].map((pct) => (
+                <button
+                  key={pct}
+                  onClick={() => {
+                    const bal = parseFloat(tokenBalance);
+                    if (bal > 0) {
+                      setAmount(((bal * pct) / 100).toString());
+                    }
+                  }}
+                  className="px-2 py-1 text-xs bg-ritual-bgHover rounded-md text-gray-400 hover:text-white hover:bg-ritual-amber-500/20 transition-all font-body"
+                >
+                  {pct}%
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>

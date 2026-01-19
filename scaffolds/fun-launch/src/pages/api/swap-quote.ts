@@ -89,6 +89,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
 /**
  * Get DBC swap quote
+ * 
+ * In Meteora DBC:
+ * - Base = the token we created (our token)
+ * - Quote = SOL (the currency)
+ * 
+ * swapBaseForQuote:
+ * - true = sell tokens for SOL (base -> quote)
+ * - false = buy tokens with SOL (quote -> base)
  */
 async function getSwapQuote({
   mint,
@@ -116,11 +124,16 @@ async function getSwapQuote({
     throw new Error(`Pool config not found for ${dbcConfigAddress.toString()}`);
   }
 
-  // Determine decimals based on swap direction
-  // For buy: input is SOL (9 decimals), output is token (6 decimals usually)
-  // For sell: input is token (6 decimals), output is SOL (9 decimals)
-  const inputDecimals = isBuy ? 9 : 6; // SOL has 9, tokens usually 6
-  const outputDecimals = isBuy ? 6 : 9;
+  // Decimals:
+  // - SOL (quote) = 9 decimals
+  // - Token (base) = 6 decimals (standard for Meteora DBC tokens)
+  const SOL_DECIMALS = 9;
+  const TOKEN_DECIMALS = 6;
+
+  // For buy: input is SOL, output is token
+  // For sell: input is token, output is SOL
+  const inputDecimals = isBuy ? SOL_DECIMALS : TOKEN_DECIMALS;
+  const outputDecimals = isBuy ? TOKEN_DECIMALS : SOL_DECIMALS;
   
   const amountIn = new BN(Math.floor(amount * Math.pow(10, inputDecimals)));
 
@@ -137,7 +150,9 @@ async function getSwapQuote({
     throw new Error('Failed to get current block time');
   }
 
-  // swapBaseForQuote: false = buy tokens with SOL, true = sell tokens for SOL
+  // swapBaseForQuote:
+  // - isBuy = true -> we want to buy tokens with SOL -> swapBaseForQuote = false
+  // - isBuy = false -> we want to sell tokens for SOL -> swapBaseForQuote = true
   const swapBaseForQuote = !isBuy;
 
   // Get swap quote
@@ -151,12 +166,14 @@ async function getSwapQuote({
   });
 
   // Convert outputs to human-readable format
-  const estimatedOutput = quote.swapOutAmount.toNumber() / Math.pow(10, outputDecimals);
-  const minimumOutput = quote.minimumAmountOut.toNumber() / Math.pow(10, outputDecimals);
+  const estimatedOutput = Number(quote.swapOutAmount.toString()) / Math.pow(10, outputDecimals);
+  const minimumOutput = Number(quote.minimumAmountOut.toString()) / Math.pow(10, outputDecimals);
   
   // Calculate price impact (simplified)
-  const priceImpact = quote.swapOutAmount.gt(new BN(0)) 
-    ? ((quote.swapOutAmount.toNumber() - quote.minimumAmountOut.toNumber()) / quote.swapOutAmount.toNumber() * 100).toFixed(2)
+  const swapOut = Number(quote.swapOutAmount.toString());
+  const minOut = Number(quote.minimumAmountOut.toString());
+  const priceImpact = swapOut > 0 
+    ? (((swapOut - minOut) / swapOut) * 100).toFixed(2)
     : '0';
 
   return {
