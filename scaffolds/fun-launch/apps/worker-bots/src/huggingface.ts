@@ -1,6 +1,6 @@
 // Using native fetch in Node.js 18+
 
-const HUGGINGFACE_API_URL = 'https://api-inference.huggingface.co/models';
+const HUGGINGFACE_API_URL = 'https://router.huggingface.co/hf-inference/models';
 const DEFAULT_MODEL = 'microsoft/DialoGPT-medium';
 
 interface HuggingFaceResponse {

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { logger } from '@/lib/logger';
 
-const HUGGINGFACE_API_URL = 'https://api-inference.huggingface.co/models';
+const HUGGINGFACE_API_URL = 'https://router.huggingface.co/hf-inference/models';
 const DEFAULT_MODEL = 'microsoft/DialoGPT-medium';
 
 type KogaionRequest = {

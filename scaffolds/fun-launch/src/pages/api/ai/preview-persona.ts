@@ -24,7 +24,7 @@ function buildSystemPrompt(
   return prompt;
 }
 
-const HUGGINGFACE_API_URL = 'https://api-inference.huggingface.co/models';
+const HUGGINGFACE_API_URL = 'https://router.huggingface.co/hf-inference/models';
 const DEFAULT_MODEL = 'microsoft/DialoGPT-medium';
 
 type PreviewRequest = {

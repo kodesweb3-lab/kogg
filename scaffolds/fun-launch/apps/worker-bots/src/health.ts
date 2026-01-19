@@ -43,7 +43,7 @@ export async function checkHealth(): Promise<{
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000); // 5s timeout
 
-      const response = await globalThis.fetch('https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium', {
+      const response = await globalThis.fetch('https://router.huggingface.co/hf-inference/models/microsoft/DialoGPT-medium', {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${hfApiKey}`,
