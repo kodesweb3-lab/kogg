@@ -34,5 +34,5 @@ EXPOSE 3000
 
 ENV NODE_ENV=production
 
-# Run migrations and start the application
-CMD ["sh", "-c", "cd scaffolds/fun-launch && pnpm db:migrate && pnpm start -p ${PORT:-3000}"]
+# Push schema to database and start the application
+CMD ["sh", "-c", "cd scaffolds/fun-launch && npx prisma db push --skip-generate && pnpm start -p ${PORT:-3000}"]
