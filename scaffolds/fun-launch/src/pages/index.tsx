@@ -371,7 +371,7 @@ export default function LandingPage() {
               </svg>
             </a>
             <a 
-              href="https://t.me/KogaionSol" 
+              href="https://t.me/kogaionpack" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-ritual-amber-400 transition-colors"
