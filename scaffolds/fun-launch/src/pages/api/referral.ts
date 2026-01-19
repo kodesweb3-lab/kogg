@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json({
         success: true,
         referralCount: referrals,
-        referralLink: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://kogg-production.up.railway.app'}/?ref=${wallet}`,
+        referralLink: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://kogaion.fun'}/?ref=${wallet}`,
       });
     } catch (error) {
       logger.error('Get referral stats error', error instanceof Error ? error : new Error(String(error)));
