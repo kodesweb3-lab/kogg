@@ -12,7 +12,7 @@
 - Builder: **Railpack** sau **NIXPACKS**
 - **Build Command:**
   ```bash
-  pnpm install && pnpm db:generate && pnpm build
+  pnpm install && pnpm build
   ```
 
 **Deploy:**
@@ -40,7 +40,7 @@
 - Builder: **NIXPACKS**
 - **Build Command:**
   ```bash
-  cd ../.. && pnpm install && pnpm db:generate && cd apps/worker-bots && pnpm build
+  cd ../.. && pnpm install && cd apps/worker-bots && pnpm build
   ```
 
 **Deploy:**
@@ -78,12 +78,12 @@ NODE_ENV=production
 
 ### Web Service:
 ```bash
-pnpm install && pnpm db:generate && pnpm build
+pnpm install && pnpm build
 ```
 
 ### Worker Service:
 ```bash
-cd ../.. && pnpm install && pnpm db:generate && cd apps/worker-bots && pnpm build
+cd ../.. && pnpm install && cd apps/worker-bots && pnpm build
 ```
 
 ---
