@@ -14,16 +14,17 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useWallet } from '@jup-ag/wallet-adapter';
 
-const Terminal = dynamic(() => import('@/components/Terminal'), { ssr: false });
+const SwapPanel = dynamic(() => import('@/components/SwapPanel'), { ssr: false });
 
 const SwapWidget = () => {
   const tokenId = useTokenAddress();
+  const { data: tokenSymbol } = useTokenInfo((data) => data?.symbol);
 
   if (!tokenId) {
     return null;
   }
 
-  return <Terminal mint={tokenId} />;
+  return <SwapPanel mint={tokenId} tokenSymbol={tokenSymbol || 'TOKEN'} />;
 };
 
 export const TokenPageWithContext = () => {
