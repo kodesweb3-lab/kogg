@@ -30,10 +30,27 @@ export function useIsFeeClaimer(baseMint?: string) {
           return { success: false, isFeeClaimer: false };
         }
 
-        const result = await response.json();
-        // Ensure we return a valid object
-        if (result && typeof result === 'object' && 'isFeeClaimer' in result) {
-          return { success: result.success ?? true, isFeeClaimer: Boolean(result.isFeeClaimer) };
+        // Parse JSON with error handling
+        let result: any;
+        try {
+          result = await response.json();
+        } catch (parseError) {
+          console.error('Error parsing JSON response:', parseError);
+          return { success: false, isFeeClaimer: false };
+        }
+
+        // Strict validation: ensure result is an object with required fields
+        if (
+          result &&
+          typeof result === 'object' &&
+          !Array.isArray(result) &&
+          'isFeeClaimer' in result &&
+          typeof result.isFeeClaimer === 'boolean'
+        ) {
+          return {
+            success: typeof result.success === 'boolean' ? result.success : true,
+            isFeeClaimer: Boolean(result.isFeeClaimer),
+          };
         }
         return { success: false, isFeeClaimer: false };
       } catch (error) {
@@ -47,14 +64,18 @@ export function useIsFeeClaimer(baseMint?: string) {
     retryDelay: 1000,
   });
 
-  // Handle errors gracefully
+  // Handle errors gracefully - ensure we never return invalid data
   if (error) {
     console.error('useIsFeeClaimer error:', error);
   }
 
+  // Ensure we always return primitive boolean values, never objects
+  const isFeeClaimerValue = data?.isFeeClaimer;
+  const isValidBoolean = typeof isFeeClaimerValue === 'boolean';
+
   return {
-    isFeeClaimer: data?.isFeeClaimer ?? false,
-    isLoading,
+    isFeeClaimer: isValidBoolean ? isFeeClaimerValue : false,
+    isLoading: Boolean(isLoading),
   };
 }
 
@@ -86,10 +107,27 @@ export function useIsPlatformFeeClaimer() {
           return { success: false, isFeeClaimer: false };
         }
 
-        const result = await response.json();
-        // Ensure we return a valid object
-        if (result && typeof result === 'object' && 'isFeeClaimer' in result) {
-          return { success: result.success ?? true, isFeeClaimer: Boolean(result.isFeeClaimer) };
+        // Parse JSON with error handling
+        let result: any;
+        try {
+          result = await response.json();
+        } catch (parseError) {
+          console.error('Error parsing JSON response:', parseError);
+          return { success: false, isFeeClaimer: false };
+        }
+
+        // Strict validation: ensure result is an object with required fields
+        if (
+          result &&
+          typeof result === 'object' &&
+          !Array.isArray(result) &&
+          'isFeeClaimer' in result &&
+          typeof result.isFeeClaimer === 'boolean'
+        ) {
+          return {
+            success: typeof result.success === 'boolean' ? result.success : true,
+            isFeeClaimer: Boolean(result.isFeeClaimer),
+          };
         }
         return { success: false, isFeeClaimer: false };
       } catch (error) {
@@ -103,13 +141,17 @@ export function useIsPlatformFeeClaimer() {
     retryDelay: 1000,
   });
 
-  // Handle errors gracefully
+  // Handle errors gracefully - ensure we never return invalid data
   if (error) {
     console.error('useIsPlatformFeeClaimer error:', error);
   }
 
+  // Ensure we always return primitive boolean values, never objects
+  const isFeeClaimerValue = data?.isFeeClaimer;
+  const isValidBoolean = typeof isFeeClaimerValue === 'boolean';
+
   return {
-    isFeeClaimer: data?.isFeeClaimer ?? false,
-    isLoading,
+    isFeeClaimer: isValidBoolean ? isFeeClaimerValue : false,
+    isLoading: Boolean(isLoading),
   };
 }

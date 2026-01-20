@@ -58,13 +58,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Check for specific token pool
       const poolState = await client.state.getPoolByBaseMint(baseMintPubkey);
       if (!poolState) {
-        return res.status(200).json({ isFeeClaimer: false });
+        return res.status(200).json({ 
+          success: true, 
+          isFeeClaimer: false 
+        });
       }
 
       const dbcConfigAddress = poolState.account.config;
       const poolConfig = await client.state.getPoolConfig(dbcConfigAddress);
       if (!poolConfig) {
-        return res.status(200).json({ isFeeClaimer: false });
+        return res.status(200).json({ 
+          success: true, 
+          isFeeClaimer: false 
+        });
       }
 
       const authorizedFeeClaimer = poolConfig.feeClaimer;
@@ -73,7 +79,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // Check for platform feeClaimer (POOL_CONFIG_KEY)
       const poolConfig = await client.state.getPoolConfig(new PublicKey(config.poolConfigKey));
       if (!poolConfig) {
-        return res.status(200).json({ isFeeClaimer: false });
+        return res.status(200).json({ 
+          success: true, 
+          isFeeClaimer: false 
+        });
       }
 
       const authorizedFeeClaimer = poolConfig.feeClaimer;

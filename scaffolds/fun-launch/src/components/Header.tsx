@@ -23,8 +23,15 @@ export const Header = () => {
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { isFeeClaimer, isLoading: isLoadingFeeClaimer } = useIsPlatformFeeClaimer();
 
-  // Safely handle feeClaimer check - don't render button if there's an error or still loading
-  const showClaimButton = address && !isLoadingFeeClaimer && isFeeClaimer === true;
+  // Safely handle feeClaimer check - ensure all values are valid primitives
+  // Prevent rendering with undefined/null/object values that could cause React error #130
+  const showClaimButton = Boolean(
+    address &&
+    typeof isLoadingFeeClaimer === 'boolean' &&
+    !isLoadingFeeClaimer &&
+    typeof isFeeClaimer === 'boolean' &&
+    isFeeClaimer === true
+  );
 
   // Close mobile menu on route change
   useEffect(() => {
