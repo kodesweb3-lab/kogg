@@ -458,7 +458,7 @@ export default function CreatePool() {
                                   <p className="text-gray-400 text-xs mb-2">PNG, JPG or SVG (max. 10MB)</p>
                                   <label
                                     htmlFor="tokenLogo"
-                                    className="bg-ritual-bgHover px-4 py-2 rounded-lg text-sm hover:bg-ritual-amber-500/20 transition cursor-pointer text-gray-300 font-body inline-block"
+                                    className="bg-steam-cyber-bgHover px-4 py-2 rounded-lg text-sm hover:bg-steam-cyber-neon-cyan/20 transition cursor-pointer text-gray-300 font-body inline-block"
                                   >
                                     Choose File
                                   </label>
@@ -656,7 +656,7 @@ const SubmitButton = ({ isSubmitting }: { isSubmitting: boolean }) => {
 const PoolCreationSuccess = () => {
   return (
     <>
-      <div className="bg-ritual-bgElevated rounded-xl p-8 border border-ritual-amber-500/20 text-center">
+      <div className="bg-steam-cyber-bgElevated rounded-xl p-8 border border-steam-cyber-neon-cyan/20 text-center">
         <div className="bg-green-500/20 p-4 rounded-full inline-flex mb-6">
           <span className="iconify ph--check-bold w-12 h-12 text-green-500" />
         </div>

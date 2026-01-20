@@ -283,7 +283,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
                       setAmount(((bal * pct) / 100).toString());
                     }
                   }}
-                  className="px-2 py-1 text-xs bg-ritual-bgHover rounded-md text-gray-400 hover:text-white hover:bg-ritual-amber-500/20 transition-all font-body"
+                  className="px-2 py-1 text-xs bg-steam-cyber-bgHover rounded-md text-gray-400 hover:text-white hover:bg-steam-cyber-neon-cyan/20 transition-all font-body"
                 >
                   {pct}%
                 </button>

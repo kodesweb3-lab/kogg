@@ -228,7 +228,7 @@ body::-webkit-scrollbar-track-piece {
 
 /* Accessibility */
 *:focus-visible {
-  outline: 2px solid var(--ritual-amber);
+  outline: 2px solid var(--neon-cyan);
   outline-offset: 2px;
 }
 
@@ -243,7 +243,7 @@ body::-webkit-scrollbar-track-piece {
   left: 50%;
   transform: translateX(-50%);
   padding: 1rem 2rem;
-  background: var(--ritual-amber);
-  color: var(--ritual-bg);
+  background: var(--neon-cyan);
+  color: var(--steam-cyber-bg);
   text-decoration: none;
 }

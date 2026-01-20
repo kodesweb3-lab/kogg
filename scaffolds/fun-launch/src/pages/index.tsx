@@ -241,7 +241,7 @@ export default function LandingPage() {
       {/* AI Wolves */}
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-ritual-amber-400">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-steam-cyber-neon-cyan">
             AI Wolves
           </h2>
           <p className="text-lg text-gray-300 mb-8 font-body">
@@ -263,8 +263,8 @@ export default function LandingPage() {
             Safety & Liquidity
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-ritual-bgHover p-6 rounded-lg border border-ritual-amber-500/20">
-              <h3 className="text-xl font-heading font-semibold mb-3 text-ritual-amber-400">
+            <div className="bg-steam-cyber-bgHover p-6 rounded-lg border border-steam-cyber-neon-cyan/20">
+              <h3 className="text-xl font-heading font-semibold mb-3 text-steam-cyber-neon-cyan">
                 🔒 LP Locked
               </h3>
               <p className="text-gray-300 font-body">
@@ -272,8 +272,8 @@ export default function LandingPage() {
                 No exit scams. Just pure, trustless ascent.
               </p>
             </div>
-            <div className="bg-ritual-bgHover p-6 rounded-lg border border-ritual-amber-500/20">
-              <h3 className="text-xl font-heading font-semibold mb-3 text-ritual-amber-400">
+            <div className="bg-steam-cyber-bgHover p-6 rounded-lg border border-steam-cyber-neon-cyan/20">
+              <h3 className="text-xl font-heading font-semibold mb-3 text-steam-cyber-neon-cyan">
                 🛡️ Verified Contracts
               </h3>
               <p className="text-gray-300 font-body">
