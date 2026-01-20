@@ -99,11 +99,12 @@ export function useIsFeeClaimer(baseMint?: string) {
  */
 export function useIsPlatformFeeClaimer() {
   const { publicKey } = useWallet();
+  const walletAddress = publicKey?.toBase58();
 
   const { data, isLoading, error } = useQuery<{ success: boolean; isFeeClaimer: boolean }>({
-    queryKey: ['isPlatformFeeClaimer', publicKey?.toBase58()],
+    queryKey: ['isPlatformFeeClaimer', walletAddress],
     queryFn: async () => {
-      if (!publicKey) {
+      if (!publicKey || !walletAddress) {
         return { success: false, isFeeClaimer: false };
       }
 
@@ -112,7 +113,7 @@ export function useIsPlatformFeeClaimer() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            wallet: publicKey.toBase58(),
+            wallet: walletAddress,
           }),
         });
 
