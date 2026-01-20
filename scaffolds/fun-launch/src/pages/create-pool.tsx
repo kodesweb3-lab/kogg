@@ -520,8 +520,8 @@ export default function CreatePool() {
               </div>
 
               {/* Social Links Section */}
-              <div className="bg-ritual-bgElevated rounded-xl p-8 border border-ritual-amber-500/20">
-                <h2 className="text-2xl font-heading font-bold mb-6 text-ritual-amber-400">Social Links (Optional)</h2>
+              <div className="bg-steam-cyber-bgElevated rounded-xl p-8 border border-steam-cyber-neon-cyan/20">
+                <h2 className="text-2xl font-heading font-bold mb-6 text-steam-cyber-neon-cyan">Social Links (Optional)</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="mb-4">

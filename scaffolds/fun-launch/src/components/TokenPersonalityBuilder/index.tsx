@@ -164,7 +164,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
           onClick={() => setActiveTab('preset')}
           className={`px-4 py-2 font-body font-medium transition-colors ${
             activeTab === 'preset'
-              ? 'text-ritual-amber-400 border-b-2 border-ritual-amber-400'
+              ? 'text-steam-cyber-neon-cyan border-b-2 border-steam-cyber-neon-cyan'
               : 'text-gray-400 hover:text-gray-300'
           }`}
         >
@@ -174,7 +174,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
           onClick={() => setActiveTab('custom')}
           className={`px-4 py-2 font-body font-medium transition-colors ${
             activeTab === 'custom'
-              ? 'text-ritual-amber-400 border-b-2 border-ritual-amber-400'
+              ? 'text-steam-cyber-neon-cyan border-b-2 border-steam-cyber-neon-cyan'
               : 'text-gray-400 hover:text-gray-300'
           }`}
         >
