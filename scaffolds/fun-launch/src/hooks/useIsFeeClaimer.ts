@@ -1,9 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 import { useWallet } from '@jup-ag/wallet-adapter';
-import { PublicKey } from '@solana/web3.js';
-import { DynamicBondingCurveClient } from '@meteora-ag/dynamic-bonding-curve-sdk';
-import { Connection } from '@solana/web3.js';
-import { getConfig } from '@/lib/config';
 
 /**
  * Hook to check if the connected wallet is the feeClaimer for a given token pool
@@ -13,37 +9,31 @@ import { getConfig } from '@/lib/config';
 export function useIsFeeClaimer(baseMint?: string) {
   const { publicKey } = useWallet();
 
-  const { data: isFeeClaimer, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<{ success: boolean; isFeeClaimer: boolean }>({
     queryKey: ['isFeeClaimer', publicKey?.toBase58(), baseMint],
     queryFn: async () => {
       if (!publicKey || !baseMint) {
-        return false;
+        return { success: false, isFeeClaimer: false };
       }
 
       try {
-        const config = getConfig();
-        const connection = new Connection(config.rpcUrl, 'confirmed');
-        const client = new DynamicBondingCurveClient(connection, 'confirmed');
+        const response = await fetch('/api/check-fee-claimer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            wallet: publicKey.toBase58(),
+            baseMint,
+          }),
+        });
 
-        // Get pool by base mint
-        const poolState = await client.state.getPoolByBaseMint(new PublicKey(baseMint));
-        if (!poolState) {
-          return false;
+        if (!response.ok) {
+          return { success: false, isFeeClaimer: false };
         }
 
-        // Get pool config to check feeClaimer
-        const dbcConfigAddress = poolState.account.config;
-        const poolConfig = await client.state.getPoolConfig(dbcConfigAddress);
-        if (!poolConfig) {
-          return false;
-        }
-
-        // Check if connected wallet matches feeClaimer
-        const authorizedFeeClaimer = poolConfig.feeClaimer;
-        return authorizedFeeClaimer.toString() === publicKey.toString();
+        return await response.json();
       } catch (error) {
         console.error('Error checking feeClaimer:', error);
-        return false;
+        return { success: false, isFeeClaimer: false };
       }
     },
     enabled: !!publicKey && !!baseMint,
@@ -51,7 +41,7 @@ export function useIsFeeClaimer(baseMint?: string) {
   });
 
   return {
-    isFeeClaimer: isFeeClaimer ?? false,
+    isFeeClaimer: data?.isFeeClaimer ?? false,
     isLoading,
   };
 }
@@ -64,30 +54,30 @@ export function useIsFeeClaimer(baseMint?: string) {
 export function useIsPlatformFeeClaimer() {
   const { publicKey } = useWallet();
 
-  const { data: isFeeClaimer, isLoading } = useQuery({
+  const { data, isLoading } = useQuery<{ success: boolean; isFeeClaimer: boolean }>({
     queryKey: ['isPlatformFeeClaimer', publicKey?.toBase58()],
     queryFn: async () => {
       if (!publicKey) {
-        return false;
+        return { success: false, isFeeClaimer: false };
       }
 
       try {
-        const config = getConfig();
-        const connection = new Connection(config.rpcUrl, 'confirmed');
-        const client = new DynamicBondingCurveClient(connection, 'confirmed');
+        const response = await fetch('/api/check-fee-claimer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            wallet: publicKey.toBase58(),
+          }),
+        });
 
-        // Get config from POOL_CONFIG_KEY
-        const poolConfig = await client.state.getPoolConfig(new PublicKey(config.poolConfigKey));
-        if (!poolConfig) {
-          return false;
+        if (!response.ok) {
+          return { success: false, isFeeClaimer: false };
         }
 
-        // Check if connected wallet matches feeClaimer
-        const authorizedFeeClaimer = poolConfig.feeClaimer;
-        return authorizedFeeClaimer.toString() === publicKey.toString();
+        return await response.json();
       } catch (error) {
         console.error('Error checking platform feeClaimer:', error);
-        return false;
+        return { success: false, isFeeClaimer: false };
       }
     },
     enabled: !!publicKey,
@@ -95,7 +85,7 @@ export function useIsPlatformFeeClaimer() {
   });
 
   return {
-    isFeeClaimer: isFeeClaimer ?? false,
+    isFeeClaimer: data?.isFeeClaimer ?? false,
     isLoading,
   };
 }
