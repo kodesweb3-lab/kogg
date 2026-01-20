@@ -147,11 +147,18 @@ export function useIsPlatformFeeClaimer() {
   }
 
   // Ensure we always return primitive boolean values, never objects
-  const isFeeClaimerValue = data?.isFeeClaimer;
-  const isValidBoolean = typeof isFeeClaimerValue === 'boolean';
+  // Double-check that data is valid and extract isFeeClaimer safely
+  let isFeeClaimerValue: boolean = false;
+  
+  if (data && typeof data === 'object' && !Array.isArray(data) && 'isFeeClaimer' in data) {
+    const value = data.isFeeClaimer;
+    if (typeof value === 'boolean') {
+      isFeeClaimerValue = value;
+    }
+  }
 
   return {
-    isFeeClaimer: isValidBoolean ? isFeeClaimerValue : false,
-    isLoading: Boolean(isLoading),
+    isFeeClaimer: isFeeClaimerValue,
+    isLoading: typeof isLoading === 'boolean' ? isLoading : false,
   };
 }

@@ -21,15 +21,21 @@ export const Header = () => {
 
   const { disconnect, publicKey } = useWallet();
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
-  const { isFeeClaimer, isLoading: isLoadingFeeClaimer } = useIsPlatformFeeClaimer();
+  const feeClaimerResult = useIsPlatformFeeClaimer();
+  
+  // Extract values with explicit type safety - prevent any object from being used
+  const isFeeClaimer = typeof feeClaimerResult?.isFeeClaimer === 'boolean' 
+    ? feeClaimerResult.isFeeClaimer 
+    : false;
+  const isLoadingFeeClaimer = typeof feeClaimerResult?.isLoading === 'boolean'
+    ? feeClaimerResult.isLoading
+    : false;
 
   // Safely handle feeClaimer check - ensure all values are valid primitives
   // Prevent rendering with undefined/null/object values that could cause React error #130
   const showClaimButton = Boolean(
     address &&
-    typeof isLoadingFeeClaimer === 'boolean' &&
     !isLoadingFeeClaimer &&
-    typeof isFeeClaimer === 'boolean' &&
     isFeeClaimer === true
   );
 
