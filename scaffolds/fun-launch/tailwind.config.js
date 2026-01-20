@@ -15,23 +15,27 @@ export default {
         xxs: ['0.5rem', { lineHeight: '0.625rem' }],
       },
       fontFamily: {
-        heading: ['Orbitron', 'monospace'],
-        body: ['Audiowide', 'monospace'],
+        heading: ['Cinzel', 'Cormorant', 'Playfair Display SC', 'serif'],
+        body: ['Inter', 'Source Serif 4', 'sans-serif'],
       },
 
       colors: {
-        // Kogaion Steampunk-Cyberpunk Palette
-        'steam-cyber': {
-          bg: '#0A0A0F',
-          bgElevated: '#151520',
-          bgHover: '#1a1a2e',
-          'neon-cyan': '#55ead4',
-          'neon-yellow': '#f3e600',
-          'neon-pink': '#ff00ff',
-          'neon-green': '#00ff88',
-          bronze: '#cd7f32',
-          metal: '#8b7355',
-          copper: '#b87333',
+        // Mystic Steampunk Ritual Palette
+        'mystic-steam': {
+          // Main colors
+          charcoal: '#0E0F11',      // Dark Charcoal - main background
+          ash: '#16181D',           // Deep Ash - cards/panels
+          copper: '#B87333',        // Antique Copper - primary accent
+          bronze: '#8C5A2B',        // Burnt Bronze - secondary accent
+          oxidized: '#6F4E37',      // Oxidized Copper - subtle accent
+          parchment: '#E6E1D6',     // Parchment Off-White - main text
+          // Accents (very minimal use)
+          umber: '#4A2E1F',         // Blood Umber - warnings/danger
+          gold: '#9C7A3C',          // Muted Gold - status/highlights
+          // Background variants
+          bg: '#0E0F11',            // Alias for charcoal
+          bgElevated: '#16181D',    // Alias for ash
+          bgHover: '#1a1a2e',       // Slightly lighter for hover states
         },
         // Kogaion Dark Ritual Palette (kept for backwards compatibility)
         ritual: {

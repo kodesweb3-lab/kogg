@@ -7,8 +7,8 @@ export function FeatureList({ features, className }: FeatureListProps) {
   return (
     <ul className={`space-y-2 ${className || ''}`}>
       {features.map((feature, index) => (
-        <li key={index} className="flex items-start gap-2 text-sm font-body text-gray-300">
-          <span className="text-steam-cyber-neon-cyan mt-0.5 flex-shrink-0">
+        <li key={index} className="flex items-start gap-2 text-sm font-body text-mystic-steam-parchment/70">
+          <span className="text-mystic-steam-copper mt-0.5 flex-shrink-0">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
                 fillRule="evenodd"

@@ -28,20 +28,19 @@ export function RoadmapCard({ phase, className }: RoadmapCardProps) {
       transition={{ delay: phase.index * 0.1 }}
       whileHover={{ scale: 1.02, y: -4 }}
       className={cn(
-        'relative bg-gradient-to-br from-steam-cyber-metal/20 to-steam-cyber-bronze/10',
-        'border-2 rounded-xl p-6 backdrop-blur-sm',
-        'border-steam-cyber-neon-cyan/30',
-        `shadow-[0_0_30px_${phase.glowColor}]`,
-        'hover:border-steam-cyber-neon-cyan/60',
+        'relative bg-mystic-steam-ash',
+        'border rounded-xl p-6 backdrop-blur-sm',
+        'border-mystic-steam-copper/30',
+        'hover:border-mystic-steam-copper/50',
         'transition-all duration-300',
         className
       )}
     >
       {/* Decorative screws */}
-      <div className="absolute -top-2 -left-2 w-4 h-4 rounded-full border-2 border-steam-cyber-bronze bg-steam-cyber-metal/50" />
-      <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full border-2 border-steam-cyber-bronze bg-steam-cyber-metal/50" />
-      <div className="absolute -bottom-2 -left-2 w-4 h-4 rounded-full border-2 border-steam-cyber-bronze bg-steam-cyber-metal/50" />
-      <div className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full border-2 border-steam-cyber-bronze bg-steam-cyber-metal/50" />
+      <div className="absolute -top-2 -left-2 w-4 h-4 rounded-full border-2 border-mystic-steam-bronze bg-mystic-steam-oxidized/50" />
+      <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full border-2 border-mystic-steam-bronze bg-mystic-steam-oxidized/50" />
+      <div className="absolute -bottom-2 -left-2 w-4 h-4 rounded-full border-2 border-mystic-steam-bronze bg-mystic-steam-oxidized/50" />
+      <div className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full border-2 border-mystic-steam-bronze bg-mystic-steam-oxidized/50" />
 
       {/* Icon */}
       <div className="mb-4 flex items-center justify-between">
@@ -50,12 +49,12 @@ export function RoadmapCard({ phase, className }: RoadmapCardProps) {
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-heading font-bold mb-2 text-white neon-cyan-glow">
+      <h3 className="text-xl font-heading font-bold mb-2 text-mystic-steam-parchment">
         {phase.title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm text-gray-400 font-body mb-4">{phase.description}</p>
+      <p className="text-sm text-mystic-steam-parchment/60 font-body mb-4">{phase.description}</p>
 
       {/* Features */}
       <FeatureList features={phase.features} />

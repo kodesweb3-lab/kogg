@@ -94,7 +94,7 @@ export function AskKogaion() {
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-steam-cyber-neon-cyan to-steam-cyber-neon-cyan/80 rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(85,234,212,0.5)] flex items-center gap-2 px-3 py-2 text-black font-heading font-bold z-50 focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+        className="fixed bottom-6 right-6 bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper rounded-full shadow-lg hover:shadow-[0_0_20px_rgba(85,234,212,0.5)] flex items-center gap-2 px-3 py-2 text-black font-heading font-bold z-50 focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
         aria-label="Chat with Kogaion"
       >
         <img 
@@ -120,14 +120,14 @@ export function AskKogaion() {
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="fixed inset-4 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-full sm:max-w-sm md:max-w-md h-auto max-h-[80vh] sm:h-[450px] md:h-[500px] bg-steam-cyber-bgElevated border-2 border-steam-cyber-neon-cyan/40 rounded-lg shadow-2xl z-50 flex flex-col"
+              className="fixed inset-4 sm:inset-auto sm:bottom-6 sm:right-6 sm:w-full sm:max-w-sm md:max-w-md h-auto max-h-[80vh] sm:h-[450px] md:h-[500px] bg-mystic-steam-ash border-2 border-mystic-steam-copper/40 rounded-lg shadow-2xl z-50 flex flex-col"
             >
               {/* Header */}
-              <div className="p-4 border-b border-steam-cyber-neon-cyan/20 flex items-center justify-between">
+              <div className="p-4 border-b border-mystic-steam-copper/20 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <img src="/brand/kogaion-icon.svg" alt="Kogaion" className="w-8 h-8" />
                   <div>
-                    <h3 className="font-heading font-bold text-steam-cyber-neon-cyan">Ask Kogaion</h3>
+                    <h3 className="font-heading font-bold text-mystic-steam-copper">Ask Kogaion</h3>
                     <p className="text-xs text-gray-400 font-body">Platform Guide</p>
                   </div>
                 </div>
@@ -150,8 +150,8 @@ export function AskKogaion() {
                     <div
                       className={`max-w-[80%] p-3 rounded-lg ${
                         msg.role === 'user'
-                          ? 'bg-steam-cyber-neon-cyan/20 text-gray-100'
-                          : 'bg-steam-cyber-bgHover text-gray-300 border border-steam-cyber-neon-cyan/20'
+                          ? 'bg-mystic-steam-copper/20 text-gray-100'
+                          : 'bg-mystic-steam-charcoal text-gray-300 border border-mystic-steam-copper/20'
                       } font-body`}
                     >
                       {msg.content}
@@ -160,11 +160,11 @@ export function AskKogaion() {
                 ))}
                 {isLoading && (
                   <div className="flex justify-start">
-                    <div className="bg-steam-cyber-bgHover p-3 rounded-lg border border-steam-cyber-neon-cyan/20">
+                    <div className="bg-mystic-steam-charcoal p-3 rounded-lg border border-mystic-steam-copper/20">
                       <div className="flex gap-1">
-                        <div className="w-2 h-2 bg-steam-cyber-neon-cyan rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                        <div className="w-2 h-2 bg-steam-cyber-neon-cyan rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                        <div className="w-2 h-2 bg-steam-cyber-neon-cyan rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                        <div className="w-2 h-2 bg-mystic-steam-copper rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                        <div className="w-2 h-2 bg-mystic-steam-copper rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                        <div className="w-2 h-2 bg-mystic-steam-copper rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                       </div>
                     </div>
                   </div>
@@ -173,7 +173,7 @@ export function AskKogaion() {
               </div>
 
               {/* Input */}
-              <div className="p-4 border-t border-steam-cyber-neon-cyan/20">
+              <div className="p-4 border-t border-mystic-steam-copper/20">
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -186,7 +186,7 @@ export function AskKogaion() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask about launching tokens..."
-                    className="flex-1 p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+                    className="flex-1 p-3 bg-mystic-steam-charcoal border border-mystic-steam-copper/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
                     disabled={isLoading}
                   />
                   <Button type="submit" disabled={isLoading || !input.trim()}>

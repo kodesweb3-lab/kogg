@@ -98,11 +98,11 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
   }, [comments.length]);
 
   return (
-    <div className="bg-steam-cyber-bgElevated rounded-xl border border-steam-cyber-neon-cyan/20 overflow-hidden">
+    <div className="bg-mystic-steam-ash rounded-xl border border-mystic-steam-copper/20 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-steam-cyber-neon-cyan/20">
-        <h3 className="font-heading font-bold text-steam-cyber-neon-cyan">Pack Chat</h3>
-        <span className="text-xs text-gray-500 font-body">{comments.length} messages</span>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-mystic-steam-copper/20">
+        <h3 className="font-heading font-bold text-mystic-steam-copper">Pack Chat</h3>
+        <span className="text-xs text-mystic-steam-parchment/50 font-body">{comments.length} messages</span>
       </div>
 
       {/* Messages */}
@@ -115,7 +115,7 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
             </div>
           ))
         ) : comments.length === 0 ? (
-          <div className="flex items-center justify-center h-full text-gray-500 font-body text-sm">
+          <div className="flex items-center justify-center h-full text-mystic-steam-parchment/50 font-body text-sm">
             No messages yet. Start the conversation!
           </div>
         ) : (
@@ -132,15 +132,15 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
                     href={`https://solscan.io/account/${comment.wallet}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs font-mono text-steam-cyber-neon-cyan hover:underline shrink-0"
+                    className="text-xs font-mono text-mystic-steam-copper hover:underline shrink-0"
                   >
                     {truncateWallet(comment.wallet)}
                   </a>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-mystic-steam-parchment/50">
                     {formatTimeAgo(comment.createdAt)}
                   </span>
                 </div>
-                <p className="text-sm text-gray-200 font-body mt-0.5 break-words">
+                <p className="text-sm text-mystic-steam-parchment/80 font-body mt-0.5 break-words">
                   {comment.content}
                 </p>
               </motion.div>
@@ -151,7 +151,7 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
       </div>
 
       {/* Input */}
-      <form onSubmit={handleSubmit} className="border-t border-steam-cyber-neon-cyan/20 p-3">
+      <form onSubmit={handleSubmit} className="border-t border-mystic-steam-copper/20 p-3">
         {connected ? (
           <div className="flex gap-2">
             <input
@@ -160,7 +160,7 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Say something..."
               maxLength={500}
-              className="flex-1 px-3 py-2 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan/50 font-body text-sm"
+              className="flex-1 px-3 py-2 bg-mystic-steam-charcoal border border-mystic-steam-copper/10 rounded-lg text-mystic-steam-parchment placeholder-mystic-steam-parchment/40 focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper/30 font-body text-sm"
               disabled={postMutation.isPending}
             />
             <Button

@@ -55,8 +55,8 @@ export function LivePreview({ personaData }: LivePreviewProps) {
   };
 
   return (
-    <div className="bg-steam-cyber-bgHover rounded-lg border border-steam-cyber-neon-cyan/20 p-4">
-      <h3 className="text-lg font-heading font-semibold mb-4 text-steam-cyber-neon-cyan">
+    <div className="bg-mystic-steam-charcoal rounded-lg border border-mystic-steam-copper/20 p-4">
+      <h3 className="text-lg font-heading font-semibold mb-4 text-mystic-steam-copper">
         Live Preview
       </h3>
       <div className="space-y-2 mb-4 h-64 overflow-y-auto">
@@ -68,8 +68,8 @@ export function LivePreview({ personaData }: LivePreviewProps) {
             <div
               className={`max-w-[80%] p-2 rounded-lg text-sm font-body ${
                 msg.role === 'user'
-                  ? 'bg-steam-cyber-neon-cyan/20 text-gray-100'
-                  : 'bg-steam-cyber-bgElevated text-gray-300'
+                  ? 'bg-mystic-steam-copper/20 text-gray-100'
+                  : 'bg-mystic-steam-charcoalElevated text-gray-300'
               }`}
             >
               {msg.content}
@@ -78,11 +78,11 @@ export function LivePreview({ personaData }: LivePreviewProps) {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-steam-cyber-bgElevated p-2 rounded-lg">
+            <div className="bg-mystic-steam-charcoalElevated p-2 rounded-lg">
               <div className="flex gap-1">
-                <div className="w-1.5 h-1.5 bg-steam-cyber-neon-cyan rounded-full animate-bounce" />
-                <div className="w-1.5 h-1.5 bg-steam-cyber-neon-cyan rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-1.5 h-1.5 bg-steam-cyber-neon-cyan rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="w-1.5 h-1.5 bg-mystic-steam-copper rounded-full animate-bounce" />
+                <div className="w-1.5 h-1.5 bg-mystic-steam-copper rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-1.5 h-1.5 bg-mystic-steam-copper rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@ export function LivePreview({ personaData }: LivePreviewProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message to preview..."
-          className="flex-1 p-2 bg-steam-cyber-bg border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 text-sm font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+          className="flex-1 p-2 bg-mystic-steam-charcoal border border-mystic-steam-copper/20 rounded-lg text-gray-100 text-sm font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
           disabled={isLoading}
         />
         <Button type="submit" disabled={isLoading || !input.trim()} className="text-sm px-4 py-2">

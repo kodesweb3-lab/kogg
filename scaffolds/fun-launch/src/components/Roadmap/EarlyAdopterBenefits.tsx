@@ -63,17 +63,14 @@ export function EarlyAdopterBenefits() {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="bg-gradient-to-br from-steam-cyber-metal/30 to-steam-cyber-bronze/20 border-2 border-steam-cyber-neon-cyan/40 rounded-2xl p-6 md:p-8 relative overflow-hidden"
+      className="bg-mystic-steam-ash border border-mystic-steam-copper/30 rounded-2xl p-6 md:p-8 relative overflow-hidden"
     >
-      {/* Scanline overlay */}
-      <div className="scanline-overlay absolute inset-0 pointer-events-none" />
-
       {/* Header */}
       <div className="relative z-10 mb-6">
-        <h2 className="text-2xl md:text-3xl font-heading font-bold mb-2 text-steam-cyber-neon-cyan neon-cyan-glow">
+        <h2 className="text-2xl md:text-3xl font-heading font-bold mb-2 text-mystic-steam-copper">
           First Pack Benefits
         </h2>
-        <p className="text-gray-400 font-body">
+        <p className="text-mystic-steam-parchment/60 font-body">
           Exclusive rewards for early token creators
         </p>
       </div>
@@ -92,20 +89,20 @@ export function EarlyAdopterBenefits() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="bg-steam-cyber-bgElevated/50 border border-steam-cyber-neon-cyan/20 rounded-lg p-4 backdrop-blur-sm"
+              className="bg-mystic-steam-charcoal border border-mystic-steam-copper/20 rounded-lg p-4 backdrop-blur-sm"
             >
               <div className="flex items-start gap-3">
                 <span className="text-2xl">{benefit.icon}</span>
                 <div className="flex-1">
-                  <h3 className="font-heading font-bold text-white mb-1">{benefit.title}</h3>
-                  <p className="text-xs text-gray-400 font-body mb-2">{benefit.description}</p>
+                  <h3 className="font-heading font-bold text-mystic-steam-parchment mb-1">{benefit.title}</h3>
+                  <p className="text-xs text-mystic-steam-parchment/60 font-body mb-2">{benefit.description}</p>
                   {slotsRemaining !== null && (
                     <div className="text-xs font-body">
-                      <span className="text-steam-cyber-neon-cyan">
+                      <span className="text-mystic-steam-copper">
                         {slotsRemaining}/{benefit.slots!.total} slots
                       </span>
                       {slotsRemaining === 0 && (
-                        <span className="text-gray-500 ml-2">(Full)</span>
+                        <span className="text-mystic-steam-parchment/40 ml-2">(Full)</span>
                       )}
                     </div>
                   )}
@@ -119,7 +116,7 @@ export function EarlyAdopterBenefits() {
       {/* CTA */}
       <div className="relative z-10 text-center">
         <Link href="/create-pool">
-          <Button className="bg-gradient-to-r from-steam-cyber-neon-cyan to-steam-cyber-neon-cyan/80 text-black font-heading font-bold px-8 py-3 hover:shadow-[0_0_30px_rgba(85,234,212,0.6)] transition-all">
+          <Button className="bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper text-mystic-steam-parchment font-heading font-bold px-8 py-3 transition-all">
             Launch Now to Claim Benefits
           </Button>
         </Link>

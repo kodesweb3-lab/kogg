@@ -271,7 +271,7 @@ export default function CreatePool() {
               <div className="flex items-center gap-2">
                 <a
                   href={`/token/${tokenMint}`}
-                  className="text-xs text-steam-cyber-neon-cyan hover:underline"
+                  className="text-xs text-mystic-steam-copper hover:underline"
                 >
                   View Token
                 </a>
@@ -322,7 +322,7 @@ export default function CreatePool() {
 
       <Confetti trigger={showConfetti} />
 
-      <div className="min-h-screen bg-steam-cyber-bg text-gray-100 relative">
+      <div className="min-h-screen bg-mystic-steam-charcoal text-gray-100 relative">
         {/* Mountain silhouette background */}
         <div className="mountain-bg" />
         
@@ -333,10 +333,10 @@ export default function CreatePool() {
         <main className="container mx-auto px-4 py-10 relative z-10">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
             <div>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-steam-cyber-neon-cyan neon-cyan-glow">
+              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-mystic-steam-copper ">
                 Summon Your Token
               </h1>
-              <p className="text-gray-300 font-body">Begin the ritual. Launch your token and start the ascent.</p>
+              <p className="text-mystic-steam-parchment/70 font-body">Begin the ritual. Launch your token and start the ascent.</p>
             </div>
           </div>
 
@@ -351,15 +351,15 @@ export default function CreatePool() {
               className="space-y-8"
             >
               {/* Token Details Section */}
-              <div className="bg-steam-cyber-bgElevated rounded-xl p-8 border border-steam-cyber-neon-cyan/20">
-                <h2 className="text-2xl font-heading font-bold mb-4 text-steam-cyber-neon-cyan">Token Details</h2>
+              <div className="bg-mystic-steam-charcoalElevated rounded-xl p-8 border border-mystic-steam-copper/20">
+                <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Token Details</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <div className="mb-4">
                       <label
                         htmlFor="tokenName"
-                        className="block text-sm font-body font-medium text-gray-300 mb-1"
+                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
                       >
                         Token Name*
                       </label>
@@ -370,7 +370,7 @@ export default function CreatePool() {
                             id="tokenName"
                             name={field.name}
                             type="text"
-                            className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+                            className="w-full p-3 bg-mystic-steam-charcoalHover border border-mystic-steam-copper/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
                             placeholder="e.g. Virtual Coin"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -384,7 +384,7 @@ export default function CreatePool() {
                     <div className="mb-4">
                       <label
                         htmlFor="tokenSymbol"
-                        className="block text-sm font-body font-medium text-gray-300 mb-1"
+                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
                       >
                         Token Symbol*
                       </label>
@@ -395,7 +395,7 @@ export default function CreatePool() {
                             id="tokenSymbol"
                             name={field.name}
                             type="text"
-                            className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+                            className="w-full p-3 bg-mystic-steam-charcoalHover border border-mystic-steam-copper/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
                             placeholder="e.g. VRTL"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -410,7 +410,7 @@ export default function CreatePool() {
                   <div>
                       <label
                         htmlFor="tokenLogo"
-                        className="block text-sm font-body font-medium text-gray-300 mb-1"
+                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
                       >
                         Token Logo*
                       </label>
@@ -432,13 +432,13 @@ export default function CreatePool() {
                         
                         return (
                           <div>
-                            <div className="border-2 border-dashed border-steam-cyber-neon-cyan/30 rounded-lg p-8 text-center">
+                            <div className="border-2 border-dashed border-mystic-steam-copper/30 rounded-lg p-8 text-center">
                               {form.state.values.logoPreview || field.state.value ? (
                                 <div className="space-y-4">
                                   <img
                                     src={form.state.values.logoPreview || (field.state.value ? URL.createObjectURL(field.state.value) : '')}
                                     alt="Logo preview"
-                                    className="mx-auto max-h-32 max-w-32 rounded-lg object-contain border border-steam-cyber-neon-cyan/20"
+                                    className="mx-auto max-h-32 max-w-32 rounded-lg object-contain border border-mystic-steam-copper/20"
                                   />
                                   <div>
                                     <p className="text-gray-400 text-xs mb-2">
@@ -446,7 +446,7 @@ export default function CreatePool() {
                                     </p>
                                     <label
                                       htmlFor="tokenLogo"
-                                      className="bg-steam-cyber-bgHover px-4 py-2 rounded-lg text-sm hover:bg-steam-cyber-neon-cyan/20 transition cursor-pointer text-gray-300 font-body inline-block"
+                                      className="bg-mystic-steam-charcoalHover px-4 py-2 rounded-lg text-sm hover:bg-mystic-steam-copper/20 transition cursor-pointer text-mystic-steam-parchment/70 font-body inline-block"
                                     >
                                       Change Image
                                     </label>
@@ -458,7 +458,7 @@ export default function CreatePool() {
                                   <p className="text-gray-400 text-xs mb-2">PNG, JPG or SVG (max. 10MB)</p>
                                   <label
                                     htmlFor="tokenLogo"
-                                    className="bg-steam-cyber-bgHover px-4 py-2 rounded-lg text-sm hover:bg-steam-cyber-neon-cyan/20 transition cursor-pointer text-gray-300 font-body inline-block"
+                                    className="bg-mystic-steam-charcoalHover px-4 py-2 rounded-lg text-sm hover:bg-mystic-steam-copper/20 transition cursor-pointer text-mystic-steam-parchment/70 font-body inline-block"
                                   >
                                     Choose File
                                   </label>
@@ -481,8 +481,8 @@ export default function CreatePool() {
               </div>
 
               {/* Dev Buy Section */}
-              <div className="bg-steam-cyber-bgElevated rounded-xl p-8 border border-steam-cyber-neon-cyan/20">
-                <h2 className="text-2xl font-heading font-bold mb-4 text-steam-cyber-neon-cyan">Initial Buy (Optional)</h2>
+              <div className="bg-mystic-steam-charcoalElevated rounded-xl p-8 border border-mystic-steam-copper/20">
+                <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Initial Buy (Optional)</h2>
                 <p className="text-gray-400 text-sm mb-4 font-body">
                   Buy tokens immediately after launch. Be the first holder of your own token.
                 </p>
@@ -490,7 +490,7 @@ export default function CreatePool() {
                 <div className="max-w-xs">
                   <label
                     htmlFor="devBuyAmount"
-                    className="block text-sm font-body font-medium text-gray-300 mb-1"
+                    className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
                   >
                     Amount (SOL)
                   </label>
@@ -505,7 +505,7 @@ export default function CreatePool() {
                           step="0.01"
                           min="0"
                           max="10"
-                          className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+                          className="w-full p-3 bg-mystic-steam-charcoalHover border border-mystic-steam-copper/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
                           placeholder="0.1"
                           value={field.state.value || ''}
                           onChange={(e) => field.handleChange(parseFloat(e.target.value) || 0)}
@@ -520,14 +520,14 @@ export default function CreatePool() {
               </div>
 
               {/* Social Links Section */}
-              <div className="bg-steam-cyber-bgElevated rounded-xl p-8 border border-steam-cyber-neon-cyan/20">
-                <h2 className="text-2xl font-heading font-bold mb-6 text-steam-cyber-neon-cyan">Social Links (Optional)</h2>
+              <div className="bg-mystic-steam-charcoalElevated rounded-xl p-8 border border-mystic-steam-copper/20">
+                <h2 className="text-2xl font-heading font-bold mb-6 text-mystic-steam-copper">Social Links (Optional)</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="mb-4">
                     <label
                       htmlFor="website"
-                      className="block text-sm font-body font-medium text-gray-300 mb-1"
+                      className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
                     >
                       Website
                     </label>
@@ -538,7 +538,7 @@ export default function CreatePool() {
                           id="website"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+                          className="w-full p-3 bg-mystic-steam-charcoalHover border border-mystic-steam-copper/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
                           placeholder="https://yourwebsite.com"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -550,7 +550,7 @@ export default function CreatePool() {
                   <div className="mb-4">
                     <label
                       htmlFor="twitter"
-                      className="block text-sm font-body font-medium text-gray-300 mb-1"
+                      className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
                     >
                       Twitter
                     </label>
@@ -561,7 +561,7 @@ export default function CreatePool() {
                           id="twitter"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+                          className="w-full p-3 bg-mystic-steam-charcoalHover border border-mystic-steam-copper/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
                           placeholder="https://twitter.com/yourusername"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -573,7 +573,7 @@ export default function CreatePool() {
                   <div className="mb-4">
                     <label
                       htmlFor="telegram"
-                      className="block text-sm font-body font-medium text-gray-300 mb-1"
+                      className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
                     >
                       Telegram
                     </label>
@@ -584,7 +584,7 @@ export default function CreatePool() {
                           id="telegram"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
+                          className="w-full p-3 bg-mystic-steam-charcoalHover border border-mystic-steam-copper/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper"
                           placeholder="https://t.me/yourchannel"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -656,18 +656,18 @@ const SubmitButton = ({ isSubmitting }: { isSubmitting: boolean }) => {
 const PoolCreationSuccess = () => {
   return (
     <>
-      <div className="bg-steam-cyber-bgElevated rounded-xl p-8 border border-steam-cyber-neon-cyan/20 text-center">
+      <div className="bg-mystic-steam-charcoalElevated rounded-xl p-8 border border-mystic-steam-copper/20 text-center">
         <div className="bg-green-500/20 p-4 rounded-full inline-flex mb-6">
           <span className="iconify ph--check-bold w-12 h-12 text-green-500" />
         </div>
-        <h2 className="text-3xl font-heading font-bold mb-4 text-steam-cyber-neon-cyan neon-cyan-glow">The Ritual is Complete! 🎉</h2>
-        <p className="text-gray-300 mb-8 max-w-lg mx-auto font-body">
+        <h2 className="text-3xl font-heading font-bold mb-4 text-mystic-steam-copper ">The Ritual is Complete! 🎉</h2>
+        <p className="text-mystic-steam-parchment/70 mb-8 max-w-lg mx-auto font-body">
           Your token has been summoned. The pack awaits. Begin the ascent.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/"
-            className="bg-steam-cyber-bgHover px-6 py-3 rounded-xl font-body font-medium hover:bg-steam-cyber-neon-cyan/20 transition text-gray-300"
+            className="bg-mystic-steam-charcoalHover px-6 py-3 rounded-xl font-body font-medium hover:bg-mystic-steam-copper/20 transition text-mystic-steam-parchment/70"
           >
             Discover Tokens
           </Link>
@@ -675,7 +675,7 @@ const PoolCreationSuccess = () => {
             onClick={() => {
               window.location.reload();
             }}
-            className="cursor-pointer bg-gradient-to-r from-steam-cyber-neon-cyan to-steam-cyber-neon-cyan/80 px-6 py-3 rounded-xl font-body font-medium hover:shadow-[0_0_20px_rgba(85,234,212,0.5)] transition text-black"
+            className="cursor-pointer bg-gradient-to-r from-mystic-steam-copper to-mystic-steam-copper/80 px-6 py-3 rounded-xl font-body font-medium hover:shadow-[0_0_20px_rgba(85,234,212,0.5)] transition text-black"
           >
             Launch Another Token
           </button>

@@ -90,7 +90,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
               href={`https://solscan.io/tx/${signature}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-steam-cyber-neon-cyan hover:underline"
+              className="text-xs text-mystic-steam-copper hover:underline"
             >
               Solscan
             </a>
@@ -119,7 +119,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
     <div
       ref={(el) => rowRef(el, pool.id)}
       data-pool-id={pool.id}
-      className="relative flex cursor-pointer items-center border-steam-cyber-neon-cyan/10 py-3 pl-1.5 pr-2 text-xs has-hover:hover:bg-steam-cyber-bgHover/50 [&:nth-child(n+2)]:border-t hover:border-steam-cyber-neon-cyan/30 transition-all"
+      className="relative flex cursor-pointer items-center border-mystic-steam-copper/20 py-3 pl-1.5 pr-2 text-xs has-hover:hover:bg-mystic-steam-ash/50 [&:nth-child(n+2)]:border-t hover:border-mystic-steam-copper/40 transition-all"
     >
       <div className="shrink-0 pl-2 pr-4">
         <TrenchesPoolTokenIcon width={54} height={54} pool={pool} />

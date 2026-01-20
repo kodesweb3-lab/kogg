@@ -169,7 +169,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
               href={`https://solscan.io/tx/${signature}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-steam-cyber-neon-cyan hover:underline"
+              className="text-xs text-mystic-steam-copper hover:underline"
             >
               Solscan
             </a>
@@ -206,15 +206,15 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
   const outputLabel = mode === 'buy' ? tokenSymbol : 'SOL';
 
   return (
-    <div className="bg-steam-cyber-bgElevated rounded-xl p-4 border border-steam-cyber-neon-cyan/20">
+    <div className="bg-mystic-steam-ash rounded-xl p-4 border border-mystic-steam-copper/30">
       {/* Mode Toggle */}
       <div className="flex gap-2 mb-4">
         <button
           onClick={() => setMode('buy')}
           className={`flex-1 py-2 px-4 rounded-lg font-heading font-bold transition-all ${
             mode === 'buy'
-              ? 'bg-green-600 text-white'
-              : 'bg-steam-cyber-bgHover text-gray-400 hover:text-white'
+              ? 'bg-mystic-steam-copper/80 text-mystic-steam-parchment'
+              : 'bg-mystic-steam-charcoal text-mystic-steam-parchment/60 hover:text-mystic-steam-parchment border border-mystic-steam-copper/20'
           }`}
         >
           Buy
@@ -223,8 +223,8 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
           onClick={() => setMode('sell')}
           className={`flex-1 py-2 px-4 rounded-lg font-heading font-bold transition-all ${
             mode === 'sell'
-              ? 'bg-red-600 text-white'
-              : 'bg-steam-cyber-bgHover text-gray-400 hover:text-white'
+              ? 'bg-mystic-steam-bronze/80 text-mystic-steam-parchment'
+              : 'bg-mystic-steam-charcoal text-mystic-steam-parchment/60 hover:text-mystic-steam-parchment border border-mystic-steam-copper/20'
           }`}
         >
           Sell
@@ -233,10 +233,10 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
 
       {/* Input */}
       <div className="mb-4">
-        <label className="block text-sm font-body text-gray-400 mb-1">
+        <label className="block text-sm font-body text-mystic-steam-parchment/60 mb-1">
           You {mode === 'buy' ? 'pay' : 'sell'}
         </label>
-        <div className="flex items-center gap-2 bg-steam-cyber-bgHover rounded-lg p-3 border border-steam-cyber-neon-cyan/10">
+        <div className="flex items-center gap-2 bg-mystic-steam-charcoal rounded-lg p-3 border border-mystic-steam-copper/20">
           <input
             type="number"
             value={amount}
@@ -244,10 +244,10 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
             placeholder="0.0"
             min="0"
             step="0.01"
-            className="flex-1 bg-transparent text-xl font-body text-white outline-none"
+            className="flex-1 bg-transparent text-xl font-body text-mystic-steam-parchment outline-none"
             disabled={isSwapping}
           />
-          <span className="text-gray-400 font-body font-medium">{inputLabel}</span>
+          <span className="text-mystic-steam-parchment/60 font-body font-medium">{inputLabel}</span>
         </div>
         {mode === 'buy' ? (
           <div className="flex gap-2 mt-2">
@@ -255,7 +255,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
               <button
                 key={val}
                 onClick={() => setAmount(val.toString())}
-                className="px-3 py-1 text-xs bg-steam-cyber-bgHover rounded-md text-gray-400 hover:text-white hover:bg-steam-cyber-neon-cyan/20 transition-all font-body"
+                className="px-3 py-1 text-xs bg-mystic-steam-charcoal rounded-md text-mystic-steam-parchment/60 hover:text-mystic-steam-parchment hover:bg-mystic-steam-copper/20 border border-mystic-steam-copper/20 transition-all font-body"
               >
                 {val} SOL
               </button>
@@ -263,12 +263,12 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
           </div>
         ) : (
           <div className="flex items-center justify-between mt-2">
-            <div className="flex items-center gap-1 text-xs text-gray-400 font-body">
+            <div className="flex items-center gap-1 text-xs text-mystic-steam-parchment/60 font-body">
               <span>Balance:</span>
               {isLoadingBalance ? (
                 <Skeleton className="h-4 w-16" />
               ) : (
-                <span className="text-white">
+                <span className="text-mystic-steam-parchment">
                   {parseFloat(tokenBalance).toLocaleString(undefined, { maximumFractionDigits: 2 })} {tokenSymbol}
                 </span>
               )}
@@ -283,7 +283,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
                       setAmount(((bal * pct) / 100).toString());
                     }
                   }}
-                  className="px-2 py-1 text-xs bg-steam-cyber-bgHover rounded-md text-gray-400 hover:text-white hover:bg-steam-cyber-neon-cyan/20 transition-all font-body"
+                  className="px-2 py-1 text-xs bg-mystic-steam-charcoal rounded-md text-mystic-steam-parchment/60 hover:text-mystic-steam-parchment hover:bg-mystic-steam-copper/20 border border-mystic-steam-copper/20 transition-all font-body"
                 >
                   {pct}%
                 </button>
@@ -295,8 +295,8 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
 
       {/* Arrow */}
       <div className="flex justify-center my-2">
-        <div className="w-8 h-8 rounded-full bg-steam-cyber-bgHover flex items-center justify-center">
-          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="w-8 h-8 rounded-full bg-mystic-steam-charcoal border border-mystic-steam-copper/20 flex items-center justify-center">
+          <svg className="w-4 h-4 text-mystic-steam-parchment/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>
@@ -304,18 +304,18 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
 
       {/* Output Estimate */}
       <div className="mb-4">
-        <label className="block text-sm font-body text-gray-400 mb-1">
+        <label className="block text-sm font-body text-mystic-steam-parchment/60 mb-1">
           You receive (estimate)
         </label>
-        <div className="flex items-center gap-2 bg-steam-cyber-bgHover rounded-lg p-3 border border-steam-cyber-neon-cyan/10">
+        <div className="flex items-center gap-2 bg-mystic-steam-charcoal rounded-lg p-3 border border-mystic-steam-copper/20">
           {isLoadingQuote ? (
             <Skeleton className="h-7 w-32" />
           ) : (
-            <span className="flex-1 text-xl font-body text-white">
+            <span className="flex-1 text-xl font-body text-mystic-steam-parchment">
               {quote ? parseFloat(quote).toLocaleString(undefined, { maximumFractionDigits: 4 }) : '0.0'}
             </span>
           )}
-          <span className="text-gray-400 font-body font-medium">{outputLabel}</span>
+          <span className="text-mystic-steam-parchment/60 font-body font-medium">{outputLabel}</span>
         </div>
       </div>
 
@@ -334,8 +334,8 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
           disabled={isSwapping || !amount || parseFloat(amount) <= 0}
           className={`w-full py-3 text-lg font-heading ${
             mode === 'buy' 
-              ? 'bg-green-600 hover:bg-green-700' 
-              : 'bg-red-600 hover:bg-red-700'
+              ? 'bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper' 
+              : 'bg-mystic-steam-bronze/80 hover:bg-mystic-steam-bronze'
           }`}
         >
           {isSwapping ? (
@@ -353,7 +353,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
       )}
 
       {/* Info */}
-      <p className="text-xs text-gray-500 text-center mt-3 font-body">
+      <p className="text-xs text-mystic-steam-parchment/50 text-center mt-3 font-body">
         Trading directly on Meteora DBC
       </p>
     </div>

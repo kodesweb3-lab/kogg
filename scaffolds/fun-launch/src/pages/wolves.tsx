@@ -46,7 +46,7 @@ export default function WolvesPage() {
 
   return (
     <Page>
-      <div className="min-h-screen bg-steam-cyber-bg text-gray-100 py-20 px-4 relative z-10">
+      <div className="min-h-screen bg-mystic-steam-charcoal text-mystic-steam-parchment py-20 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <motion.div
@@ -54,10 +54,10 @@ export default function WolvesPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-steam-cyber-neon-cyan neon-cyan-glow">
+            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-mystic-steam-copper">
               The Pack
             </h1>
-            <p className="text-xl text-gray-300 font-body mb-8">
+            <p className="text-xl text-mystic-steam-parchment/70 font-body mb-8">
               Choose a preset personality or build your own. Each wolf is a starting point—
               you own the final voice.
             </p>
@@ -71,24 +71,24 @@ export default function WolvesPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-steam-cyber-bgElevated p-6 rounded-lg border border-steam-cyber-neon-cyan/20 hover:border-steam-cyber-neon-cyan/40 transition-all"
+                className="bg-mystic-steam-ash p-6 rounded-lg border border-mystic-steam-copper/30 hover:border-mystic-steam-copper/50 transition-all"
               >
                 <div className="text-5xl mb-4">{wolf.icon}</div>
-                <h2 className="text-2xl font-heading font-bold mb-3 text-steam-cyber-neon-cyan">
+                <h2 className="text-2xl font-heading font-bold mb-3 text-mystic-steam-copper">
                   {wolf.name}
                 </h2>
-                <p className="text-gray-300 mb-4 font-body">{wolf.description}</p>
+                <p className="text-mystic-steam-parchment/70 mb-4 font-body">{wolf.description}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
                   {wolf.traits.map((trait) => (
                     <span
                       key={trait}
-                      className="px-2 py-1 text-xs bg-steam-cyber-bgHover rounded border border-steam-cyber-neon-cyan/20 text-gray-400"
+                      className="px-2 py-1 text-xs bg-mystic-steam-charcoal rounded border border-mystic-steam-copper/20 text-mystic-steam-parchment/60"
                     >
                       {trait}
                     </span>
                   ))}
                 </div>
-                <p className="text-sm text-gray-500 font-body italic">
+                <p className="text-sm text-mystic-steam-parchment/50 font-body italic">
                   Starter template—fully customizable
                 </p>
               </motion.div>
@@ -100,12 +100,12 @@ export default function WolvesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-steam-cyber-bgElevated p-8 rounded-lg border-2 border-steam-cyber-neon-cyan/40 text-center"
+            className="bg-mystic-steam-ash p-8 rounded-lg border border-mystic-steam-copper/30 text-center"
           >
-            <h2 className="text-3xl font-heading font-bold mb-4 text-steam-cyber-neon-cyan">
+            <h2 className="text-3xl font-heading font-bold mb-4 text-mystic-steam-copper">
               Build Your Own
             </h2>
-            <p className="text-lg text-gray-300 mb-6 font-body">
+            <p className="text-lg text-mystic-steam-parchment/70 mb-6 font-body">
               Start from scratch. Define every aspect of your token's personality.
               The builder is yours to command.
             </p>
@@ -122,10 +122,10 @@ export default function WolvesPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-12 p-6 bg-steam-cyber-bgHover rounded-lg border border-steam-cyber-neon-cyan/20"
+            className="mt-12 p-6 bg-mystic-steam-charcoal rounded-lg border border-mystic-steam-copper/20"
           >
-            <p className="text-gray-400 font-body text-center">
-              <strong className="text-steam-cyber-neon-cyan">Important:</strong> All presets are
+            <p className="text-mystic-steam-parchment/60 font-body text-center">
+              <strong className="text-mystic-steam-copper">Important:</strong> All presets are
               starting points. You can edit the system prompt, adjust sliders, and customize
               every aspect. Your token's personality is 100% user-owned—Kogaion only provides
               the tools.
