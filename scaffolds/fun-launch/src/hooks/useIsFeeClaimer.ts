@@ -135,15 +135,20 @@ export function useIsPlatformFeeClaimer() {
         return { success: false, isFeeClaimer: false };
       }
     },
-    enabled: !!publicKey,
+    enabled: !!publicKey && !!walletAddress,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
     retry: 1,
     retryDelay: 1000,
+    // Prevent query from running if wallet is not connected
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   // Handle errors gracefully - ensure we never return invalid data
+  // Don't log error object directly to prevent React error #130
   if (error) {
-    console.error('useIsPlatformFeeClaimer error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('useIsPlatformFeeClaimer error:', errorMessage);
   }
 
   // Ensure we always return primitive boolean values, never objects
@@ -157,8 +162,9 @@ export function useIsPlatformFeeClaimer() {
     }
   }
 
+  // Always return primitive values - never objects
   return {
-    isFeeClaimer: isFeeClaimerValue,
-    isLoading: typeof isLoading === 'boolean' ? isLoading : false,
+    isFeeClaimer: Boolean(isFeeClaimerValue),
+    isLoading: Boolean(isLoading),
   };
 }
