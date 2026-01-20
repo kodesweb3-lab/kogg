@@ -15,12 +15,25 @@ export default {
         xxs: ['0.5rem', { lineHeight: '0.625rem' }],
       },
       fontFamily: {
-        heading: ['Cinzel', 'serif'],
-        body: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['Orbitron', 'monospace'],
+        body: ['Audiowide', 'monospace'],
       },
 
       colors: {
-        // Kogaion Dark Ritual Palette
+        // Kogaion Steampunk-Cyberpunk Palette
+        'steam-cyber': {
+          bg: '#0A0A0F',
+          bgElevated: '#151520',
+          bgHover: '#1a1a2e',
+          'neon-cyan': '#55ead4',
+          'neon-yellow': '#f3e600',
+          'neon-pink': '#ff00ff',
+          'neon-green': '#00ff88',
+          bronze: '#cd7f32',
+          metal: '#8b7355',
+          copper: '#b87333',
+        },
+        // Kogaion Dark Ritual Palette (kept for backwards compatibility)
         ritual: {
           // Background: #020617
           bg: '#020617',

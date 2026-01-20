@@ -1,21 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Audiowide&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #020617;
+  --background: #0A0A0F;
   --foreground: #f9fafb;
   --ritual-amber: #f59e0b;
   --ritual-rust: #dc2626;
+  /* Steampunk-Cyberpunk Colors */
+  --steam-cyber-bg: #0A0A0F;
+  --steam-cyber-bg-elevated: #151520;
+  --steam-cyber-bg-hover: #1a1a2e;
+  --neon-cyan: #55ead4;
+  --neon-yellow: #f3e600;
+  --neon-pink: #ff00ff;
+  --neon-green: #00ff88;
+  --bronze: #cd7f32;
+  --metal: #8b7355;
+  --copper: #b87333;
+  /* Glow Effects */
+  --neon-glow-cyan: 0 0 10px rgba(85, 234, 212, 0.5), 0 0 20px rgba(85, 234, 212, 0.3), 0 0 30px rgba(85, 234, 212, 0.2);
+  --neon-glow-yellow: 0 0 10px rgba(243, 230, 0, 0.5), 0 0 20px rgba(243, 230, 0, 0.3);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-heading: 'Cinzel', serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Orbitron', monospace;
+  --font-body: 'Audiowide', monospace;
 }
 
 body {
@@ -26,20 +40,23 @@ body {
   position: relative;
 }
 
-/* Mountain silhouette background - SVG pattern */
+/* Steampunk-Cyberpunk Industrial Background */
 .mountain-bg {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 50vh;
-  opacity: 0.08;
+  opacity: 0.1;
   pointer-events: none;
   z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg width='1920' height='600' viewBox='0 0 1920 600' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 600 L160 450 L320 480 L480 420 L640 450 L800 375 L960 405 L1120 330 L1280 360 L1440 300 L1600 330 L1760 270 L1920 300 L1920 600 Z' fill='%23f59e0b'/%3E%3Cpath d='M0 600 L240 480 L480 510 L720 450 L960 480 L1200 420 L1440 450 L1680 390 L1920 420 L1920 600 Z' fill='%23dc2626' opacity='0.4'/%3E%3Cpath d='M0 600 L320 520 L640 550 L960 500 L1280 530 L1600 480 L1920 510 L1920 600 Z' fill='%23f59e0b' opacity='0.3'/%3E%3C/svg%3E");
-  background-size: cover;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(85, 234, 212, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+    url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%2355ead4' stroke-width='0.5' opacity='0.3'%3E%3Cpath d='M0 100 Q50 50 100 100 T200 100'/%3E%3Cpath d='M0 150 Q50 100 100 150 T200 150'/%3E%3Ccircle cx='50' cy='50' r='3' fill='%2355ead4' opacity='0.5'/%3E%3Ccircle cx='150' cy='50' r='3' fill='%2355ead4' opacity='0.5'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover, cover, 200px 200px;
   background-position: bottom;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat, no-repeat, repeat;
   mask-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
   -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
 }
@@ -64,6 +81,38 @@ h1, h2, h3, h4, h5, h6 {
   animation: mist 8s ease-in-out infinite;
 }
 
+/* Neon Glow Animations */
+@keyframes neonGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px #55ead4, 0 0 10px #55ead4, 0 0 15px #55ead4;
+    box-shadow: 0 0 10px rgba(85, 234, 212, 0.5), 0 0 20px rgba(85, 234, 212, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 10px #55ead4, 0 0 20px #55ead4, 0 0 30px #55ead4, 0 0 40px #55ead4;
+    box-shadow: 0 0 20px rgba(85, 234, 212, 0.8), 0 0 40px rgba(85, 234, 212, 0.5);
+  }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes steam {
+  0% { opacity: 0; transform: translateY(0) scale(0.8); }
+  50% { opacity: 0.6; }
+  100% { opacity: 0; transform: translateY(-50px) scale(1.2); }
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
 /* Glow effects */
 .glow-amber {
   box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
@@ -71,6 +120,88 @@ h1, h2, h3, h4, h5, h6 {
 
 .glow-rust {
   box-shadow: 0 0 20px rgba(220, 38, 38, 0.3);
+}
+
+/* Steampunk-Cyberpunk Utility Classes */
+.neon-cyan-glow {
+  text-shadow: var(--neon-glow-cyan);
+  animation: neonGlow 2s ease-in-out infinite;
+}
+
+.neon-yellow-glow {
+  text-shadow: 0 0 10px rgba(243, 230, 0, 0.5), 0 0 20px rgba(243, 230, 0, 0.3);
+  box-shadow: 0 0 20px rgba(243, 230, 0, 0.5);
+}
+
+.glitch-text {
+  animation: glitch 0.3s infinite;
+}
+
+.steam-particle {
+  animation: steam 3s ease-out infinite;
+}
+
+.scanline-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline-overlay::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(85, 234, 212, 0.5), transparent);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.metal-texture {
+  background: linear-gradient(135deg, #8b7355 0%, #6b5d4f 50%, #8b7355 100%);
+  background-size: 200% 200%;
+  position: relative;
+}
+
+.metal-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.1) 2px, rgba(0,0,0,0.1) 4px);
+  opacity: 0.3;
+}
+
+.bronze-border {
+  border: 2px solid #cd7f32;
+  box-shadow: 
+    inset 0 0 10px rgba(205, 127, 50, 0.3),
+    0 0 20px rgba(205, 127, 50, 0.2);
+  position: relative;
+}
+
+.bronze-border::before,
+.bronze-border::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #cd7f32;
+  border-radius: 50%;
+  background: radial-gradient(circle, #cd7f32 30%, transparent 70%);
+}
+
+.bronze-border::before {
+  top: -6px;
+  left: -6px;
+}
+
+.bronze-border::after {
+  bottom: -6px;
+  right: -6px;
 }
 
 /* Scrollbar */
