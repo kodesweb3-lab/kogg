@@ -62,19 +62,32 @@ export function useIsFeeClaimer(baseMint?: string) {
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
     retry: 1,
     retryDelay: 1000,
+    // Prevent query from running unnecessarily
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   });
 
   // Handle errors gracefully - ensure we never return invalid data
+  // Don't log error object directly to prevent React error #130
   if (error) {
-    console.error('useIsFeeClaimer error:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error('useIsFeeClaimer error:', errorMessage);
   }
 
   // Ensure we always return primitive boolean values, never objects
-  const isFeeClaimerValue = data?.isFeeClaimer;
-  const isValidBoolean = typeof isFeeClaimerValue === 'boolean';
+  // Double-check that data is valid and extract isFeeClaimer safely
+  let isFeeClaimerValue: boolean = false;
+  
+  if (data && typeof data === 'object' && !Array.isArray(data) && 'isFeeClaimer' in data) {
+    const value = data.isFeeClaimer;
+    if (typeof value === 'boolean') {
+      isFeeClaimerValue = value;
+    }
+  }
 
+  // Always return primitive values - never objects
   return {
-    isFeeClaimer: isValidBoolean ? isFeeClaimerValue : false,
+    isFeeClaimer: Boolean(isFeeClaimerValue),
     isLoading: Boolean(isLoading),
   };
 }
