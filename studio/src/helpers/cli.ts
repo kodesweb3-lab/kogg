@@ -30,6 +30,9 @@ export function parseCliArguments(): CliArguments {
       poolAddress: {
         type: 'string',
       },
+      receiver: {
+        type: 'string',
+      },
       airdrop: {
         type: 'boolean',
       },

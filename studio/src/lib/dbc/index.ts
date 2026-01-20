@@ -338,6 +338,103 @@ export async function claimTradingFee(
 }
 
 /**
+ * Claim partner trading fee from a DBC pool
+ * This function only claims fees for the partner (launchpad), not for the creator
+ * @param config - The DBC config
+ * @param connection - The connection to the network
+ * @param wallet - The wallet to use for the transaction (must be the feeClaimer)
+ * @param baseMint - The base mint address of the token
+ * @param receiver - Optional receiver wallet (defaults to feeClaimer wallet)
+ */
+export async function claimPartnerTradingFee(
+  config: DbcConfig,
+  connection: Connection,
+  wallet: Wallet,
+  baseMint: PublicKey,
+  receiver?: PublicKey
+) {
+  console.log('\n> Initializing DBC claim partner trading fee...');
+
+  const dbcInstance = new DynamicBondingCurveClient(connection, 'confirmed');
+
+  const poolState = await dbcInstance.state.getPoolByBaseMint(baseMint);
+  if (!poolState) {
+    throw new Error(`DBC Pool not found for ${baseMint.toString()}`);
+  }
+
+  const dbcConfigAddress = poolState.account.config;
+  const poolConfig = await dbcInstance.state.getPoolConfig(dbcConfigAddress);
+  if (!poolConfig) {
+    throw new Error(`DBC Pool config not found for ${dbcConfigAddress.toString()}`);
+  }
+
+  const poolAddress = poolState.publicKey;
+  const partner = poolConfig.feeClaimer;
+  const feeMetrics = await dbcInstance.state.getPoolFeeMetrics(poolAddress);
+
+  const isPartner = partner.toString() === wallet.publicKey.toString();
+  console.log(`> Is partner (feeClaimer): ${isPartner}`);
+  console.log(`> Partner wallet (feeClaimer): ${partner.toString()}`);
+  console.log(`> Your wallet: ${wallet.publicKey.toString()}`);
+
+  if (!isPartner) {
+    throw new Error(
+      `Wallet ${wallet.publicKey.toString()} is not the authorized fee claimer for this pool. ` +
+      `Authorized fee claimer: ${partner.toString()}`
+    );
+  }
+
+  // Check if there are fees to claim
+  const partnerBaseFee = feeMetrics.current.partnerBaseFee;
+  const partnerQuoteFee = feeMetrics.current.partnerQuoteFee;
+
+  console.log(`> Partner base fee available: ${partnerBaseFee.toString()}`);
+  console.log(`> Partner quote fee available: ${partnerQuoteFee.toString()}`);
+
+  if (partnerBaseFee.isZero() && partnerQuoteFee.isZero()) {
+    console.log('> No partner trading fees to claim');
+    return;
+  }
+
+  const receiverWallet = receiver || wallet.publicKey;
+  console.log(`> Receiver wallet: ${receiverWallet.toString()}`);
+
+  const claimPartnerTradingFeeTx = await dbcInstance.partner.claimPartnerTradingFee({
+    feeClaimer: wallet.publicKey,
+    pool: poolAddress,
+    maxBaseAmount: partnerBaseFee,
+    maxQuoteAmount: partnerQuoteFee,
+    payer: wallet.publicKey,
+    receiver: receiverWallet,
+  });
+
+  modifyComputeUnitPriceIx(claimPartnerTradingFeeTx, config.computeUnitPriceMicroLamports ?? 0);
+
+  if (config.dryRun) {
+    console.log('> Simulating claim partner trading fee tx...');
+    await runSimulateTransaction(connection, [wallet.payer], wallet.publicKey, [claimPartnerTradingFeeTx]);
+    console.log('> Claim partner trading fee simulation successful');
+    return;
+  }
+
+  try {
+    console.log('> Sending partner trading fee claim transaction...');
+
+    const txHash = await sendAndConfirmTransaction(connection, claimPartnerTradingFeeTx, [wallet.payer], {
+      commitment: connection.commitment,
+      maxRetries: DEFAULT_SEND_TX_MAX_RETRIES,
+    });
+
+    console.log(`> Partner trading fee claimed successfully with tx hash: ${txHash}`);
+    console.log(`> Base fee claimed: ${partnerBaseFee.toString()}`);
+    console.log(`> Quote fee claimed: ${partnerQuoteFee.toString()}`);
+  } catch (error) {
+    console.error('Failed to claim partner trading fee:', error);
+    throw error;
+  }
+}
+
+/**
  * Swap on DBC pools (Buy or Sell)
  * @param config - The DBC config
  * @param connection - The connection to the network
