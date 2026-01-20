@@ -55,8 +55,8 @@ export function LivePreview({ personaData }: LivePreviewProps) {
   };
 
   return (
-    <div className="bg-ritual-bgHover rounded-lg border border-ritual-amber-500/20 p-4">
-      <h3 className="text-lg font-heading font-semibold mb-4 text-ritual-amber-400">
+    <div className="bg-steam-cyber-bgHover rounded-lg border border-steam-cyber-neon-cyan/20 p-4">
+      <h3 className="text-lg font-heading font-semibold mb-4 text-steam-cyber-neon-cyan">
         Live Preview
       </h3>
       <div className="space-y-2 mb-4 h-64 overflow-y-auto">
@@ -78,11 +78,11 @@ export function LivePreview({ personaData }: LivePreviewProps) {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-ritual-bgElevated p-2 rounded-lg">
+            <div className="bg-steam-cyber-bgElevated p-2 rounded-lg">
               <div className="flex gap-1">
-                <div className="w-1.5 h-1.5 bg-ritual-amber-400 rounded-full animate-bounce" />
-                <div className="w-1.5 h-1.5 bg-ritual-amber-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-1.5 h-1.5 bg-ritual-amber-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="w-1.5 h-1.5 bg-steam-cyber-neon-cyan rounded-full animate-bounce" />
+                <div className="w-1.5 h-1.5 bg-steam-cyber-neon-cyan rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                <div className="w-1.5 h-1.5 bg-steam-cyber-neon-cyan rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
               </div>
             </div>
           </div>

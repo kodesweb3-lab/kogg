@@ -505,7 +505,7 @@ export default function CreatePool() {
                           step="0.01"
                           min="0"
                           max="10"
-                          className="w-full p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-ritual-amber-500"
+                          className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
                           placeholder="0.1"
                           value={field.state.value || ''}
                           onChange={(e) => field.handleChange(parseFloat(e.target.value) || 0)}
@@ -538,7 +538,7 @@ export default function CreatePool() {
                           id="website"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-ritual-amber-500"
+                          className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
                           placeholder="https://yourwebsite.com"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -561,7 +561,7 @@ export default function CreatePool() {
                           id="twitter"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-ritual-amber-500"
+                          className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
                           placeholder="https://twitter.com/yourusername"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -584,7 +584,7 @@ export default function CreatePool() {
                           id="telegram"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-ritual-amber-500"
+                          className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
                           placeholder="https://t.me/yourchannel"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}

@@ -246,7 +246,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
 
       {/* Branding */}
       <div className="mt-6">
-        <h3 className="text-lg font-heading font-semibold mb-4 text-ritual-amber-400">Branding</h3>
+        <h3 className="text-lg font-heading font-semibold mb-4 text-steam-cyber-neon-cyan">Branding</h3>
         <div className="grid md:grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-body font-medium mb-2 text-gray-300">Catchphrases (comma-separated)</label>
