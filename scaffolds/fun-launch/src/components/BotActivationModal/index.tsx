@@ -124,10 +124,10 @@ export function BotActivationModal({ tokenMint, isOpen, onClose, onSuccess }: Bo
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
-            <div className="bg-ritual-bgElevated border-2 border-ritual-amber-500/40 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-steam-cyber-bgElevated border-2 border-steam-cyber-neon-cyan/40 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-heading font-bold text-ritual-amber-400">
+                  <h2 className="text-2xl font-heading font-bold text-steam-cyber-neon-cyan">
                     Activate Token Bot
                   </h2>
                   <button
@@ -159,15 +159,15 @@ export function BotActivationModal({ tokenMint, isOpen, onClose, onSuccess }: Bo
                         value={botToken}
                         onChange={(e) => setBotToken(e.target.value)}
                         placeholder="Enter your BotFather token"
-                        className="w-full p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-ritual-amber-500"
+                        className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
                       />
                       <p className="text-xs text-gray-500 mt-1 font-body">
                         Get this from @BotFather on Telegram. It will be encrypted and stored securely.
                       </p>
                     </div>
-                    <div className="bg-ritual-bgHover p-4 rounded-lg border border-ritual-amber-500/20">
+                    <div className="bg-steam-cyber-bgHover p-4 rounded-lg border border-steam-cyber-neon-cyan/20">
                       <p className="text-sm text-gray-300 font-body mb-2">
-                        <strong className="text-ritual-amber-400">Activation Fee:</strong> 0.1 SOL
+                        <strong className="text-steam-cyber-neon-cyan">Activation Fee:</strong> 0.1 SOL
                       </p>
                       <p className="text-xs text-gray-500 font-body">
                         Payment goes to treasury wallet. Bot activates after on-chain confirmation.

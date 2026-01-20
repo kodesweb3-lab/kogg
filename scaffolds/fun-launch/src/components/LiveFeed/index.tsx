@@ -14,14 +14,14 @@ export function LiveFeed() {
   const tokens = data?.data || [];
 
   return (
-    <div className="bg-ritual-bgElevated rounded-xl border border-ritual-amber-500/20 overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-ritual-amber-500/20">
+    <div className="bg-steam-cyber-bgElevated rounded-xl border border-steam-cyber-neon-cyan/20 overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-steam-cyber-neon-cyan/20">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
           </span>
-          <h3 className="font-heading font-bold text-ritual-amber-400">Live Rituals</h3>
+          <h3 className="font-heading font-bold text-steam-cyber-neon-cyan">Live Rituals</h3>
         </div>
         <Link 
           href="/discover" 
@@ -31,7 +31,7 @@ export function LiveFeed() {
         </Link>
       </div>
 
-      <div className="divide-y divide-ritual-amber-500/10">
+      <div className="divide-y divide-steam-cyber-neon-cyan/10">
         {status === 'pending' ? (
           Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="flex items-center gap-3 px-4 py-3">
@@ -59,7 +59,7 @@ export function LiveFeed() {
               >
                 <Link
                   href={`/token/${token.mint}`}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-ritual-bgHover transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-steam-cyber-bgHover transition-colors"
                 >
                   {/* Token Image */}
                   <div className="relative">
@@ -67,10 +67,10 @@ export function LiveFeed() {
                       <img
                         src={token.imageUrl}
                         alt={token.symbol}
-                        className="h-10 w-10 rounded-full object-cover border border-ritual-amber-500/20"
+                        className="h-10 w-10 rounded-full object-cover border border-steam-cyber-neon-cyan/20"
                       />
                     ) : (
-                      <div className="h-10 w-10 rounded-full bg-ritual-bgHover flex items-center justify-center text-ritual-amber-400 font-bold">
+                      <div className="h-10 w-10 rounded-full bg-steam-cyber-bgHover flex items-center justify-center text-steam-cyber-neon-cyan font-bold">
                         {token.symbol?.charAt(0) || '?'}
                       </div>
                     )}

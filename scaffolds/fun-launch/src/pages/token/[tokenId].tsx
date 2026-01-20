@@ -64,7 +64,7 @@ export const TokenPageWithContext = () => {
       <Page>
         <div className="flex items-center justify-center min-h-[50vh]">
           <div className="flex flex-col items-center gap-4">
-            <div className="w-12 h-12 border-4 border-ritual-amber-500/30 border-t-ritual-amber-500 rounded-full animate-spin" />
+            <div className="w-12 h-12 border-4 border-steam-cyber-neon-cyan/30 border-t-steam-cyber-neon-cyan rounded-full animate-spin" />
             <p className="text-gray-400 font-body">Loading token...</p>
           </div>
         </div>

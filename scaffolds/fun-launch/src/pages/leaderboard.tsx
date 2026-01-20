@@ -57,7 +57,7 @@ export default function LeaderboardPage() {
 
   return (
     <Page>
-      <div className="min-h-screen bg-ritual-bg text-gray-100 py-12 px-4 relative z-10">
+      <div className="min-h-screen bg-steam-cyber-bg text-gray-100 py-12 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <motion.div
@@ -65,7 +65,7 @@ export default function LeaderboardPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-ritual-amber-400">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-steam-cyber-neon-cyan neon-cyan-glow">
               Pack Leaders
             </h1>
             <p className="text-lg text-gray-400 font-body">
@@ -80,14 +80,14 @@ export default function LeaderboardPage() {
             transition={{ delay: 0.1 }}
             className="grid grid-cols-2 gap-4 mb-8"
           >
-            <div className="bg-ritual-bgElevated rounded-xl p-6 border border-ritual-amber-500/20 text-center">
-              <div className="text-3xl font-heading font-bold text-ritual-amber-400">
+            <div className="bg-steam-cyber-bgElevated rounded-xl p-6 border border-steam-cyber-neon-cyan/20 text-center">
+              <div className="text-3xl font-heading font-bold text-steam-cyber-neon-cyan">
                 {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : data?.stats.totalTokens || 0}
               </div>
               <div className="text-sm text-gray-400 font-body mt-1">Tokens Summoned</div>
             </div>
-            <div className="bg-ritual-bgElevated rounded-xl p-6 border border-ritual-amber-500/20 text-center">
-              <div className="text-3xl font-heading font-bold text-ritual-amber-400">
+            <div className="bg-steam-cyber-bgElevated rounded-xl p-6 border border-steam-cyber-neon-cyan/20 text-center">
+              <div className="text-3xl font-heading font-bold text-steam-cyber-neon-cyan">
                 {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : data?.stats.totalCreators || 0}
               </div>
               <div className="text-sm text-gray-400 font-body mt-1">Pack Members</div>
@@ -99,13 +99,13 @@ export default function LeaderboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-ritual-bgElevated rounded-xl border border-ritual-amber-500/20 overflow-hidden"
+            className="bg-steam-cyber-bgElevated rounded-xl border border-steam-cyber-neon-cyan/20 overflow-hidden"
           >
-            <div className="px-6 py-4 border-b border-ritual-amber-500/20">
-              <h2 className="font-heading font-bold text-xl text-ritual-amber-400">Top Creators</h2>
+            <div className="px-6 py-4 border-b border-steam-cyber-neon-cyan/20">
+              <h2 className="font-heading font-bold text-xl text-steam-cyber-neon-cyan">Top Creators</h2>
             </div>
 
-            <div className="divide-y divide-ritual-amber-500/10">
+            <div className="divide-y divide-steam-cyber-neon-cyan/10">
               {isLoading ? (
                 Array.from({ length: 5 }).map((_, i) => (
                   <div key={i} className="flex items-center gap-4 px-6 py-4">
@@ -127,7 +127,7 @@ export default function LeaderboardPage() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex items-center gap-4 px-6 py-4 hover:bg-ritual-bgHover transition-colors"
+                      className="flex items-center gap-4 px-6 py-4 hover:bg-steam-cyber-bgHover transition-colors"
                     >
                       {/* Rank */}
                       <div className={`w-8 text-center font-heading font-bold ${badge.color}`}>
@@ -141,12 +141,12 @@ export default function LeaderboardPage() {
                             href={`https://solscan.io/account/${entry.wallet}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="font-mono text-white hover:text-ritual-amber-400 transition-colors"
+                            className="font-mono text-white hover:text-steam-cyber-neon-cyan transition-colors"
                           >
                             {truncateWallet(entry.wallet)}
                           </a>
                           {entry.rank <= 3 && (
-                            <span className="px-2 py-0.5 text-[10px] font-bold bg-ritual-amber-500/20 text-ritual-amber-400 rounded">
+                            <span className="px-2 py-0.5 text-[10px] font-bold bg-steam-cyber-neon-cyan/20 text-steam-cyber-neon-cyan rounded">
                               TOP {entry.rank}
                             </span>
                           )}
@@ -186,7 +186,7 @@ export default function LeaderboardPage() {
           >
             <Link
               href="/create-pool"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-ritual-amber-500 hover:bg-ritual-amber-600 text-black font-heading font-bold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-steam-cyber-neon-cyan to-steam-cyber-neon-cyan/80 hover:shadow-[0_0_20px_rgba(85,234,212,0.5)] text-black font-heading font-bold rounded-lg transition-all"
             >
               Launch Your Token
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

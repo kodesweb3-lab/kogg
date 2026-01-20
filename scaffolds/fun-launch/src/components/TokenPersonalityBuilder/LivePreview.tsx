@@ -68,8 +68,8 @@ export function LivePreview({ personaData }: LivePreviewProps) {
             <div
               className={`max-w-[80%] p-2 rounded-lg text-sm font-body ${
                 msg.role === 'user'
-                  ? 'bg-ritual-amber-500/20 text-gray-100'
-                  : 'bg-ritual-bgElevated text-gray-300'
+                  ? 'bg-steam-cyber-neon-cyan/20 text-gray-100'
+                  : 'bg-steam-cyber-bgElevated text-gray-300'
               }`}
             >
               {msg.content}
@@ -100,7 +100,7 @@ export function LivePreview({ personaData }: LivePreviewProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message to preview..."
-          className="flex-1 p-2 bg-ritual-bg border border-ritual-amber-500/20 rounded-lg text-gray-100 text-sm font-body focus:outline-none focus:ring-2 focus:ring-ritual-amber-500"
+          className="flex-1 p-2 bg-steam-cyber-bg border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 text-sm font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
           disabled={isLoading}
         />
         <Button type="submit" disabled={isLoading || !input.trim()} className="text-sm px-4 py-2">

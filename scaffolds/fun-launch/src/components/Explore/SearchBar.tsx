@@ -12,7 +12,7 @@ export function SearchBar() {
   const { searchQuery, setSearchQuery, sortOption, setSortOption } = useExplore();
 
   return (
-    <div className="flex flex-col sm:flex-row gap-3 p-4 bg-ritual-bgElevated rounded-xl border border-ritual-amber-500/20 mb-4">
+    <div className="flex flex-col sm:flex-row gap-3 p-4 bg-steam-cyber-bgElevated rounded-xl border border-steam-cyber-neon-cyan/20 mb-4">
       {/* Search Input */}
       <div className="relative flex-1">
         <svg
@@ -33,7 +33,7 @@ export function SearchBar() {
           placeholder="Search by name or symbol..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-10 pr-4 py-2 bg-ritual-bgHover border border-ritual-amber-500/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-ritual-amber-500/50 font-body"
+          className="w-full pl-10 pr-4 py-2 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan/50 font-body"
         />
         {searchQuery && (
           <button
@@ -53,7 +53,7 @@ export function SearchBar() {
         <select
           value={sortOption}
           onChange={(e) => setSortOption(e.target.value as SortOption)}
-          className="px-3 py-2 bg-ritual-bgHover border border-ritual-amber-500/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-ritual-amber-500/50 font-body text-sm"
+          className="px-3 py-2 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan/50 font-body text-sm"
         >
           {SORT_OPTIONS.map((opt) => (
             <option key={opt.value} value={opt.value}>

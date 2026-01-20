@@ -150,8 +150,8 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
   };
 
   return (
-    <div className="bg-ritual-bgElevated rounded-lg border border-ritual-amber-500/20 p-6">
-      <h2 className="text-2xl font-heading font-bold mb-6 text-ritual-amber-400">
+    <div className="bg-steam-cyber-bgElevated rounded-lg border border-steam-cyber-neon-cyan/20 p-6">
+      <h2 className="text-2xl font-heading font-bold mb-6 text-steam-cyber-neon-cyan">
         Token Personality Builder
       </h2>
       <p className="text-gray-400 mb-6 font-body text-sm">
@@ -159,7 +159,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
       </p>
 
       {/* Tabs */}
-      <div className="flex gap-2 mb-6 border-b border-ritual-amber-500/20">
+      <div className="flex gap-2 mb-6 border-b border-steam-cyber-neon-cyan/20">
         <button
           onClick={() => setActiveTab('preset')}
           className={`px-4 py-2 font-body font-medium transition-colors ${
@@ -195,12 +195,12 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
                 onClick={() => handlePresetSelect(presetName)}
                 className={`p-4 rounded-lg border-2 transition-all ${
                   selectedPreset === presetName
-                    ? 'border-ritual-amber-500 bg-ritual-amber-500/10'
-                    : 'border-ritual-amber-500/20 hover:border-ritual-amber-500/40'
+                    ? 'border-steam-cyber-neon-cyan bg-steam-cyber-neon-cyan/10'
+                    : 'border-steam-cyber-neon-cyan/20 hover:border-steam-cyber-neon-cyan/40'
                 }`}
               >
                 <div className="text-2xl mb-2">{PRESETS[presetName as keyof typeof PRESETS].branding.emojis[0]}</div>
-                <div className="font-heading font-semibold text-ritual-amber-400">{presetName}</div>
+                <div className="font-heading font-semibold text-steam-cyber-neon-cyan">{presetName}</div>
               </button>
             ))}
           </div>
@@ -215,7 +215,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
         <textarea
           value={systemPrompt}
           onChange={(e) => setSystemPrompt(e.target.value)}
-          className="w-full h-32 p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-ritual-amber-500"
+          className="w-full h-32 p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan"
           placeholder="Define your bot's core personality and behavior..."
         />
         <p className="text-xs text-gray-500 mt-1 font-body">
@@ -225,12 +225,12 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
 
       {/* Style Sliders */}
       <div className="mt-6 space-y-4">
-        <h3 className="text-lg font-heading font-semibold text-ritual-amber-400">Style Sliders</h3>
+        <h3 className="text-lg font-heading font-semibold text-steam-cyber-neon-cyan">Style Sliders</h3>
         {(['chaos', 'friendliness', 'formality', 'aggression', 'humor'] as const).map((key) => (
           <div key={key}>
             <div className="flex justify-between mb-2">
               <label className="text-sm font-body text-gray-300 capitalize">{key}</label>
-              <span className="text-sm font-body text-ritual-amber-400">{style[key]}</span>
+              <span className="text-sm font-body text-steam-cyber-neon-cyan">{style[key]}</span>
             </div>
             <input
               type="range"
@@ -238,7 +238,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
               max="100"
               value={style[key]}
               onChange={(e) => setStyle({ ...style, [key]: parseInt(e.target.value) })}
-              className="w-full h-2 bg-ritual-bgHover rounded-lg appearance-none cursor-pointer accent-ritual-amber-500"
+              className="w-full h-2 bg-steam-cyber-bgHover rounded-lg appearance-none cursor-pointer accent-steam-cyber-neon-cyan"
             />
           </div>
         ))}
@@ -254,7 +254,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
               type="text"
               value={branding.catchphrases.join(', ')}
               onChange={(e) => setBranding({ ...branding, catchphrases: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-              className="w-full p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body"
+              className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body"
               placeholder="LFG!, To the moon!"
             />
           </div>
@@ -264,7 +264,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
               type="text"
               value={branding.emojis.join(', ')}
               onChange={(e) => setBranding({ ...branding, emojis: e.target.value.split(',').map(s => s.trim()).filter(Boolean) })}
-              className="w-full p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body"
+              className="w-full p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body"
               placeholder="🔥, 🚀, 💎"
             />
           </div>
@@ -278,7 +278,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
           <textarea
             value={allowed.join('\n')}
             onChange={(e) => setAllowed(e.target.value.split('\n').filter(Boolean))}
-            className="w-full h-24 p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body"
+            className="w-full h-24 p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body"
             placeholder="Trading\nPrice action\nCommunity"
           />
         </div>
@@ -287,7 +287,7 @@ export function TokenPersonalityBuilder({ tokenMint, onSave, initialData }: Toke
           <textarea
             value={forbidden.join('\n')}
             onChange={(e) => setForbidden(e.target.value.split('\n').filter(Boolean))}
-            className="w-full h-24 p-3 bg-ritual-bgHover border border-ritual-amber-500/20 rounded-lg text-gray-100 font-body"
+            className="w-full h-24 p-3 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/20 rounded-lg text-gray-100 font-body"
             placeholder="Financial advice\nScams\nIllegal activities"
           />
         </div>

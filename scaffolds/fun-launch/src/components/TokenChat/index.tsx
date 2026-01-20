@@ -98,10 +98,10 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
   }, [comments.length]);
 
   return (
-    <div className="bg-ritual-bgElevated rounded-xl border border-ritual-amber-500/20 overflow-hidden">
+    <div className="bg-steam-cyber-bgElevated rounded-xl border border-steam-cyber-neon-cyan/20 overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-ritual-amber-500/20">
-        <h3 className="font-heading font-bold text-ritual-amber-400">Pack Chat</h3>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-steam-cyber-neon-cyan/20">
+        <h3 className="font-heading font-bold text-steam-cyber-neon-cyan">Pack Chat</h3>
         <span className="text-xs text-gray-500 font-body">{comments.length} messages</span>
       </div>
 
@@ -132,7 +132,7 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
                     href={`https://solscan.io/account/${comment.wallet}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs font-mono text-ritual-amber-400 hover:underline shrink-0"
+                    className="text-xs font-mono text-steam-cyber-neon-cyan hover:underline shrink-0"
                   >
                     {truncateWallet(comment.wallet)}
                   </a>
@@ -151,7 +151,7 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
       </div>
 
       {/* Input */}
-      <form onSubmit={handleSubmit} className="border-t border-ritual-amber-500/20 p-3">
+      <form onSubmit={handleSubmit} className="border-t border-steam-cyber-neon-cyan/20 p-3">
         {connected ? (
           <div className="flex gap-2">
             <input
@@ -160,7 +160,7 @@ export function TokenChat({ tokenMint }: TokenChatProps) {
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Say something..."
               maxLength={500}
-              className="flex-1 px-3 py-2 bg-ritual-bgHover border border-ritual-amber-500/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-ritual-amber-500/50 font-body text-sm"
+              className="flex-1 px-3 py-2 bg-steam-cyber-bgHover border border-steam-cyber-neon-cyan/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan/50 font-body text-sm"
               disabled={postMutation.isPending}
             />
             <Button

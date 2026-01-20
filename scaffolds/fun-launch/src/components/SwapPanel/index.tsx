@@ -169,7 +169,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
               href={`https://solscan.io/tx/${signature}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-ritual-amber-400 hover:underline"
+              className="text-xs text-steam-cyber-neon-cyan hover:underline"
             >
               Solscan
             </a>
@@ -206,7 +206,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
   const outputLabel = mode === 'buy' ? tokenSymbol : 'SOL';
 
   return (
-    <div className="bg-ritual-bgElevated rounded-xl p-4 border border-ritual-amber-500/20">
+    <div className="bg-steam-cyber-bgElevated rounded-xl p-4 border border-steam-cyber-neon-cyan/20">
       {/* Mode Toggle */}
       <div className="flex gap-2 mb-4">
         <button
@@ -214,7 +214,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
           className={`flex-1 py-2 px-4 rounded-lg font-heading font-bold transition-all ${
             mode === 'buy'
               ? 'bg-green-600 text-white'
-              : 'bg-ritual-bgHover text-gray-400 hover:text-white'
+              : 'bg-steam-cyber-bgHover text-gray-400 hover:text-white'
           }`}
         >
           Buy
@@ -224,7 +224,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
           className={`flex-1 py-2 px-4 rounded-lg font-heading font-bold transition-all ${
             mode === 'sell'
               ? 'bg-red-600 text-white'
-              : 'bg-ritual-bgHover text-gray-400 hover:text-white'
+              : 'bg-steam-cyber-bgHover text-gray-400 hover:text-white'
           }`}
         >
           Sell
@@ -236,7 +236,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
         <label className="block text-sm font-body text-gray-400 mb-1">
           You {mode === 'buy' ? 'pay' : 'sell'}
         </label>
-        <div className="flex items-center gap-2 bg-ritual-bgHover rounded-lg p-3 border border-ritual-amber-500/10">
+        <div className="flex items-center gap-2 bg-steam-cyber-bgHover rounded-lg p-3 border border-steam-cyber-neon-cyan/10">
           <input
             type="number"
             value={amount}
@@ -255,7 +255,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
               <button
                 key={val}
                 onClick={() => setAmount(val.toString())}
-                className="px-3 py-1 text-xs bg-ritual-bgHover rounded-md text-gray-400 hover:text-white hover:bg-ritual-amber-500/20 transition-all font-body"
+                className="px-3 py-1 text-xs bg-steam-cyber-bgHover rounded-md text-gray-400 hover:text-white hover:bg-steam-cyber-neon-cyan/20 transition-all font-body"
               >
                 {val} SOL
               </button>
@@ -295,7 +295,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
 
       {/* Arrow */}
       <div className="flex justify-center my-2">
-        <div className="w-8 h-8 rounded-full bg-ritual-bgHover flex items-center justify-center">
+        <div className="w-8 h-8 rounded-full bg-steam-cyber-bgHover flex items-center justify-center">
           <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
@@ -307,7 +307,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
         <label className="block text-sm font-body text-gray-400 mb-1">
           You receive (estimate)
         </label>
-        <div className="flex items-center gap-2 bg-ritual-bgHover rounded-lg p-3 border border-ritual-amber-500/10">
+        <div className="flex items-center gap-2 bg-steam-cyber-bgHover rounded-lg p-3 border border-steam-cyber-neon-cyan/10">
           {isLoadingQuote ? (
             <Skeleton className="h-7 w-32" />
           ) : (

@@ -17,7 +17,7 @@ type ReferralData = {
 
 // Rank tiers based on referrals
 function getRank(count: number): { name: string; icon: string; color: string; next: number } {
-  if (count >= 50) return { name: 'Alpha Wolf', icon: '🐺', color: 'text-ritual-amber-400', next: 0 };
+  if (count >= 50) return { name: 'Alpha Wolf', icon: '🐺', color: 'text-steam-cyber-neon-cyan', next: 0 };
   if (count >= 25) return { name: 'Pack Leader', icon: '🔥', color: 'text-orange-400', next: 50 };
   if (count >= 10) return { name: 'Hunter', icon: '🎯', color: 'text-purple-400', next: 25 };
   if (count >= 5) return { name: 'Scout', icon: '👁️', color: 'text-blue-400', next: 10 };
@@ -82,7 +82,7 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative bg-gradient-to-b from-ritual-bgElevated to-ritual-bg border-2 border-ritual-amber-500/30 rounded-2xl p-6 max-w-sm w-full shadow-2xl shadow-ritual-amber-500/10"
+            className="relative bg-gradient-to-b from-steam-cyber-bgElevated to-steam-cyber-bg border-2 border-steam-cyber-neon-cyan/30 rounded-2xl p-6 max-w-sm w-full shadow-2xl shadow-steam-cyber-neon-cyan/10"
           >
             {/* Close button */}
             <button
@@ -113,7 +113,7 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
             </div>
 
             {/* Stats Card */}
-            <div className="bg-ritual-bg/50 rounded-xl p-4 mb-4 border border-ritual-amber-500/10">
+            <div className="bg-steam-cyber-bg/50 rounded-xl p-4 mb-4 border border-steam-cyber-neon-cyan/10">
               <div className="text-center mb-3">
                 <div className="text-4xl font-heading font-bold text-white">
                   {isLoading ? (
@@ -140,12 +140,12 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
                     <span>Progress to {getRank(rank.next).name}</span>
                     <span>{count}/{rank.next}</span>
                   </div>
-                  <div className="h-2 bg-ritual-bgHover rounded-full overflow-hidden">
+                  <div className="h-2 bg-steam-cyber-bgHover rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${Math.min(progress, 100)}%` }}
                       transition={{ duration: 0.5 }}
-                      className="h-full bg-gradient-to-r from-ritual-amber-500 to-ritual-amber-400 rounded-full"
+                      className="h-full bg-gradient-to-r from-steam-cyber-neon-cyan to-steam-cyber-neon-green rounded-full"
                     />
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
                   type="text"
                   readOnly
                   value={data?.referralLink || 'Loading...'}
-                  className="flex-1 px-3 py-2.5 bg-ritual-bg border border-ritual-amber-500/20 rounded-lg text-white font-mono text-xs truncate focus:outline-none focus:ring-2 focus:ring-ritual-amber-500/50"
+                  className="flex-1 px-3 py-2.5 bg-steam-cyber-bg border border-steam-cyber-neon-cyan/20 rounded-lg text-white font-mono text-xs truncate focus:outline-none focus:ring-2 focus:ring-steam-cyber-neon-cyan/50"
                 />
                 <Button 
                   onClick={handleCopy} 
