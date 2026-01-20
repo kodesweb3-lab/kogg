@@ -23,6 +23,9 @@ export const Header = () => {
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { isFeeClaimer, isLoading: isLoadingFeeClaimer } = useIsPlatformFeeClaimer();
 
+  // Safely handle feeClaimer check - don't render button if there's an error or still loading
+  const showClaimButton = address && !isLoadingFeeClaimer && isFeeClaimer === true;
+
   // Close mobile menu on route change
   useEffect(() => {
     setIsMobileMenuOpen(false);
@@ -167,7 +170,7 @@ export const Header = () => {
           )}
           
           {/* Claim Partner Fees Button - Only visible to feeClaimer */}
-          {address && !isLoadingFeeClaimer && isFeeClaimer && (
+          {showClaimButton && (
             <button
               onClick={() => setIsClaimFeesOpen(true)}
               className="p-2 text-mystic-steam-copper hover:text-mystic-steam-copper/80 transition-colors"

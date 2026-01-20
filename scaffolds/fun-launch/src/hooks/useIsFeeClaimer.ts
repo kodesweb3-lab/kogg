@@ -9,7 +9,7 @@ import { useWallet } from '@jup-ag/wallet-adapter';
 export function useIsFeeClaimer(baseMint?: string) {
   const { publicKey } = useWallet();
 
-  const { data, isLoading } = useQuery<{ success: boolean; isFeeClaimer: boolean }>({
+  const { data, isLoading, error } = useQuery<{ success: boolean; isFeeClaimer: boolean }>({
     queryKey: ['isFeeClaimer', publicKey?.toBase58(), baseMint],
     queryFn: async () => {
       if (!publicKey || !baseMint) {
@@ -30,7 +30,12 @@ export function useIsFeeClaimer(baseMint?: string) {
           return { success: false, isFeeClaimer: false };
         }
 
-        return await response.json();
+        const result = await response.json();
+        // Ensure we return a valid object
+        if (result && typeof result === 'object' && 'isFeeClaimer' in result) {
+          return { success: result.success ?? true, isFeeClaimer: Boolean(result.isFeeClaimer) };
+        }
+        return { success: false, isFeeClaimer: false };
       } catch (error) {
         console.error('Error checking feeClaimer:', error);
         return { success: false, isFeeClaimer: false };
@@ -38,7 +43,14 @@ export function useIsFeeClaimer(baseMint?: string) {
     },
     enabled: !!publicKey && !!baseMint,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    retry: 1,
+    retryDelay: 1000,
   });
+
+  // Handle errors gracefully
+  if (error) {
+    console.error('useIsFeeClaimer error:', error);
+  }
 
   return {
     isFeeClaimer: data?.isFeeClaimer ?? false,
@@ -54,7 +66,7 @@ export function useIsFeeClaimer(baseMint?: string) {
 export function useIsPlatformFeeClaimer() {
   const { publicKey } = useWallet();
 
-  const { data, isLoading } = useQuery<{ success: boolean; isFeeClaimer: boolean }>({
+  const { data, isLoading, error } = useQuery<{ success: boolean; isFeeClaimer: boolean }>({
     queryKey: ['isPlatformFeeClaimer', publicKey?.toBase58()],
     queryFn: async () => {
       if (!publicKey) {
@@ -74,7 +86,12 @@ export function useIsPlatformFeeClaimer() {
           return { success: false, isFeeClaimer: false };
         }
 
-        return await response.json();
+        const result = await response.json();
+        // Ensure we return a valid object
+        if (result && typeof result === 'object' && 'isFeeClaimer' in result) {
+          return { success: result.success ?? true, isFeeClaimer: Boolean(result.isFeeClaimer) };
+        }
+        return { success: false, isFeeClaimer: false };
       } catch (error) {
         console.error('Error checking platform feeClaimer:', error);
         return { success: false, isFeeClaimer: false };
@@ -82,7 +99,14 @@ export function useIsPlatformFeeClaimer() {
     },
     enabled: !!publicKey,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    retry: 1,
+    retryDelay: 1000,
   });
+
+  // Handle errors gracefully
+  if (error) {
+    console.error('useIsPlatformFeeClaimer error:', error);
+  }
 
   return {
     isFeeClaimer: data?.isFeeClaimer ?? false,
