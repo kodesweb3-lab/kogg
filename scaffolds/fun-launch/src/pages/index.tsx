@@ -24,14 +24,14 @@ export default function LandingPage() {
   });
 
   return (
-    <div className="min-h-screen bg-ritual-bg text-gray-100 relative">
-      {/* Mountain silhouette background */}
+    <div className="min-h-screen bg-steam-cyber-bg text-gray-100 relative">
+      {/* Industrial background */}
       <div className="mountain-bg" />
       
       {/* Hero Section */}
       <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden z-10">
-        {/* Mist animation background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-ritual-bg via-ritual-bgElevated to-ritual-bg">
+        {/* Neon glow animation background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-steam-cyber-bg via-steam-cyber-bgElevated to-steam-cyber-bg">
           <motion.div
             className="absolute inset-0 opacity-30"
             animate={{
@@ -43,10 +43,12 @@ export default function LandingPage() {
               repeatType: 'reverse',
             }}
             style={{
-              backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(245, 158, 11, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%)',
+              backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(85, 234, 212, 0.15) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%)',
               backgroundSize: '200% 200%',
             }}
           />
+          {/* Scanline overlay */}
+          <div className="scanline-overlay absolute inset-0 pointer-events-none" />
         </div>
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 md:py-20 text-center">
@@ -56,7 +58,7 @@ export default function LandingPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6"
           >
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-ritual-amber-500/10 border border-ritual-amber-500/30 rounded-full text-sm text-ritual-amber-400 font-body">
+            <span className="inline-flex items-center gap-2 px-4 py-2 bg-steam-cyber-neon-cyan/10 border border-steam-cyber-neon-cyan/30 rounded-full text-sm text-steam-cyber-neon-cyan font-body">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
@@ -84,7 +86,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-4 md:mb-6 text-ritual-amber-400"
+            className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-4 md:mb-6 text-steam-cyber-neon-cyan neon-cyan-glow"
           >
             Summon Tokens.
             <br />
@@ -118,7 +120,7 @@ export default function LandingPage() {
             <Button
               onClick={() => router.push('/discover')}
               variant="outline"
-              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 bg-transparent border-2 border-ritual-amber-500 text-ritual-amber-400 hover:bg-ritual-amber-500/10"
+              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4"
             >
               Explore the Pack
             </Button>
@@ -181,7 +183,7 @@ export default function LandingPage() {
       {/* What is Kogaion */}
       <section className="py-20 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-8 text-ritual-amber-400">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-8 text-steam-cyber-neon-cyan">
             What is Kogaion?
           </h2>
           <p className="text-lg text-gray-300 text-center font-body leading-relaxed">
@@ -194,9 +196,9 @@ export default function LandingPage() {
       </section>
 
       {/* How the Ritual Works */}
-      <section className="py-20 px-4 bg-ritual-bgElevated">
+      <section className="py-20 px-4 bg-steam-cyber-bgElevated">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-12 text-ritual-amber-400">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-12 text-steam-cyber-neon-cyan">
             How the Ritual Works
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -223,10 +225,10 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-ritual-bgHover p-6 rounded-lg border border-ritual-amber-500/20"
+                className="bg-steam-cyber-bgHover p-6 rounded-lg border border-steam-cyber-neon-cyan/20"
               >
                 <div className="text-4xl mb-4">{step.icon}</div>
-                <h3 className="text-xl font-heading font-semibold mb-3 text-ritual-amber-400">
+                <h3 className="text-xl font-heading font-semibold mb-3 text-steam-cyber-neon-cyan">
                   {step.title}
                 </h3>
                 <p className="text-gray-300 font-body">{step.description}</p>
@@ -255,9 +257,9 @@ export default function LandingPage() {
       </section>
 
       {/* Safety / LP Locked */}
-      <section className="py-20 px-4 bg-ritual-bgElevated relative z-10">
+      <section className="py-20 px-4 bg-steam-cyber-bgElevated relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-8 text-ritual-amber-400">
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-8 text-steam-cyber-neon-cyan">
             Safety & Liquidity
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
@@ -305,7 +307,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-ritual-bgHover/50 p-4 md:p-6 rounded-lg border border-ritual-amber-500/10 text-center opacity-75"
+                className="bg-steam-cyber-bgHover/50 p-4 md:p-6 rounded-lg border border-steam-cyber-neon-cyan/10 text-center opacity-75"
               >
                 <div className="text-2xl md:text-3xl mb-2">{item.icon}</div>
                 <h3 className="font-heading font-semibold text-gray-400 text-sm md:text-base">{item.title}</h3>
@@ -323,9 +325,9 @@ export default function LandingPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-b from-ritual-bgElevated to-ritual-bg border-2 border-ritual-amber-500/30 rounded-2xl p-8 md:p-12"
+                className="bg-gradient-to-b from-steam-cyber-bgElevated to-steam-cyber-bg border-2 border-steam-cyber-neon-cyan/30 rounded-2xl p-8 md:p-12"
           >
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 text-ritual-amber-400">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 text-steam-cyber-neon-cyan neon-cyan-glow">
               Ready to Begin the Ritual?
             </h2>
             <p className="text-base md:text-lg text-gray-300 mb-6 md:mb-8 font-body max-w-xl mx-auto">
@@ -351,7 +353,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-8 px-4 border-t border-ritual-amber-500/10 relative z-10">
+      <footer className="py-8 px-4 border-t border-steam-cyber-neon-cyan/10 relative z-10">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <img src="/brand/kogaion-icon.svg" alt="Kogaion" className="w-6 h-6" />
@@ -364,7 +366,7 @@ export default function LandingPage() {
               href="https://x.com/KogaionSol" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-ritual-amber-400 transition-colors"
+              className="text-gray-500 hover:text-steam-cyber-neon-cyan transition-colors"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -374,7 +376,7 @@ export default function LandingPage() {
               href="https://t.me/kogaionpack" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-500 hover:text-ritual-amber-400 transition-colors"
+              className="text-gray-500 hover:text-steam-cyber-neon-cyan transition-colors"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
