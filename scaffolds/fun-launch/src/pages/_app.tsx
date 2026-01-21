@@ -54,7 +54,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useWindowWidthListener();
 
   return (
-    <ErrorBoundary>
+    <ErrorBoundaryWrapper>
       <QueryClientProvider client={queryClient}>
         <UnifiedWalletProvider
           wallets={wallets}
