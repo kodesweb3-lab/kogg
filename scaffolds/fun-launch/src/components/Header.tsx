@@ -7,62 +7,22 @@ import { shortenAddress } from '@/lib/utils';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useIsPlatformFeeClaimer } from '@/hooks/useIsFeeClaimer';
 
 const ReferralModal = dynamic(() => import('./ReferralModal'), { ssr: false });
-const ClaimPartnerFeesModal = dynamic(() => import('./ClaimPartnerFeesModal'), { ssr: false });
+// Separate component for fee claimer check to avoid object rendering issues
+const FeeClaimerButton = dynamic(
+  () => import('./FeeClaimerButton').then((mod) => ({ default: mod.FeeClaimerButton })),
+  { ssr: false }
+);
 
 export const Header = () => {
   const { setShowModal } = useUnifiedWalletContext();
   const router = useRouter();
   const [isReferralOpen, setIsReferralOpen] = useState(false);
-  const [isClaimFeesOpen, setIsClaimFeesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { disconnect, publicKey } = useWallet();
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
-  
-  // Use hook and immediately extract primitive values using useMemo to prevent object rendering
-  const feeClaimerHookResult = useIsPlatformFeeClaimer();
-  
-  // Extract values with maximum type safety using useMemo - ensure primitives only
-  // Never allow objects to be used in render - extract immediately
-  const isFeeClaimer = useMemo<boolean>(() => {
-    try {
-      if (!feeClaimerHookResult) return false;
-      if (typeof feeClaimerHookResult !== 'object') return false;
-      if (feeClaimerHookResult === null) return false;
-      if (Array.isArray(feeClaimerHookResult)) return false;
-      const value = (feeClaimerHookResult as { isFeeClaimer?: unknown }).isFeeClaimer;
-      return typeof value === 'boolean' ? value : false;
-    } catch {
-      return false;
-    }
-  }, [feeClaimerHookResult]);
-  
-  const isLoadingFeeClaimer = useMemo<boolean>(() => {
-    try {
-      if (!feeClaimerHookResult) return false;
-      if (typeof feeClaimerHookResult !== 'object') return false;
-      if (feeClaimerHookResult === null) return false;
-      if (Array.isArray(feeClaimerHookResult)) return false;
-      const value = (feeClaimerHookResult as { isLoading?: unknown }).isLoading;
-      return typeof value === 'boolean' ? value : false;
-    } catch {
-      return false;
-    }
-  }, [feeClaimerHookResult]);
-
-  // Safely handle feeClaimer check - ensure all values are valid primitives
-  // Prevent rendering with undefined/null/object values that could cause React error #130
-  const showClaimButton = useMemo<boolean>(() => {
-    return Boolean(
-      address &&
-      typeof address === 'string' &&
-      !isLoadingFeeClaimer &&
-      isFeeClaimer === true
-    );
-  }, [address, isLoadingFeeClaimer, isFeeClaimer]);
 
   // Close mobile menu on route change
   useEffect(() => {
