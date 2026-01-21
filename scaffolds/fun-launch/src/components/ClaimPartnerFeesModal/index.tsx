@@ -4,8 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../ui/button';
-import { Connection, Transaction } from '@solana/web3.js';
-import { useSendTransaction } from '@/hooks/useSendTransaction';
+import { Transaction } from '@solana/web3.js';
 
 interface ClaimPartnerFeesModalProps {
   isOpen: boolean;
@@ -20,9 +19,9 @@ type Token = {
 };
 
 export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModalProps) {
-  const { publicKey } = useWallet();
+  const { publicKey, signTransaction } = useWallet();
   const [selectedToken, setSelectedToken] = useState<string>('');
-  const { sendTransaction, isLoading: isSending } = useSendTransaction();
+  const [isSending, setIsSending] = useState(false);
 
   // Fetch all tokens from database
   const { data: tokensData, isLoading: isLoadingTokens } = useQuery<{
@@ -53,8 +52,17 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
       return;
     }
 
+    if (!signTransaction) {
+      toast.error('Wallet not connected. Please connect your wallet.');
+      return;
+    }
+
+    setIsSending(true);
+    const toastId = 'claim-fees';
+
     try {
-      // Fetch claim transaction from API
+      // Step 1: Fetch claim transaction from API (already prepared with blockhash server-side)
+      toast.loading('Creating claim transaction...', { id: toastId });
       const response = await fetch('/api/claim-partner-fee', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -70,33 +78,40 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
       }
 
       const { claimTx: claimTxBase64 } = await response.json();
+      const transaction = Transaction.from(Buffer.from(claimTxBase64, 'base64'));
 
-      // Deserialize transaction
-      // Use mainnet RPC - in production this should come from env or wallet adapter
-      const rpcUrl = process.env.NEXT_PUBLIC_RPC_URL || 'https://api.mainnet-beta.solana.com';
-      const connection = new Connection(rpcUrl, 'confirmed');
-      const claimTx = Transaction.from(Buffer.from(claimTxBase64, 'base64'));
+      // Step 2: Sign transaction with wallet
+      toast.loading('Please sign the transaction...', { id: toastId });
+      const signedTx = await signTransaction(transaction);
 
-      // Send transaction
-      const signature = await sendTransaction(claimTx, connection, {
-        onSuccess: (sig) => {
-          toast.success('Partner fees claimed successfully!');
-          onClose();
-        },
-        onError: (error) => {
-          const errorMessage = error instanceof Error ? error.message : String(error);
-          toast.error(`Failed to claim fees: ${errorMessage}`);
-        },
+      // Step 3: Send transaction via API route (uses server-side RPC)
+      toast.loading('Sending transaction...', { id: toastId });
+      const sendResponse = await fetch('/api/send-transaction', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          signedTransaction: signedTx.serialize().toString('base64'),
+        }),
       });
 
-      if (signature) {
-        toast.success('Transaction sent!', {
-          description: `View on Solscan: https://solscan.io/tx/${signature}`,
-        });
+      if (!sendResponse.ok) {
+        const error = await sendResponse.json();
+        throw new Error(error.error || 'Failed to send transaction');
       }
+
+      const { signature } = await sendResponse.json();
+
+      toast.success('Partner fees claimed successfully!', {
+        id: toastId,
+        description: `View on Solscan: https://solscan.io/tx/${signature}`,
+      });
+      onClose();
     } catch (error: any) {
       console.error('Error claiming partner fees:', error);
-      toast.error(error.message || 'Failed to claim partner fees');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to claim partner fees';
+      toast.error(errorMessage, { id: toastId });
+    } finally {
+      setIsSending(false);
     }
   };
 
