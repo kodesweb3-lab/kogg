@@ -10,7 +10,21 @@ import { AskKogaion } from '@/components/AskKogaion';
 
 export default function App({ Component, pageProps }: AppProps) {
   const wallets: Adapter[] = useMemo(() => {
-    return [new PhantomWalletAdapter(), new SolflareWalletAdapter()].filter(
+    // Filter out Phantom if it's already available as a standard wallet
+    // This prevents the "Phantom was registered as a Standard Wallet" warning
+    const adapters: Adapter[] = [];
+    
+    // Only add Phantom if not already detected as standard wallet
+    if (typeof window !== 'undefined' && !window.solana?.isPhantom) {
+      adapters.push(new PhantomWalletAdapter());
+    } else if (typeof window === 'undefined') {
+      // SSR: include Phantom, it will be filtered client-side if needed
+      adapters.push(new PhantomWalletAdapter());
+    }
+    
+    adapters.push(new SolflareWalletAdapter());
+    
+    return adapters.filter(
       (item) => item && item.name && item.icon
     ) as Adapter[];
   }, []);
@@ -20,27 +34,29 @@ export default function App({ Component, pageProps }: AppProps) {
   useWindowWidthListener();
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <UnifiedWalletProvider
-        wallets={wallets}
-        config={{
-          env: 'mainnet-beta',
-          autoConnect: true,
-          metadata: {
-            name: 'Kogaion',
-            description: 'The most based token launchpad on Solana',
-            url: 'https://kogaion.io',
-            iconUrls: ['/favicon.ico'],
-          },
-          // notificationCallback: WalletNotification,
-          theme: 'dark',
-          lang: 'en',
-        }}
-      >
-        <Toaster />
-        <Component {...pageProps} />
-        <AskKogaion />
-      </UnifiedWalletProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <UnifiedWalletProvider
+          wallets={wallets}
+          config={{
+            env: 'mainnet-beta',
+            autoConnect: true,
+            metadata: {
+              name: 'Kogaion',
+              description: 'The most based token launchpad on Solana',
+              url: 'https://kogaion.io',
+              iconUrls: ['/favicon.ico'],
+            },
+            // notificationCallback: WalletNotification,
+            theme: 'dark',
+            lang: 'en',
+          }}
+        >
+          <Toaster />
+          <Component {...pageProps} />
+          <AskKogaion />
+        </UnifiedWalletProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }

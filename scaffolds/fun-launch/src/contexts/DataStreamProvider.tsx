@@ -9,6 +9,8 @@ import { delay } from '@/lib/utils';
 const WS_URL = 'wss://trench-stream.jup.ag/ws';
 
 const RECONNECT_DELAY_MILLIS = 2_500;
+const MAX_RETRIES = 5;
+const INITIAL_RECONNECT_DELAY = 1000; // Start with 1 second
 
 const [dataStreamMsgAtom, useDataStreamListener] = atomMsgWithListeners<StreamResponse | null>(
   null
@@ -36,6 +38,8 @@ export const DataStreamProvider = ({ children }: { children: React.ReactNode }) 
 
   const ws = useRef<WebSocket | null>(null);
   const shouldReconnect = useRef(true);
+  const retryCount = useRef(0);
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const subRecentTokenList = useRef(false);
   const subPools = useRef<Set<string>>(new Set());
   const subTxnsAssets = useRef<Set<string>>(new Set());
@@ -206,9 +210,19 @@ export const DataStreamProvider = ({ children }: { children: React.ReactNode }) 
   }, [queryClient, setDataStreamMsg, subscribePools, subscribeRecentTokenList, subscribeTxns]);
 
   useEffect(() => {
+    // Only initialize WebSocket in browser
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     const cleanup = init();
     return () => {
       shouldReconnect.current = false;
+      retryCount.current = 0;
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+        reconnectTimeoutRef.current = null;
+      }
       cleanup();
     };
   }, [init]);

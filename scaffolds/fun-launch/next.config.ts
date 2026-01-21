@@ -3,6 +3,9 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   
+  // Enable source maps in production for better error debugging
+  productionBrowserSourceMaps: true,
+  
   // Ignore ESLint and TypeScript errors during builds for faster deployments
   eslint: {
     ignoreDuringBuilds: true,
