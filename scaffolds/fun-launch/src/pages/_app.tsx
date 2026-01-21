@@ -7,7 +7,12 @@ import { useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useWindowWidthListener } from '@/lib/device';
 import { AskKogaion } from '@/components/AskKogaion';
-import { ErrorBoundary } from '@/components/ErrorBoundary';
+import dynamic from 'next/dynamic';
+
+// ErrorBoundary must be loaded client-side only to avoid SSR issues
+const ErrorBoundary = dynamic(() => import('@/components/ErrorBoundary').then(mod => ({ default: mod.ErrorBoundary })), {
+  ssr: false,
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   const wallets: Adapter[] = useMemo(() => {
