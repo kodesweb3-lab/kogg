@@ -22,35 +22,47 @@ export const Header = () => {
   const { disconnect, publicKey } = useWallet();
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
   
-  // Use hook and immediately extract primitive values to prevent object rendering
+  // Use hook and immediately extract primitive values using useMemo to prevent object rendering
   const feeClaimerHookResult = useIsPlatformFeeClaimer();
   
-  // Extract values with maximum type safety - ensure primitives only
-  // Never allow objects to be used in render
-  const isFeeClaimer: boolean = (() => {
-    if (!feeClaimerHookResult) return false;
-    if (typeof feeClaimerHookResult !== 'object') return false;
-    if (Array.isArray(feeClaimerHookResult)) return false;
-    const value = feeClaimerHookResult.isFeeClaimer;
-    return typeof value === 'boolean' ? value : false;
-  })();
+  // Extract values with maximum type safety using useMemo - ensure primitives only
+  // Never allow objects to be used in render - extract immediately
+  const isFeeClaimer = useMemo<boolean>(() => {
+    try {
+      if (!feeClaimerHookResult) return false;
+      if (typeof feeClaimerHookResult !== 'object') return false;
+      if (feeClaimerHookResult === null) return false;
+      if (Array.isArray(feeClaimerHookResult)) return false;
+      const value = (feeClaimerHookResult as { isFeeClaimer?: unknown }).isFeeClaimer;
+      return typeof value === 'boolean' ? value : false;
+    } catch {
+      return false;
+    }
+  }, [feeClaimerHookResult]);
   
-  const isLoadingFeeClaimer: boolean = (() => {
-    if (!feeClaimerHookResult) return false;
-    if (typeof feeClaimerHookResult !== 'object') return false;
-    if (Array.isArray(feeClaimerHookResult)) return false;
-    const value = feeClaimerHookResult.isLoading;
-    return typeof value === 'boolean' ? value : false;
-  })();
+  const isLoadingFeeClaimer = useMemo<boolean>(() => {
+    try {
+      if (!feeClaimerHookResult) return false;
+      if (typeof feeClaimerHookResult !== 'object') return false;
+      if (feeClaimerHookResult === null) return false;
+      if (Array.isArray(feeClaimerHookResult)) return false;
+      const value = (feeClaimerHookResult as { isLoading?: unknown }).isLoading;
+      return typeof value === 'boolean' ? value : false;
+    } catch {
+      return false;
+    }
+  }, [feeClaimerHookResult]);
 
   // Safely handle feeClaimer check - ensure all values are valid primitives
   // Prevent rendering with undefined/null/object values that could cause React error #130
-  const showClaimButton: boolean = Boolean(
-    address &&
-    typeof address === 'string' &&
-    !isLoadingFeeClaimer &&
-    isFeeClaimer === true
-  );
+  const showClaimButton = useMemo<boolean>(() => {
+    return Boolean(
+      address &&
+      typeof address === 'string' &&
+      !isLoadingFeeClaimer &&
+      isFeeClaimer === true
+    );
+  }, [address, isLoadingFeeClaimer, isFeeClaimer]);
 
   // Close mobile menu on route change
   useEffect(() => {
