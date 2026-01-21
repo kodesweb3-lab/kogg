@@ -9,8 +9,6 @@ import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ReferralModal = dynamic(() => import('./ReferralModal'), { ssr: false });
-// Separate component for fee claimer check to avoid object rendering issues
-const FeeClaimerButton = dynamic(() => import('./FeeClaimerButton'), { ssr: false });
 
 export const Header = () => {
   const { setShowModal } = useUnifiedWalletContext();
@@ -164,8 +162,6 @@ export const Header = () => {
             </button>
           )}
           
-          {/* Claim Partner Fees Button - Only visible to feeClaimer */}
-          <FeeClaimerButton />
           <div className="hidden md:block">
             <CreatePoolButton />
           </div>
