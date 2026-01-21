@@ -78,18 +78,44 @@ export function useIsFeeClaimer(baseMint?: string) {
   // Double-check that data is valid and extract isFeeClaimer safely
   let isFeeClaimerValue: boolean = false;
   
-  if (data && typeof data === 'object' && !Array.isArray(data) && 'isFeeClaimer' in data) {
-    const value = data.isFeeClaimer;
+  // Strict validation: data must be a plain object (not array, not null)
+  if (
+    data !== null &&
+    data !== undefined &&
+    typeof data === 'object' &&
+    !Array.isArray(data) &&
+    Object.prototype.toString.call(data) === '[object Object]' &&
+    'isFeeClaimer' in data
+  ) {
+    const value = (data as { isFeeClaimer?: unknown }).isFeeClaimer;
     if (typeof value === 'boolean') {
       isFeeClaimerValue = value;
     }
   }
 
-  // Always return primitive values - never objects
-  return {
+  // Always return a plain object with primitive boolean values only
+  // This ensures React never receives an invalid object to render
+  const result = {
     isFeeClaimer: Boolean(isFeeClaimerValue),
     isLoading: Boolean(isLoading),
   };
+  
+  // Final safety check: ensure result is a plain object with boolean properties
+  if (
+    typeof result !== 'object' ||
+    result === null ||
+    Array.isArray(result) ||
+    typeof result.isFeeClaimer !== 'boolean' ||
+    typeof result.isLoading !== 'boolean'
+  ) {
+    // Fallback to safe defaults if validation fails
+    return {
+      isFeeClaimer: false,
+      isLoading: false,
+    };
+  }
+  
+  return result;
 }
 
 /**
@@ -169,16 +195,42 @@ export function useIsPlatformFeeClaimer() {
   // Double-check that data is valid and extract isFeeClaimer safely
   let isFeeClaimerValue: boolean = false;
   
-  if (data && typeof data === 'object' && !Array.isArray(data) && 'isFeeClaimer' in data) {
-    const value = data.isFeeClaimer;
+  // Strict validation: data must be a plain object (not array, not null)
+  if (
+    data !== null &&
+    data !== undefined &&
+    typeof data === 'object' &&
+    !Array.isArray(data) &&
+    Object.prototype.toString.call(data) === '[object Object]' &&
+    'isFeeClaimer' in data
+  ) {
+    const value = (data as { isFeeClaimer?: unknown }).isFeeClaimer;
     if (typeof value === 'boolean') {
       isFeeClaimerValue = value;
     }
   }
 
-  // Always return primitive values - never objects
-  return {
+  // Always return a plain object with primitive boolean values only
+  // This ensures React never receives an invalid object to render
+  const result = {
     isFeeClaimer: Boolean(isFeeClaimerValue),
     isLoading: Boolean(isLoading),
   };
+  
+  // Final safety check: ensure result is a plain object with boolean properties
+  if (
+    typeof result !== 'object' ||
+    result === null ||
+    Array.isArray(result) ||
+    typeof result.isFeeClaimer !== 'boolean' ||
+    typeof result.isLoading !== 'boolean'
+  ) {
+    // Fallback to safe defaults if validation fails
+    return {
+      isFeeClaimer: false,
+      isLoading: false,
+    };
+  }
+  
+  return result;
 }
