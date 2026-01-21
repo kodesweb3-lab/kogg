@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useWindowWidthListener } from '@/lib/device';
 import { AskKogaion } from '@/components/AskKogaion';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export default function App({ Component, pageProps }: AppProps) {
   const wallets: Adapter[] = useMemo(() => {
