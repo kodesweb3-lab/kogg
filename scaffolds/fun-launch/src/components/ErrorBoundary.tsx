@@ -69,3 +69,7 @@ export class ErrorBoundary extends Component<Props, State> {
     return this.props.children;
   }
 }
+
+// Export both named and default for flexibility
+export { ErrorBoundary };
+export default ErrorBoundary;
