@@ -37,7 +37,8 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
   }>({
     queryKey: ['all-tokens-for-claim'],
     queryFn: async () => {
-      const res = await fetch('/api/tokens?limit=1000&sortBy=createdAt&sortOrder=desc');
+      // Fetch tokens with pagination - API allows max 100 per request
+      const res = await fetch('/api/tokens?limit=100&sortBy=createdAt&sortOrder=desc');
       if (!res.ok) throw new Error('Failed to fetch tokens');
       return res.json();
     },
