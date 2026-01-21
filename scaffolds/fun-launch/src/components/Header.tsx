@@ -21,20 +21,33 @@ export const Header = () => {
 
   const { disconnect, publicKey } = useWallet();
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
-  const feeClaimerResult = useIsPlatformFeeClaimer();
   
-  // Extract values with explicit type safety - prevent any object from being used
-  const isFeeClaimer = typeof feeClaimerResult?.isFeeClaimer === 'boolean' 
-    ? feeClaimerResult.isFeeClaimer 
-    : false;
-  const isLoadingFeeClaimer = typeof feeClaimerResult?.isLoading === 'boolean'
-    ? feeClaimerResult.isLoading
-    : false;
+  // Use hook and immediately extract primitive values to prevent object rendering
+  const feeClaimerHookResult = useIsPlatformFeeClaimer();
+  
+  // Extract values with maximum type safety - ensure primitives only
+  // Never allow objects to be used in render
+  const isFeeClaimer: boolean = (() => {
+    if (!feeClaimerHookResult) return false;
+    if (typeof feeClaimerHookResult !== 'object') return false;
+    if (Array.isArray(feeClaimerHookResult)) return false;
+    const value = feeClaimerHookResult.isFeeClaimer;
+    return typeof value === 'boolean' ? value : false;
+  })();
+  
+  const isLoadingFeeClaimer: boolean = (() => {
+    if (!feeClaimerHookResult) return false;
+    if (typeof feeClaimerHookResult !== 'object') return false;
+    if (Array.isArray(feeClaimerHookResult)) return false;
+    const value = feeClaimerHookResult.isLoading;
+    return typeof value === 'boolean' ? value : false;
+  })();
 
   // Safely handle feeClaimer check - ensure all values are valid primitives
   // Prevent rendering with undefined/null/object values that could cause React error #130
-  const showClaimButton = Boolean(
+  const showClaimButton: boolean = Boolean(
     address &&
+    typeof address === 'string' &&
     !isLoadingFeeClaimer &&
     isFeeClaimer === true
   );
