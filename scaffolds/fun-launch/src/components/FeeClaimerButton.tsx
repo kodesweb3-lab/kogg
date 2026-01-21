@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 
 const ClaimPartnerFeesModal = dynamic(() => import('./ClaimPartnerFeesModal'), { ssr: false });
 
-export function FeeClaimerButton() {
+function FeeClaimerButton() {
   const { publicKey } = useWallet();
   const [isClaimFeesOpen, setIsClaimFeesOpen] = useState(false);
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
@@ -73,3 +73,7 @@ export function FeeClaimerButton() {
     </>
   );
 }
+
+// Export both named and default for flexibility
+export { FeeClaimerButton };
+export default FeeClaimerButton;

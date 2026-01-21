@@ -10,10 +10,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const ReferralModal = dynamic(() => import('./ReferralModal'), { ssr: false });
 // Separate component for fee claimer check to avoid object rendering issues
-const FeeClaimerButton = dynamic(
-  () => import('./FeeClaimerButton').then((mod) => ({ default: mod.FeeClaimerButton })),
-  { ssr: false }
-);
+const FeeClaimerButton = dynamic(() => import('./FeeClaimerButton'), { ssr: false });
 
 export const Header = () => {
   const { setShowModal } = useUnifiedWalletContext();

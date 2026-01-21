@@ -83,7 +83,8 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
           onClose();
         },
         onError: (error) => {
-          toast.error(`Failed to claim fees: ${error}`);
+          const errorMessage = error instanceof Error ? error.message : String(error);
+          toast.error(`Failed to claim fees: ${errorMessage}`);
         },
       });
 
