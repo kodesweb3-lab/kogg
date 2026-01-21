@@ -10,9 +10,19 @@ import { AskKogaion } from '@/components/AskKogaion';
 import dynamic from 'next/dynamic';
 
 // ErrorBoundary must be loaded client-side only to avoid SSR issues
-const ErrorBoundary = dynamic(() => import('@/components/ErrorBoundary').then(mod => ({ default: mod.ErrorBoundary })), {
-  ssr: false,
-});
+// Create a wrapper component to ensure proper export
+const ErrorBoundaryWrapper = dynamic(
+  () => import('@/components/ErrorBoundary').then((mod) => {
+    // Return a wrapper component that uses ErrorBoundary
+    return {
+      default: ({ children }: { children: React.ReactNode }) => {
+        const { ErrorBoundary } = mod;
+        return <ErrorBoundary>{children}</ErrorBoundary>;
+      },
+    };
+  }),
+  { ssr: false }
+);
 
 export default function App({ Component, pageProps }: AppProps) {
   const wallets: Adapter[] = useMemo(() => {
@@ -67,6 +77,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <AskKogaion />
         </UnifiedWalletProvider>
       </QueryClientProvider>
-    </ErrorBoundary>
+    </ErrorBoundaryWrapper>
   );
 }
