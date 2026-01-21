@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 export default function LorePage() {
   return (
     <Page>
-      <div className="min-h-screen bg-mystic-steam-charcoal text-gray-100 py-12 md:py-20 px-4 relative z-10">
+      <div className="min-h-screen text-mystic-steam-parchment py-12 md:py-20 px-4 relative z-10">
         <div className="max-w-5xl mx-auto">
           {/* Hero Section */}
           <motion.div
@@ -29,7 +29,7 @@ export default function LorePage() {
             transition={{ delay: 0.2 }}
             className="mb-16"
           >
-            <div className="bg-mystic-steam-ash border border-mystic-steam-copper/30 rounded-2xl p-8 md:p-12 relative overflow-hidden">
+            <div className="steel-panel rounded-2xl p-8 md:p-12 relative overflow-hidden">
               <div className="relative z-10">
                 <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-copper">
                   The Origin
@@ -55,7 +55,7 @@ export default function LorePage() {
             transition={{ delay: 0.4 }}
             className="mb-16"
           >
-            <div className="bg-mystic-steam-ash border border-mystic-steam-gold/30 rounded-2xl p-8 md:p-12 relative overflow-hidden">
+            <div className="steel-panel rounded-2xl p-8 md:p-12 relative overflow-hidden">
               <div className="relative z-10">
                 <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-gold">
                   The Evolution (2026)
@@ -94,7 +94,7 @@ export default function LorePage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="bg-mystic-steam-ash border border-mystic-steam-copper/30 rounded-xl p-6 relative overflow-hidden"
+                className="steel-panel rounded-xl p-6 relative overflow-hidden"
               >
                 <div className="relative z-10">
                   <div className="text-4xl mb-4">⚙️</div>
@@ -166,7 +166,7 @@ export default function LorePage() {
             transition={{ delay: 0.8 }}
             className="mb-16"
           >
-            <div className="bg-mystic-steam-ash border border-mystic-steam-copper/30 rounded-2xl p-8 md:p-12 relative overflow-hidden">
+            <div className="steel-panel rounded-2xl p-8 md:p-12 relative overflow-hidden">
               <div className="relative z-10">
                 <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-copper">
                   The New Mapping (2026 Edition)
@@ -222,7 +222,7 @@ export default function LorePage() {
             transition={{ delay: 1 }}
             className="mb-16"
           >
-            <div className="bg-mystic-steam-ash border border-mystic-steam-bronze/30 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
+            <div className="steel-panel rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
               <div className="relative z-10">
                 <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-bronze">
                   The Vision

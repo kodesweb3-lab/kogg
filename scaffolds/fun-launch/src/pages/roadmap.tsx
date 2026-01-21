@@ -10,7 +10,7 @@ export default function RoadmapPage() {
 
   return (
     <Page>
-      <div className="min-h-screen bg-mystic-steam-charcoal text-mystic-steam-parchment py-12 px-4 relative z-10">
+      <div className="min-h-screen text-mystic-steam-parchment py-12 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Hero Section */}
           <motion.div
@@ -33,12 +33,12 @@ export default function RoadmapPage() {
             transition={{ delay: 0.2 }}
             className="mb-12 max-w-2xl mx-auto"
           >
-            <div className="bg-mystic-steam-ash border border-mystic-steam-copper/20 rounded-xl p-6 backdrop-blur-sm">
+            <div className="steel-panel rounded-xl p-6 backdrop-blur-sm">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-body text-mystic-steam-parchment/60">Platform Progress</span>
                 <span className="text-sm font-heading font-bold text-mystic-steam-copper">20%</span>
               </div>
-              <div className="h-2 bg-mystic-steam-charcoal rounded-full overflow-hidden border border-mystic-steam-copper/20">
+              <div className="h-2 bg-dacian-steel-dark rounded-full overflow-hidden border border-dacian-steel-steel/30">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: '20%' }}
@@ -62,7 +62,7 @@ export default function RoadmapPage() {
             viewport={{ once: true }}
             className="mt-16 text-center"
           >
-            <div className="bg-mystic-steam-ash border border-mystic-steam-copper/30 rounded-2xl p-8 md:p-12">
+            <div className="steel-panel rounded-2xl p-8 md:p-12">
               <h2 className="text-2xl md:text-3xl font-heading font-bold mb-4 text-mystic-steam-copper">
                 Ready to Begin Your Ascent?
               </h2>

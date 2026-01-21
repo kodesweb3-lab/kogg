@@ -57,7 +57,7 @@ export default function LeaderboardPage() {
 
   return (
     <Page>
-      <div className="min-h-screen bg-mystic-steam-charcoal text-mystic-steam-parchment py-12 px-4 relative z-10">
+      <div className="min-h-screen text-mystic-steam-parchment py-12 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <motion.div
@@ -80,13 +80,13 @@ export default function LeaderboardPage() {
             transition={{ delay: 0.1 }}
             className="grid grid-cols-2 gap-4 mb-8"
           >
-            <div className="bg-mystic-steam-ash rounded-xl p-6 border border-mystic-steam-copper/30 text-center">
+            <div className="steel-panel rounded-xl p-6 text-center">
               <div className="text-3xl font-heading font-bold text-mystic-steam-copper">
                 {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : data?.stats.totalTokens || 0}
               </div>
               <div className="text-sm text-mystic-steam-parchment/60 font-body mt-1">Tokens Summoned</div>
             </div>
-            <div className="bg-mystic-steam-ash rounded-xl p-6 border border-mystic-steam-copper/30 text-center">
+            <div className="steel-panel rounded-xl p-6 text-center">
               <div className="text-3xl font-heading font-bold text-mystic-steam-copper">
                 {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : data?.stats.totalCreators || 0}
               </div>
@@ -99,7 +99,7 @@ export default function LeaderboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-mystic-steam-ash rounded-xl border border-mystic-steam-copper/30 overflow-hidden"
+            className="steel-panel rounded-xl overflow-hidden"
           >
             <div className="px-6 py-4 border-b border-mystic-steam-copper/20">
               <h2 className="font-heading font-bold text-xl text-mystic-steam-copper">Top Creators</h2>
@@ -127,7 +127,7 @@ export default function LeaderboardPage() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.05 }}
-                      className="flex items-center gap-4 px-6 py-4 hover:bg-mystic-steam-charcoal transition-colors"
+                      className="flex items-center gap-4 px-6 py-4 hover:bg-dacian-steel-dark transition-colors"
                     >
                       {/* Rank */}
                       <div className={`w-8 text-center font-heading font-bold ${badge.color}`}>

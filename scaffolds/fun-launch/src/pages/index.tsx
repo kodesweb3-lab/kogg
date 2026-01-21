@@ -24,14 +24,17 @@ export default function LandingPage() {
   });
 
   return (
-    <div className="min-h-screen bg-mystic-steam-charcoal text-mystic-steam-parchment relative">
-      {/* Industrial background */}
-      <div className="mountain-bg" />
+    <div className="min-h-screen bg-dacian-steel-dark text-mystic-steam-parchment relative">
+      {/* Layered atmospheric background */}
+      <div className="atmosphere-layer" />
+      <div className="steam-layer" />
+      <div className="castle-silhouette" />
+      <div className="dacian-pattern" />
       
       {/* Hero Section */}
       <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden z-10">
-        {/* Background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-mystic-steam-charcoal via-mystic-steam-ash to-mystic-steam-charcoal">
+        {/* Enhanced background with steam layers */}
+        <div className="absolute inset-0 bg-gradient-to-b from-dacian-steel-dark via-dacian-steel-gunmetal to-dacian-steel-dark">
           <motion.div
             className="absolute inset-0 opacity-10"
             animate={{
@@ -43,7 +46,7 @@ export default function LandingPage() {
               repeatType: 'reverse',
             }}
             style={{
-              backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(184, 115, 51, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(140, 90, 43, 0.08) 0%, transparent 50%)',
+              backgroundImage: 'radial-gradient(circle at 20% 50%, rgba(139, 111, 71, 0.08) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(107, 82, 51, 0.06) 0%, transparent 50%)',
               backgroundSize: '200% 200%',
             }}
           />
@@ -111,14 +114,15 @@ export default function LandingPage() {
           >
             <Button
               onClick={() => router.push('/create-pool')}
-              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4"
+              variant="steel"
+              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 text-dacian-copper-light font-heading"
             >
               Launch a Token
             </Button>
             <Button
               onClick={() => router.push('/discover')}
               variant="outline"
-              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4"
+              className="w-full sm:w-auto text-base md:text-lg px-6 md:px-8 py-3 md:py-4 border-dacian-steel-steel/40 hover:border-dacian-steel-steel/60"
             >
               Explore the Pack
             </Button>
@@ -194,7 +198,7 @@ export default function LandingPage() {
       </section>
 
       {/* How the Ritual Works */}
-      <section className="py-20 px-4 bg-mystic-steam-ash">
+      <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-12 text-mystic-steam-copper">
             How the Ritual Works
@@ -223,7 +227,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className="bg-mystic-steam-charcoal p-6 rounded-lg border border-mystic-steam-copper/30"
+                className="steel-panel p-6 rounded-lg"
               >
                 <div className="text-4xl mb-4">{step.icon}</div>
                 <h3 className="text-xl font-heading font-semibold mb-3 text-mystic-steam-copper">
@@ -255,7 +259,7 @@ export default function LandingPage() {
       </section>
 
       {/* Safety / LP Locked */}
-      <section className="py-20 px-4 bg-mystic-steam-ash relative z-10">
+      <section className="py-20 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-8 text-mystic-steam-copper">
             Safety & Liquidity
@@ -323,7 +327,7 @@ export default function LandingPage() {
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-                className="bg-mystic-steam-ash border border-mystic-steam-copper/30 rounded-2xl p-8 md:p-12"
+                className="steel-panel rounded-2xl p-8 md:p-12"
           >
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 text-mystic-steam-copper">
               Ready to Begin the Ritual?

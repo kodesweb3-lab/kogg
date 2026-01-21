@@ -23,6 +23,27 @@
   --mystic-steam-bg: #0E0F11;
   --mystic-steam-bg-elevated: #16181D;
   --mystic-steam-bg-hover: #1a1a2e;
+  
+  /* Dacian Steel & Professional Palette (2026) */
+  --dacian-steel-gunmetal: #1a1d23;
+  --dacian-steel-steel: #252932;
+  --dacian-steel-steel-blue: #2d3748;
+  --dacian-steel-brushed: #3a4451;
+  --dacian-steel-dark: #14161a;
+  --dacian-copper: #8B6F47;
+  --dacian-copper-dark: #6B5233;
+  --dacian-copper-light: #A6895A;
+  --castle-stone: #0d0f12;
+  --castle-stone-warm: #14161a;
+  --draco-bronze: #5d4e37;
+  --draco-bronze-dark: #4a3e2d;
+  
+  /* Steam mist overlays */
+  --steam-mist-light: rgba(255, 255, 255, 0.03);
+  --steam-mist-medium: rgba(255, 255, 255, 0.05);
+  --steam-mist-heavy: rgba(255, 255, 255, 0.08);
+  --steam-mist-cool: rgba(200, 210, 220, 0.04);
+  --steam-mist-warm: rgba(240, 235, 225, 0.04);
 }
 
 @theme inline {
@@ -40,7 +61,76 @@ body {
   position: relative;
 }
 
-/* Mystic Steampunk Ritual Mountain Background */
+/* Layered Atmospheric Background System */
+.atmosphere-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(
+    180deg,
+    #0d0f12 0%,
+    #14161a 30%,
+    #0d0f12 70%,
+    #0a0c0f 100%
+  );
+}
+
+.steam-layer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  background: 
+    radial-gradient(ellipse at 20% 80%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 90%, rgba(200, 210, 220, 0.02) 0%, transparent 50%);
+  opacity: 0.6;
+  animation: steamDrift 20s ease-in-out infinite;
+}
+
+@keyframes steamDrift {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-5vh) scale(1.05);
+    opacity: 0.7;
+  }
+}
+
+.castle-silhouette {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg width='800' height='400' viewBox='0 0 800 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1' opacity='0.3'%3E%3Cpath d='M0 400 L100 350 L150 300 L200 320 L250 280 L300 300 L350 250 L400 270 L450 220 L500 240 L550 200 L600 220 L650 180 L700 200 L750 160 L800 180 L800 400 Z'/%3E%3Cpath d='M150 300 L150 250 L180 250 L180 300'/%3E%3Cpath d='M350 250 L350 200 L380 200 L380 250'/%3E%3Cpath d='M550 200 L550 150 L580 150 L580 200'/%3E%3Cpath d='M650 180 L650 130 L680 130 L680 180'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: cover;
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  mask-image: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+}
+
+.dacian-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23B87333' stroke-width='0.5'%3E%3Cpath d='M50 100 Q75 75 100 100 T150 100'/%3E%3Cpath d='M50 150 Q75 125 100 150 T150 150'/%3E%3Ccircle cx='100' cy='50' r='8'/%3E%3Cpath d='M100 42 L95 50 L100 58 L105 50 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  background-repeat: repeat;
+}
+
+/* Legacy mountain-bg (kept for compatibility) */
 .mountain-bg {
   position: fixed;
   bottom: 0;
@@ -64,15 +154,79 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   letter-spacing: 0.05em;
+  line-height: 1.2;
 }
 
-/* Subtle Animations */
+/* Typography refinement */
+.text-premium {
+  letter-spacing: 0.025em;
+  line-height: 1.6;
+}
+
+.heading-premium {
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+/* Professional Animation System */
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes steamRise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) scale(2.5);
+    opacity: 0;
+  }
+}
+
+@keyframes steelShine {
+  0% {
+    transform: translateX(-100%) skewX(-20deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(200%) skewX(-20deg);
+    opacity: 0;
   }
 }
 
@@ -85,8 +239,49 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* Animation utilities */
 .animate-fade-in {
   animation: fadeIn 0.8s ease-in-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.4s ease-out;
+}
+
+.animate-steel-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-steel-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: steelShine 3s ease-in-out infinite;
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .animate-mechanical-shift {
@@ -135,6 +330,143 @@ h1, h2, h3, h4, h5, h6 {
 
 .copper-border:hover {
   border-color: rgba(184, 115, 51, 0.5);
+}
+
+/* Professional Steel Textures */
+.steel-surface {
+  background: linear-gradient(
+    135deg,
+    #252932 0%,
+    #1a1d23 25%,
+    #252932 50%,
+    #1a1d23 75%,
+    #252932 100%
+  );
+  background-size: 200% 200%;
+  position: relative;
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.steel-surface::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.02) 2px,
+    rgba(255, 255, 255, 0.02) 4px
+  );
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.steel-border {
+  border: 1px solid rgba(58, 68, 81, 0.4);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.steel-border:hover {
+  border-color: rgba(58, 68, 81, 0.6);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.steel-panel {
+  background: linear-gradient(
+    135deg,
+    #1a1d23 0%,
+    #252932 50%,
+    #1a1d23 100%
+  );
+  border: 1px solid rgba(58, 68, 81, 0.3);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.steel-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.steel-panel:hover::before {
+  left: 100%;
+}
+
+.steel-button {
+  background: linear-gradient(
+    135deg,
+    #252932 0%,
+    #1a1d23 50%,
+    #252932 100%
+  );
+  border: 1px solid rgba(58, 68, 81, 0.5);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.steel-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.4s ease;
+}
+
+.steel-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.steel-button:hover::before {
+  left: 100%;
+}
+
+.steel-button:active {
+  transform: translateY(0);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.5),
+    0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* Scrollbar */

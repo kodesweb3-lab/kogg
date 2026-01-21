@@ -60,7 +60,9 @@ export const Header = () => {
 
   return (
     <>
-      <header className="w-full px-4 py-3 flex items-center justify-between border-b border-mystic-steam-copper/30 bg-mystic-steam-charcoal/80 backdrop-blur-sm sticky top-0 z-40">
+      <header className="w-full px-4 py-3 flex items-center justify-between border-b border-dacian-steel-steel/40 bg-dacian-steel-gunmetal/90 backdrop-blur-sm sticky top-0 z-40 steel-surface relative overflow-hidden">
+        {/* Subtle steam effect at bottom edge */}
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-steam-mist-medium to-transparent opacity-30" />
         {/* Logo Section */}
         <Link href="/" className="flex items-center gap-2 md:gap-3">
           <img 

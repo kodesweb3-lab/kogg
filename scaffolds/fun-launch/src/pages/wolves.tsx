@@ -46,7 +46,7 @@ export default function WolvesPage() {
 
   return (
     <Page>
-      <div className="min-h-screen bg-mystic-steam-charcoal text-mystic-steam-parchment py-20 px-4 relative z-10">
+      <div className="min-h-screen text-mystic-steam-parchment py-20 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <motion.div
@@ -71,7 +71,7 @@ export default function WolvesPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="bg-mystic-steam-ash p-6 rounded-lg border border-mystic-steam-copper/30 hover:border-mystic-steam-copper/50 transition-all"
+                className="steel-panel p-6 rounded-lg hover:border-dacian-steel-steel/60 transition-all"
               >
                 <div className="text-5xl mb-4">{wolf.icon}</div>
                 <h2 className="text-2xl font-heading font-bold mb-3 text-mystic-steam-copper">
@@ -82,7 +82,7 @@ export default function WolvesPage() {
                   {wolf.traits.map((trait) => (
                     <span
                       key={trait}
-                      className="px-2 py-1 text-xs bg-mystic-steam-charcoal rounded border border-mystic-steam-copper/20 text-mystic-steam-parchment/60"
+                      className="px-2 py-1 text-xs bg-dacian-steel-dark rounded border border-dacian-steel-steel/30 text-mystic-steam-parchment/60"
                     >
                       {trait}
                     </span>
@@ -100,7 +100,7 @@ export default function WolvesPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="bg-mystic-steam-ash p-8 rounded-lg border border-mystic-steam-copper/30 text-center"
+            className="steel-panel p-8 rounded-lg text-center"
           >
             <h2 className="text-3xl font-heading font-bold mb-4 text-mystic-steam-copper">
               Build Your Own
@@ -122,7 +122,7 @@ export default function WolvesPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="mt-12 p-6 bg-mystic-steam-charcoal rounded-lg border border-mystic-steam-copper/20"
+            className="mt-12 p-6 steel-panel rounded-lg"
           >
             <p className="text-mystic-steam-parchment/60 font-body text-center">
               <strong className="text-mystic-steam-copper">Important:</strong> All presets are

@@ -14,12 +14,15 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
   return (
     <div
       className={cn(
-        'flex min-h-screen flex-col justify-between bg-mystic-steam-charcoal text-mystic-steam-parchment relative film-grain vignette',
+        'flex min-h-screen flex-col justify-between bg-dacian-steel-dark text-mystic-steam-parchment relative film-grain vignette',
         pageClassName
       )}
     >
-      {/* Mountain silhouette background */}
-      <div className="mountain-bg" />
+      {/* Layered atmospheric background */}
+      <div className="atmosphere-layer" />
+      <div className="steam-layer" />
+      <div className="castle-silhouette" />
+      <div className="dacian-pattern" />
       
       <Header />
       <div

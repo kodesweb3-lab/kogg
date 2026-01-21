@@ -18,6 +18,22 @@ export default {
         heading: ['Cinzel', 'Cormorant', 'Playfair Display SC', 'serif'],
         body: ['Inter', 'Source Serif 4', 'sans-serif'],
       },
+      letterSpacing: {
+        tighter: '-0.05em',
+        tight: '-0.025em',
+        normal: '0',
+        wide: '0.025em',
+        wider: '0.05em',
+        widest: '0.1em',
+      },
+      lineHeight: {
+        tighter: '1.1',
+        tight: '1.25',
+        snug: '1.375',
+        normal: '1.5',
+        relaxed: '1.625',
+        loose: '2',
+      },
 
       colors: {
         // Mystic Steampunk Ritual Palette
@@ -36,6 +52,33 @@ export default {
           bg: '#0E0F11',            // Alias for charcoal
           bgElevated: '#16181D',    // Alias for ash
           bgHover: '#1a1a2e',       // Slightly lighter for hover states
+        },
+        // Dacian Steel & Professional Palette (2026)
+        'dacian-steel': {
+          // Steel tones - professional metallic
+          gunmetal: '#1a1d23',      // Gunmetal gray - primary steel
+          steel: '#252932',         // Steel gray - secondary
+          steelBlue: '#2d3748',     // Steel blue - cool accent
+          brushed: '#3a4451',       // Brushed silver - highlights
+          dark: '#14161a',          // Dark steel - deep backgrounds
+          // Dacian copper - refined, more muted
+          copper: '#8B6F47',        // Refined Dacian copper
+          copperDark: '#6B5233',    // Dark oxidized copper
+          copperLight: '#A6895A',  // Light copper accent
+          // Castle stone - deep charcoals with warm undertones
+          stone: '#0d0f12',         // Castle stone base
+          stoneWarm: '#14161a',      // Warm stone variant
+          // Draco accents - deep bronze for wolf/Draco elements
+          draco: '#5d4e37',         // Draco bronze
+          dracoDark: '#4a3e2d',     // Dark draco
+        },
+        // Steam mist - subtle overlay effects
+        'steam-mist': {
+          light: 'rgba(255, 255, 255, 0.03)',   // Very subtle
+          medium: 'rgba(255, 255, 255, 0.05)',  // Medium subtle
+          heavy: 'rgba(255, 255, 255, 0.08)',   // Heavier (still subtle)
+          cool: 'rgba(200, 210, 220, 0.04)',    // Cool-toned mist
+          warm: 'rgba(240, 235, 225, 0.04)',   // Warm-toned mist
         },
         // Kogaion Dark Ritual Palette (kept for backwards compatibility)
         ritual: {

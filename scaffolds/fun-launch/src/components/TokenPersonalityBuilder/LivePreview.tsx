@@ -69,7 +69,7 @@ export function LivePreview({ personaData }: LivePreviewProps) {
               className={`max-w-[80%] p-2 rounded-lg text-sm font-body ${
                 msg.role === 'user'
                   ? 'bg-mystic-steam-copper/20 text-gray-100'
-                  : 'bg-mystic-steam-charcoalElevated text-gray-300'
+                  : 'bg-dacian-steel-gunmetal text-mystic-steam-parchment'
               }`}
             >
               {msg.content}
@@ -78,7 +78,7 @@ export function LivePreview({ personaData }: LivePreviewProps) {
         ))}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="bg-mystic-steam-charcoalElevated p-2 rounded-lg">
+            <div className="bg-dacian-steel-gunmetal p-2 rounded-lg">
               <div className="flex gap-1">
                 <div className="w-1.5 h-1.5 bg-mystic-steam-copper rounded-full animate-bounce" />
                 <div className="w-1.5 h-1.5 bg-mystic-steam-copper rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
