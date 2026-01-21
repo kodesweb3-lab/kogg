@@ -15,9 +15,13 @@ export default function App({ Component, pageProps }: AppProps) {
     const adapters: Adapter[] = [];
     
     // Only add Phantom if not already detected as standard wallet
-    if (typeof window !== 'undefined' && !window.solana?.isPhantom) {
-      adapters.push(new PhantomWalletAdapter());
-    } else if (typeof window === 'undefined') {
+    if (typeof window !== 'undefined') {
+      // Check if Phantom is already injected as a standard wallet
+      const hasPhantomStandard = (window as any).solana?.isPhantom;
+      if (!hasPhantomStandard) {
+        adapters.push(new PhantomWalletAdapter());
+      }
+    } else {
       // SSR: include Phantom, it will be filtered client-side if needed
       adapters.push(new PhantomWalletAdapter());
     }
