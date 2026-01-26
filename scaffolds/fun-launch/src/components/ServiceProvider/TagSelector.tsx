@@ -101,7 +101,7 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute z-50 w-full mt-2 steel-panel rounded-lg shadow-lg max-h-64 overflow-y-auto"
+                className="absolute z-50 w-full mt-2 steel-panel rounded-lg shadow-lg max-h-96 overflow-y-auto"
               >
                 {/* Search input */}
                 <div className="p-2 border-b border-dacian-steel-steel/30">
@@ -117,17 +117,21 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
                 {/* Predefined tags list */}
                 {filteredTags.length > 0 && (
                   <div className="p-2">
-                    <div className="text-xs text-mystic-steam-parchment/60 mb-2 px-2">Predefined Tags</div>
-                    {filteredTags.slice(0, 10).map((tag) => (
-                      <button
-                        key={tag}
-                        type="button"
-                        onClick={() => handleTagSelect(tag)}
-                        className="w-full text-left px-3 py-2 hover:bg-dacian-steel-steel rounded text-sm text-mystic-steam-parchment transition-colors"
-                      >
-                        {tag}
-                      </button>
-                    ))}
+                    <div className="text-xs text-mystic-steam-parchment/60 mb-2 px-2 sticky top-0 bg-dacian-steel-gunmetal py-1 rounded">
+                      Predefined Tags ({filteredTags.length} available)
+                    </div>
+                    <div className="space-y-1">
+                      {filteredTags.map((tag) => (
+                        <button
+                          key={tag}
+                          type="button"
+                          onClick={() => handleTagSelect(tag)}
+                          className="w-full text-left px-3 py-2 hover:bg-dacian-steel-steel rounded text-sm text-mystic-steam-parchment transition-colors"
+                        >
+                          {tag}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 )}
 
