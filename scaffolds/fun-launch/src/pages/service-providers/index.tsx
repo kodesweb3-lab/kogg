@@ -186,17 +186,164 @@ export default function ServiceProvidersMarketplacePage() {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                {data.providers.map((provider, index) => (
-                  <motion.div
-                    key={provider.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <ServiceProviderCard provider={provider} />
-                  </motion.div>
-                ))}
+              {/* Premium Table Layout */}
+              <div className="steel-panel rounded-xl overflow-hidden mb-8">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead className="bg-dacian-steel-gunmetal/50 border-b border-dacian-steel-steel/30">
+                      <tr>
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                          Provider
+                        </th>
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                          Services
+                        </th>
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                          Contact
+                        </th>
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-dacian-steel-steel/20">
+                      {data.providers.map((provider, index) => (
+                        <motion.tr
+                          key={provider.id}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: index * 0.02 }}
+                          className="hover:bg-dacian-steel-gunmetal/30 transition-colors"
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex flex-col">
+                              <div className="flex items-center gap-2">
+                                <span className="font-mono text-sm font-medium text-mystic-steam-parchment">
+                                  {provider.wallet.slice(0, 4)}...{provider.wallet.slice(-4)}
+                                </span>
+                                {provider.verified && (
+                                  <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-500/20 text-green-400 rounded text-xs font-medium border border-green-500/30">
+                                    ✓ Verified
+                                  </span>
+                                )}
+                              </div>
+                              {provider.twitterHandle && (
+                                <Link
+                                  href={`https://x.com/${provider.twitterHandle}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-xs text-dacian-steel-copper hover:text-dacian-steel-copper-light mt-1"
+                                >
+                                  @{provider.twitterHandle}
+                                </Link>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex flex-col gap-2">
+                              {provider.description && (
+                                <p className="text-sm text-mystic-steam-parchment/80 line-clamp-2 max-w-md">
+                                  {provider.description}
+                                </p>
+                              )}
+                              {provider.tags.length > 0 && (
+                                <div className="flex flex-wrap gap-1.5">
+                                  {provider.tags.slice(0, 4).map((tagItem) => (
+                                    <span
+                                      key={tagItem.tag}
+                                      className="px-2 py-0.5 bg-dacian-steel-steel/50 text-mystic-steam-parchment/70 rounded text-xs border border-dacian-steel-steel/30"
+                                    >
+                                      {tagItem.tag}
+                                    </span>
+                                  ))}
+                                  {provider.tags.length > 4 && (
+                                    <span className="px-2 py-0.5 text-mystic-steam-parchment/50 text-xs">
+                                      +{provider.tags.length - 4}
+                                    </span>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex flex-wrap gap-2">
+                              {provider.telegram && (
+                                <Link
+                                  href={`https://t.me/${provider.telegram.replace(/^@/, '')}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors border border-dacian-steel-steel/30"
+                                >
+                                  Telegram
+                                </Link>
+                              )}
+                              {provider.twitterHandle && (
+                                <Link
+                                  href={`https://x.com/${provider.twitterHandle}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors border border-dacian-steel-steel/30"
+                                >
+                                  Twitter
+                                </Link>
+                              )}
+                              {provider.email && (
+                                <a
+                                  href={`mailto:${provider.email}`}
+                                  className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors border border-dacian-steel-steel/30"
+                                >
+                                  Email
+                                </a>
+                              )}
+                              {!provider.telegram && !provider.twitterHandle && !provider.email && (
+                                <span className="text-xs text-mystic-steam-parchment/50">No contact info</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex flex-col gap-1">
+                              {provider.verified ? (
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-500/20 text-green-400 rounded text-xs font-medium border border-green-500/30 w-fit">
+                                  ✓ Verified
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-500/20 text-yellow-400 rounded text-xs font-medium border border-yellow-500/30 w-fit">
+                                  Pending
+                                </span>
+                              )}
+                              <span className="text-xs text-mystic-steam-parchment/50">
+                                {new Date(provider.createdAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex gap-2">
+                              {(provider.telegram || provider.twitterHandle || provider.email) && (
+                                <button
+                                  onClick={() => {
+                                    if (provider.telegram) {
+                                      window.open(`https://t.me/${provider.telegram.replace(/^@/, '')}`, '_blank');
+                                    } else if (provider.twitterHandle) {
+                                      window.open(`https://x.com/${provider.twitterHandle}`, '_blank');
+                                    } else if (provider.email) {
+                                      window.location.href = `mailto:${provider.email}`;
+                                    }
+                                  }}
+                                  className="px-4 py-2 bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper text-mystic-steam-parchment rounded text-xs font-medium transition-colors"
+                                >
+                                  Contact
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </motion.tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               {/* Pagination */}

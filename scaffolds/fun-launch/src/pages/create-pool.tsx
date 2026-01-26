@@ -76,16 +76,33 @@ export default function CreatePool() {
         const { tokenLogo } = value;
         if (!tokenLogo) {
           toast.error('Token logo is required');
+          setIsLoading(false);
           return;
+        }
+
+        // Validate RWA fields if tokenType is RWA
+        if (value.tokenType === 'RWA') {
+          if (!value.assetType || !value.assetType.trim()) {
+            toast.error('Asset Type is required for RWA tokens');
+            setIsLoading(false);
+            return;
+          }
+          if (!value.assetDescription || !value.assetDescription.trim()) {
+            toast.error('Asset Description is required for RWA tokens');
+            setIsLoading(false);
+            return;
+          }
         }
 
         if (!signTransaction) {
           toast.error('Wallet not connected');
+          setIsLoading(false);
           return;
         }
 
         if (!address) {
           toast.error('Wallet address not available');
+          setIsLoading(false);
           return;
         }
 

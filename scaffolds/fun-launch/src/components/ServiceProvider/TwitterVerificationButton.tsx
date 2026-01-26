@@ -18,10 +18,33 @@ export function TwitterVerificationButton({
   const [isLoading, setIsLoading] = useState(false);
   const [verificationCode, setVerificationCode] = useState<string | null>(null);
   const [tweetMessage, setTweetMessage] = useState<string | null>(null);
-  const [tweetId, setTweetId] = useState('');
-  const [twitterHandle, setTwitterHandle] = useState('');
+  const [tweetUrl, setTweetUrl] = useState('');
+  const [extractedData, setExtractedData] = useState<{ handle: string; tweetId: string } | null>(null);
   const [verificationId, setVerificationId] = useState<string | null>(null);
   const [isChecking, setIsChecking] = useState(false);
+
+  // Parse tweet URL to extract handle and tweet ID
+  const parseTweetUrl = (url: string): { handle: string; tweetId: string } | null => {
+    // Match patterns:
+    // x.com/username/status/TWEET_ID
+    // twitter.com/username/status/TWEET_ID
+    // www.x.com/username/status/TWEET_ID
+    // https://x.com/username/status/TWEET_ID
+    const match = url.match(/(?:x\.com|twitter\.com)\/([^\/\?]+)\/status\/(\d+)/i);
+    if (match) {
+      return {
+        handle: match[1].replace('@', '').trim(),
+        tweetId: match[2].trim(),
+      };
+    }
+    return null;
+  };
+
+  const handleUrlChange = (url: string) => {
+    setTweetUrl(url);
+    const parsed = parseTweetUrl(url);
+    setExtractedData(parsed);
+  };
 
   const handleInitVerification = async () => {
     if (!publicKey) {
@@ -46,7 +69,12 @@ export function TwitterVerificationButton({
       setVerificationCode(data.verificationCode);
       setTweetMessage(data.tweetMessage);
       setVerificationId(data.verificationId);
-      toast.success('Verification code generated! Please post the tweet.');
+      
+      // Automatically open Twitter with pre-filled message
+      const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(data.tweetMessage)}`;
+      window.open(twitterUrl, '_blank');
+      
+      toast.success('Twitter opened! Post the tweet, then paste the URL below.');
     } catch (error: any) {
       toast.error(error.message || 'Failed to initialize verification');
     } finally {
@@ -55,13 +83,13 @@ export function TwitterVerificationButton({
   };
 
   const handleVerify = async () => {
-    if (!tweetId.trim()) {
-      toast.error('Please enter the tweet ID');
+    if (!tweetUrl.trim()) {
+      toast.error('Please paste the tweet URL');
       return;
     }
 
-    if (!twitterHandle.trim()) {
-      toast.error('Please enter your Twitter handle');
+    if (!extractedData) {
+      toast.error('Invalid tweet URL. Please paste a valid Twitter/X tweet URL');
       return;
     }
 
@@ -77,8 +105,8 @@ export function TwitterVerificationButton({
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           verificationId,
-          tweetId: tweetId.trim(),
-          twitterHandle: twitterHandle.trim(),
+          tweetId: extractedData.tweetId,
+          twitterHandle: extractedData.handle,
         }),
       });
 
@@ -90,7 +118,9 @@ export function TwitterVerificationButton({
       toast.success('Verification completed successfully!');
       setVerificationCode(null);
       setTweetMessage(null);
-      setTweetId('');
+      setTweetUrl('');
+      setExtractedData(null);
+      setVerificationId(null);
       onVerified?.();
     } catch (error: any) {
       toast.error(error.message || 'Failed to verify');
@@ -104,11 +134,12 @@ export function TwitterVerificationButton({
       <div className="space-y-4 p-4 steel-panel rounded-lg">
         <div>
           <p className="text-sm text-mystic-steam-parchment/70 mb-2">
-            Please post this tweet on your Twitter account:
+            Tweet posted? Paste the URL below to verify:
           </p>
-          <div className="p-3 bg-dacian-steel-dark rounded border border-dacian-steel-steel/30">
-            <p className="text-sm text-mystic-steam-parchment whitespace-pre-wrap">
-              {tweetMessage}
+          <div className="p-3 bg-dacian-steel-dark rounded border border-dacian-steel-steel/30 mb-3">
+            <p className="text-xs text-mystic-steam-parchment/60 mb-1">Verification Code:</p>
+            <p className="text-sm font-mono text-mystic-steam-copper font-bold">
+              {verificationCode}
             </p>
           </div>
           <button
@@ -117,53 +148,61 @@ export function TwitterVerificationButton({
               const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetMessage)}`;
               window.open(twitterUrl, '_blank');
             }}
-            className="mt-2 text-sm text-dacian-steel-copper hover:text-dacian-steel-copper-light"
+            className="text-sm text-dacian-steel-copper hover:text-dacian-steel-copper-light underline"
           >
-            Open Twitter to post →
+            Open Twitter again →
           </button>
         </div>
 
         <div className="space-y-4">
           <div>
             <label className="block text-sm text-mystic-steam-parchment/70 mb-2">
-              Twitter Handle
+              Paste Your Tweet URL
             </label>
             <input
               type="text"
-              value={twitterHandle}
-              onChange={(e) => setTwitterHandle(e.target.value)}
-              placeholder="@username or username"
-              className="w-full px-3 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
-            />
-          </div>
-          <div>
-            <label className="block text-sm text-mystic-steam-parchment/70 mb-2">
-              Tweet ID (from the tweet URL):
-            </label>
-            <input
-              type="text"
-              value={tweetId}
-              onChange={(e) => setTweetId(e.target.value)}
-              placeholder="e.g., 1234567890123456789"
-              className="w-full px-3 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+              value={tweetUrl}
+              onChange={(e) => handleUrlChange(e.target.value)}
+              placeholder="https://x.com/username/status/1234567890"
+              className="w-full min-h-[44px] px-3 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
             />
             <p className="text-xs text-mystic-steam-parchment/50 mt-1">
-              Find the tweet ID in the URL: x.com/username/status/[TWEET_ID]
+              After posting the tweet above, copy its URL and paste it here
             </p>
+            {extractedData && (
+              <div className="mt-2 p-2 bg-dacian-steel-dark/50 rounded border border-dacian-steel-copper/30">
+                <p className="text-xs text-mystic-steam-parchment/70 mb-1">Detected:</p>
+                <p className="text-sm text-mystic-steam-copper font-mono">@{extractedData.handle}</p>
+                <p className="text-xs text-mystic-steam-parchment/50 font-mono">Tweet ID: {extractedData.tweetId}</p>
+              </div>
+            )}
+            {tweetUrl && !extractedData && (
+              <p className="text-xs text-red-400 mt-1">
+                Invalid URL format. Please paste a valid Twitter/X tweet URL
+              </p>
+            )}
           </div>
         </div>
 
         <div className="flex gap-2">
-          <Button onClick={handleVerify} disabled={isChecking || !tweetId.trim() || !twitterHandle.trim()}>
+          <Button 
+            onClick={handleVerify} 
+            disabled={isChecking || !extractedData || !tweetUrl.trim()}
+            className="min-h-[44px]"
+          >
             {isChecking ? 'Verifying...' : 'Verify Tweet'}
           </Button>
-          <Button variant="outline" onClick={() => {
-            setVerificationCode(null);
-            setTweetMessage(null);
-            setTweetId('');
-            setTwitterHandle('');
-            setVerificationId(null);
-          }}>
+          <Button 
+            variant="outline" 
+            onClick={() => {
+              setVerificationCode(null);
+              setTweetMessage(null);
+              setTweetUrl('');
+              setExtractedData(null);
+              setVerificationId(null);
+            }}
+            className="min-h-[44px]"
+          >
             Cancel
           </Button>
         </div>

@@ -122,9 +122,15 @@ export default function DevLogPage() {
       params.append('limit', '50');
       
       const res = await fetch(`/api/dev-log?${params.toString()}`);
-      if (!res.ok) throw new Error('Failed to fetch dev logs');
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Failed to fetch dev logs');
+      }
       return res.json();
     },
+    enabled: true,
+    refetchOnMount: true,
+    refetchOnWindowFocus: false,
     refetchInterval: 30000, // Refresh every 30 seconds
     staleTime: 0, // Always consider data stale to ensure fresh fetches on filter change
   });

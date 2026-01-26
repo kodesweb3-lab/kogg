@@ -242,7 +242,7 @@ export default function LandingPage() {
                 },
                 {
                   title: 'Anti-Rug Protection',
-                  description: 'Genesis SDK integration coming soon. Standardized, secure tokenomics.',
+                  description: 'Enhanced security and standardized tokenomics for all launches.',
                   Icon: ShieldIcon,
                 },
                 {

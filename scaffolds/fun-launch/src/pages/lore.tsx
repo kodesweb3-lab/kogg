@@ -134,8 +134,9 @@ export default function LorePage() {
                     Genesis SDK standardizes launches. The neural network that ensures transparency,
                     security, and fair tokenomics.
                   </p>
-                  <span className="inline-block px-3 py-1 text-xs font-heading font-bold bg-mystic-steam-gold/20 text-mystic-steam-gold rounded-full border border-mystic-steam-gold/30">
-                    🔜 Coming Soon
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-heading font-bold bg-mystic-steam-gold/20 text-mystic-steam-gold rounded-full border border-mystic-steam-gold/30">
+                    <ComingSoonIcon className="w-3 h-3" />
+                    In Development
                   </span>
                 </div>
               </motion.div>
