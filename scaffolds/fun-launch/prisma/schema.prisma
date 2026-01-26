@@ -106,3 +106,59 @@ model Referral {
   @@index([referrerWallet])
   @@index([referredWallet])
 }
+
+model ServiceProvider {
+  id            String   @id @default(uuid())
+  wallet        String   @unique // Solana wallet address
+  email         String?
+  telegram      String?
+  twitterHandle String?  // Twitter username (fără @)
+  twitterId     String?  // Twitter user ID pentru verificare
+  description   String? // Descrierea serviciilor oferite
+  verified      Boolean  @default(false) // Verificat prin Twitter
+  verifiedAt    DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+  
+  tags          ServiceProviderTag[]
+  twitterVerification TwitterVerification?
+  
+  @@index([wallet])
+  @@index([verified])
+  @@index([createdAt])
+}
+
+model ServiceProviderTag {
+  id                String   @id @default(uuid())
+  serviceProviderId String
+  tag               String   // Tag name (predefined sau custom)
+  isCustom          Boolean  @default(false) // Dacă e tag custom
+  createdAt         DateTime @default(now())
+  
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  
+  @@index([serviceProviderId])
+  @@index([tag])
+}
+
+model TwitterVerification {
+  id                String   @id @default(uuid())
+  serviceProviderId String   @unique
+  verificationCode  String   // Cod unic pentru verificare
+  tweetId           String?  // ID-ul tweet-ului de verificare
+  status            VerificationStatus @default(PENDING)
+  createdAt         DateTime @default(now())
+  verifiedAt        DateTime?
+  
+  serviceProvider   ServiceProvider @relation(fields: [serviceProviderId], references: [id], onDelete: Cascade)
+  
+  @@index([verificationCode])
+  @@index([status])
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  FAILED
+  EXPIRED
+}

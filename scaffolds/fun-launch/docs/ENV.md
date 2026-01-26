@@ -181,6 +181,96 @@ HUGGINGFACE_API_KEY=hf_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ## Optional Variables
 
+### `NEXT_PUBLIC_WEBSITE_URL`
+
+**Description**: Public website URL used in Twitter verification messages.
+
+**Type**: String (URL)
+
+**Where Used**: Web service (Twitter verification)
+
+**Default**: `https://kogaion.fun`
+
+**Example**:
+```bash
+NEXT_PUBLIC_WEBSITE_URL=https://kogaion.fun
+```
+
+**Security**: Low - Public URL, can be committed
+
+---
+
+### `NEXT_PUBLIC_TELEGRAM_URL`
+
+**Description**: Public Telegram URL used in Twitter verification messages.
+
+**Type**: String (URL)
+
+**Where Used**: Web service (Twitter verification)
+
+**Default**: `https://t.me/kogaionpack`
+
+**Example**:
+```bash
+NEXT_PUBLIC_TELEGRAM_URL=https://t.me/kogaionpack
+```
+
+**Security**: Low - Public URL, can be committed
+
+---
+
+### `NEXT_PUBLIC_TWITTER_URL`
+
+**Description**: Public Twitter/X URL used in Twitter verification messages.
+
+**Type**: String (URL)
+
+**Where Used**: Web service (Twitter verification)
+
+**Default**: `https://x.com/KogaionSol`
+
+**Example**:
+```bash
+NEXT_PUBLIC_TWITTER_URL=https://x.com/KogaionSol
+```
+
+**Security**: Low - Public URL, can be committed
+
+---
+
+### Twitter/X API Variables (Optional)
+
+**Description**: Twitter API credentials for service provider verification feature.
+
+**Required For**: Service provider Twitter verification
+
+**How to Get**:
+1. Go to https://developer.twitter.com/en/portal/dashboard
+2. Create a new app or use existing app
+3. Get API keys and tokens from "Keys and tokens" tab
+
+**Variables**:
+- `TWITTER_CLIENT_ID` - OAuth 2.0 Client ID
+- `TWITTER_CLIENT_SECRET` - OAuth 2.0 Client Secret
+- `TWITTER_CALLBACK_URL` - OAuth callback URL (must match app settings)
+- `TWITTER_ACCESS_TOKEN` - Access token for API calls
+- `TWITTER_ACCESS_TOKEN_SECRET` - Access token secret
+
+**Example**:
+```bash
+TWITTER_CLIENT_ID=your_client_id
+TWITTER_CLIENT_SECRET=your_client_secret
+TWITTER_CALLBACK_URL=https://kogaion.fun/api/twitter/callback
+TWITTER_ACCESS_TOKEN=your_access_token
+TWITTER_ACCESS_TOKEN_SECRET=your_access_token_secret
+```
+
+**Security**: High - Keep secret, never commit
+
+**Note**: These are optional. Service provider registration works without Twitter verification, but verification adds a verified badge.
+
+---
+
 ### `ALLOWED_ORIGIN`
 
 **Description**: CORS allowed origin (default: `*`).

@@ -52,6 +52,7 @@ export const Header = () => {
     { label: 'Home', href: '/' },
     { label: 'Discover', href: '/discover' },
     { label: 'Launch', href: '/create-pool' },
+    { label: 'Marketplace', href: '/service-providers' },
     { label: 'Leaders', href: '/leaderboard' },
     { label: 'Roadmap', href: '/roadmap' },
     { label: 'Lore', href: '/lore' },
