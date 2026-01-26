@@ -232,6 +232,13 @@ export type Pool = {
     isVerified?: boolean | undefined;
     ctLikes?: number | undefined;
     smartCtLikes?: number | undefined;
+    // RWA fields
+    tokenType?: 'MEMECOIN' | 'RWA' | undefined;
+    assetType?: string | undefined;
+    assetDescription?: string | undefined;
+    assetValue?: number | undefined;
+    assetLocation?: string | undefined;
+    documents?: Array<{ url: string; name: string; type: string }> | undefined;
   };
 
   // frontend field

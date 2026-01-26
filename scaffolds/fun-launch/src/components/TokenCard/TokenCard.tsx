@@ -14,6 +14,7 @@ import { TokenAge } from '../TokenAge';
 import { TokenSocials } from '../TokenSocials';
 import { TokenCardMcapMetric, TokenCardVolumeMetric } from './TokenCardMetric';
 import Link from 'next/link';
+import { RWABadge, RWATypeBadge } from '@/components/RWABadge';
 
 type TokenCardProps = {
   pool: Pool;
@@ -138,6 +139,11 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
                 {pool.baseAsset.symbol}
               </div>
 
+              {/* RWA Badge */}
+              {pool.baseAsset.tokenType === 'RWA' && (
+                <RWATypeBadge className="ml-1" />
+              )}
+
               <div className="ml-1 flex items-center gap-1 overflow-hidden z-10">
                 <Copyable
                   name="Address"
@@ -188,6 +194,16 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
           <div className="flex items-center gap-1.5">
             <TokenAge className="opacity-80" date={pool.createdAt} />
             <TokenSocials className="z-[1]" token={pool.baseAsset} />
+            {/* Asset Type Badge for RWA */}
+            {pool.baseAsset.tokenType === 'RWA' && pool.baseAsset.assetType && (
+              <RWABadge assetType={pool.baseAsset.assetType} size="sm" />
+            )}
+            {/* Asset Value for RWA */}
+            {pool.baseAsset.tokenType === 'RWA' && pool.baseAsset.assetValue && (
+              <span className="text-xs text-mystic-steam-parchment/60 font-body">
+                ${pool.baseAsset.assetValue.toLocaleString()}
+              </span>
+            )}
           </div>
 
           {/* Token metric */}

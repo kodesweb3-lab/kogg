@@ -29,6 +29,10 @@ type ExploreContextType = {
   setSearchQuery: (query: string) => void;
   sortOption: SortOption;
   setSortOption: (option: SortOption) => void;
+  tokenTypeFilter: 'ALL' | 'MEMECOIN' | 'RWA';
+  setTokenTypeFilter: (filter: 'ALL' | 'MEMECOIN' | 'RWA') => void;
+  assetTypeFilter: string;
+  setAssetTypeFilter: (filter: string) => void;
 };
 
 const ExploreContext = createContext<ExploreContextType>({
@@ -57,6 +61,10 @@ const ExploreContext = createContext<ExploreContextType>({
   setSearchQuery: () => {},
   sortOption: 'newest',
   setSortOption: () => {},
+  tokenTypeFilter: 'ALL',
+  setTokenTypeFilter: () => {},
+  assetTypeFilter: '',
+  setAssetTypeFilter: () => {},
 });
 
 const ExploreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -126,6 +134,10 @@ const ExploreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
         setSearchQuery,
         sortOption,
         setSortOption,
+        tokenTypeFilter,
+        setTokenTypeFilter,
+        assetTypeFilter,
+        setAssetTypeFilter,
       }}
     >
       {children}

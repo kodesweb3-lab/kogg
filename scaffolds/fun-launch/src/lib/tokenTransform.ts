@@ -10,6 +10,12 @@ type DbToken = {
   dbcPool: string | null;
   creatorWallet: string;
   configKey: string;
+  tokenType?: 'MEMECOIN' | 'RWA' | null;
+  assetType?: string | null;
+  assetDescription?: string | null;
+  assetValue?: number | null;
+  assetLocation?: string | null;
+  documents?: any; // JSON field
   createdAt: Date | string;
   metrics: Array<{
     price: number | null;
@@ -53,6 +59,13 @@ export function transformDbTokenToPool(token: DbToken): Pool {
       mcap: metrics?.mcap || undefined,
       usdPrice: metrics?.price || undefined,
       organicScoreLabel: 'medium',
+      // RWA fields
+      tokenType: token.tokenType || undefined,
+      assetType: token.assetType || undefined,
+      assetDescription: token.assetDescription || undefined,
+      assetValue: token.assetValue || undefined,
+      assetLocation: token.assetLocation || undefined,
+      documents: token.documents ? (typeof token.documents === 'string' ? JSON.parse(token.documents) : token.documents) : undefined,
     },
     streamed: false,
   };

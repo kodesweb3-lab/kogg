@@ -54,7 +54,7 @@ export const Header = () => {
     { label: 'Launch', href: '/create-pool' },
     { label: 'Marketplace', href: '/service-providers' },
     { label: 'Leaders', href: '/leaderboard' },
-    { label: 'Roadmap', href: '/roadmap' },
+    { label: 'Dev Log', href: '/dev-log' },
     { label: 'Lore', href: '/lore' },
     { label: 'Wolves', href: '/wolves' },
   ] as Array<{ label: string; href: string; external?: boolean; disabled?: boolean }>;

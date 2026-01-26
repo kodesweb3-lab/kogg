@@ -159,6 +159,8 @@ export const ApeQueries = {
     sortOrder?: 'asc' | 'desc';
     search?: string;
     creatorWallet?: string;
+    tokenType?: 'MEMECOIN' | 'RWA';
+    assetType?: string;
   }) => {
     return {
       queryKey: ['explore', 'local-tokens', args],
@@ -170,6 +172,8 @@ export const ApeQueries = {
         if (args.sortOrder) params.set('sortOrder', args.sortOrder);
         if (args.search) params.set('search', args.search);
         if (args.creatorWallet) params.set('creatorWallet', args.creatorWallet);
+        if (args.tokenType) params.set('tokenType', args.tokenType);
+        if (args.assetType) params.set('assetType', args.assetType);
 
         const res = await ky.get(`/api/tokens?${params.toString()}`).json<{
           success: boolean;

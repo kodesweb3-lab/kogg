@@ -70,12 +70,17 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
 
     const listRef = useRef<HTMLDivElement>(null);
 
+    const { tokenTypeFilter, assetTypeFilter } = useExplore();
+
     // Use local tokens from database (not global Solana)
     const { data: localTokensData, status: localStatus, error: localError } = useLocalTokens({
       page: 1,
       limit: 50,
       sortBy: 'createdAt',
       sortOrder: 'desc',
+      search: searchQuery || undefined,
+      tokenType: tokenTypeFilter !== 'ALL' ? tokenTypeFilter : undefined,
+      assetType: assetTypeFilter || undefined,
     });
 
     // Debug logging
@@ -122,16 +127,8 @@ const TokenCardListContainer: React.FC<TokenCardListContainerProps> = memo(
       }
     }
 
-    // Apply search filter
-    if (finalData && searchQuery.trim()) {
-      const query = searchQuery.toLowerCase().trim();
-      finalData = finalData.filter(
-        (pool) =>
-          pool.baseAsset.name.toLowerCase().includes(query) ||
-          pool.baseAsset.symbol.toLowerCase().includes(query) ||
-          pool.baseAsset.id.toLowerCase().includes(query)
-      );
-    }
+    // Note: Search filtering is now handled server-side via API
+    // Client-side filtering removed to avoid duplication
 
     // Apply sort
     if (finalData) {

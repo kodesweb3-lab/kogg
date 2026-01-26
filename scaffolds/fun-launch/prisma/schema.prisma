@@ -19,6 +19,12 @@ model Token {
   dbcPool     String?  // DBC pool address
   creatorWallet String
   configKey   String
+  tokenType   TokenType @default(MEMECOIN)
+  assetType   String?   // e.g., "physical_product", "service", "real_estate", "financial_asset", "other"
+  assetDescription String?  // Detailed description of the asset
+  assetValue  Float?    // Estimated value in USD
+  assetLocation String? // Physical location (optional)
+  documents   Json?     // Array of document URLs: [{url: string, name: string, type: string}]
   createdAt   DateTime @default(now())
   
   metrics     Metric[]
@@ -26,6 +32,8 @@ model Token {
   @@index([mint])
   @@index([creatorWallet])
   @@index([createdAt])
+  @@index([tokenType])
+  @@index([assetType])
 }
 
 model Metric {
@@ -161,4 +169,42 @@ enum VerificationStatus {
   VERIFIED
   FAILED
   EXPIRED
+}
+
+enum TokenType {
+  MEMECOIN
+  RWA
+}
+
+model DevLog {
+  id          String   @id @default(uuid())
+  title       String
+  content     String   // Markdown content
+  category    DevLogCategory @default(UPDATE)
+  status      DevLogStatus @default(COMPLETED)
+  version     String?  // Optional version tag (e.g., "v1.2.0")
+  isPublic    Boolean  @default(true)
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  
+  @@index([publishedAt])
+  @@index([category])
+  @@index([status])
+  @@index([isPublic])
+}
+
+enum DevLogCategory {
+  UPDATE      // New features, improvements
+  FIX         // Bug fixes
+  ANNOUNCEMENT // Important announcements
+  ROADMAP     // Future plans
+  TECHNICAL   // Technical deep-dives (non-sensitive)
+}
+
+enum DevLogStatus {
+  COMPLETED   // Already implemented
+  IN_PROGRESS // Currently working on
+  PLANNED     // Planned for future
+  BLOCKED     // Blocked or delayed
 }

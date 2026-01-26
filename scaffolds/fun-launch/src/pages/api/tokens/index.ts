@@ -11,13 +11,32 @@ type CreateTokenRequest = {
   metadataUri: string;
   dbcPool?: string;
   creatorWallet: string;
+  tokenType?: 'MEMECOIN' | 'RWA';
+  assetType?: string;
+  assetDescription?: string;
+  assetValue?: number;
+  assetLocation?: string;
+  documents?: Array<{ url: string; name: string; type: string }> | string; // Can be JSON string or array
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     try {
-      const { mint, name, symbol, imageUrl, metadataUri, dbcPool, creatorWallet } =
-        req.body as CreateTokenRequest;
+      const { 
+        mint, 
+        name, 
+        symbol, 
+        imageUrl, 
+        metadataUri, 
+        dbcPool, 
+        creatorWallet,
+        tokenType,
+        assetType,
+        assetDescription,
+        assetValue,
+        assetLocation,
+        documents,
+      } = req.body as CreateTokenRequest;
 
       // Validate required fields
       if (!mint || !name || !symbol || !metadataUri || !creatorWallet) {
@@ -26,7 +45,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
       }
 
+      // Validate RWA fields if tokenType is RWA
+      if (tokenType === 'RWA') {
+        if (!assetType) {
+          return res.status(400).json({
+            error: 'assetType is required for RWA tokens',
+          });
+        }
+        if (!assetDescription) {
+          return res.status(400).json({
+            error: 'assetDescription is required for RWA tokens',
+          });
+        }
+      }
+
       const config = getConfig();
+
+      // Parse documents if it's a string (JSON)
+      let documentsData: any = null;
+      if (documents) {
+        if (typeof documents === 'string') {
+          try {
+            documentsData = JSON.parse(documents);
+          } catch {
+            documentsData = documents;
+          }
+        } else {
+          documentsData = documents;
+        }
+      }
 
       // Create token in database with initial metrics
       const token = await prisma.token.create({
@@ -39,6 +86,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           dbcPool: dbcPool || null,
           creatorWallet,
           configKey: config.poolConfigKey,
+          tokenType: tokenType || 'MEMECOIN',
+          assetType: assetType || null,
+          assetDescription: assetDescription || null,
+          assetValue: assetValue || null,
+          assetLocation: assetLocation || null,
+          documents: documentsData ? documentsData : null,
           metrics: {
             create: {
               price: 0,
@@ -121,10 +174,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           { name: { contains: search as string, mode: 'insensitive' } },
           { symbol: { contains: search as string, mode: 'insensitive' } },
           { mint: { contains: search as string, mode: 'insensitive' } },
+          { assetDescription: { contains: search as string, mode: 'insensitive' } },
         ];
       }
       if (creatorWallet) {
         where.creatorWallet = creatorWallet as string;
+      }
+      if (tokenType) {
+        where.tokenType = tokenType as string;
+      }
+      if (assetType) {
+        where.assetType = assetType as string;
       }
 
       // Get tokens with pagination

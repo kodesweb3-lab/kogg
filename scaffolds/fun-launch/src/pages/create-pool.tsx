@@ -34,6 +34,13 @@ interface FormValues {
   twitter?: string;
   telegram?: string;
   devBuyAmount?: number;
+  tokenType: 'MEMECOIN' | 'RWA';
+  assetType?: string;
+  assetDescription?: string;
+  assetValue?: number;
+  assetLocation?: string;
+  documents?: File[];
+  uploadedDocuments?: Array<{ url: string; name: string; type: string }>;
 }
 
 export default function CreatePool() {
@@ -55,6 +62,13 @@ export default function CreatePool() {
       twitter: '',
       telegram: '',
       devBuyAmount: 0,
+      tokenType: 'MEMECOIN' as const,
+      assetType: undefined,
+      assetDescription: undefined,
+      assetValue: undefined,
+      assetLocation: undefined,
+      documents: undefined,
+      uploadedDocuments: undefined,
     } as FormValues,
     onSubmit: async ({ value }) => {
       try {
@@ -96,21 +110,67 @@ export default function CreatePool() {
         const { imageUrl } = await imageUploadResponse.json();
         toast.success('Image uploaded successfully', { id: 'upload-image' });
 
+        // Step 1.5: Upload documents if RWA token
+        let uploadedDocuments: Array<{ url: string; name: string; type: string }> | undefined;
+        if (value.tokenType === 'RWA' && value.documents && value.documents.length > 0) {
+          toast.loading('Uploading documents to IPFS...', { id: 'upload-documents' });
+          try {
+            const documentsFormData = new FormData();
+            value.documents.forEach((file) => {
+              documentsFormData.append('documents', file);
+            });
+
+            const documentsResponse = await fetch('/api/upload/documents', {
+              method: 'POST',
+              body: documentsFormData,
+            });
+
+            if (!documentsResponse.ok) {
+              const error = await documentsResponse.json();
+              toast.error(error.error || 'Failed to upload documents', { id: 'upload-documents' });
+              throw new Error(error.error || 'Failed to upload documents');
+            }
+
+            const { documents: docs } = await documentsResponse.json();
+            uploadedDocuments = docs.map((doc: any) => ({
+              url: doc.url,
+              name: doc.name,
+              type: doc.type,
+            }));
+            toast.success(`${uploadedDocuments.length} document(s) uploaded successfully`, { id: 'upload-documents' });
+          } catch (docError) {
+            console.error('Document upload error:', docError);
+            toast.error('Document upload failed, but continuing with token creation', { id: 'upload-documents' });
+          }
+        }
+
         // Step 2: Upload metadata to Pinata
         toast.loading('Uploading metadata to IPFS...', { id: 'upload-metadata' });
+        const metadataPayload: any = {
+          name: value.tokenName,
+          symbol: value.tokenSymbol,
+          description: value.website || value.twitter || value.telegram 
+            ? `Website: ${value.website || ''}, Twitter: ${value.twitter || ''}, Telegram: ${value.telegram || ''}` 
+            : undefined,
+          imageUrl: imageUrl,
+          tokenType: value.tokenType,
+        };
+
+        // Add RWA fields if tokenType is RWA
+        if (value.tokenType === 'RWA') {
+          if (value.assetType) metadataPayload.assetType = value.assetType;
+          if (value.assetDescription) metadataPayload.assetDescription = value.assetDescription;
+          if (value.assetValue !== undefined && value.assetValue !== null) metadataPayload.assetValue = value.assetValue;
+          if (value.assetLocation) metadataPayload.assetLocation = value.assetLocation;
+          if (uploadedDocuments && uploadedDocuments.length > 0) metadataPayload.documents = uploadedDocuments;
+        }
+
         const metadataResponse = await fetch('/api/upload/metadata', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            name: value.tokenName,
-            symbol: value.tokenSymbol,
-            description: value.website || value.twitter || value.telegram 
-              ? `Website: ${value.website || ''}, Twitter: ${value.twitter || ''}, Telegram: ${value.telegram || ''}` 
-              : undefined,
-            imageUrl: imageUrl,
-          }),
+          body: JSON.stringify(metadataPayload),
         });
 
         if (!metadataResponse.ok) {
@@ -178,19 +238,33 @@ export default function CreatePool() {
           // Step 7: Save token to database
           toast.loading('Saving token to database...', { id: 'save-token' });
           try {
+            const tokenPayload: any = {
+              mint: keyPair.publicKey.toBase58(),
+              name: value.tokenName,
+              symbol: value.tokenSymbol,
+              imageUrl: imageUrl,
+              metadataUri: metadataUri,
+              creatorWallet: address,
+              tokenType: value.tokenType,
+            };
+
+            // Add RWA fields if tokenType is RWA
+            if (value.tokenType === 'RWA') {
+              if (value.assetType) tokenPayload.assetType = value.assetType;
+              if (value.assetDescription) tokenPayload.assetDescription = value.assetDescription;
+              if (value.assetValue !== undefined && value.assetValue !== null) tokenPayload.assetValue = value.assetValue;
+              if (value.assetLocation) tokenPayload.assetLocation = value.assetLocation;
+              if (uploadedDocuments && uploadedDocuments.length > 0) {
+                tokenPayload.documents = uploadedDocuments;
+              }
+            }
+
             const saveTokenResponse = await fetch('/api/tokens', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({
-                mint: keyPair.publicKey.toBase58(),
-                name: value.tokenName,
-                symbol: value.tokenSymbol,
-                imageUrl: imageUrl,
-                metadataUri: metadataUri,
-                creatorWallet: address,
-              }),
+              body: JSON.stringify(tokenPayload),
             });
 
             if (!saveTokenResponse.ok) {
@@ -353,6 +427,45 @@ export default function CreatePool() {
               }}
               className="space-y-8"
             >
+              {/* Token Type Selector */}
+              <div className="steel-panel rounded-xl p-8">
+                <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Token Type</h2>
+                <p className="text-mystic-steam-parchment/70 mb-4 font-body text-sm">
+                  Choose between a memecoin or tokenize a real-world asset (product, service, or asset)
+                </p>
+                {form.Field({
+                  name: 'tokenType',
+                  children: (field) => (
+                    <div className="flex gap-4">
+                      <button
+                        type="button"
+                        onClick={() => field.handleChange('MEMECOIN')}
+                        className={`flex-1 p-4 rounded-lg border-2 transition-all font-body ${
+                          field.state.value === 'MEMECOIN'
+                            ? 'border-dacian-steel-copper bg-dacian-steel-copper/20 text-mystic-steam-copper'
+                            : 'border-dacian-steel-steel/30 bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:border-dacian-steel-steel/50'
+                        }`}
+                      >
+                        <div className="font-bold mb-1">Memecoin</div>
+                        <div className="text-xs">Traditional meme token</div>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => field.handleChange('RWA')}
+                        className={`flex-1 p-4 rounded-lg border-2 transition-all font-body ${
+                          field.state.value === 'RWA'
+                            ? 'border-dacian-steel-copper bg-dacian-steel-copper/20 text-mystic-steam-copper'
+                            : 'border-dacian-steel-steel/30 bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:border-dacian-steel-steel/50'
+                        }`}
+                      >
+                        <div className="font-bold mb-1">Real World Asset (RWA)</div>
+                        <div className="text-xs">Tokenize products, services, or assets</div>
+                      </button>
+                    </div>
+                  ),
+                })}
+              </div>
+
               {/* Token Details Section */}
               <div className="steel-panel rounded-xl p-8">
                 <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Token Details</h2>
@@ -597,6 +710,196 @@ export default function CreatePool() {
                   </div>
                 </div>
               </div>
+
+              {/* RWA Fields Section - Only show when tokenType is RWA */}
+              {form.state.values.tokenType === 'RWA' && (
+                <div className="steel-panel rounded-xl p-8">
+                  <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Asset Information</h2>
+                  <p className="text-mystic-steam-parchment/70 mb-6 font-body text-sm">
+                    Provide details about the real-world asset you're tokenizing
+                  </p>
+
+                  <div className="space-y-6">
+                    {/* Asset Type */}
+                    <div>
+                      <label
+                        htmlFor="assetType"
+                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                      >
+                        Asset Type*
+                      </label>
+                      {form.Field({
+                        name: 'assetType',
+                        children: (field) => (
+                          <select
+                            id="assetType"
+                            name={field.name}
+                            className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            value={field.state.value || ''}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            required
+                          >
+                            <option value="">Select asset type...</option>
+                            <option value="physical_product">Physical Product</option>
+                            <option value="service">Service</option>
+                            <option value="real_estate">Real Estate</option>
+                            <option value="financial_asset">Financial Asset</option>
+                            <option value="intellectual_property">Intellectual Property</option>
+                            <option value="other">Other</option>
+                          </select>
+                        ),
+                      })}
+                    </div>
+
+                    {/* Asset Description */}
+                    <div>
+                      <label
+                        htmlFor="assetDescription"
+                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                      >
+                        Asset Description*
+                      </label>
+                      {form.Field({
+                        name: 'assetDescription',
+                        children: (field) => (
+                          <textarea
+                            id="assetDescription"
+                            name={field.name}
+                            rows={4}
+                            className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            placeholder="Describe your asset in detail..."
+                            value={field.state.value || ''}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            required
+                          />
+                        ),
+                      })}
+                    </div>
+
+                    {/* Asset Value and Location */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label
+                          htmlFor="assetValue"
+                          className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                        >
+                          Estimated Value (USD)
+                        </label>
+                        {form.Field({
+                          name: 'assetValue',
+                          children: (field) => (
+                            <input
+                              id="assetValue"
+                              name={field.name}
+                              type="number"
+                              step="0.01"
+                              min="0"
+                              className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                              placeholder="0.00"
+                              value={field.state.value || ''}
+                              onChange={(e) => field.handleChange(e.target.value ? parseFloat(e.target.value) : undefined)}
+                            />
+                          ),
+                        })}
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor="assetLocation"
+                          className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                        >
+                          Location (Optional)
+                        </label>
+                        {form.Field({
+                          name: 'assetLocation',
+                          children: (field) => (
+                            <input
+                              id="assetLocation"
+                              name={field.name}
+                              type="text"
+                              className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                              placeholder="e.g., New York, USA"
+                              value={field.state.value || ''}
+                              onChange={(e) => field.handleChange(e.target.value)}
+                            />
+                          ),
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Document Upload */}
+                    <div>
+                      <label
+                        htmlFor="documents"
+                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                      >
+                        Supporting Documents (Optional)
+                      </label>
+                      <p className="text-xs text-mystic-steam-parchment/50 mb-2 font-body">
+                        Upload certificates, invoices, photos, or other documents (PDF, images, documents). Max 10 files, 20MB each.
+                      </p>
+                      {form.Field({
+                        name: 'documents',
+                        children: (field) => {
+                          const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                            const files = e.target.files;
+                            if (files && files.length > 0) {
+                              const fileArray = Array.from(files);
+                              field.handleChange(fileArray);
+                            }
+                          };
+
+                          return (
+                            <div>
+                              <div className="border-2 border-dashed border-dacian-steel-steel/30 rounded-lg p-6 text-center">
+                                {field.state.value && field.state.value.length > 0 ? (
+                                  <div className="space-y-2">
+                                    <div className="text-sm text-mystic-steam-parchment/70 mb-2">
+                                      {field.state.value.length} file(s) selected
+                                    </div>
+                                    <div className="space-y-1 max-h-32 overflow-y-auto">
+                                      {field.state.value.map((file, index) => (
+                                        <div key={index} className="text-xs text-mystic-steam-parchment/60 text-left">
+                                          • {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
+                                        </div>
+                                      ))}
+                                    </div>
+                                    <label
+                                      htmlFor="documents"
+                                      className="bg-dacian-steel-gunmetal px-4 py-2 rounded-lg text-sm hover:bg-dacian-steel-steel transition cursor-pointer text-mystic-steam-parchment/70 font-body inline-block mt-2"
+                                    >
+                                      Change Files
+                                    </label>
+                                  </div>
+                                ) : (
+                                  <>
+                                    <span className="iconify w-6 h-6 mx-auto mb-2 text-gray-400 ph--file-bold" />
+                                    <p className="text-gray-400 text-xs mb-2">PDF, images, or documents</p>
+                                    <label
+                                      htmlFor="documents"
+                                      className="bg-dacian-steel-gunmetal px-4 py-2 rounded-lg text-sm hover:bg-dacian-steel-steel transition cursor-pointer text-mystic-steam-parchment/70 font-body inline-block"
+                                    >
+                                      Choose Files
+                                    </label>
+                                  </>
+                                )}
+                                <input
+                                  type="file"
+                                  id="documents"
+                                  className="hidden"
+                                  multiple
+                                  accept=".pdf,.png,.jpg,.jpeg,.gif,.webp,.doc,.docx,.txt,.xls,.xlsx"
+                                  onChange={handleFileChange}
+                                />
+                              </div>
+                            </div>
+                          );
+                        },
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {form.state.errors && form.state.errors.length > 0 && (
                 <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 space-y-2">

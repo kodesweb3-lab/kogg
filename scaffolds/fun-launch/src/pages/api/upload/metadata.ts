@@ -20,6 +20,12 @@ type MetadataRequest = {
   symbol: string;
   description?: string;
   imageUrl: string;
+  tokenType?: 'MEMECOIN' | 'RWA';
+  assetType?: string;
+  assetDescription?: string;
+  assetValue?: number;
+  assetLocation?: string;
+  documents?: Array<{ url: string; name: string; type: string }>;
 };
 
 type Metadata = {
@@ -27,6 +33,12 @@ type Metadata = {
   symbol: string;
   description?: string;
   image: string;
+  tokenType?: 'MEMECOIN' | 'RWA';
+  assetType?: string;
+  assetDescription?: string;
+  assetValue?: number;
+  assetLocation?: string;
+  documents?: Array<{ url: string; name: string; type: string }>;
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -72,9 +84,48 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       image: imageUrl,
     };
 
+    // Add token type if provided
+    if (tokenType) {
+      metadata.tokenType = tokenType;
+    }
+
     // Add description if provided
     if (description && description.trim()) {
       metadata.description = description.trim();
+    }
+
+    // Add RWA-specific fields if tokenType is RWA
+    if (tokenType === 'RWA') {
+      if (assetType) {
+        metadata.assetType = assetType;
+      }
+      if (assetDescription && assetDescription.trim()) {
+        metadata.assetDescription = assetDescription.trim();
+        // Use asset description as main description if no description provided
+        if (!metadata.description) {
+          metadata.description = assetDescription.trim();
+        }
+      }
+      if (assetValue !== undefined && assetValue !== null) {
+        metadata.assetValue = assetValue;
+      }
+      if (assetLocation && assetLocation.trim()) {
+        metadata.assetLocation = assetLocation.trim();
+      }
+      if (documents && Array.isArray(documents) && documents.length > 0) {
+        metadata.documents = documents;
+      }
+    }
+
+    // Add launchpad information to description
+    const launchpadWebsite = process.env.NEXT_PUBLIC_WEBSITE_URL || 'https://kogaion.fun';
+    const launchpadTwitter = process.env.NEXT_PUBLIC_TWITTER_URL || 'https://x.com/KogaionSol';
+    const launchpadText = `\n\nLaunched via Kogaion - ${launchpadWebsite} | ${launchpadTwitter}`;
+
+    if (metadata.description) {
+      metadata.description += launchpadText;
+    } else {
+      metadata.description = `Token launched via Kogaion${launchpadText}`;
     }
 
     // Convert metadata to JSON buffer

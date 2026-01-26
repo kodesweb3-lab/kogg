@@ -8,6 +8,8 @@ type UseLocalTokensOptions = {
   sortOrder?: 'asc' | 'desc';
   search?: string;
   creatorWallet?: string;
+  tokenType?: 'MEMECOIN' | 'RWA';
+  assetType?: string;
 };
 
 export function useLocalTokens<T = any>(options: UseLocalTokensOptions = {}) {
