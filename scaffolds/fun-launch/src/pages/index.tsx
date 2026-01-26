@@ -7,6 +7,19 @@ import { useQuery } from '@tanstack/react-query';
 import { useLocalTokens } from '@/hooks/useLocalTokens';
 import Page from '@/components/ui/Page/Page';
 import { shortenAddress } from '@/lib/utils';
+import {
+  CoinsIcon,
+  HandshakeIcon,
+  GlobeIcon,
+  RobotIcon,
+  ShieldIcon,
+  LockIcon,
+  LightningIcon,
+  RocketIcon,
+  SearchIcon,
+  UsersIcon,
+  DocumentIcon,
+} from '@/components/icons/FeatureIcons';
 
 export default function LandingPage() {
   const { setShowModal } = useUnifiedWalletContext();
@@ -190,52 +203,62 @@ export default function LandingPage() {
         )}
 
         {/* Key Features for Creators */}
-        <section className="py-16 px-4">
+        <section className="py-16 md:py-20 px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-heading font-bold text-center mb-12 text-mystic-steam-copper">
-              Why Launch on Kogaion?
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12 md:mb-16"
+            >
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 text-mystic-steam-copper">
+                Why Launch on Kogaion?
+              </h2>
+              <p className="text-lg text-mystic-steam-parchment/60 font-body max-w-2xl mx-auto">
+                Built for creators. Powered by innovation. Secured by design.
+              </p>
+            </motion.div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {[
                 {
                   title: 'Higher Developer Fees',
                   description: 'More revenue for creators than any other platform. We prioritize your success.',
-                  icon: '💰',
+                  Icon: CoinsIcon,
                 },
                 {
                   title: 'Service Marketplace',
                   description: 'Connect with KOLs, marketers, and service providers. Build your community.',
-                  icon: '🤝',
+                  Icon: HandshakeIcon,
                 },
                 {
                   title: 'Real World Assets',
                   description: 'Tokenize products, services, or assets. Beyond memecoins, into real value.',
-                  icon: '🌍',
+                  Icon: GlobeIcon,
                 },
                 {
                   title: 'AI Bot Builder',
                   description: 'Custom AI agents for your token. 100% user-owned, fully autonomous.',
-                  icon: '🤖',
+                  Icon: RobotIcon,
                 },
                 {
                   title: 'Anti-Rug Protection',
                   description: 'Genesis SDK integration coming soon. Standardized, secure tokenomics.',
-                  icon: '🛡️',
+                  Icon: ShieldIcon,
                 },
                 {
                   title: 'LP Locked Forever',
                   description: 'All liquidity locked via Meteora DBC. No rug pulls, no exit scams.',
-                  icon: '🔒',
+                  Icon: LockIcon,
                 },
                 {
                   title: 'Instant Graduation',
                   description: 'Automatic graduation to DAMM v2 when conditions are met.',
-                  icon: '⚡',
+                  Icon: LightningIcon,
                 },
                 {
                   title: 'Complete Ecosystem',
                   description: 'Everything you need in one place. Launch, trade, grow, succeed.',
-                  icon: '🚀',
+                  Icon: RocketIcon,
                 },
               ].map((feature, idx) => (
                 <motion.div
@@ -244,13 +267,15 @@ export default function LandingPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  className="steel-panel rounded-xl p-6"
+                  className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all group"
                 >
-                  <div className="text-4xl mb-4">{feature.icon}</div>
-                  <h3 className="text-lg font-heading font-bold mb-2 text-mystic-steam-copper">
+                  <div className="mb-4 md:mb-6 text-mystic-steam-copper group-hover:scale-110 transition-transform duration-300">
+                    <feature.Icon className="w-10 h-10 md:w-12 md:h-12" />
+                  </div>
+                  <h3 className="text-lg md:text-xl font-heading font-bold mb-2 md:mb-3 text-mystic-steam-copper">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-mystic-steam-parchment/70 font-body">
+                  <p className="text-sm md:text-base text-mystic-steam-parchment/70 font-body leading-relaxed">
                     {feature.description}
                   </p>
                 </motion.div>
@@ -260,72 +285,108 @@ export default function LandingPage() {
         </section>
 
         {/* Quick Links */}
-        <section className="py-12 px-4">
+        <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-3 gap-4">
-              <Link
-                href="/discover"
-                className="steel-panel rounded-xl p-6 hover:border-mystic-steam-copper/50 transition-all text-center"
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
               >
-                <div className="text-3xl mb-3">🔍</div>
-                <h3 className="font-heading font-bold text-mystic-steam-copper mb-2">Discover Tokens</h3>
-                <p className="text-sm text-mystic-steam-parchment/60 font-body">
-                  Browse all launches and find opportunities
-                </p>
-              </Link>
-              <Link
-                href="/service-providers"
-                className="steel-panel rounded-xl p-6 hover:border-mystic-steam-copper/50 transition-all text-center"
+                <Link
+                  href="/discover"
+                  className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all text-center group block"
+                >
+                  <div className="mb-4 text-mystic-steam-copper flex justify-center group-hover:scale-110 transition-transform duration-300">
+                    <SearchIcon className="w-10 h-10 md:w-12 md:h-12" />
+                  </div>
+                  <h3 className="text-lg md:text-xl font-heading font-bold text-mystic-steam-copper mb-2">Discover Tokens</h3>
+                  <p className="text-sm md:text-base text-mystic-steam-parchment/60 font-body">
+                    Browse all launches and find opportunities
+                  </p>
+                </Link>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
               >
-                <div className="text-3xl mb-3">👥</div>
-                <h3 className="font-heading font-bold text-mystic-steam-copper mb-2">Service Marketplace</h3>
-                <p className="text-sm text-mystic-steam-parchment/60 font-body">
-                  Find KOLs, marketers, and service providers
-                </p>
-              </Link>
-              <Link
-                href="/dev-log"
-                className="steel-panel rounded-xl p-6 hover:border-mystic-steam-copper/50 transition-all text-center"
+                <Link
+                  href="/service-providers"
+                  className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all text-center group block"
+                >
+                  <div className="mb-4 text-mystic-steam-copper flex justify-center group-hover:scale-110 transition-transform duration-300">
+                    <UsersIcon className="w-10 h-10 md:w-12 md:h-12" />
+                  </div>
+                  <h3 className="text-lg md:text-xl font-heading font-bold text-mystic-steam-copper mb-2">Service Marketplace</h3>
+                  <p className="text-sm md:text-base text-mystic-steam-parchment/60 font-body">
+                    Find KOLs, marketers, and service providers
+                  </p>
+                </Link>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
               >
-                <div className="text-3xl mb-3">📝</div>
-                <h3 className="font-heading font-bold text-mystic-steam-copper mb-2">Dev Log</h3>
-                <p className="text-sm text-mystic-steam-parchment/60 font-body">
-                  Track our progress and upcoming features
-                </p>
-              </Link>
+                <Link
+                  href="/dev-log"
+                  className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all text-center group block"
+                >
+                  <div className="mb-4 text-mystic-steam-copper flex justify-center group-hover:scale-110 transition-transform duration-300">
+                    <DocumentIcon className="w-10 h-10 md:w-12 md:h-12" />
+                  </div>
+                  <h3 className="text-lg md:text-xl font-heading font-bold text-mystic-steam-copper mb-2">Dev Log</h3>
+                  <p className="text-sm md:text-base text-mystic-steam-parchment/60 font-body">
+                    Track our progress and upcoming features
+                  </p>
+                </Link>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="py-16 px-4">
+        <section className="py-16 md:py-20 px-4">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="steel-panel rounded-2xl p-8 md:p-12 text-center"
+              className="steel-panel rounded-2xl p-8 md:p-12 text-center relative overflow-hidden"
             >
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-4 text-mystic-steam-copper">
-                Ready to Launch?
-              </h2>
-              <p className="text-lg text-mystic-steam-parchment/70 mb-8 font-body max-w-xl mx-auto">
-                Join the pack. Launch your token. Build your community. Succeed.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  onClick={() => router.push('/create-pool')}
-                  className="text-lg px-8 py-6 bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper text-mystic-steam-parchment font-heading font-bold"
-                >
-                  Launch Token Now
-                </Button>
-                <Button
-                  onClick={() => setShowModal(true)}
-                  variant="outline"
-                  className="text-lg px-8 py-6 border-mystic-steam-copper/30 hover:border-mystic-steam-copper/50"
-                >
-                  Connect Wallet
-                </Button>
+              {/* Subtle background pattern */}
+              <div className="absolute inset-0 opacity-5">
+                <div className="absolute inset-0" style={{
+                  backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)',
+                  backgroundSize: '24px 24px',
+                }} />
+              </div>
+              <div className="relative z-10">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 text-mystic-steam-copper">
+                  Ready to Launch?
+                </h2>
+                <p className="text-base md:text-lg text-mystic-steam-parchment/70 mb-8 md:mb-10 font-body max-w-xl mx-auto leading-relaxed">
+                  Join the pack. Launch your token. Build your community. Succeed.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    onClick={() => router.push('/create-pool')}
+                    className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6 bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper text-mystic-steam-parchment font-heading font-bold transition-all hover:scale-105"
+                  >
+                    Launch Token Now
+                  </Button>
+                  <Button
+                    onClick={() => setShowModal(true)}
+                    variant="outline"
+                    className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6 border-mystic-steam-copper/30 hover:border-mystic-steam-copper/50 transition-all hover:scale-105"
+                  >
+                    Connect Wallet
+                  </Button>
+                </div>
               </div>
             </motion.div>
           </div>

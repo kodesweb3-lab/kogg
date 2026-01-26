@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import Page from '@/components/ui/Page/Page';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { CompletedIcon, InProgressIcon, PlannedIcon, BlockedIcon } from '@/components/icons/StatusIcons';
 
 interface DevLogEntry {
   id: string;
@@ -41,10 +42,10 @@ const statusColors = {
 };
 
 const statusIcons = {
-  COMPLETED: '✅',
-  IN_PROGRESS: '🔄',
-  PLANNED: '📋',
-  BLOCKED: '⛔',
+  COMPLETED: CompletedIcon,
+  IN_PROGRESS: InProgressIcon,
+  PLANNED: PlannedIcon,
+  BLOCKED: BlockedIcon,
 };
 
 function formatDate(dateString: string): string {
@@ -77,9 +78,13 @@ function DevLogCard({ entry }: { entry: DevLogEntry }) {
                 {entry.category}
               </span>
               <span
-                className={`px-3 py-1 text-xs font-heading font-bold rounded-full border ${statusColors[entry.status]}`}
+                className={`px-3 py-1 text-xs font-heading font-bold rounded-full border ${statusColors[entry.status]} flex items-center gap-1.5`}
               >
-                {statusIcons[entry.status]} {entry.status.replace('_', ' ')}
+                {(() => {
+                  const Icon = statusIcons[entry.status];
+                  return <Icon className="w-3 h-3" />;
+                })()}
+                {entry.status.replace('_', ' ')}
               </span>
               {entry.version && (
                 <span className="px-3 py-1 text-xs font-mono text-mystic-steam-parchment/60 bg-dacian-steel-gunmetal rounded-full border border-mystic-steam-copper/20">
@@ -121,6 +126,7 @@ export default function DevLogPage() {
       return res.json();
     },
     refetchInterval: 30000, // Refresh every 30 seconds
+    staleTime: 0, // Always consider data stale to ensure fresh fetches on filter change
   });
 
   const entries = data?.data || [];
@@ -174,11 +180,11 @@ export default function DevLogPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-wrap gap-3 mb-8"
+            className="flex flex-wrap gap-2 md:gap-3 mb-8"
           >
             <button
               onClick={() => setFilter('ALL')}
-              className={`px-4 py-2 rounded-lg font-body font-medium transition-colors ${
+              className={`min-h-[44px] px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-body font-medium transition-colors text-sm md:text-base ${
                 filter === 'ALL'
                   ? 'bg-mystic-steam-copper/30 text-mystic-steam-copper border border-mystic-steam-copper/50'
                   : 'bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:bg-dacian-steel-steel border border-mystic-steam-copper/20'
@@ -190,7 +196,7 @@ export default function DevLogPage() {
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`px-4 py-2 rounded-lg font-body font-medium transition-colors ${
+                className={`min-h-[44px] px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-body font-medium transition-colors text-sm md:text-base ${
                   filter === cat
                     ? `${categoryColors[cat]} border-2`
                     : 'bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:bg-dacian-steel-steel border border-mystic-steam-copper/20'
@@ -202,7 +208,7 @@ export default function DevLogPage() {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
-              className="px-4 py-2 rounded-lg font-body font-medium bg-dacian-steel-gunmetal text-mystic-steam-parchment border border-mystic-steam-copper/20 hover:bg-dacian-steel-steel transition-colors"
+              className="min-h-[44px] px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-body font-medium bg-dacian-steel-gunmetal text-mystic-steam-parchment border border-mystic-steam-copper/20 hover:bg-dacian-steel-steel transition-colors text-sm md:text-base"
             >
               <option value="ALL">All Status</option>
               <option value="COMPLETED">Completed</option>

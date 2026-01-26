@@ -2,6 +2,9 @@ import { motion } from 'framer-motion';
 import Page from '@/components/ui/Page/Page';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { GearIcon, BrainIcon, VisionIcon, ComingSoonIcon } from '@/components/icons/MiscIcons';
+import { RobotIcon } from '@/components/icons/FeatureIcons';
+import { CompletedIcon } from '@/components/icons/StatusIcons';
 
 export default function LorePage() {
   return (
@@ -97,7 +100,9 @@ export default function LorePage() {
                 className="steel-panel rounded-xl p-6 relative overflow-hidden"
               >
                 <div className="relative z-10">
-                  <div className="text-4xl mb-4">⚙️</div>
+                  <div className="mb-4 text-mystic-steam-copper">
+                    <GearIcon className="w-10 h-10" />
+                  </div>
                   <h3 className="text-xl font-heading font-bold mb-2 text-mystic-steam-copper">
                     The Mechanical Heart
                   </h3>
@@ -105,8 +110,9 @@ export default function LorePage() {
                     Meteora DBC powers our bonding curves. The mechanical engine that drives price
                     discovery and automatic graduation.
                   </p>
-                  <span className="inline-block px-3 py-1 text-xs font-heading font-bold bg-mystic-steam-copper/20 text-mystic-steam-copper rounded-full border border-mystic-steam-copper/30">
-                    ✅ Active
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-heading font-bold bg-mystic-steam-copper/20 text-mystic-steam-copper rounded-full border border-mystic-steam-copper/30">
+                    <CompletedIcon className="w-3 h-3" />
+                    Active
                   </span>
                 </div>
               </motion.div>
@@ -143,7 +149,9 @@ export default function LorePage() {
                 className="bg-mystic-steam-ash border border-mystic-steam-bronze/30 rounded-xl p-6 relative overflow-hidden"
               >
                 <div className="relative z-10">
-                  <div className="text-4xl mb-4">🤖</div>
+                  <div className="mb-4 text-mystic-steam-bronze">
+                    <RobotIcon className="w-10 h-10" />
+                  </div>
                   <h3 className="text-xl font-heading font-bold mb-2 text-mystic-steam-bronze">
                     The Swarm Intelligence
                   </h3>
@@ -151,8 +159,9 @@ export default function LorePage() {
                     Autonomous AI agents for each token. The swarm that manages communities,
                     analyzes markets, and operates independently.
                   </p>
-                  <span className="inline-block px-3 py-1 text-xs font-heading font-bold bg-mystic-steam-bronze/20 text-mystic-steam-bronze rounded-full border border-mystic-steam-bronze/30">
-                    🔮 Vision
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-heading font-bold bg-mystic-steam-bronze/20 text-mystic-steam-bronze rounded-full border border-mystic-steam-bronze/30">
+                    <VisionIcon className="w-3 h-3" />
+                    Vision
                   </span>
                 </div>
               </motion.div>

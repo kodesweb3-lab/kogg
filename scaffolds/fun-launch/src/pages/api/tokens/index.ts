@@ -139,6 +139,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         sortOrder = 'desc',
         search,
         creatorWallet,
+        tokenType,
+        assetType,
       } = req.query;
 
       const pageNum = parseInt(page as string, 10);

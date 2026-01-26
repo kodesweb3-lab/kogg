@@ -436,30 +436,30 @@ export default function CreatePool() {
                 {form.Field({
                   name: 'tokenType',
                   children: (field) => (
-                    <div className="flex gap-4">
+                    <div className="flex flex-col sm:flex-row gap-4">
                       <button
                         type="button"
                         onClick={() => field.handleChange('MEMECOIN')}
-                        className={`flex-1 p-4 rounded-lg border-2 transition-all font-body ${
+                        className={`flex-1 min-h-[60px] sm:min-h-[80px] p-4 md:p-6 rounded-lg border-2 transition-all font-body ${
                           field.state.value === 'MEMECOIN'
                             ? 'border-dacian-steel-copper bg-dacian-steel-copper/20 text-mystic-steam-copper'
                             : 'border-dacian-steel-steel/30 bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:border-dacian-steel-steel/50'
                         }`}
                       >
-                        <div className="font-bold mb-1">Memecoin</div>
-                        <div className="text-xs">Traditional meme token</div>
+                        <div className="font-bold mb-1 text-base md:text-lg">Memecoin</div>
+                        <div className="text-xs md:text-sm">Traditional meme token</div>
                       </button>
                       <button
                         type="button"
                         onClick={() => field.handleChange('RWA')}
-                        className={`flex-1 p-4 rounded-lg border-2 transition-all font-body ${
+                        className={`flex-1 min-h-[60px] sm:min-h-[80px] p-4 md:p-6 rounded-lg border-2 transition-all font-body ${
                           field.state.value === 'RWA'
                             ? 'border-dacian-steel-copper bg-dacian-steel-copper/20 text-mystic-steam-copper'
                             : 'border-dacian-steel-steel/30 bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:border-dacian-steel-steel/50'
                         }`}
                       >
-                        <div className="font-bold mb-1">Real World Asset (RWA)</div>
-                        <div className="text-xs">Tokenize products, services, or assets</div>
+                        <div className="font-bold mb-1 text-base md:text-lg">Real World Asset (RWA)</div>
+                        <div className="text-xs md:text-sm">Tokenize products, services, or assets</div>
                       </button>
                     </div>
                   ),
@@ -486,7 +486,7 @@ export default function CreatePool() {
                             id="tokenName"
                             name={field.name}
                             type="text"
-                            className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                             placeholder="e.g. Virtual Coin"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -511,7 +511,7 @@ export default function CreatePool() {
                             id="tokenSymbol"
                             name={field.name}
                             type="text"
-                            className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                             placeholder="e.g. VRTL"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -621,7 +621,7 @@ export default function CreatePool() {
                           step="0.01"
                           min="0"
                           max="10"
-                          className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                           placeholder="0.1"
                           value={field.state.value || ''}
                           onChange={(e) => field.handleChange(parseFloat(e.target.value) || 0)}
@@ -654,7 +654,7 @@ export default function CreatePool() {
                           id="website"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                           placeholder="https://yourwebsite.com"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -677,7 +677,7 @@ export default function CreatePool() {
                           id="twitter"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                           placeholder="https://twitter.com/yourusername"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -700,7 +700,7 @@ export default function CreatePool() {
                           id="telegram"
                           name={field.name}
                           type="url"
-                          className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                           placeholder="https://t.me/yourchannel"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -734,7 +734,7 @@ export default function CreatePool() {
                           <select
                             id="assetType"
                             name={field.name}
-                            className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                             value={field.state.value || ''}
                             onChange={(e) => field.handleChange(e.target.value)}
                             required
@@ -766,7 +766,7 @@ export default function CreatePool() {
                             id="assetDescription"
                             name={field.name}
                             rows={4}
-                            className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[120px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                             placeholder="Describe your asset in detail..."
                             value={field.state.value || ''}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -794,7 +794,7 @@ export default function CreatePool() {
                               type="number"
                               step="0.01"
                               min="0"
-                              className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                              className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                               placeholder="0.00"
                               value={field.state.value || ''}
                               onChange={(e) => field.handleChange(e.target.value ? parseFloat(e.target.value) : undefined)}
@@ -817,7 +817,7 @@ export default function CreatePool() {
                               id="assetLocation"
                               name={field.name}
                               type="text"
-                              className="w-full p-3 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                              className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
                               placeholder="e.g., New York, USA"
                               value={field.state.value || ''}
                               onChange={(e) => field.handleChange(e.target.value)}

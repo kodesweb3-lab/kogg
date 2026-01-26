@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useWallet } from '@jup-ag/wallet-adapter';
+import { WolfIcon } from '@/components/icons/MiscIcons';
 
 const SwapPanel = dynamic(() => import('@/components/SwapPanel'), { ssr: false });
 const TokenChat = dynamic(() => import('@/components/TokenChat'), { ssr: false });
@@ -96,10 +97,11 @@ export const TokenPageWithContext = () => {
               <div className="mt-4">
                 <Button
                   onClick={() => setIsBotModalOpen(true)}
-                  className="w-full"
+                  className="w-full flex items-center justify-center gap-2"
                   variant="outline"
                 >
-                  🐺 Activate Token Bot
+                  <WolfIcon className="w-4 h-4" />
+                  Activate Token Bot
                 </Button>
               </div>
             )}

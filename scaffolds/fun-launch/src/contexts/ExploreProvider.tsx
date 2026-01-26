@@ -81,6 +81,8 @@ const ExploreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) 
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOption, setSortOption] = useState<SortOption>('newest');
+  const [tokenTypeFilter, setTokenTypeFilter] = useState<'ALL' | 'MEMECOIN' | 'RWA'>('ALL');
+  const [assetTypeFilter, setAssetTypeFilter] = useState<string>('');
 
   // Store all filters in an object to avoid tab -> filter state sync issues
   const [filtersConfig, setFiltersConfig] = useLocalStorage<FiltersConfig>(
