@@ -147,6 +147,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             verifiedAt: serviceProvider.verifiedAt,
             tags: serviceProvider.tags.map((t) => t.tag),
             description: serviceProvider.description,
+            email: serviceProvider.email,
+            telegram: serviceProvider.telegram,
+            twitterHandle: serviceProvider.twitterHandle,
           }
         : null,
       tokensCreated,

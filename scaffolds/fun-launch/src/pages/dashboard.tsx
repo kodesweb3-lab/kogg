@@ -11,6 +11,7 @@ import { shortenAddress } from '@/lib/utils';
 import { ReadableNumber } from '@/components/ui/ReadableNumber';
 import { useState, useMemo } from 'react';
 import { useWatchlist } from '@/hooks/useWatchlist';
+import { ServiceProviderEditModal } from '@/components/ServiceProvider/ServiceProviderEditModal';
 
 type DashboardData = {
   wallet: string;
@@ -21,6 +22,9 @@ type DashboardData = {
     verifiedAt: Date | null;
     tags: string[];
     description: string | null;
+    email: string | null;
+    telegram: string | null;
+    twitterHandle: string | null;
   } | null;
   tokensCreated: Array<{
     id: string;
@@ -59,8 +63,9 @@ export default function DashboardPage() {
   const router = useRouter();
   const [sortBy, setSortBy] = useState<'name' | 'createdAt' | 'type'>('createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const { data: dashboardData, isLoading, error } = useQuery<DashboardData>({
+  const { data: dashboardData, isLoading, error, refetch } = useQuery<DashboardData>({
     queryKey: ['dashboard', publicKey?.toBase58()],
     queryFn: async () => {
       if (!publicKey) throw new Error('Wallet not connected');
@@ -71,6 +76,10 @@ export default function DashboardPage() {
     enabled: !!publicKey && connected,
     refetchInterval: 30000,
   });
+
+  const handleEditSuccess = () => {
+    refetch();
+  };
 
   const sortedTokens = useMemo(() => {
     if (!dashboardData?.tokensCreated) return [];
@@ -272,11 +281,20 @@ export default function DashboardPage() {
                       </div>
                     </div>
                   )}
-                  <Link href="/service-providers">
-                    <Button variant="outline" className="w-full text-sm">
-                      View Marketplace
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      className="flex-1 text-sm"
+                      onClick={() => setIsEditModalOpen(true)}
+                    >
+                      Edit Profile
                     </Button>
-                  </Link>
+                    <Link href="/service-providers" className="flex-1">
+                      <Button variant="outline" className="w-full text-sm">
+                        View Marketplace
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -489,6 +507,16 @@ export default function DashboardPage() {
           )}
         </div>
       </div>
+
+      {/* Service Provider Edit Modal */}
+      {dashboardData?.isServiceProvider && dashboardData.serviceProvider && (
+        <ServiceProviderEditModal
+          isOpen={isEditModalOpen}
+          onClose={() => setIsEditModalOpen(false)}
+          serviceProvider={dashboardData.serviceProvider}
+          onSuccess={handleEditSuccess}
+        />
+      )}
     </Page>
   );
 }
