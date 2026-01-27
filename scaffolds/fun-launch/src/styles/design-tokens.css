@@ -1,0 +1,57 @@
+/* Design Tokens System - Obsidian + Aureate Theme */
+
+:root {
+  /* Obsidian Base */
+  --obsidian-base: #0a0a0a;
+  --obsidian-elevated: #0f0f0f;
+  --obsidian-surface: #141414;
+  --obsidian-border: rgba(255, 255, 255, 0.08);
+  
+  /* Aureate (Desaturated Gold - More Metallic, Less Orange) */
+  --aureate-base: #b8a082;      /* Less orange, more metallic */
+  --aureate-light: #d4c4a8;
+  --aureate-dark: #8b7355;
+  --aureate-glow: rgba(184, 160, 130, 0.15);
+  --aureate-glow-strong: rgba(184, 160, 130, 0.25);
+  
+  /* Glass Morphism */
+  --glass-bg: rgba(20, 20, 20, 0.6);
+  --glass-bg-heavy: rgba(20, 20, 20, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-rim-light: rgba(255, 255, 255, 0.15);
+  --glass-rim-light-strong: rgba(255, 255, 255, 0.2);
+  
+  /* Semantic Tokens */
+  --bg-primary: var(--obsidian-base);
+  --bg-elevated: var(--obsidian-elevated);
+  --bg-surface: var(--obsidian-surface);
+  --text-primary: #e6e1d6;
+  --text-muted: rgba(230, 225, 214, 0.6);
+  --text-subtle: rgba(230, 225, 214, 0.4);
+  --accent-primary: var(--aureate-base);
+  --accent-glow: var(--aureate-glow);
+  --border-default: var(--obsidian-border);
+  --border-elevated: rgba(255, 255, 255, 0.12);
+  
+  /* Wolf Theme Tokens (default to Fire) */
+  --wolf-accent: var(--wolf-fire-accent);
+  --wolf-glow: var(--wolf-fire-glow);
+  --wolf-bg-tint: var(--wolf-fire-bg-tint);
+  --wolf-icon-style: 'fire';
+}
+
+/* Noise texture for obsidian background */
+.obsidian-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 400px 400px;
+  background-repeat: repeat;
+}
+
+/* Controlled vignette */
+.obsidian-vignette {
+  background-image: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}

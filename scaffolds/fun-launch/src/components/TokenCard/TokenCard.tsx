@@ -15,6 +15,7 @@ import { TokenSocials } from '../TokenSocials';
 import { TokenCardMcapMetric, TokenCardVolumeMetric } from './TokenCardMetric';
 import Link from 'next/link';
 import { RWABadge, RWATypeBadge } from '@/components/RWABadge';
+import { NewbornSigil, BondedSigil, AscendedSigil } from '@/components/icons/SigilIcons';
 
 type TokenCardProps = {
   pool: Pool;
@@ -139,6 +140,14 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
                 {pool.baseAsset.symbol}
               </div>
 
+              {/* Status Sigil */}
+              {!pool.baseAsset.graduatedAt && (
+                <NewbornSigil className="ml-1 w-3 h-3 text-aureate-base opacity-70" />
+              )}
+              {pool.baseAsset.graduatedAt && (
+                <AscendedSigil className="ml-1 w-3 h-3 text-aureate-base opacity-70" />
+              )}
+              
               {/* RWA Badge */}
               {pool.baseAsset.tokenType === 'RWA' && (
                 <RWATypeBadge className="ml-1" />

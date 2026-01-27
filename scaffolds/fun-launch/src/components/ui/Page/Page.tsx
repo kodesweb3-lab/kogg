@@ -14,14 +14,20 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
   return (
     <div
       className={cn(
-        'flex min-h-screen flex-col justify-between bg-dacian-steel-dark text-mystic-steam-parchment relative film-grain vignette',
+        'flex min-h-screen flex-col justify-between bg-obsidian-base text-text-primary relative sigil-pattern',
         pageClassName
       )}
+      style={{
+        backgroundImage: `
+          radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%),
+          var(--obsidian-base)
+        `,
+      }}
     >
-      {/* Layered atmospheric background */}
-      <div className="atmosphere-layer" />
-      <div className="steam-layer" />
-      <div className="castle-silhouette" />
+      {/* Layered atmospheric background - kept for compatibility */}
+      <div className="atmosphere-layer opacity-0" />
+      <div className="steam-layer opacity-30" />
+      <div className="castle-silhouette opacity-20" />
       <div className="dacian-pattern" />
       
       <Header />

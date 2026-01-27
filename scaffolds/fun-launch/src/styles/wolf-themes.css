@@ -1,0 +1,88 @@
+/* Wolf Theme System - Global Theming Variables */
+
+:root {
+  /* Fire Wolf */
+  --wolf-fire-accent: #c94a2c;
+  --wolf-fire-glow: rgba(201, 74, 44, 0.2);
+  --wolf-fire-bg-tint: rgba(201, 74, 44, 0.05);
+  --wolf-fire-border: rgba(201, 74, 44, 0.3);
+  
+  /* Frost Wolf */
+  --wolf-frost-accent: #4a9bc9;
+  --wolf-frost-glow: rgba(74, 155, 201, 0.2);
+  --wolf-frost-bg-tint: rgba(74, 155, 201, 0.05);
+  --wolf-frost-border: rgba(74, 155, 201, 0.3);
+  
+  /* Blood Wolf */
+  --wolf-blood-accent: #8b1a1a;
+  --wolf-blood-glow: rgba(139, 26, 26, 0.2);
+  --wolf-blood-bg-tint: rgba(139, 26, 26, 0.05);
+  --wolf-blood-border: rgba(139, 26, 26, 0.3);
+  
+  /* Moon Wolf */
+  --wolf-moon-accent: #9b7fb8;
+  --wolf-moon-glow: rgba(155, 127, 184, 0.2);
+  --wolf-moon-bg-tint: rgba(155, 127, 184, 0.05);
+  --wolf-moon-border: rgba(155, 127, 184, 0.3);
+  
+  /* Stone Wolf */
+  --wolf-stone-accent: #6b6b6b;
+  --wolf-stone-glow: rgba(107, 107, 107, 0.2);
+  --wolf-stone-bg-tint: rgba(107, 107, 107, 0.05);
+  --wolf-stone-border: rgba(107, 107, 107, 0.3);
+  
+  /* Default (no wolf selected - uses aureate) */
+  --wolf-default-accent: var(--aureate-base);
+  --wolf-default-glow: var(--aureate-glow);
+  --wolf-default-bg-tint: rgba(184, 160, 130, 0.05);
+  --wolf-default-border: rgba(184, 160, 130, 0.3);
+}
+
+/* Fire Wolf Theme */
+[data-wolf-theme="fire"] {
+  --wolf-accent: var(--wolf-fire-accent);
+  --wolf-glow: var(--wolf-fire-glow);
+  --wolf-bg-tint: var(--wolf-fire-bg-tint);
+  --wolf-border: var(--wolf-fire-border);
+}
+
+/* Frost Wolf Theme */
+[data-wolf-theme="frost"] {
+  --wolf-accent: var(--wolf-frost-accent);
+  --wolf-glow: var(--wolf-frost-glow);
+  --wolf-bg-tint: var(--wolf-frost-bg-tint);
+  --wolf-border: var(--wolf-frost-border);
+}
+
+/* Blood Wolf Theme */
+[data-wolf-theme="blood"] {
+  --wolf-accent: var(--wolf-blood-accent);
+  --wolf-glow: var(--wolf-blood-glow);
+  --wolf-bg-tint: var(--wolf-blood-bg-tint);
+  --wolf-border: var(--wolf-blood-border);
+}
+
+/* Moon Wolf Theme */
+[data-wolf-theme="moon"] {
+  --wolf-accent: var(--wolf-moon-accent);
+  --wolf-glow: var(--wolf-moon-glow);
+  --wolf-bg-tint: var(--wolf-moon-bg-tint);
+  --wolf-border: var(--wolf-moon-border);
+}
+
+/* Stone Wolf Theme */
+[data-wolf-theme="stone"] {
+  --wolf-accent: var(--wolf-stone-accent);
+  --wolf-glow: var(--wolf-stone-glow);
+  --wolf-bg-tint: var(--wolf-stone-bg-tint);
+  --wolf-border: var(--wolf-stone-border);
+}
+
+/* Default Theme (no wolf selected) */
+[data-wolf-theme="default"],
+[data-wolf-theme=""] {
+  --wolf-accent: var(--wolf-default-accent);
+  --wolf-glow: var(--wolf-default-glow);
+  --wolf-bg-tint: var(--wolf-default-bg-tint);
+  --wolf-border: var(--wolf-default-border);
+}

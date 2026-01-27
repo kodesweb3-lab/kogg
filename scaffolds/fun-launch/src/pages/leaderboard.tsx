@@ -3,6 +3,7 @@ import Page from '@/components/ui/Page/Page';
 import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '@/components/ui/Skeleton';
 import Link from 'next/link';
+import { AlphaSigil, SentinelSigil, ElderSigil } from '@/components/icons/SigilIcons';
 
 type LeaderboardEntry = {
   rank: number;
@@ -39,16 +40,18 @@ function truncateWallet(wallet: string): string {
   return `${wallet.slice(0, 4)}...${wallet.slice(-4)}`;
 }
 
-function getRankBadge(rank: number): { color: string; icon: string } {
+function getRankBadge(rank: number): { color: string; Sigil: React.ComponentType<{ className?: string }> | null; label: string } {
   switch (rank) {
     case 1:
-      return { color: 'text-yellow-400', icon: '🥇' };
+      return { color: 'text-aureate-base', Sigil: AlphaSigil, label: 'Alpha' };
     case 2:
-      return { color: 'text-gray-300', icon: '🥈' };
     case 3:
-      return { color: 'text-amber-600', icon: '🥉' };
+      return { color: 'text-aureate-light', Sigil: SentinelSigil, label: 'Sentinel' };
     default:
-      return { color: 'text-gray-500', icon: '' };
+      if (rank <= 10) {
+        return { color: 'text-aureate-dark', Sigil: ElderSigil, label: 'Elder' };
+      }
+      return { color: 'text-mystic-steam-parchment/40', Sigil: null, label: '' };
   }
 }
 
@@ -129,9 +132,14 @@ export default function LeaderboardPage() {
                       transition={{ delay: index * 0.05 }}
                       className="flex items-center gap-4 px-6 py-4 hover:bg-dacian-steel-dark transition-colors"
                     >
-                      {/* Rank */}
-                      <div className={`w-8 text-center font-heading font-bold ${badge.color}`}>
-                        {badge.icon || `#${entry.rank}`}
+                      {/* Rank with Sigil */}
+                      <div className={`flex items-center gap-2 ${badge.color}`}>
+                        {badge.Sigil && (
+                          <badge.Sigil className="w-5 h-5 animate-pulse" />
+                        )}
+                        <span className="font-heading font-bold text-sm">
+                          #{entry.rank}
+                        </span>
                       </div>
 
                       {/* Wallet */}
@@ -145,9 +153,9 @@ export default function LeaderboardPage() {
                           >
                             {truncateWallet(entry.wallet)}
                           </a>
-                          {entry.rank <= 3 && (
-                            <span className="px-2 py-0.5 text-[10px] font-bold bg-mystic-steam-copper/20 text-mystic-steam-copper rounded">
-                              TOP {entry.rank}
+                          {badge.label && (
+                            <span className={`px-2 py-0.5 text-[10px] font-bold bg-${badge.color.replace('text-', '')}/20 ${badge.color} rounded border border-current/30`}>
+                              {badge.label}
                             </span>
                           )}
                         </div>

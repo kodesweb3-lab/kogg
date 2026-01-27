@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import './design-tokens.css';
+@import './wolf-themes.css';
 
 @tailwind base;
 @tailwind components;
@@ -54,11 +56,29 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: 
+    /* Fine noise texture */
+    var(--obsidian-base),
+    /* Controlled vignette */
+    radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%),
+    var(--obsidian-base);
+  background-attachment: fixed;
+  color: var(--text-primary);
   font-family: var(--font-body);
   min-height: 100vh;
   position: relative;
+}
+
+/* Apply noise texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background-size: 400px 400px;
+  background-repeat: repeat;
 }
 
 /* Layered Atmospheric Background System */
@@ -151,10 +171,31 @@ body {
   -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
 }
 
+/* Fluid Typography */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   letter-spacing: 0.05em;
   line-height: 1.2;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+  line-height: 1.4;
 }
 
 /* Typography refinement */
@@ -380,6 +421,22 @@ h1, h2, h3, h4, h5, h6 {
     0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
+/* Glass-morphic Cards */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    /* Rim light on edges */
+    inset 0 1px 0 var(--glass-rim-light),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3),
+    /* Outer shadow */
+    0 4px 12px rgba(0, 0, 0, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
 .steel-panel {
   background: linear-gradient(
     135deg,
@@ -394,6 +451,33 @@ h1, h2, h3, h4, h5, h6 {
     0 4px 12px rgba(0, 0, 0, 0.25);
   position: relative;
   overflow: hidden;
+}
+
+/* Rim Light Utilities */
+.rim-light {
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.rim-light-top {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.rim-light-bottom {
+  box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* Sigil Pattern Background */
+.sigil-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23b8a082' stroke-width='0.5'%3E%3Cpath d='M50 100 Q75 75 100 100 T150 100'/%3E%3Cpath d='M50 150 Q75 125 100 150 T150 150'/%3E%3Ccircle cx='100' cy='50' r='8'/%3E%3Cpath d='M100 42 L95 50 L100 58 L105 50 Z'/%3E%3Cpath d='M30 80 L50 70 L70 80 L50 90 Z'/%3E%3Cpath d='M130 80 L150 70 L170 80 L150 90 Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  background-repeat: repeat;
 }
 
 .steel-panel::before {

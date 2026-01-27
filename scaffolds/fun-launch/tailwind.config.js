@@ -36,7 +36,26 @@ export default {
       },
 
       colors: {
-        // Mystic Steampunk Ritual Palette
+        // Obsidian + Aureate Theme
+        obsidian: {
+          base: 'var(--obsidian-base)',
+          elevated: 'var(--obsidian-elevated)',
+          surface: 'var(--obsidian-surface)',
+          border: 'var(--obsidian-border)',
+        },
+        aureate: {
+          base: 'var(--aureate-base)',
+          light: 'var(--aureate-light)',
+          dark: 'var(--aureate-dark)',
+          glow: 'var(--aureate-glow)',
+        },
+        wolf: {
+          accent: 'var(--wolf-accent)',
+          glow: 'var(--wolf-glow)',
+          'bg-tint': 'var(--wolf-bg-tint)',
+          border: 'var(--wolf-border)',
+        },
+        // Mystic Steampunk Ritual Palette (kept for backwards compatibility)
         'mystic-steam': {
           // Main colors
           charcoal: '#0E0F11',      // Dark Charcoal - main background

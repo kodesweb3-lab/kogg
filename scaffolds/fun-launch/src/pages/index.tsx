@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useLocalTokens } from '@/hooks/useLocalTokens';
 import Page from '@/components/ui/Page/Page';
 import { shortenAddress } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import {
   CoinsIcon,
   HandshakeIcon,

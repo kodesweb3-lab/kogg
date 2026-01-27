@@ -7,6 +7,9 @@ import { useMemo } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useWindowWidthListener } from '@/lib/device';
 import { AskKogaion } from '@/components/AskKogaion';
+import { WolfThemeProvider } from '@/contexts/WolfThemeProvider';
+import { AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
 // ErrorBoundary must be loaded client-side only to avoid SSR issues
@@ -25,6 +28,7 @@ const ErrorBoundaryWrapper = dynamic(
 );
 
 export default function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   const wallets: Adapter[] = useMemo(() => {
     // Filter out Phantom if it's already available as a standard wallet
     // This prevents the "Phantom was registered as a Standard Wallet" warning
@@ -56,26 +60,30 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundaryWrapper>
       <QueryClientProvider client={queryClient}>
-        <UnifiedWalletProvider
-          wallets={wallets}
-          config={{
-            env: 'mainnet-beta',
-            autoConnect: true,
-            metadata: {
-              name: 'Kogaion',
-              description: 'The most based token launchpad on Solana',
-              url: 'https://kogaion.io',
-              iconUrls: ['/favicon.ico'],
-            },
-            // notificationCallback: WalletNotification,
-            theme: 'dark',
-            lang: 'en',
-          }}
-        >
+        <WolfThemeProvider>
+          <UnifiedWalletProvider
+            wallets={wallets}
+            config={{
+              env: 'mainnet-beta',
+              autoConnect: true,
+              metadata: {
+                name: 'Kogaion',
+                description: 'The most based token launchpad on Solana',
+                url: 'https://kogaion.io',
+                iconUrls: ['/favicon.ico'],
+              },
+              // notificationCallback: WalletNotification,
+              theme: 'dark',
+              lang: 'en',
+            }}
+          >
           <Toaster />
-          <Component {...pageProps} />
+          <AnimatePresence mode="wait">
+            <Component {...pageProps} key={router.asPath} />
+          </AnimatePresence>
           <AskKogaion />
-        </UnifiedWalletProvider>
+          </UnifiedWalletProvider>
+        </WolfThemeProvider>
       </QueryClientProvider>
     </ErrorBoundaryWrapper>
   );

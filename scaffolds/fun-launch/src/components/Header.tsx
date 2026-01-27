@@ -7,6 +7,7 @@ import { shortenAddress } from '@/lib/utils';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
+import { WolfThemeSelector } from '@/components/WolfThemeSelector/WolfThemeSelector';
 
 const ReferralModal = dynamic(() => import('./ReferralModal'), { ssr: false });
 
@@ -82,7 +83,8 @@ export const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-4">
+          <WolfThemeSelector />
           {navItems.map((item) => {
             if (item.disabled) {
               return (

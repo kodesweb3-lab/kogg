@@ -47,10 +47,12 @@ export default function CreatePool() {
   const { publicKey, signTransaction } = useWallet();
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const queryClient = useQueryClient();
+  const { selectedWolf } = useWolfTheme();
 
   const [isLoading, setIsLoading] = useState(false);
   const [poolCreated, setPoolCreated] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showSigil, setShowSigil] = useState(false);
 
   const form = useForm({
     defaultValues: {
@@ -75,7 +77,7 @@ export default function CreatePool() {
         setIsLoading(true);
         const { tokenLogo } = value;
         if (!tokenLogo) {
-          toast.error('The ritual requires a token sigil.');
+          toast.error(getMicrocopy('error', selectedWolf));
           setIsLoading(false);
           return;
         }
@@ -83,25 +85,25 @@ export default function CreatePool() {
         // Validate RWA fields if tokenType is RWA
         if (value.tokenType === 'RWA') {
           if (!value.assetType || !value.assetType.trim()) {
-              toast.error('The ritual requires an asset type.');
+              toast.error(getMicrocopy('error', selectedWolf));
             setIsLoading(false);
             return;
           }
           if (!value.assetDescription || !value.assetDescription.trim()) {
-              toast.error('The ritual requires an asset description.');
+              toast.error(getMicrocopy('error', selectedWolf));
             setIsLoading(false);
             return;
           }
         }
 
         if (!signTransaction) {
-          toast.error('The chain requires your wallet.');
+          toast.error(getMicrocopy('error', selectedWolf));
           setIsLoading(false);
           return;
         }
 
         if (!address) {
-          toast.error('The seal cannot be found.');
+          toast.error(getMicrocopy('error', selectedWolf));
           setIsLoading(false);
           return;
         }
@@ -109,7 +111,7 @@ export default function CreatePool() {
         const keyPair = Keypair.generate();
 
         // Step 1: Upload image to Pinata
-        toast.loading('The chain listens...', { id: 'upload-image' });
+        toast.loading(getMicrocopy('loading', selectedWolf), { id: 'upload-image' });
         const formData = new FormData();
         formData.append('file', tokenLogo);
 
@@ -130,7 +132,7 @@ export default function CreatePool() {
         // Step 1.5: Upload documents if RWA token
         let uploadedDocuments: Array<{ url: string; name: string; type: string }> | undefined;
         if (value.tokenType === 'RWA' && value.documents && value.documents.length > 0) {
-          toast.loading('Uploading documents to IPFS...', { id: 'upload-documents' });
+          toast.loading(getMicrocopy('loading', selectedWolf), { id: 'upload-documents' });
           try {
             const documentsFormData = new FormData();
             value.documents.forEach((file) => {
@@ -162,7 +164,7 @@ export default function CreatePool() {
         }
 
         // Step 2: Upload metadata to Pinata
-        toast.loading('Uploading metadata to IPFS...', { id: 'upload-metadata' });
+        toast.loading(getMicrocopy('loading', selectedWolf), { id: 'upload-metadata' });
         const metadataPayload: any = {
           name: value.tokenName,
           symbol: value.tokenSymbol,
@@ -289,7 +291,9 @@ export default function CreatePool() {
               console.error('Failed to save token to database:', error);
               toast.error('The ritual succeeded, but the seal was not recorded.', { id: 'save-token' });
             } else {
-              toast.success('The seal holds. Your token is bound to the chain.', { id: 'save-token' });
+              toast.success(getMicrocopy('success', selectedWolf), { id: 'save-token' });
+              setShowSigil(true);
+              setTimeout(() => setShowSigil(false), 2000);
               queryClient.invalidateQueries({ queryKey: ['explore', 'local-tokens'] });
             }
           } catch (dbError) {
@@ -403,6 +407,7 @@ export default function CreatePool() {
 
   return (
     <>
+      {showSigil && <TokenLaunchSigil onComplete={() => setShowSigil(false)} />}
       <Head>
         <title>Launch Token - Kogaion</title>
         <meta
