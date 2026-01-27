@@ -15,77 +15,111 @@ export default function LorePage() {
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-mystic-steam-copper">
+            <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 text-mystic-steam-copper tracking-tight">
               The Evolution
             </h1>
-            <p className="text-xl md:text-2xl text-mystic-steam-parchment/70 font-body">
-              From Myth to Machine - The Kogaion Transformation
+            <p className="text-xl md:text-2xl text-mystic-steam-parchment/70 font-body italic">
+              From Myth to Machine
             </p>
           </motion.div>
 
-          {/* Section 1: The Origin */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mb-16"
-          >
-            <div className="steel-panel rounded-2xl p-8 md:p-12 relative overflow-hidden">
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-copper">
-                  The Origin
-                </h2>
-                <div className="space-y-4 text-lg font-body leading-relaxed text-mystic-steam-parchment/70">
-                  <p>
-                    In ancient Dacia, the Kogaion mountain stood as a sacred peak—a place where
-                    warriors ascended to prove their worth. The wolf, guardian of the mountain,
-                    watched over each climb. Those who reached the summit joined the pack.
-                  </p>
-                  <p className="text-mystic-steam-copper font-heading text-xl mt-6">
-                    But time flows, and legends evolve...
-                  </p>
+          {/* Timeline Vertical */}
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-mystic-steam-copper/50 via-mystic-steam-gold/30 to-mystic-steam-bronze/50 transform md:-translate-x-1/2" />
+
+            {/* Chapter 1: Origin */}
+            <motion.section
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="relative mb-20 pl-20 md:pl-0 md:pr-1/2 md:w-1/2 md:ml-auto"
+            >
+              <div className="absolute left-0 md:left-1/2 top-6 w-4 h-4 bg-mystic-steam-copper rounded-full border-2 border-dacian-steel-dark transform -translate-x-1/2 md:translate-x-1/2" />
+              <div className="steel-panel rounded-xl p-6 md:p-8 relative">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="text-mystic-steam-copper mt-1">
+                    <GearIcon className="w-8 h-8" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl md:text-3xl font-heading font-bold mb-2 text-mystic-steam-copper">
+                      Origin
+                    </h2>
+                    <p className="text-sm md:text-base text-mystic-steam-parchment/70 font-body leading-relaxed mb-3">
+                      In ancient Dacia, the Kogaion mountain stood as a sacred peak. Warriors ascended to prove their worth. The wolf watched over each climb.
+                    </p>
+                    <p className="text-mystic-steam-copper font-heading italic text-sm md:text-base">
+                      "Those who reached the summit joined the pack."
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.section>
+            </motion.section>
 
-          {/* Section 2: The Evolution */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="mb-16"
-          >
-            <div className="steel-panel rounded-2xl p-8 md:p-12 relative overflow-hidden">
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-gold">
-                  The Evolution (2026)
-                </h2>
-                <div className="space-y-4 text-lg font-body leading-relaxed text-mystic-steam-parchment/70">
-                  <p>
-                    In 2026, the legend transformed. The wolf became a hybrid entity—part
-                    mechanical, part digital. Rotating gears merged with neural circuits. Bronze
-                    met copper. Steam met code.
-                  </p>
-                  <p>
-                    <strong className="text-mystic-steam-copper">Kogaion is no longer just a guardian—it's a protocol. A neural network. A swarm.</strong>
-                  </p>
-                  <p>
-                    Each token launched is a node in this network. Each trade is a pulse of energy.
-                    Each holder is a connection in the digital pack.
-                  </p>
+            {/* Chapter 2: Evolution */}
+            <motion.section
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className="relative mb-20 pl-20 md:pl-1/2 md:w-1/2"
+            >
+              <div className="absolute left-0 md:left-1/2 top-6 w-4 h-4 bg-mystic-steam-gold rounded-full border-2 border-dacian-steel-dark transform -translate-x-1/2 md:-translate-x-1/2" />
+              <div className="steel-panel rounded-xl p-6 md:p-8 relative border-mystic-steam-gold/30">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="text-mystic-steam-gold mt-1">
+                    <BrainIcon className="w-8 h-8" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl md:text-3xl font-heading font-bold mb-2 text-mystic-steam-gold">
+                      Evolution
+                    </h2>
+                    <p className="text-sm md:text-base text-mystic-steam-parchment/70 font-body leading-relaxed mb-3">
+                      In 2026, the legend transformed. The wolf became hybrid—mechanical meets digital. Gears merged with neural circuits.
+                    </p>
+                    <p className="text-mystic-steam-gold font-heading italic text-sm md:text-base">
+                      "Kogaion is no longer just a guardian—it's a protocol. A neural network. A swarm."
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.section>
+            </motion.section>
 
-          {/* Section 3: The Three Pillars */}
+            {/* Chapter 3: Machine */}
+            <motion.section
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.6 }}
+              className="relative mb-20 pl-20 md:pl-0 md:pr-1/2 md:w-1/2 md:ml-auto"
+            >
+              <div className="absolute left-0 md:left-1/2 top-6 w-4 h-4 bg-mystic-steam-bronze rounded-full border-2 border-dacian-steel-dark transform -translate-x-1/2 md:translate-x-1/2" />
+              <div className="steel-panel rounded-xl p-6 md:p-8 relative border-mystic-steam-bronze/30">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="text-mystic-steam-bronze mt-1">
+                    <RobotIcon className="w-8 h-8" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl md:text-3xl font-heading font-bold mb-2 text-mystic-steam-bronze">
+                      Machine
+                    </h2>
+                    <p className="text-sm md:text-base text-mystic-steam-parchment/70 font-body leading-relaxed mb-3">
+                      Each token is a node. Each trade is a pulse. Each holder is a connection. The swarm grows.
+                    </p>
+                    <p className="text-mystic-steam-bronze font-heading italic text-sm md:text-base">
+                      "The ritual is complete. The machine awakens."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.section>
+          </div>
+
+          {/* The Three Pillars - Compact */}
           <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.8 }}
             className="mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-center text-mystic-steam-copper">
@@ -169,89 +203,6 @@ export default function LorePage() {
             </div>
           </motion.section>
 
-          {/* Section 4: The New Mapping */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8 }}
-            className="mb-16"
-          >
-            <div className="steel-panel rounded-2xl p-8 md:p-12 relative overflow-hidden">
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-copper">
-                  The New Mapping (2026 Edition)
-                </h2>
-                <div className="space-y-6">
-                  <div>
-                    <strong className="text-mystic-steam-copper font-heading text-lg">
-                      Mountain → Neural Network
-                    </strong>
-                    <p className="text-mystic-steam-parchment/70 font-body mt-2">
-                      The bonding curve is now a neural pathway. Price discovery flows through
-                      digital synapses. Each trade strengthens the connection.
-                    </p>
-                  </div>
-                  <div>
-                    <strong className="text-mystic-steam-copper font-heading text-lg">
-                      Ascent → Data Flow
-                    </strong>
-                    <p className="text-mystic-steam-parchment/70 font-body mt-2">
-                      Progress is measured in data streams. Market cap grows as information
-                      propagates through the network. The token climbs through computational
-                      layers.
-                    </p>
-                  </div>
-                  <div>
-                    <strong className="text-mystic-steam-copper font-heading text-lg">
-                      Pack → Swarm
-                    </strong>
-                    <p className="text-mystic-steam-parchment/70 font-body mt-2">
-                      Every trader who buys becomes a node in the swarm. Together, they form a
-                      distributed intelligence. Collective action drives graduation.
-                    </p>
-                  </div>
-                  <div>
-                    <strong className="text-mystic-steam-copper font-heading text-lg">
-                      Graduation → Autonomous Node
-                    </strong>
-                    <p className="text-mystic-steam-parchment/70 font-body mt-2">
-                      When conditions are met, the token graduates to permanent liquidity. It
-                      becomes an autonomous node in the network. The ritual is complete. The
-                      machine awakens.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.section>
-
-          {/* Section 5: The Vision */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1 }}
-            className="mb-16"
-          >
-            <div className="steel-panel rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-bronze">
-                  The Vision
-                </h2>
-                <p className="text-lg md:text-xl text-mystic-steam-parchment/70 font-body leading-relaxed max-w-3xl mx-auto">
-                  Kogaion is not just a launchpad. It's a ritual. A journey. An ascent. But now,
-                  it's also a protocol. A neural network. A swarm.
-                </p>
-                <p className="text-lg md:text-xl text-mystic-steam-parchment/70 font-body leading-relaxed max-w-3xl mx-auto mt-4">
-                  Every token that launches here begins a climb through digital layers. Every
-                  holder joins the swarm. Every graduation marks a new node activated in the
-                  network.
-                </p>
-                <p className="text-2xl md:text-3xl font-heading font-bold text-mystic-steam-copper mt-8">
-                  From myth to machine. From pack to swarm. The evolution continues.
-                </p>
-              </div>
-            </div>
-          </motion.section>
 
           {/* CTA Section */}
           <motion.div

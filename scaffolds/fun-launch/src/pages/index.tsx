@@ -68,27 +68,30 @@ export default function LandingPage() {
                 </span>
               </motion.div>
 
-              {/* Headline */}
+              {/* Headline - Lore First */}
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-4xl md:text-6xl lg:text-7xl font-heading font-bold mb-4 md:mb-6 text-mystic-steam-copper"
+                className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-4 md:mb-6 text-mystic-steam-copper tracking-tight"
               >
-                Launch Your Token
-                <br />
-                <span className="text-mystic-steam-parchment">On Solana</span>
+                ASCEND THE CHAIN
               </motion.h1>
 
-              {/* Subheadline */}
-              <motion.p
+              {/* Subheadline - Myth + Product */}
+              <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-lg md:text-xl text-mystic-steam-parchment/70 mb-8 md:mb-10 max-w-2xl mx-auto font-body"
+                className="mb-6 md:mb-8"
               >
-                The most developer-friendly launchpad. Higher fees, better tools, complete ecosystem.
-              </motion.p>
+                <p className="text-xl md:text-2xl lg:text-3xl text-mystic-steam-parchment/90 mb-3 font-heading italic">
+                  Where tokens are summoned, not deployed.
+                </p>
+                <p className="text-base md:text-lg text-mystic-steam-parchment/70 max-w-2xl mx-auto font-body">
+                  Launch, bond and scale Solana tokens inside a curated, high-signal ecosystem.
+                </p>
+              </motion.div>
 
               {/* Primary CTA */}
               <motion.div
@@ -221,44 +224,52 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {[
                 {
+                  title: 'Launch Your Token',
+                  description: 'Summon your token into existence. Higher fees, better tools, complete control.',
+                  Icon: RocketIcon,
+                  featured: true,
+                },
+                {
+                  title: 'Discover',
+                  description: 'Explore the pack. Find tokens, track performance, join the ecosystem.',
+                  Icon: SearchIcon,
+                  featured: false,
+                },
+                {
                   title: 'Higher Developer Fees',
                   description: 'More revenue for creators than any other platform. We prioritize your success.',
                   Icon: CoinsIcon,
+                  featured: false,
                 },
                 {
                   title: 'Service Marketplace',
                   description: 'Connect with KOLs, marketers, and service providers. Build your community.',
                   Icon: HandshakeIcon,
+                  featured: false,
                 },
                 {
                   title: 'Real World Assets',
                   description: 'Tokenize products, services, or assets. Beyond memecoins, into real value.',
                   Icon: GlobeIcon,
+                  featured: false,
                 },
                 {
                   title: 'AI Bot Builder',
                   description: 'Custom AI agents for your token. 100% user-owned, fully autonomous.',
                   Icon: RobotIcon,
+                  featured: false,
                 },
                 {
                   title: 'Anti-Rug Protection',
                   description: 'Enhanced security and standardized tokenomics for all launches.',
                   Icon: ShieldIcon,
+                  featured: false,
                 },
                 {
                   title: 'LP Locked Forever',
                   description: 'All liquidity locked via Meteora DBC. No rug pulls, no exit scams.',
                   Icon: LockIcon,
-                },
-                {
-                  title: 'Instant Graduation',
-                  description: 'Automatic graduation to DAMM v2 when conditions are met.',
-                  Icon: LightningIcon,
-                },
-                {
-                  title: 'Complete Ecosystem',
-                  description: 'Everything you need in one place. Launch, trade, grow, succeed.',
-                  Icon: RocketIcon,
+                  featured: false,
                 },
               ].map((feature, idx) => (
                 <motion.div
@@ -267,15 +278,28 @@ export default function LandingPage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }}
-                  className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all group"
+                  className={`steel-panel rounded-xl p-6 md:p-8 transition-all group relative overflow-hidden ${
+                    feature.featured
+                      ? 'border-2 border-mystic-steam-gold/50 bg-gradient-to-br from-mystic-steam-gold/10 to-transparent shadow-lg shadow-mystic-steam-gold/20 hover:shadow-mystic-steam-gold/30 hover:border-mystic-steam-gold/70'
+                      : 'border border-dacian-steel-steel/20 bg-dacian-steel-gunmetal/50 hover:border-dacian-steel-steel/40 opacity-90'
+                  }`}
                 >
-                  <div className="mb-4 md:mb-6 text-mystic-steam-copper group-hover:scale-110 transition-transform duration-300">
-                    <feature.Icon className="w-10 h-10 md:w-12 md:h-12" />
+                  {feature.featured && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-mystic-steam-gold/5 to-transparent pointer-events-none" />
+                  )}
+                  <div className={`mb-4 md:mb-6 transition-transform duration-300 ${
+                    feature.featured ? 'text-mystic-steam-gold group-hover:scale-110' : 'text-mystic-steam-copper/70 group-hover:scale-105'
+                  }`}>
+                    <feature.Icon className={`w-10 h-10 md:w-12 md:h-12 ${feature.featured ? 'drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]' : ''}`} />
                   </div>
-                  <h3 className="text-lg md:text-xl font-heading font-bold mb-2 md:mb-3 text-mystic-steam-copper">
+                  <h3 className={`text-lg md:text-xl font-heading font-bold mb-2 md:mb-3 ${
+                    feature.featured ? 'text-mystic-steam-gold' : 'text-mystic-steam-copper'
+                  }`}>
                     {feature.title}
                   </h3>
-                  <p className="text-sm md:text-base text-mystic-steam-parchment/70 font-body leading-relaxed">
+                  <p className={`text-sm md:text-base font-body leading-relaxed ${
+                    feature.featured ? 'text-mystic-steam-parchment/80' : 'text-mystic-steam-parchment/60'
+                  }`}>
                     {feature.description}
                   </p>
                 </motion.div>

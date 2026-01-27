@@ -89,8 +89,12 @@ export const TokenCardList = memo(
           ) : !data || data.length === 0 ? (
             (emptyState ?? (
               <div className="col-span-full py-12 text-center">
-                <div className="text-neutral-500">No tokens matching this criteria</div>
-                <div className="text-neutral-600">Adjust filters!</div>
+                <p className="text-mystic-steam-parchment/60 font-body text-lg mb-2 italic">
+                  The valley is quiet.
+                </p>
+                <p className="text-mystic-steam-parchment/40 font-body text-sm">
+                  Adjust your filters to summon tokens.
+                </p>
               </div>
             ))
           ) : (

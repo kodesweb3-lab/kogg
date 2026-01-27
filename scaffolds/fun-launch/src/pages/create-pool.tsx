@@ -75,7 +75,7 @@ export default function CreatePool() {
         setIsLoading(true);
         const { tokenLogo } = value;
         if (!tokenLogo) {
-          toast.error('Token logo is required');
+          toast.error('The ritual requires a token sigil.');
           setIsLoading(false);
           return;
         }
@@ -83,25 +83,25 @@ export default function CreatePool() {
         // Validate RWA fields if tokenType is RWA
         if (value.tokenType === 'RWA') {
           if (!value.assetType || !value.assetType.trim()) {
-            toast.error('Asset Type is required for RWA tokens');
+              toast.error('The ritual requires an asset type.');
             setIsLoading(false);
             return;
           }
           if (!value.assetDescription || !value.assetDescription.trim()) {
-            toast.error('Asset Description is required for RWA tokens');
+              toast.error('The ritual requires an asset description.');
             setIsLoading(false);
             return;
           }
         }
 
         if (!signTransaction) {
-          toast.error('Wallet not connected');
+          toast.error('The chain requires your wallet.');
           setIsLoading(false);
           return;
         }
 
         if (!address) {
-          toast.error('Wallet address not available');
+          toast.error('The seal cannot be found.');
           setIsLoading(false);
           return;
         }
@@ -109,7 +109,7 @@ export default function CreatePool() {
         const keyPair = Keypair.generate();
 
         // Step 1: Upload image to Pinata
-        toast.loading('Uploading image to IPFS...', { id: 'upload-image' });
+        toast.loading('The chain listens...', { id: 'upload-image' });
         const formData = new FormData();
         formData.append('file', tokenLogo);
 
@@ -125,7 +125,7 @@ export default function CreatePool() {
         }
 
         const { imageUrl } = await imageUploadResponse.json();
-        toast.success('Image uploaded successfully', { id: 'upload-image' });
+        toast.success('The seal holds.', { id: 'upload-image' });
 
         // Step 1.5: Upload documents if RWA token
         let uploadedDocuments: Array<{ url: string; name: string; type: string }> | undefined;
@@ -287,9 +287,9 @@ export default function CreatePool() {
             if (!saveTokenResponse.ok) {
               const error = await saveTokenResponse.json();
               console.error('Failed to save token to database:', error);
-              toast.error('Token launched but failed to save to database', { id: 'save-token' });
+              toast.error('The ritual succeeded, but the seal was not recorded.', { id: 'save-token' });
             } else {
-              toast.success('Token saved successfully', { id: 'save-token' });
+              toast.success('The seal holds. Your token is bound to the chain.', { id: 'save-token' });
               queryClient.invalidateQueries({ queryKey: ['explore', 'local-tokens'] });
             }
           } catch (dbError) {
@@ -343,12 +343,12 @@ export default function CreatePool() {
                   const error = await swapSendResponse.json();
                   toast.error(error.error || 'Failed to send buy transaction', { id: 'dev-buy' });
                 } else {
-                  toast.success(`Successfully bought ${devBuyAmount} SOL worth of tokens! 🎉`, { id: 'dev-buy' });
+                  toast.success(`The pact is sealed. ${devBuyAmount} SOL bound to your token.`, { id: 'dev-buy' });
                 }
               }
             } catch (swapError) {
               console.error('Dev buy error:', swapError);
-              toast.error('Dev buy failed, but your token was created successfully', { id: 'dev-buy' });
+              toast.error('The ritual failed. Gas was not enough. Your token remains.', { id: 'dev-buy' });
             }
           }
 

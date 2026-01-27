@@ -131,8 +131,9 @@ export default function DevLogPage() {
     enabled: true,
     refetchOnMount: true,
     refetchOnWindowFocus: false,
-    refetchInterval: 30000, // Refresh every 30 seconds
+    refetchInterval: false, // Disable auto-refresh to prevent conflicts
     staleTime: 0, // Always consider data stale to ensure fresh fetches on filter change
+    cacheTime: 0, // Don't cache to ensure fresh data on filter change
   });
 
   const entries = data?.data || [];

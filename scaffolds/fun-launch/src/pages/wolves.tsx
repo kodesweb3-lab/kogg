@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import Page from '@/components/ui/Page/Page';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/router';
@@ -12,7 +13,9 @@ const WOLF_PRESETS = [
     color: 'text-red-400',
     borderColor: 'border-red-500/30',
     bgColor: 'bg-red-500/10',
+    hoverBgColor: 'bg-red-500/20',
     Icon: FireIcon,
+    oath: 'You burn fast. You amplify chaos.',
   },
   {
     name: 'Frost',
@@ -21,7 +24,9 @@ const WOLF_PRESETS = [
     color: 'text-cyan-400',
     borderColor: 'border-cyan-500/30',
     bgColor: 'bg-cyan-500/10',
+    hoverBgColor: 'bg-cyan-500/20',
     Icon: FrostIcon,
+    oath: 'You calculate. You execute. You endure.',
   },
   {
     name: 'Blood',
@@ -30,7 +35,9 @@ const WOLF_PRESETS = [
     color: 'text-red-600',
     borderColor: 'border-red-700/30',
     bgColor: 'bg-red-900/10',
+    hoverBgColor: 'bg-red-900/20',
     Icon: BloodIcon,
+    oath: 'You embrace shadows. You command respect.',
   },
   {
     name: 'Moon',
@@ -39,7 +46,9 @@ const WOLF_PRESETS = [
     color: 'text-purple-400',
     borderColor: 'border-purple-500/30',
     bgColor: 'bg-purple-500/10',
+    hoverBgColor: 'bg-purple-500/20',
     Icon: MoonIcon,
+    oath: 'You dream. You inspire. You ascend.',
   },
   {
     name: 'Stone',
@@ -48,9 +57,62 @@ const WOLF_PRESETS = [
     color: 'text-gray-400',
     borderColor: 'border-gray-500/30',
     bgColor: 'bg-gray-500/10',
+    hoverBgColor: 'bg-gray-500/20',
     Icon: StoneIcon,
+    oath: 'You stand firm. You build. You persist.',
   },
 ];
+
+function WolfCard({ wolf, idx }: { wolf: typeof WOLF_PRESETS[0]; idx: number }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const Icon = wolf.Icon;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: idx * 0.1 }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className={`steel-panel p-6 md:p-8 rounded-xl transition-all duration-300 border-2 ${wolf.borderColor} relative overflow-hidden hover:border-opacity-80 hover:scale-[1.02] cursor-pointer group`}
+    >
+      <div className={`absolute top-0 right-0 w-32 h-32 ${isHovered ? wolf.hoverBgColor : wolf.bgColor} rounded-full blur-3xl transition-all duration-300 opacity-50 -z-0`} />
+      <div className="relative z-10">
+        <div className={`mb-4 transition-transform duration-300 ${wolf.color} ${isHovered ? 'scale-110' : ''}`}>
+          <Icon className="w-12 h-12 md:w-16 md:h-16" />
+        </div>
+        <h2 className="text-2xl md:text-3xl font-heading font-bold mb-3 text-mystic-steam-copper">
+          {wolf.name}
+        </h2>
+        <p className="text-mystic-steam-parchment/70 mb-4 font-body text-sm md:text-base leading-relaxed">
+          {wolf.description}
+        </p>
+        {isHovered && (
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-mystic-steam-copper font-heading italic text-sm md:text-base mb-4 border-l-2 border-mystic-steam-copper/50 pl-3"
+          >
+            "{wolf.oath}"
+          </motion.p>
+        )}
+        <div className="flex flex-wrap gap-2 mb-4">
+          {wolf.traits.map((trait) => (
+            <span
+              key={trait}
+              className="px-2.5 py-1 text-xs font-medium bg-dacian-steel-dark rounded-full border border-dacian-steel-steel/30 text-mystic-steam-parchment/70"
+            >
+              {trait}
+            </span>
+          ))}
+        </div>
+        <p className="text-xs text-mystic-steam-parchment/50 font-body italic">
+          Starter template—fully customizable
+        </p>
+      </div>
+    </motion.div>
+  );
+}
 
 export default function WolvesPage() {
   const router = useRouter();
@@ -76,44 +138,9 @@ export default function WolvesPage() {
 
           {/* Wolves Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {WOLF_PRESETS.map((wolf, idx) => {
-              const Icon = wolf.Icon;
-              return (
-                <motion.div
-                  key={wolf.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  className={`steel-panel p-6 md:p-8 rounded-xl transition-all border-2 ${wolf.borderColor} relative overflow-hidden hover:border-opacity-60`}
-                >
-                  <div className={`absolute top-0 right-0 w-32 h-32 ${wolf.bgColor} rounded-full blur-3xl opacity-50 -z-0`} />
-                  <div className="relative z-10">
-                    <div className={`mb-4 ${wolf.color}`}>
-                      <Icon className="w-12 h-12 md:w-16 md:h-16" />
-                    </div>
-                    <h2 className="text-2xl md:text-3xl font-heading font-bold mb-3 text-mystic-steam-copper">
-                      {wolf.name}
-                    </h2>
-                    <p className="text-mystic-steam-parchment/70 mb-4 font-body text-sm md:text-base leading-relaxed">
-                      {wolf.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {wolf.traits.map((trait) => (
-                        <span
-                          key={trait}
-                          className="px-2.5 py-1 text-xs font-medium bg-dacian-steel-dark rounded-full border border-dacian-steel-steel/30 text-mystic-steam-parchment/70"
-                        >
-                          {trait}
-                        </span>
-                      ))}
-                    </div>
-                    <p className="text-xs text-mystic-steam-parchment/50 font-body italic">
-                      Starter template—fully customizable
-                    </p>
-                  </div>
-                </motion.div>
-              );
-            })}
+            {WOLF_PRESETS.map((wolf, idx) => (
+              <WolfCard key={wolf.name} wolf={wolf} idx={idx} />
+            ))}
           </div>
 
           {/* Custom Option */}
