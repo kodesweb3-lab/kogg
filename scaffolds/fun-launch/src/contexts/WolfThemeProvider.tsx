@@ -75,33 +75,42 @@ const defaultTheme: WolfThemeConfig = {
 const WolfThemeContext = createContext<WolfThemeContextType | undefined>(undefined);
 
 export function WolfThemeProvider({ children }: { children: ReactNode }) {
+  // Use useState for initial render to avoid SSR mismatch
+  const [mounted, setMounted] = useState(false);
   const [selectedWolf, setSelectedWolfState] = useLocalStorage<WolfTheme>(
     'kogaion-wolf-theme',
     null
   );
 
+  // Set mounted flag on client side only
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const setSelectedWolf = (wolf: WolfTheme) => {
     setSelectedWolfState(wolf);
     // Update data attribute on document root for CSS
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined' && mounted) {
       document.documentElement.setAttribute('data-wolf-theme', wolf || 'default');
     }
   };
 
-  // Initialize data attribute on mount and when theme changes
+  // Initialize data attribute on mount and when theme changes (client-side only)
   useEffect(() => {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined' && mounted) {
       const theme = selectedWolf || 'default';
       document.documentElement.setAttribute('data-wolf-theme', theme);
     }
-  }, [selectedWolf]);
+  }, [selectedWolf, mounted]);
   
-  // Initialize on mount
+  // Initialize on mount (client-side only)
   useEffect(() => {
-    if (typeof document !== 'undefined' && !document.documentElement.hasAttribute('data-wolf-theme')) {
-      document.documentElement.setAttribute('data-wolf-theme', selectedWolf || 'default');
+    if (typeof document !== 'undefined' && mounted) {
+      if (!document.documentElement.hasAttribute('data-wolf-theme')) {
+        document.documentElement.setAttribute('data-wolf-theme', selectedWolf || 'default');
+      }
     }
-  }, []);
+  }, [mounted, selectedWolf]);
 
   const themeConfig = useMemo(() => {
     if (!selectedWolf) return defaultTheme;

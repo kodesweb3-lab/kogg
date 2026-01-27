@@ -12,19 +12,18 @@ import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 
-// ErrorBoundary must be loaded client-side only to avoid SSR issues
-// Create a wrapper component to ensure proper export
+// ErrorBoundary - load client-side only, but don't block rendering
 const ErrorBoundaryWrapper = dynamic(
-  () => import('@/components/ErrorBoundary').then((mod) => {
-    // Return a wrapper component that uses ErrorBoundary
-    return {
-      default: ({ children }: { children: React.ReactNode }) => {
-        const { ErrorBoundary } = mod;
-        return <ErrorBoundary>{children}</ErrorBoundary>;
-      },
-    };
-  }),
-  { ssr: false }
+  () => import('@/components/ErrorBoundary').then((mod) => ({
+    default: ({ children }: { children: React.ReactNode }) => {
+      const ErrorBoundary = mod.ErrorBoundary || mod.default;
+      return <ErrorBoundary>{children}</ErrorBoundary>;
+    },
+  })),
+  { 
+    ssr: false,
+    loading: () => null, // Don't block, render children immediately
+  }
 );
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -77,11 +76,11 @@ export default function App({ Component, pageProps }: AppProps) {
               lang: 'en',
             }}
           >
-          <Toaster />
-          <AnimatePresence mode="wait" initial={false}>
-            <Component {...pageProps} key={router.asPath} />
-          </AnimatePresence>
-          <AskKogaion />
+            <Toaster />
+            <AnimatePresence mode="wait" initial={false}>
+              <Component {...pageProps} key={router.asPath} />
+            </AnimatePresence>
+            <AskKogaion />
           </UnifiedWalletProvider>
         </WolfThemeProvider>
       </QueryClientProvider>
