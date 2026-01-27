@@ -637,25 +637,45 @@ export default function CreatePool() {
                   </label>
                   {form.Field({
                     name: 'devBuyAmount',
-                    children: (field) => (
-                      <div>
-                        <input
-                          id="devBuyAmount"
-                          name={field.name}
-                          type="number"
-                          step="0.01"
-                          min="0"
-                          max="10"
-                          className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
-                          placeholder="0.1"
-                          value={field.state.value || ''}
-                          onChange={(e) => field.handleChange(parseFloat(e.target.value) || 0)}
-                        />
-                        <p className="text-xs text-gray-500 mt-1 font-body">
-                          Leave at 0 to skip initial buy. Max 10 SOL.
-                        </p>
-                      </div>
-                    ),
+                    children: (field) => {
+                      const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                        const value = e.target.value;
+                        // Allow empty, numbers, and both . and , as decimal separators
+                        if (value === '' || /^[0-9]+([.,][0-9]*)?$/.test(value)) {
+                          // Convert comma to dot for parsing
+                          const normalizedValue = value.replace(',', '.');
+                          const numValue = normalizedValue === '' ? 0 : parseFloat(normalizedValue);
+                          if (!isNaN(numValue) && numValue >= 0 && numValue <= 10) {
+                            field.handleChange(numValue);
+                          } else if (value === '') {
+                            field.handleChange(0);
+                          }
+                        }
+                      };
+
+                      // Display value - show as stored (will be dot) but allow user to type comma
+                      const displayValue = field.state.value !== undefined && field.state.value !== null
+                        ? field.state.value.toString()
+                        : '';
+
+                      return (
+                        <div>
+                          <input
+                            id="devBuyAmount"
+                            name={field.name}
+                            type="text"
+                            inputMode="decimal"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            placeholder="0.1 sau 0,1"
+                            value={displayValue}
+                            onChange={handleChange}
+                          />
+                          <p className="text-xs text-gray-500 mt-1 font-body">
+                            Leave at 0 to skip initial buy. Max 10 SOL. Use . or , for decimals.
+                          </p>
+                        </div>
+                      );
+                    },
                   })}
                 </div>
               </div>

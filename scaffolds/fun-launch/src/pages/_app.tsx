@@ -158,6 +158,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
+                style={{ background: 'var(--obsidian-base, #0a0a0a)' }}
               >
                 <Component {...pageProps} />
               </motion.div>

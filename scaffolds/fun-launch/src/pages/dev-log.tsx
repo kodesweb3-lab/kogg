@@ -225,7 +225,7 @@ export default function DevLogPage() {
                 <ul className="space-y-1 text-[var(--text-muted)] font-body text-sm">
                   <li>• PostgreSQL (Prisma ORM)</li>
                   <li>• IPFS (Pinata)</li>
-                  <li>• Railway Deployment</li>
+                  <li>• Cloud Infrastructure</li>
                   <li>• Server-side API Routes</li>
                 </ul>
               </div>

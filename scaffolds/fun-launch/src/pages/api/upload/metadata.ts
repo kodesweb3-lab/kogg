@@ -47,7 +47,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const { name, symbol, description, imageUrl } = req.body as MetadataRequest;
+    const { 
+      name, 
+      symbol, 
+      description, 
+      imageUrl,
+      tokenType,
+      assetType,
+      assetDescription,
+      assetValue,
+      assetLocation,
+      documents
+    } = req.body as MetadataRequest;
 
     // Validate required fields
     if (!name || !symbol || !imageUrl) {
@@ -74,6 +85,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://') && !imageUrl.startsWith('ipfs://')) {
       return res.status(400).json({ 
         error: 'Invalid imageUrl format. Must be a valid HTTP/HTTPS URL or IPFS URI' 
+      });
+    }
+
+    // Validate tokenType if provided
+    if (tokenType && tokenType !== 'MEMECOIN' && tokenType !== 'RWA') {
+      return res.status(400).json({ 
+        error: 'Invalid tokenType. Must be either MEMECOIN or RWA' 
       });
     }
 

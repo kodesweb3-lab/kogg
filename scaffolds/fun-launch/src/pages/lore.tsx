@@ -160,7 +160,7 @@ export default function LorePage() {
                 className="bg-mystic-steam-ash border border-mystic-steam-gold/30 rounded-xl p-6 relative overflow-hidden"
               >
                 <div className="relative z-10">
-                  <div className="text-4xl mb-4">🧠</div>
+                  <BrainIcon className="w-12 h-12 mb-4 text-mystic-steam-gold" />
                   <h3 className="text-xl font-heading font-bold mb-2 text-mystic-steam-gold">
                     The Neural Pathways
                   </h3>

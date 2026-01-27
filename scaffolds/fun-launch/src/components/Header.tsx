@@ -7,7 +7,6 @@ import { shortenAddress } from '@/lib/utils';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
-import { WolfThemeSelector } from '@/components/WolfThemeSelector/WolfThemeSelector';
 
 const ReferralModal = dynamic(() => import('./ReferralModal'), { ssr: false });
 
@@ -58,6 +57,7 @@ export const Header = () => {
     { label: 'Dev Log', href: '/dev-log' },
     { label: 'Lore', href: '/lore' },
     { label: 'Wolves', href: '/wolves' },
+    ...(connected && publicKey ? [{ label: 'Dashboard', href: '/dashboard' }] : []),
   ] as Array<{ label: string; href: string; external?: boolean; disabled?: boolean }>;
 
   return (
@@ -84,7 +84,6 @@ export const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-4">
-          <WolfThemeSelector />
           {navItems.map((item) => {
             if (item.disabled) {
               return (
