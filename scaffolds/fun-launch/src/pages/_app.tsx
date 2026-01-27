@@ -8,7 +8,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useWindowWidthListener } from '@/lib/device';
 import { AskKogaion } from '@/components/AskKogaion';
 import { WolfThemeProvider } from '@/contexts/WolfThemeProvider';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 
 // SSR-safe ErrorBoundary wrapper - renders children immediately on SSR, wraps with ErrorBoundary on client
@@ -43,12 +43,12 @@ function ErrorBoundaryWrapper({ children }: { children: ReactNode }) {
 // Fallback UI for critical errors
 function FallbackUI({ error }: { error?: Error }) {
   return (
-    <div className="min-h-screen bg-obsidian-base text-text-primary flex items-center justify-center p-4">
+    <div className="min-h-screen bg-obsidian-base text-[var(--text-primary)] flex items-center justify-center p-4">
       <div className="max-w-md w-full glass-card rounded-xl p-8 rim-light">
         <h1 className="text-2xl font-heading font-bold mb-4 text-aureate-base">
           Kogaion
         </h1>
-        <p className="text-text-primary/80 mb-4">
+        <p className="text-[var(--text-primary)]/80 mb-4">
           {error 
             ? 'An error occurred while loading the application. Please refresh the page.'
             : 'Loading...'}
@@ -152,7 +152,15 @@ export default function App({ Component, pageProps }: AppProps) {
           >
             <Toaster />
             <AnimatePresence mode="wait" initial={false}>
-              <Component {...pageProps} key={router.asPath} />
+              <motion.div
+                key={router.asPath}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Component {...pageProps} />
+              </motion.div>
             </AnimatePresence>
             <AskKogaion />
           </UnifiedWalletProvider>

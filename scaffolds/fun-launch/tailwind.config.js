@@ -55,6 +55,10 @@ export default {
           'bg-tint': 'var(--wolf-bg-tint)',
           border: 'var(--wolf-border)',
         },
+        // Semantic text colors - use direct names for Tailwind
+        textPrimary: 'var(--text-primary)',
+        textMuted: 'var(--text-muted)',
+        textSubtle: 'var(--text-subtle)',
         // Mystic Steampunk Ritual Palette (kept for backwards compatibility)
         'mystic-steam': {
           // Main colors

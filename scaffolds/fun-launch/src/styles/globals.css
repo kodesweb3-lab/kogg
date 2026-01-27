@@ -68,6 +68,9 @@ body {
   font-family: var(--font-body, 'Inter', sans-serif);
   min-height: 100vh;
   position: relative;
+  /* Ensure content is visible */
+  visibility: visible;
+  opacity: 1;
 }
 
 /* Fallback styles if CSS variables are not available */

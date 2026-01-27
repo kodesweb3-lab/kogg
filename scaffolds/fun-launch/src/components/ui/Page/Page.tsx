@@ -14,7 +14,7 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
   return (
     <div
       className={cn(
-        'flex min-h-screen flex-col justify-between bg-obsidian-base text-text-primary relative sigil-pattern',
+        'flex min-h-screen flex-col justify-between bg-obsidian-base text-[var(--text-primary)] relative',
         pageClassName
       )}
       style={{
@@ -24,6 +24,9 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
         `,
       }}
     >
+      {/* Sigil pattern as separate layer */}
+      <div className="sigil-pattern" />
+      
       {/* Layered atmospheric background - kept for compatibility */}
       <div className="atmosphere-layer opacity-0" />
       <div className="steam-layer opacity-30" />
