@@ -56,17 +56,26 @@
 }
 
 body {
+  /* Fallback values if CSS variables fail to load */
   background: 
     /* Fine noise texture */
-    var(--obsidian-base),
+    var(--obsidian-base, #0a0a0a),
     /* Controlled vignette */
     radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.4) 100%),
-    var(--obsidian-base);
+    var(--obsidian-base, #0a0a0a);
   background-attachment: fixed;
-  color: var(--text-primary);
-  font-family: var(--font-body);
+  color: var(--text-primary, #e6e1d6);
+  font-family: var(--font-body, 'Inter', sans-serif);
   min-height: 100vh;
   position: relative;
+}
+
+/* Fallback styles if CSS variables are not available */
+@supports not (--css: variables) {
+  body {
+    background: #0a0a0a;
+    color: #e6e1d6;
+  }
 }
 
 /* Apply noise texture */

@@ -1,7 +1,48 @@
 'use client';
 
-import { createContext, useContext, useEffect, useState, useMemo, ReactNode } from 'react';
-import { useLocalStorage } from 'react-use';
+import { createContext, useContext, useEffect, useState, useMemo, ReactNode, useCallback } from 'react';
+
+// SSR-safe localStorage hook that prevents hydration mismatches
+function useSSRSafeLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
+  const [mounted, setMounted] = useState(false);
+
+  // Only access localStorage after component mounts (client-side)
+  useEffect(() => {
+    setMounted(true);
+    if (typeof window !== 'undefined') {
+      try {
+        const item = window.localStorage.getItem(key);
+        if (item !== null) {
+          setStoredValue(JSON.parse(item) as T);
+        }
+      } catch (error) {
+        console.error(`[WolfThemeProvider] Error reading localStorage key "${key}":`, error);
+      }
+    }
+  }, [key]);
+
+  const setValue = useCallback(
+    (value: T) => {
+      try {
+        setStoredValue(value);
+        if (typeof window !== 'undefined' && mounted) {
+          if (value === null || value === undefined) {
+            window.localStorage.removeItem(key);
+          } else {
+            window.localStorage.setItem(key, JSON.stringify(value));
+          }
+        }
+      } catch (error) {
+        console.error(`[WolfThemeProvider] Error setting localStorage key "${key}":`, error);
+      }
+    },
+    [key, mounted]
+  );
+
+  // Return initialValue during SSR, storedValue after mount
+  return [mounted ? storedValue : initialValue, setValue];
+}
 
 export type WolfTheme = 'fire' | 'frost' | 'blood' | 'moon' | 'stone' | null;
 
@@ -75,12 +116,14 @@ const defaultTheme: WolfThemeConfig = {
 const WolfThemeContext = createContext<WolfThemeContextType | undefined>(undefined);
 
 export function WolfThemeProvider({ children }: { children: ReactNode }) {
-  // Use useState for initial render to avoid SSR mismatch
-  const [mounted, setMounted] = useState(false);
-  const [selectedWolf, setSelectedWolfState] = useLocalStorage<WolfTheme>(
+  // Use SSR-safe localStorage hook
+  const [selectedWolf, setSelectedWolfState] = useSSRSafeLocalStorage<WolfTheme>(
     'kogaion-wolf-theme',
     null
   );
+  
+  // Track mounted state separately for DOM operations
+  const [mounted, setMounted] = useState(false);
 
   // Set mounted flag on client side only
   useEffect(() => {
