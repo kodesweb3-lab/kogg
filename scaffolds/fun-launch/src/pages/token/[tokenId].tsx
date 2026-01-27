@@ -14,6 +14,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 import { useWallet } from '@jup-ag/wallet-adapter';
 import { WolfIcon } from '@/components/icons/MiscIcons';
+import { TokenShareButtons } from '@/components/TokenShareButtons';
 
 const SwapPanel = dynamic(() => import('@/components/SwapPanel'), { ssr: false });
 const TokenChat = dynamic(() => import('@/components/TokenChat'), { ssr: false });
@@ -77,9 +78,10 @@ export const TokenPageWithContext = () => {
     <Page>
       <TokenPageMsgHandler />
 
-      <div className="max-h-screen">
-        <div className="flex mb-4 rounded-lg border border-neutral-700 p-3">
+      <div className="min-h-screen">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 rounded-lg border border-neutral-700 p-3 gap-4">
           <TokenHeader className="max-sm:order-1" />
+          <TokenShareButtons />
         </div>
 
         <div className="w-full h-full flex flex-col md:flex-row gap-4">
@@ -107,19 +109,16 @@ export const TokenPageWithContext = () => {
             )}
           </div>
 
-          <div className={'border-neutral-850 w-full max-sm:order-2'}>
+          <div className={'border-neutral-850 w-full max-sm:order-2 flex flex-col'}>
             <TokenStats key={`token-stats-${poolId}`} />
 
-            <div className="flex flex-col h-[300px] lg:h-[500px] w-full">
+            <div className="flex flex-col h-[300px] lg:h-[500px] w-full mb-4">
               <TokenChartProvider>
                 <TokenChart />
               </TokenChartProvider>
             </div>
 
-            {/* Height 0 makes the element not contribute to height sizing */}
-            {/* Min height 100% makes the element fill height */}
-
-            <TokenBottomPanel className="flex h-0 min-h-full flex-col overflow-hidden" />
+            <TokenBottomPanel className="flex flex-col overflow-hidden h-[400px] lg:h-[500px]" />
 
             {/* <div className="flex flex-1 flex-col overflow-hidden mt-4 h-[300px] lg:h-[500px] max-sm:order-4">
               <TxnsTab />

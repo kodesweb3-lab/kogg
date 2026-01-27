@@ -27,6 +27,22 @@ type DashboardData = {
       createdAt: Date;
     }>;
   };
+  // Aggregated statistics
+  statistics: {
+    totalTokens: number;
+    totalVolume: number;
+    totalMarketCap: number;
+    averagePrice: number;
+    totalHolders: number;
+    tokensByType: {
+      MEMECOIN: number;
+      RWA: number;
+    };
+    tokensCreatedByMonth: Array<{
+      month: string;
+      count: number;
+    }>;
+  };
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -87,6 +103,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
 
+    // Fetch metrics for all tokens created by this wallet
+    const tokenMints = tokensCreated.map((t) => t.mint);
+    const metrics = await prisma.metric.findMany({
+      where: {
+        tokenMint: {
+          in: tokenMints,
+        },
+      },
+    });
+
+    // Calculate aggregated statistics
+    const totalVolume = metrics.reduce((sum, m) => sum + (m.vol24h || 0), 0);
+    const totalMarketCap = metrics.reduce((sum, m) => sum + (m.mcap || 0), 0);
+    const totalHolders = metrics.reduce((sum, m) => sum + (m.holders || 0), 0);
+    const prices = metrics.filter((m) => m.price && m.price > 0).map((m) => m.price!);
+    const averagePrice = prices.length > 0 ? prices.reduce((sum, p) => sum + p, 0) / prices.length : 0;
+
+    // Count tokens by type
+    const tokensByType = {
+      MEMECOIN: tokensCreated.filter((t) => t.tokenType === 'MEMECOIN').length,
+      RWA: tokensCreated.filter((t) => t.tokenType === 'RWA').length,
+    };
+
+    // Group tokens by month for chart data
+    const tokensByMonthMap = new Map<string, number>();
+    tokensCreated.forEach((token) => {
+      const date = new Date(token.createdAt);
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+      tokensByMonthMap.set(monthKey, (tokensByMonthMap.get(monthKey) || 0) + 1);
+    });
+    const tokensCreatedByMonth = Array.from(tokensByMonthMap.entries())
+      .map(([month, count]) => ({ month, count }))
+      .sort((a, b) => a.month.localeCompare(b.month));
+
     const dashboardData: DashboardData = {
       wallet,
       isServiceProvider: !!serviceProvider,
@@ -103,6 +153,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       referralStats: {
         totalReferred: referrals.length,
         referrals,
+      },
+      statistics: {
+        totalTokens: tokensCreated.length,
+        totalVolume,
+        totalMarketCap,
+        averagePrice,
+        totalHolders,
+        tokensByType,
+        tokensCreatedByMonth,
       },
     };
 

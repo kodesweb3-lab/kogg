@@ -19,11 +19,11 @@ export const TokenBottomPanel: React.FC<TokenBottomPanelProps> = memo(({ classNa
 
   return (
     <Tabs
-      className={cn('overflow-hidden', className)}
+      className={cn('flex flex-col overflow-hidden bg-obsidian-surface/50 rounded-lg border border-obsidian-border', className)}
       value={tab}
       onValueChange={(value) => setTab(value as BottomPanelTab)}
     >
-      <div className="flex items-center justify-between border-b border-neutral-850 pr-2">
+      <div className="flex items-center justify-between border-b border-neutral-850 pr-2 flex-shrink-0">
         <TabsList className="scrollbar-none flex h-10 w-full items-center text-sm">
           <TabsTrigger value={BottomPanelTab.TXNS}>
             <span className="sm:hidden">{`Txns`}</span>
@@ -36,13 +36,15 @@ export const TokenBottomPanel: React.FC<TokenBottomPanelProps> = memo(({ classNa
         </TabsList>
       </div>
 
-      <TabsContent className="contents" value={BottomPanelTab.TXNS}>
-        <TxnsTab />
-      </TabsContent>
+      <div className="flex-1 overflow-hidden">
+        <TabsContent className="h-full overflow-y-auto" value={BottomPanelTab.TXNS}>
+          <TxnsTab />
+        </TabsContent>
 
-      <TabsContent className="contents" value={BottomPanelTab.HOLDERS}>
-        <HoldersTab />
-      </TabsContent>
+        <TabsContent className="h-full overflow-y-auto" value={BottomPanelTab.HOLDERS}>
+          <HoldersTab />
+        </TabsContent>
+      </div>
     </Tabs>
   );
 });

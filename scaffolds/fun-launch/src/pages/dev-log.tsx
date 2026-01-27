@@ -19,7 +19,7 @@ export default function DevLogPage() {
               Dev Log
             </h1>
             <p className="text-xl md:text-2xl text-[var(--text-muted)] font-body max-w-3xl mx-auto">
-              Building the future of Solana launchpads. Track our progress, updates, and what's coming next.
+              Building the future of token launchpads. Track our progress, updates, and what's coming next.
             </p>
           </motion.div>
 
@@ -57,7 +57,7 @@ export default function DevLogPage() {
                   Service Providers Marketplace
                 </h3>
                 <p className="text-[var(--text-primary)]/80 font-body leading-relaxed mb-4">
-                  A comprehensive marketplace connecting token creators with service providers in the Solana ecosystem. KOLs, marketers, moderators, and other professionals can register and showcase their services.
+                  A comprehensive marketplace connecting token creators with service providers. KOLs, marketers, moderators, and other professionals can register and showcase their services.
                 </p>
                 <ul className="list-disc list-inside space-y-2 text-[var(--text-muted)] font-body ml-4">
                   <li>Provider registration with Twitter verification</li>
@@ -78,7 +78,7 @@ export default function DevLogPage() {
                 <ul className="list-disc list-inside space-y-2 text-[var(--text-muted)] font-body ml-4">
                   <li>Dedicated RWA token type in launch form</li>
                   <li>Asset type classification and valuation</li>
-                  <li>Document upload support via IPFS</li>
+                  <li>Document upload support via decentralized storage</li>
                   <li>Asset location tracking</li>
                   <li>RWA-specific badges and display</li>
                 </ul>
@@ -137,7 +137,7 @@ export default function DevLogPage() {
                   Genesis SDK Anti-Rug Integration
                 </h3>
                 <p className="text-[var(--text-primary)]/80 font-body leading-relaxed">
-                  Planning to integrate Metaplex Genesis SDK for enhanced security and anti-rug protection. This will provide standardized tokenomics, enhanced security checks, and better token verification, making Kogaion one of the most secure launchpads on Solana.
+                  Planning to integrate Genesis SDK for enhanced security and anti-rug protection. This will provide standardized tokenomics, enhanced security checks, and better token verification, making Kogaion one of the most secure launchpads.
                 </p>
                 <p className="text-[var(--text-muted)] font-body text-sm mt-3">
                   Timeline: Q2 2026
@@ -199,22 +199,22 @@ export default function DevLogPage() {
                   Frontend Stack
                 </h3>
                 <ul className="space-y-1 text-[var(--text-muted)] font-body text-sm">
-                  <li>• Next.js 15 (React 19)</li>
+                  <li>• Modern React Framework</li>
                   <li>• TypeScript</li>
-                  <li>• Framer Motion</li>
-                  <li>• TanStack Query</li>
+                  <li>• Animation Library</li>
+                  <li>• Data Fetching & Caching</li>
                 </ul>
               </div>
 
               <div className="glass-card rounded-xl p-6 rim-light">
                 <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
-                  Blockchain
+                  Blockchain Integration
                 </h3>
                 <ul className="space-y-1 text-[var(--text-muted)] font-body text-sm">
-                  <li>• Solana Web3.js</li>
-                  <li>• Meteora DBC SDK</li>
-                  <li>• Jupiter Aggregator</li>
-                  <li>• Helius RPC</li>
+                  <li>• Blockchain SDK</li>
+                  <li>• Dynamic Bonding Curve Protocol</li>
+                  <li>• DEX Aggregation</li>
+                  <li>• Blockchain RPC</li>
                 </ul>
               </div>
 
@@ -223,8 +223,8 @@ export default function DevLogPage() {
                   Infrastructure
                 </h3>
                 <ul className="space-y-1 text-[var(--text-muted)] font-body text-sm">
-                  <li>• PostgreSQL (Prisma ORM)</li>
-                  <li>• IPFS (Pinata)</li>
+                  <li>• Relational Database</li>
+                  <li>• Decentralized Storage</li>
                   <li>• Cloud Infrastructure</li>
                   <li>• Server-side API Routes</li>
                 </ul>
@@ -245,7 +245,7 @@ export default function DevLogPage() {
             
             <div className="glass-card rounded-xl p-8 md:p-12 rim-light">
               <p className="text-lg font-body leading-relaxed text-[var(--text-primary)]/80 mb-6">
-                <strong className="text-aureate-base">Kogaion</strong> is evolving into the most comprehensive and secure launchpad on Solana. We're building beyond just token launches—we're creating an ecosystem.
+                <strong className="text-aureate-base">Kogaion</strong> is evolving into the most comprehensive and secure launchpad. We're building beyond just token launches—we're creating an ecosystem.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
@@ -293,7 +293,7 @@ export default function DevLogPage() {
                 Join the Pack
               </h3>
               <p className="text-[var(--text-primary)]/70 font-body mb-6 max-w-2xl mx-auto">
-                Follow our progress, launch your tokens, and be part of the evolution. The future of Solana launchpads is being built here.
+                Follow our progress, launch your tokens, and be part of the evolution. The future of token launchpads is being built here.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <a
