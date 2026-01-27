@@ -16,7 +16,7 @@ export const Header = () => {
   const [isReferralOpen, setIsReferralOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const { disconnect, publicKey } = useWallet();
+  const { disconnect, publicKey, connected } = useWallet();
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
   // Close mobile menu on route change
