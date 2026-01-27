@@ -11,6 +11,9 @@ import { Keypair, Transaction } from '@solana/web3.js';
 import { useUnifiedWalletContext, useWallet } from '@jup-ag/wallet-adapter';
 import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
+import { useWolfTheme } from '@/contexts/WolfThemeProvider';
+import { getMicrocopy } from '@/lib/microcopy';
+import { TokenLaunchSigil } from '@/components/rituals/TokenLaunchSigil';
 
 const Confetti = dynamic(() => import('@/components/Confetti'), { ssr: false });
 
