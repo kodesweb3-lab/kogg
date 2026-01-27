@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useEffect, useMemo, ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo, ReactNode } from 'react';
 import { useLocalStorage } from 'react-use';
 
 export type WolfTheme = 'fire' | 'frost' | 'blood' | 'moon' | 'stone' | null;

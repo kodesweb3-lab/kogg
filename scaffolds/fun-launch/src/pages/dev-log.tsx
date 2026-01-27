@@ -1,316 +1,298 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import Page from '@/components/ui/Page/Page';
-import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
-import { CompletedIcon, InProgressIcon, PlannedIcon, BlockedIcon } from '@/components/icons/StatusIcons';
-
-interface DevLogEntry {
-  id: string;
-  title: string;
-  content: string;
-  category: 'UPDATE' | 'FIX' | 'ANNOUNCEMENT' | 'ROADMAP' | 'TECHNICAL';
-  status: 'COMPLETED' | 'IN_PROGRESS' | 'PLANNED' | 'BLOCKED';
-  version?: string | null;
-  publishedAt: string;
-  createdAt: string;
-}
-
-interface DevLogResponse {
-  success: boolean;
-  data: DevLogEntry[];
-  pagination: {
-    page: number;
-    limit: number;
-    total: number;
-    totalPages: number;
-  };
-}
-
-const categoryColors = {
-  UPDATE: 'bg-mystic-steam-copper/20 text-mystic-steam-copper border-mystic-steam-copper/30',
-  FIX: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  ANNOUNCEMENT: 'bg-mystic-steam-gold/20 text-mystic-steam-gold border-mystic-steam-gold/30',
-  ROADMAP: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-  TECHNICAL: 'bg-mystic-steam-bronze/20 text-mystic-steam-bronze border-mystic-steam-bronze/30',
-};
-
-const statusColors = {
-  COMPLETED: 'bg-green-500/20 text-green-400 border-green-500/30',
-  IN_PROGRESS: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
-  PLANNED: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-  BLOCKED: 'bg-red-500/20 text-red-400 border-red-500/30',
-};
-
-const statusIcons = {
-  COMPLETED: CompletedIcon,
-  IN_PROGRESS: InProgressIcon,
-  PLANNED: PlannedIcon,
-  BLOCKED: BlockedIcon,
-};
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
-
-function DevLogCard({ entry }: { entry: DevLogEntry }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="steel-panel rounded-xl p-6 md:p-8 relative overflow-hidden"
-    >
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
-          <div className="flex-1">
-            <h3 className="text-xl md:text-2xl font-heading font-bold mb-2 text-mystic-steam-copper">
-              {entry.title}
-            </h3>
-            <div className="flex flex-wrap gap-2 items-center">
-              <span
-                className={`px-3 py-1 text-xs font-heading font-bold rounded-full border ${categoryColors[entry.category]}`}
-              >
-                {entry.category}
-              </span>
-              <span
-                className={`px-3 py-1 text-xs font-heading font-bold rounded-full border ${statusColors[entry.status]} flex items-center gap-1.5`}
-              >
-                {(() => {
-                  const Icon = statusIcons[entry.status];
-                  return <Icon className="w-3 h-3" />;
-                })()}
-                {entry.status.replace('_', ' ')}
-              </span>
-              {entry.version && (
-                <span className="px-3 py-1 text-xs font-mono text-mystic-steam-parchment/60 bg-dacian-steel-gunmetal rounded-full border border-mystic-steam-copper/20">
-                  {entry.version}
-                </span>
-              )}
-            </div>
-          </div>
-          <div className="text-sm text-mystic-steam-parchment/50 font-body">
-            {formatDate(entry.publishedAt)}
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="prose prose-invert max-w-none">
-          <div className="text-mystic-steam-parchment/80 font-body leading-relaxed whitespace-pre-wrap">
-            {entry.content}
-          </div>
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+import Link from 'next/link';
 
 export default function DevLogPage() {
-  const [filter, setFilter] = useState<'ALL' | DevLogEntry['category']>('ALL');
-  const [statusFilter, setStatusFilter] = useState<'ALL' | DevLogEntry['status']>('ALL');
-
-  const { data, isLoading, error } = useQuery<DevLogResponse>({
-    queryKey: ['dev-logs', filter, statusFilter],
-    queryFn: async () => {
-      const params = new URLSearchParams();
-      if (filter !== 'ALL') params.append('category', filter);
-      if (statusFilter !== 'ALL') params.append('status', statusFilter);
-      params.append('limit', '50');
-      
-      const res = await fetch(`/api/dev-log?${params.toString()}`);
-      if (!res.ok) {
-        const errorData = await res.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Failed to fetch dev logs');
-      }
-      return res.json();
-    },
-    enabled: true,
-    refetchOnMount: true,
-    refetchOnWindowFocus: false,
-    refetchInterval: false, // Disable auto-refresh to prevent conflicts
-    staleTime: 0, // Always consider data stale to ensure fresh fetches on filter change
-    cacheTime: 0, // Don't cache to ensure fresh data on filter change
-  });
-
-  const entries = data?.data || [];
-
-  // Group entries by status for summary
-  const completed = entries.filter((e) => e.status === 'COMPLETED').length;
-  const inProgress = entries.filter((e) => e.status === 'IN_PROGRESS').length;
-  const planned = entries.filter((e) => e.status === 'PLANNED').length;
-
   return (
     <Page>
-      <div className="min-h-screen text-mystic-steam-parchment py-12 md:py-20 px-4 relative z-10">
-        <div className="max-w-5xl mx-auto">
+      <div className="min-h-screen text-text-primary py-12 md:py-20 px-4 relative z-10">
+        <div className="max-w-4xl mx-auto">
           {/* Hero Section */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="text-center mb-16"
           >
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-mystic-steam-copper">
+            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-aureate-base">
               Dev Log
             </h1>
-            <p className="text-xl md:text-2xl text-mystic-steam-parchment/70 font-body max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-text-muted font-body max-w-3xl mx-auto">
               Building the future of Solana launchpads. Track our progress, updates, and what's coming next.
             </p>
           </motion.div>
 
-          {/* Summary Stats */}
-          <motion.div
+          {/* What We've Built */}
+          <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8"
+            className="mb-16"
           >
-            <div className="steel-panel rounded-xl p-6 text-center">
-              <div className="text-3xl font-heading font-bold text-green-400 mb-2">{completed}</div>
-              <div className="text-sm text-mystic-steam-parchment/60 font-body">Completed</div>
-            </div>
-            <div className="steel-panel rounded-xl p-6 text-center">
-              <div className="text-3xl font-heading font-bold text-yellow-400 mb-2">{inProgress}</div>
-              <div className="text-sm text-mystic-steam-parchment/60 font-body">In Progress</div>
-            </div>
-            <div className="steel-panel rounded-xl p-6 text-center">
-              <div className="text-3xl font-heading font-bold text-blue-400 mb-2">{planned}</div>
-              <div className="text-sm text-mystic-steam-parchment/60 font-body">Planned</div>
-            </div>
-          </motion.div>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-aureate-base border-b border-aureate-base/30 pb-4">
+              What We've Built
+            </h2>
+            
+            <div className="space-y-6">
+              <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-light">
+                  Obsidian + Aureate Design System
+                </h3>
+                <p className="text-text-primary/80 font-body leading-relaxed mb-4">
+                  We've completely transformed Kogaion's visual identity with a premium Obsidian + Aureate design system. The platform now features a luxury museum aesthetic with glass-morphic cards, sigil iconography, and a cohesive theming system.
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-text-muted font-body ml-4">
+                  <li>Design tokens system with CSS variables</li>
+                  <li>Global Wolf Theming with 5 pack themes (Fire, Frost, Blood, Moon, Stone)</li>
+                  <li>Glass-morphic cards with rim-light effects</li>
+                  <li>Sigil icon system for status badges and ranks</li>
+                  <li>Consistent motion system with Framer Motion</li>
+                  <li>Fluid typography with responsive scaling</li>
+                </ul>
+              </div>
 
-          {/* Filters */}
-          <motion.div
+              <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-light">
+                  Service Providers Marketplace
+                </h3>
+                <p className="text-text-primary/80 font-body leading-relaxed mb-4">
+                  A comprehensive marketplace connecting token creators with service providers in the Solana ecosystem. KOLs, marketers, moderators, and other professionals can register and showcase their services.
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-text-muted font-body ml-4">
+                  <li>Provider registration with Twitter verification</li>
+                  <li>Service tags system with custom tag support</li>
+                  <li>Premium table layout for detailed information</li>
+                  <li>Automated marketing tweet for verification</li>
+                  <li>Telegram, email, and wallet integration</li>
+                </ul>
+              </div>
+
+              <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-light">
+                  Real World Assets (RWA) Tokenization
+                </h3>
+                <p className="text-text-primary/80 font-body leading-relaxed mb-4">
+                  Expanded beyond memecoins to support Real World Assets tokenization. Users can now tokenize physical products, services, property, intellectual property, and any real-world asset.
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-text-muted font-body ml-4">
+                  <li>Dedicated RWA token type in launch form</li>
+                  <li>Asset type classification and valuation</li>
+                  <li>Document upload support via IPFS</li>
+                  <li>Asset location tracking</li>
+                  <li>RWA-specific badges and display</li>
+                </ul>
+              </div>
+
+              <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+                <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-light">
+                  Motion System & Micro-interactions
+                </h3>
+                <p className="text-text-primary/80 font-body leading-relaxed mb-4">
+                  Implemented a consistent animation system using Framer Motion with reusable variants, page transitions, and signature ritual moments.
+                </p>
+                <ul className="list-disc list-inside space-y-2 text-text-muted font-body ml-4">
+                  <li>Centralized motion variants library</li>
+                  <li>Page transitions with AnimatePresence</li>
+                  <li>Signature ritual moments (wallet connection, token launch)</li>
+                  <li>Microcopy system with wolf-adaptive messages</li>
+                  <li>GPU-accelerated animations for performance</li>
+                </ul>
+              </div>
+            </div>
+          </motion.section>
+
+          {/* What We're Building */}
+          <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="flex flex-wrap gap-2 md:gap-3 mb-8"
+            className="mb-16"
           >
-            <button
-              onClick={() => setFilter('ALL')}
-              className={`min-h-[44px] px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-body font-medium transition-colors text-sm md:text-base ${
-                filter === 'ALL'
-                  ? 'bg-mystic-steam-copper/30 text-mystic-steam-copper border border-mystic-steam-copper/50'
-                  : 'bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:bg-dacian-steel-steel border border-mystic-steam-copper/20'
-              }`}
-            >
-              All Categories
-            </button>
-            {(['UPDATE', 'FIX', 'ANNOUNCEMENT', 'ROADMAP', 'TECHNICAL'] as const).map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`min-h-[44px] px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-body font-medium transition-colors text-sm md:text-base ${
-                  filter === cat
-                    ? `${categoryColors[cat]} border-2`
-                    : 'bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:bg-dacian-steel-steel border border-mystic-steam-copper/20'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value as typeof statusFilter)}
-              className="min-h-[44px] px-4 md:px-6 py-2.5 md:py-3 rounded-lg font-body font-medium bg-dacian-steel-gunmetal text-mystic-steam-parchment border border-mystic-steam-copper/20 hover:bg-dacian-steel-steel transition-colors text-sm md:text-base"
-            >
-              <option value="ALL">All Status</option>
-              <option value="COMPLETED">Completed</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="PLANNED">Planned</option>
-              <option value="BLOCKED">Blocked</option>
-            </select>
-          </motion.div>
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-aureate-base border-b border-aureate-base/30 pb-4">
+              What We're Building
+            </h2>
+            
+            <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+              <p className="text-text-primary/80 font-body leading-relaxed">
+                Currently focused on platform optimizations, performance improvements, and enhancing the user experience across all features. We're continuously refining the design system and adding new capabilities based on community feedback.
+              </p>
+            </div>
+          </motion.section>
 
-          {/* Vision Section */}
-          <motion.div
+          {/* What's Next */}
+          <motion.section
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="steel-panel rounded-2xl p-8 md:p-12 mb-12 relative overflow-hidden"
+            className="mb-16"
           >
-            <div className="relative z-10">
-              <h2 className="text-3xl md:text-4xl font-heading font-bold mb-6 text-mystic-steam-copper">
-                The Direction
-              </h2>
-              <div className="space-y-4 text-lg font-body leading-relaxed text-mystic-steam-parchment/70">
-                <p>
-                  <strong className="text-mystic-steam-copper">Kogaion</strong> is evolving into the most comprehensive and secure launchpad on Solana. We're building beyond just token launches—we're creating an ecosystem.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                  <div className="bg-dacian-steel-gunmetal/50 rounded-lg p-4 border border-mystic-steam-copper/20">
-                    <h3 className="font-heading font-bold text-mystic-steam-copper mb-2">Genesis SDK Integration</h3>
-                    <p className="text-sm text-mystic-steam-parchment/60">
-                      Anti-rug protection, standardized tokenomics, and enhanced security for all launches.
-                    </p>
-                  </div>
-                  <div className="bg-dacian-steel-gunmetal/50 rounded-lg p-4 border border-mystic-steam-copper/20">
-                    <h3 className="font-heading font-bold text-mystic-steam-copper mb-2">AI & Automation</h3>
-                    <p className="text-sm text-mystic-steam-parchment/60">
-                      Autonomous AI agents, smart contract automation, and intelligent market analysis.
-                    </p>
-                  </div>
-                  <div className="bg-dacian-steel-gunmetal/50 rounded-lg p-4 border border-mystic-steam-copper/20">
-                    <h3 className="font-heading font-bold text-mystic-steam-copper mb-2">Real World Assets</h3>
-                    <p className="text-sm text-mystic-steam-parchment/60">
-                      Tokenize products, services, and assets. Beyond memecoins, into real value.
-                    </p>
-                  </div>
-                  <div className="bg-dacian-steel-gunmetal/50 rounded-lg p-4 border border-mystic-steam-copper/20">
-                    <h3 className="font-heading font-bold text-mystic-steam-copper mb-2">Service Marketplace</h3>
-                    <p className="text-sm text-mystic-steam-parchment/60">
-                      Connect with KOLs, marketers, moderators, and service providers. Build your pack.
-                    </p>
-                  </div>
-                </div>
-                <p className="mt-6 text-mystic-steam-parchment/80">
-                  We're committed to giving developers more than any other platform. Higher fees, better tools, and a complete ecosystem to build on.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Dev Log Entries */}
-          {isLoading ? (
-            <div className="text-center py-12">
-              <div className="inline-flex gap-2">
-                <div className="w-2 h-2 bg-mystic-steam-copper rounded-full animate-bounce" />
-                <div className="w-2 h-2 bg-mystic-steam-copper rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                <div className="w-2 h-2 bg-mystic-steam-copper rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
-              </div>
-              <p className="text-mystic-steam-parchment/60 font-body mt-4">Loading updates...</p>
-            </div>
-          ) : error ? (
-            <div className="text-center py-12">
-              <p className="text-red-400 font-body">Failed to load dev logs. Please try again later.</p>
-            </div>
-          ) : entries.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-mystic-steam-parchment/60 font-body">No entries found. Check back soon for updates!</p>
-            </div>
-          ) : (
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-aureate-base border-b border-aureate-base/30 pb-4">
+              What's Next
+            </h2>
+            
             <div className="space-y-6">
-              {entries.map((entry) => (
-                <DevLogCard key={entry.id} entry={entry} />
-              ))}
+              <div className="glass-card rounded-xl p-6 md:p-8 rim-light border-wolf-border/30">
+                <h3 className="text-xl font-heading font-bold mb-3 text-aureate-light">
+                  Genesis SDK Anti-Rug Integration
+                </h3>
+                <p className="text-text-primary/80 font-body leading-relaxed">
+                  Planning to integrate Metaplex Genesis SDK for enhanced security and anti-rug protection. This will provide standardized tokenomics, enhanced security checks, and better token verification, making Kogaion one of the most secure launchpads on Solana.
+                </p>
+                <p className="text-text-muted font-body text-sm mt-3">
+                  Timeline: Q2 2026
+                </p>
+              </div>
+
+              <div className="glass-card rounded-xl p-6 md:p-8 rim-light border-wolf-border/30">
+                <h3 className="text-xl font-heading font-bold mb-3 text-aureate-light">
+                  Enhanced AI Bot Capabilities
+                </h3>
+                <p className="text-text-primary/80 font-body leading-relaxed">
+                  Significant enhancements to our AI bot system including multi-agent swarms, advanced analytics, predictive market analysis, and cross-platform deployment. All while maintaining the 100% user-owned personality system.
+                </p>
+                <p className="text-text-muted font-body text-sm mt-3">
+                  Timeline: Q2-Q4 2026
+                </p>
+              </div>
+
+              <div className="glass-card rounded-xl p-6 md:p-8 rim-light border-wolf-border/30">
+                <h3 className="text-xl font-heading font-bold mb-3 text-aureate-light">
+                  Mobile Application
+                </h3>
+                <p className="text-text-primary/80 font-body leading-relaxed">
+                  Native mobile applications for iOS and Android with full token launch functionality, trading terminal, portfolio management, push notifications, and biometric authentication.
+                </p>
+                <p className="text-text-muted font-body text-sm mt-3">
+                  Timeline: Q3-Q4 2026 (Beta), Q1 2027 (Public Release)
+                </p>
+              </div>
             </div>
-          )}
+          </motion.section>
+
+          {/* Technical Stack */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-aureate-base border-b border-aureate-base/30 pb-4">
+              Technical Architecture
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="glass-card rounded-xl p-6 rim-light">
+                <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
+                  Design System
+                </h3>
+                <ul className="space-y-1 text-text-muted font-body text-sm">
+                  <li>• CSS Variables & Semantic Tokens</li>
+                  <li>• Tailwind CSS Integration</li>
+                  <li>• Glass-morphic Components</li>
+                  <li>• Responsive Typography</li>
+                </ul>
+              </div>
+
+              <div className="glass-card rounded-xl p-6 rim-light">
+                <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
+                  Frontend Stack
+                </h3>
+                <ul className="space-y-1 text-text-muted font-body text-sm">
+                  <li>• Next.js 15 (React 19)</li>
+                  <li>• TypeScript</li>
+                  <li>• Framer Motion</li>
+                  <li>• TanStack Query</li>
+                </ul>
+              </div>
+
+              <div className="glass-card rounded-xl p-6 rim-light">
+                <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
+                  Blockchain
+                </h3>
+                <ul className="space-y-1 text-text-muted font-body text-sm">
+                  <li>• Solana Web3.js</li>
+                  <li>• Meteora DBC SDK</li>
+                  <li>• Jupiter Aggregator</li>
+                  <li>• Helius RPC</li>
+                </ul>
+              </div>
+
+              <div className="glass-card rounded-xl p-6 rim-light">
+                <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
+                  Infrastructure
+                </h3>
+                <ul className="space-y-1 text-text-muted font-body text-sm">
+                  <li>• PostgreSQL (Prisma ORM)</li>
+                  <li>• IPFS (Pinata)</li>
+                  <li>• Railway Deployment</li>
+                  <li>• Server-side API Routes</li>
+                </ul>
+              </div>
+            </div>
+          </motion.section>
+
+          {/* The Direction */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-aureate-base border-b border-aureate-base/30 pb-4">
+              The Direction
+            </h2>
+            
+            <div className="glass-card rounded-xl p-8 md:p-12 rim-light">
+              <p className="text-lg font-body leading-relaxed text-text-primary/80 mb-6">
+                <strong className="text-aureate-base">Kogaion</strong> is evolving into the most comprehensive and secure launchpad on Solana. We're building beyond just token launches—we're creating an ecosystem.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                <div className="bg-obsidian-surface/50 rounded-lg p-4 border border-aureate-base/20">
+                  <h3 className="font-heading font-bold text-aureate-base mb-2">Genesis SDK Integration</h3>
+                  <p className="text-sm text-text-muted">
+                    Anti-rug protection, standardized tokenomics, and enhanced security for all launches.
+                  </p>
+                </div>
+                <div className="bg-obsidian-surface/50 rounded-lg p-4 border border-aureate-base/20">
+                  <h3 className="font-heading font-bold text-aureate-base mb-2">AI & Automation</h3>
+                  <p className="text-sm text-text-muted">
+                    Autonomous AI agents, smart contract automation, and intelligent market analysis.
+                  </p>
+                </div>
+                <div className="bg-obsidian-surface/50 rounded-lg p-4 border border-aureate-base/20">
+                  <h3 className="font-heading font-bold text-aureate-base mb-2">Real World Assets</h3>
+                  <p className="text-sm text-text-muted">
+                    Tokenize products, services, and assets. Beyond memecoins, into real value.
+                  </p>
+                </div>
+                <div className="bg-obsidian-surface/50 rounded-lg p-4 border border-aureate-base/20">
+                  <h3 className="font-heading font-bold text-aureate-base mb-2">Service Marketplace</h3>
+                  <p className="text-sm text-text-muted">
+                    Connect with KOLs, marketers, moderators, and service providers. Build your pack.
+                  </p>
+                </div>
+              </div>
+              
+              <p className="mt-6 text-text-primary/80 font-body">
+                We're committed to giving developers more than any other platform. Higher fees, better tools, and a complete ecosystem to build on.
+              </p>
+            </div>
+          </motion.section>
 
           {/* Footer CTA */}
           <motion.div
             initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mt-16 text-center"
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6 }}
+            className="text-center"
           >
-            <div className="steel-panel rounded-xl p-8">
-              <h3 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">
+            <div className="glass-card rounded-xl p-8 rim-light">
+              <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-base">
                 Join the Pack
               </h3>
-              <p className="text-mystic-steam-parchment/70 font-body mb-6 max-w-2xl mx-auto">
+              <p className="text-text-primary/70 font-body mb-6 max-w-2xl mx-auto">
                 Follow our progress, launch your tokens, and be part of the evolution. The future of Solana launchpads is being built here.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -318,7 +300,7 @@ export default function DevLogPage() {
                   href="https://x.com/KogaionSol"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper text-mystic-steam-parchment font-heading font-bold rounded-lg transition-all"
+                  className="px-6 py-3 bg-aureate-base/80 hover:bg-aureate-base text-obsidian-base font-heading font-bold rounded-lg transition-all rim-light"
                 >
                   Follow on X
                 </a>
@@ -326,7 +308,7 @@ export default function DevLogPage() {
                   href="https://t.me/kogaionpack"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment font-heading font-bold rounded-lg border border-mystic-steam-copper/30 transition-all"
+                  className="px-6 py-3 bg-obsidian-surface hover:bg-obsidian-elevated text-text-primary font-heading font-bold rounded-lg border border-aureate-base/30 transition-all rim-light"
                 >
                   Join Telegram
                 </a>
