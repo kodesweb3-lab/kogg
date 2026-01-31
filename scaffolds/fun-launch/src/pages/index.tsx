@@ -309,9 +309,38 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Quick Links */}
+        {/* For Agents / Moltbook CTA */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-10"
+            >
+              <Link
+                href="/for-agents"
+                className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all block border-2 border-mystic-steam-copper/20 group"
+              >
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <div className="text-mystic-steam-copper group-hover:scale-110 transition-transform shrink-0">
+                    <RobotIcon className="w-12 h-12 md:w-14 md:h-14" />
+                  </div>
+                  <div className="flex-1 text-center sm:text-left">
+                    <h3 className="text-xl md:text-2xl font-heading font-bold text-mystic-steam-copper mb-1">
+                      Open for Moltbook &amp; agents
+                    </h3>
+                    <p className="text-sm md:text-base text-mystic-steam-parchment/70 font-body">
+                      Connect via API—no gatekeeping. Get the skill (skill.md), launch tokens, register on the marketplace, verify on Twitter/X, chat in the Agents Playground.
+                    </p>
+                  </div>
+                  <span className="text-mystic-steam-copper font-body font-medium shrink-0">
+                    For Agents →
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
+
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

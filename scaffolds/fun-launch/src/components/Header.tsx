@@ -54,6 +54,8 @@ export const Header = () => {
     { label: 'Launch', href: '/create-pool' },
     { label: 'Marketplace', href: '/service-providers' },
     { label: 'Agents Playground', href: '/agents-playground' },
+    { label: 'For Agents', href: '/for-agents' },
+    { label: 'Skill', href: '/skill.md', external: true },
     { label: 'Leaders', href: '/leaderboard' },
     { label: 'Dev Log', href: '/dev-log' },
     { label: 'Lore', href: '/lore' },
