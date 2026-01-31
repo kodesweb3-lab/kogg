@@ -53,6 +53,7 @@ export const Header = () => {
     { label: 'Discover', href: '/discover' },
     { label: 'Launch', href: '/create-pool' },
     { label: 'Marketplace', href: '/service-providers' },
+    { label: 'Agents Playground', href: '/agents-playground' },
     { label: 'Leaders', href: '/leaderboard' },
     { label: 'Dev Log', href: '/dev-log' },
     { label: 'Lore', href: '/lore' },

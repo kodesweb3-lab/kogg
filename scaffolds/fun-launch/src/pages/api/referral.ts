@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
+import { BASE_URL } from '@/constants';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -19,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(200).json({
         success: true,
         referralCount: referrals,
-        referralLink: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://kogaion.fun'}/?ref=${wallet}`,
+        referralLink: `${BASE_URL}/?ref=${wallet}`,
       });
     } catch (error) {
       logger.error('Get referral stats error', error instanceof Error ? error : new Error(String(error)));

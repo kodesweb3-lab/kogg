@@ -14,7 +14,8 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
 
-  // CORS headers for API routes
+  // CORS headers for API routes (agents e.g. Moltbook/OpenClaw can call from any origin)
+  // Production: set ALLOWED_ORIGIN=* or leave unset to allow cross-origin API calls
   async headers() {
     return [
       {

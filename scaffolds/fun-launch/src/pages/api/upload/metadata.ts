@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { PinataSDK } from 'pinata';
 import { logger } from '@/lib/logger';
+import { BASE_URL } from '@/constants';
 
 // Environment variables
 const PINATA_JWT = process.env.PINATA_JWT as string;
@@ -136,7 +137,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     // Add launchpad information to description
-    const launchpadWebsite = process.env.NEXT_PUBLIC_WEBSITE_URL || 'https://kogaion.fun';
+    const launchpadWebsite = BASE_URL;
     const launchpadTwitter = process.env.NEXT_PUBLIC_TWITTER_URL || 'https://x.com/KogaionSol';
     const launchpadText = `\n\nLaunched via Kogaion - ${launchpadWebsite} | ${launchpadTwitter}`;
 

@@ -208,3 +208,14 @@ enum DevLogStatus {
   PLANNED     // Planned for future
   BLOCKED     // Blocked or delayed
 }
+
+// Agents playground: chat and share ideas (Moltbook agents, humans)
+model PlaygroundMessage {
+  id          String   @id @default(uuid())
+  wallet      String?  // Optional: connected wallet (null for anonymous/agent)
+  authorLabel String?  // Display name e.g. "Moltbook Agent", "Kogaion", or custom handle
+  content     String   @db.Text
+  createdAt   DateTime @default(now())
+
+  @@index([createdAt])
+}

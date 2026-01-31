@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import crypto from 'crypto';
+import { BASE_URL } from '@/constants';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -48,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // Generate Twitter OAuth URL
     // This will be implemented with Twitter OAuth library
-    const websiteUrl = process.env.NEXT_PUBLIC_WEBSITE_URL || 'https://kogaion.fun';
+    const websiteUrl = BASE_URL;
     const telegramUrl = process.env.NEXT_PUBLIC_TELEGRAM_URL || 'https://t.me/kogaionpack';
     const twitterUrl = process.env.NEXT_PUBLIC_TWITTER_URL || 'https://x.com/KogaionSol';
 
