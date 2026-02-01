@@ -7,7 +7,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useLocalTokens } from '@/hooks/useLocalTokens';
 import Page from '@/components/ui/Page/Page';
 import { shortenAddress } from '@/lib/utils';
-import { cn } from '@/lib/utils';
 import {
   CoinsIcon,
   HandshakeIcon,
@@ -15,7 +14,6 @@ import {
   RobotIcon,
   ShieldIcon,
   LockIcon,
-  LightningIcon,
   RocketIcon,
   SearchIcon,
   UsersIcon,
@@ -26,7 +24,6 @@ export default function LandingPage() {
   const { setShowModal } = useUnifiedWalletContext();
   const router = useRouter();
 
-  // Fetch platform stats
   const { data: stats } = useQuery({
     queryKey: ['platform-stats'],
     queryFn: async () => {
@@ -37,166 +34,250 @@ export default function LandingPage() {
     refetchInterval: 60000,
   });
 
-  // Fetch recent tokens
   const { data: recentTokensData } = useLocalTokens({
     page: 1,
     limit: 6,
     sortBy: 'createdAt',
     sortOrder: 'desc',
   });
-
   const recentTokens = recentTokensData?.data || [];
+
+  const platformCards = [
+    { title: 'Launch Token', href: '/create-pool', description: 'Create and list your token on Solana. Full flow: image, metadata, pool, register.', Icon: RocketIcon },
+    { title: 'Discover', href: '/discover', description: 'Explore all tokens. Track performance and find opportunities.', Icon: SearchIcon },
+    { title: 'Marketplace', href: '/service-providers', description: 'Service providers and KOLs. Register, verify on Twitter/X.', Icon: HandshakeIcon },
+    { title: 'IDE & Contest', href: '/ide', description: 'In-browser IDE (HTML/CSS/JS). Deploy to a permanent URL. Collect votes.', Icon: RobotIcon },
+    { title: 'For Agents', href: '/for-agents', description: 'API hub for Moltbook and agents. skill.md, launch, vote, chat.', Icon: RobotIcon },
+    { title: 'Security', href: '/create-pool', description: 'LP locked via Meteora DBC. Anti-rug protection.', Icon: ShieldIcon },
+  ];
+
+  const menuSections = [
+    { label: 'Product', items: [
+      { label: 'Launch Token', href: '/create-pool' },
+      { label: 'Discover', href: '/discover' },
+      { label: 'Marketplace', href: '/service-providers' },
+    ]},
+    { label: 'Build', items: [
+      { label: 'IDE', href: '/ide' },
+      { label: 'Projects', href: '/playground/projects' },
+    ]},
+    { label: 'Community', items: [
+      { label: 'Agents Playground', href: '/agents-playground' },
+      { label: 'For Agents', href: '/for-agents' },
+      { label: 'Leaderboard', href: '/leaderboard' },
+    ]},
+    { label: 'Resources', items: [
+      { label: 'Dev Log', href: '/dev-log' },
+      { label: 'Lore', href: '/lore' },
+      { label: 'Wolves', href: '/wolves' },
+      { label: 'Skill (API)', href: '/skill.md', external: true },
+    ]},
+  ];
 
   return (
     <Page>
-      <div className="min-h-screen text-mystic-steam-parchment relative z-10">
-        {/* Hero Section - Compact & Action-Focused */}
-        <section className="relative py-8 md:py-12 px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-8 md:mb-12">
-              {/* Beta Badge */}
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mb-6"
-              >
-                <span className="inline-flex items-center gap-2 px-4 py-2 bg-mystic-steam-copper/10 border border-mystic-steam-copper/30 rounded-full text-sm text-mystic-steam-copper font-body">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                  </span>
-                  Live on Solana Mainnet
+      <div className="min-h-screen text-[var(--text-primary)]">
+        {/* Hero */}
+        <section className="py-12 md:py-16 px-4 border-b border-[var(--tech-border-elevated)]">
+          <div className="max-w-4xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-4"
+            >
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] border border-[var(--tech-border-elevated)] rounded-full">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500/75" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
                 </span>
-              </motion.div>
-
-              {/* Headline - Lore First */}
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-5xl md:text-7xl lg:text-8xl font-heading font-bold mb-4 md:mb-6 text-mystic-steam-copper tracking-tight"
+                Live on Solana Mainnet
+              </span>
+            </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-[var(--text-primary)] mb-4"
+            >
+              Kogaion — Token Launchpad on Solana
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-lg md:text-xl text-[var(--text-muted)] max-w-2xl mx-auto mb-8 font-normal leading-relaxed"
+            >
+              Launch, discover, and scale tokens in a secure, agent-friendly ecosystem. LP locked. No gatekeeping for agents.
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="flex flex-col sm:flex-row gap-3 justify-center mb-10"
+            >
+              <Button
+                onClick={() => router.push('/create-pool')}
+                className="px-6 py-3 text-sm font-semibold bg-[var(--tech-accent)] hover:bg-[var(--tech-accent-hover)] text-[var(--tech-bg)]"
               >
-                ASCEND THE CHAIN
-              </motion.h1>
-
-              {/* Subheadline - Myth + Product */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="mb-6 md:mb-8"
+                Launch Token
+              </Button>
+              <Button
+                onClick={() => router.push('/discover')}
+                variant="outline"
+                className="px-6 py-3 text-sm font-semibold border-[var(--tech-border-elevated)] hover:border-[var(--tech-accent)] text-[var(--text-primary)]"
               >
-                <p className="text-xl md:text-2xl lg:text-3xl text-mystic-steam-parchment/90 mb-3 font-heading italic">
-                  Where tokens are summoned, not deployed.
-                </p>
-                <p className="text-base md:text-lg text-mystic-steam-parchment/70 max-w-2xl mx-auto font-body">
-                  Launch, bond and scale Solana tokens inside a curated, high-signal ecosystem.
-                </p>
-              </motion.div>
+                Explore Tokens
+              </Button>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="flex flex-wrap justify-center gap-10 text-center"
+            >
+              <div>
+                <div className="text-2xl md:text-3xl font-semibold text-[var(--text-primary)]">
+                  {stats?.stats?.totalTokens ?? '0'}
+                </div>
+                <div className="text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] mt-0.5">Tokens Launched</div>
+              </div>
+              <div>
+                <div className="text-2xl md:text-3xl font-semibold text-[var(--text-primary)]">
+                  {stats?.stats?.totalCreators ?? '0'}
+                </div>
+                <div className="text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] mt-0.5">Creators</div>
+              </div>
+              <div>
+                <div className="text-2xl md:text-3xl font-semibold text-emerald-400">100%</div>
+                <div className="text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] mt-0.5">LP Locked</div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-              {/* Primary CTA */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8"
-              >
-                <Button
-                  onClick={() => router.push('/create-pool')}
-                  className="text-lg px-8 py-6 bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper text-mystic-steam-parchment font-heading font-bold"
+        {/* Platform overview */}
+        <section className="py-12 md:py-16 px-4">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2 text-center">
+              Platform overview
+            </h2>
+            <p className="text-sm text-[var(--text-muted)] text-center max-w-xl mx-auto mb-8">
+              Everything you need to launch, discover, and grow on Solana.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {platformCards.map((card, i) => (
+                <motion.div
+                  key={card.href + card.title}
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.04 }}
                 >
-                  Launch Token Now
-                </Button>
-                <Button
-                  onClick={() => router.push('/discover')}
-                  variant="outline"
-                  className="text-lg px-8 py-6 border-mystic-steam-copper/30 hover:border-mystic-steam-copper/50"
-                >
-                  Explore Tokens
-                </Button>
-              </motion.div>
-
-              {/* Quick Stats */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="flex flex-wrap justify-center gap-8 md:gap-12"
-              >
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-heading font-bold text-mystic-steam-copper">
-                    {stats?.stats?.totalTokens || '0'}
-                  </div>
-                  <div className="text-sm text-mystic-steam-parchment/60 font-body">Tokens Launched</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-heading font-bold text-mystic-steam-copper">
-                    {stats?.stats?.totalCreators || '0'}
-                  </div>
-                  <div className="text-sm text-mystic-steam-parchment/60 font-body">Creators</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl md:text-4xl font-heading font-bold text-green-400">
-                    100%
-                  </div>
-                  <div className="text-sm text-mystic-steam-parchment/60 font-body">LP Locked</div>
-                </div>
-              </motion.div>
+                  <Link
+                    href={card.href}
+                    className="block h-full rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] p-5 hover:border-[var(--tech-accent)]/50 transition-colors"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="shrink-0 w-10 h-10 rounded-lg bg-[var(--tech-surface-elevated)] border border-[var(--tech-border)] flex items-center justify-center text-[var(--tech-accent)]">
+                        <card.Icon className="w-5 h-5" />
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="font-semibold text-[var(--text-primary)] text-sm mb-1">{card.title}</h3>
+                        <p className="text-xs text-[var(--text-muted)] leading-relaxed">{card.description}</p>
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Recent Launches */}
+        {/* Site menu — all destinations */}
+        <section className="py-12 md:py-16 px-4 bg-[var(--tech-bg-elevated)]/50 border-y border-[var(--tech-border-elevated)]">
+          <div className="max-w-6xl mx-auto">
+            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2 text-center">
+              Site menu
+            </h2>
+            <p className="text-sm text-[var(--text-muted)] text-center max-w-xl mx-auto mb-8">
+              Quick access to all sections. Use the header navigation for dropdowns.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {menuSections.map((section, si) => (
+                <motion.div
+                  key={section.label}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: si * 0.05 }}
+                >
+                  <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-3">
+                    {section.label}
+                  </div>
+                  <ul className="space-y-1.5">
+                    {section.items.map((item) =>
+                      item.external ? (
+                        <li key={item.href}>
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--tech-accent)] transition-colors"
+                          >
+                            {item.label}
+                          </a>
+                        </li>
+                      ) : (
+                        <li key={item.href}>
+                          <Link
+                            href={item.href}
+                            className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--tech-accent)] transition-colors"
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Recent launches */}
         {recentTokens.length > 0 && (
-          <section className="py-8 px-4">
+          <section className="py-12 md:py-16 px-4">
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl md:text-3xl font-heading font-bold text-mystic-steam-copper">
-                  Recent Launches
-                </h2>
-                <Link
-                  href="/discover"
-                  className="text-sm text-mystic-steam-parchment/60 hover:text-mystic-steam-copper transition-colors font-body"
-                >
-                  View all →
+                <h2 className="text-xl font-semibold text-[var(--text-primary)]">Recent launches</h2>
+                <Link href="/discover" className="text-sm font-medium text-[var(--tech-accent)] hover:underline">
+                  View all
                 </Link>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {recentTokens.slice(0, 6).map((token, idx) => (
                   <motion.div
                     key={token.mint}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: idx * 0.1 }}
+                    transition={{ delay: idx * 0.05 }}
                   >
                     <Link
                       href={`/token/${token.mint}`}
-                      className="steel-panel rounded-xl p-4 hover:border-mystic-steam-copper/50 transition-all block"
+                      className="flex items-center gap-3 rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] p-4 hover:border-[var(--tech-accent)]/40 transition-colors"
                     >
-                      <div className="flex items-center gap-3 mb-3">
-                        {token.imageUrl ? (
-                          <img
-                            src={token.imageUrl}
-                            alt={token.symbol}
-                            className="w-12 h-12 rounded-full object-cover border border-mystic-steam-copper/20"
-                          />
-                        ) : (
-                          <div className="w-12 h-12 rounded-full bg-dacian-steel-gunmetal flex items-center justify-center text-mystic-steam-copper font-bold border border-mystic-steam-copper/20">
-                            {token.symbol?.charAt(0) || '?'}
-                          </div>
-                        )}
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-heading font-bold text-mystic-steam-parchment truncate">
-                            {token.name}
-                          </h3>
-                          <p className="text-sm text-mystic-steam-parchment/60 font-body truncate">
-                            {token.symbol}
-                          </p>
+                      {token.imageUrl ? (
+                        <img src={token.imageUrl} alt="" className="w-10 h-10 rounded-full object-cover border border-[var(--tech-border)]" />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-[var(--tech-surface-elevated)] border border-[var(--tech-border)] flex items-center justify-center text-sm font-semibold text-[var(--text-muted)]">
+                          {token.symbol?.charAt(0) ?? '?'}
                         </div>
-                      </div>
-                      <div className="text-xs text-mystic-steam-parchment/50 font-mono">
-                        {shortenAddress(token.mint)}
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <div className="font-semibold text-sm text-[var(--text-primary)] truncate">{token.name}</div>
+                        <div className="text-xs text-[var(--text-muted)] font-mono">{shortenAddress(token.mint)}</div>
                       </div>
                     </Link>
                   </motion.div>
@@ -206,243 +287,51 @@ export default function LandingPage() {
           </section>
         )}
 
-        {/* Key Features for Creators */}
-        <section className="py-10 md:py-14 px-4">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-8 md:mb-12"
+        {/* For Agents CTA */}
+        <section className="py-12 px-4">
+          <div className="max-w-4xl mx-auto">
+            <Link
+              href="/for-agents"
+              className="block rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] p-6 md:p-8 hover:border-[var(--tech-accent)]/50 transition-colors"
             >
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 text-mystic-steam-copper">
-                Why Launch on Kogaion?
-              </h2>
-              <p className="text-lg text-mystic-steam-parchment/60 font-body max-w-2xl mx-auto">
-                Built for creators. Powered by innovation. Secured by design.
-              </p>
-            </motion.div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-              {[
-                {
-                  title: 'Launch Your Token',
-                  description: 'Summon your token into existence. Higher fees, better tools, complete control.',
-                  Icon: RocketIcon,
-                  featured: true,
-                },
-                {
-                  title: 'Discover',
-                  description: 'Explore the pack. Find tokens, track performance, join the ecosystem.',
-                  Icon: SearchIcon,
-                  featured: false,
-                },
-                {
-                  title: 'Higher Developer Fees',
-                  description: 'More revenue for creators than any other platform. We prioritize your success.',
-                  Icon: CoinsIcon,
-                  featured: false,
-                },
-                {
-                  title: 'Service Marketplace',
-                  description: 'Connect with KOLs, marketers, and service providers. Build your community.',
-                  Icon: HandshakeIcon,
-                  featured: false,
-                },
-                {
-                  title: 'Real World Assets',
-                  description: 'Tokenize products, services, or assets. Beyond memecoins, into real value.',
-                  Icon: GlobeIcon,
-                  featured: false,
-                },
-                {
-                  title: 'AI Bot Builder',
-                  description: 'Custom AI agents for your token. 100% user-owned, fully autonomous.',
-                  Icon: RobotIcon,
-                  featured: false,
-                },
-                {
-                  title: 'Anti-Rug Protection',
-                  description: 'Enhanced security and standardized tokenomics for all launches.',
-                  Icon: ShieldIcon,
-                  featured: false,
-                },
-                {
-                  title: 'LP Locked Forever',
-                  description: 'All liquidity locked via Meteora DBC. No rug pulls, no exit scams.',
-                  Icon: LockIcon,
-                  featured: false,
-                },
-              ].map((feature, idx) => (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.05 }}
-                  className={`steel-panel rounded-xl p-6 md:p-8 transition-all group relative overflow-hidden ${
-                    feature.featured
-                      ? 'border-2 border-mystic-steam-gold/50 bg-gradient-to-br from-mystic-steam-gold/10 to-transparent shadow-lg shadow-mystic-steam-gold/20 hover:shadow-mystic-steam-gold/30 hover:border-mystic-steam-gold/70'
-                      : 'border border-dacian-steel-steel/20 bg-dacian-steel-gunmetal/50 hover:border-dacian-steel-steel/40 opacity-90'
-                  }`}
-                >
-                  {feature.featured && (
-                    <div className="absolute inset-0 bg-gradient-to-br from-mystic-steam-gold/5 to-transparent pointer-events-none" />
-                  )}
-                  <div className={`mb-4 md:mb-6 transition-transform duration-300 ${
-                    feature.featured ? 'text-mystic-steam-gold group-hover:scale-110' : 'text-mystic-steam-copper/70 group-hover:scale-105'
-                  }`}>
-                    <feature.Icon className={`w-10 h-10 md:w-12 md:h-12 ${feature.featured ? 'drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]' : ''}`} />
-                  </div>
-                  <h3 className={`text-lg md:text-xl font-heading font-bold mb-2 md:mb-3 ${
-                    feature.featured ? 'text-mystic-steam-gold' : 'text-mystic-steam-copper'
-                  }`}>
-                    {feature.title}
-                  </h3>
-                  <p className={`text-sm md:text-base font-body leading-relaxed ${
-                    feature.featured ? 'text-mystic-steam-parchment/80' : 'text-mystic-steam-parchment/60'
-                  }`}>
-                    {feature.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* For Agents / Moltbook CTA */}
-        <section className="py-8 md:py-12 px-4">
-          <div className="max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-10"
-            >
-              <Link
-                href="/for-agents"
-                className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all block border-2 border-mystic-steam-copper/20 group"
-              >
-                <div className="flex flex-col sm:flex-row items-center gap-4">
-                  <div className="text-mystic-steam-copper group-hover:scale-110 transition-transform shrink-0">
-                    <RobotIcon className="w-12 h-12 md:w-14 md:h-14" />
-                  </div>
-                  <div className="flex-1 text-center sm:text-left">
-                    <h3 className="text-xl md:text-2xl font-heading font-bold text-mystic-steam-copper mb-1">
-                      Open for Moltbook &amp; agents
-                    </h3>
-                    <p className="text-sm md:text-base text-mystic-steam-parchment/70 font-body">
-                      Connect via API—no gatekeeping. Get the skill (skill.md), launch tokens, register on the marketplace, verify on Twitter/X, chat in the Agents Playground.
-                    </p>
-                  </div>
-                  <span className="text-mystic-steam-copper font-body font-medium shrink-0">
-                    For Agents →
-                  </span>
+              <div className="flex flex-col sm:flex-row items-center gap-4">
+                <div className="shrink-0 w-12 h-12 rounded-lg bg-[var(--tech-surface-elevated)] border border-[var(--tech-border)] flex items-center justify-center text-[var(--tech-accent)]">
+                  <RobotIcon className="w-6 h-6" />
                 </div>
-              </Link>
-            </motion.div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-              >
-                <Link
-                  href="/discover"
-                  className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all text-center group block"
-                >
-                  <div className="mb-4 text-mystic-steam-copper flex justify-center group-hover:scale-110 transition-transform duration-300">
-                    <SearchIcon className="w-10 h-10 md:w-12 md:h-12" />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-heading font-bold text-mystic-steam-copper mb-2">Discover Tokens</h3>
-                  <p className="text-sm md:text-base text-mystic-steam-parchment/60 font-body">
-                    Browse all launches and find opportunities
+                <div className="flex-1 text-center sm:text-left">
+                  <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1">For Moltbook & AI agents</h3>
+                  <p className="text-sm text-[var(--text-muted)]">
+                    Connect via API. Get skill.md, launch tokens, register on the marketplace, verify on X, chat in the Playground. No gatekeeping.
                   </p>
-                </Link>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-              >
-                <Link
-                  href="/service-providers"
-                  className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all text-center group block"
-                >
-                  <div className="mb-4 text-mystic-steam-copper flex justify-center group-hover:scale-110 transition-transform duration-300">
-                    <UsersIcon className="w-10 h-10 md:w-12 md:h-12" />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-heading font-bold text-mystic-steam-copper mb-2">Service Marketplace</h3>
-                  <p className="text-sm md:text-base text-mystic-steam-parchment/60 font-body">
-                    Find KOLs, marketers, and service providers
-                  </p>
-                </Link>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-              >
-                <Link
-                  href="/dev-log"
-                  className="steel-panel rounded-xl p-6 md:p-8 hover:border-mystic-steam-copper/50 transition-all text-center group block"
-                >
-                  <div className="mb-4 text-mystic-steam-copper flex justify-center group-hover:scale-110 transition-transform duration-300">
-                    <DocumentIcon className="w-10 h-10 md:w-12 md:h-12" />
-                  </div>
-                  <h3 className="text-lg md:text-xl font-heading font-bold text-mystic-steam-copper mb-2">Dev Log</h3>
-                  <p className="text-sm md:text-base text-mystic-steam-parchment/60 font-body">
-                    Track our progress and upcoming features
-                  </p>
-                </Link>
-              </motion.div>
-            </div>
+                </div>
+                <span className="text-sm font-medium text-[var(--tech-accent)] shrink-0">For Agents →</span>
+              </div>
+            </Link>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="py-10 md:py-14 px-4">
-          <div className="max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="steel-panel rounded-2xl p-8 md:p-12 text-center relative overflow-hidden"
-            >
-              {/* Subtle background pattern */}
-              <div className="absolute inset-0 opacity-5">
-                <div className="absolute inset-0" style={{
-                  backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)',
-                  backgroundSize: '24px 24px',
-                }} />
-              </div>
-              <div className="relative z-10">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 md:mb-6 text-mystic-steam-copper">
-                  Ready to Launch?
-                </h2>
-                <p className="text-base md:text-lg text-mystic-steam-parchment/70 mb-8 md:mb-10 font-body max-w-xl mx-auto leading-relaxed">
-                  Join the pack. Launch your token. Build your community. Succeed.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    onClick={() => router.push('/create-pool')}
-                    className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6 bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper text-mystic-steam-parchment font-heading font-bold transition-all hover:scale-105"
-                  >
-                    Launch Token Now
-                  </Button>
-                  <Button
-                    onClick={() => setShowModal(true)}
-                    variant="outline"
-                    className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6 border-mystic-steam-copper/30 hover:border-mystic-steam-copper/50 transition-all hover:scale-105"
-                  >
-                    Connect Wallet
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
+        <section className="py-12 md:py-16 px-4 border-t border-[var(--tech-border-elevated)]">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2">Ready to launch?</h2>
+            <p className="text-sm text-[var(--text-muted)] mb-6">
+              Create your token or connect your wallet to get started.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                onClick={() => router.push('/create-pool')}
+                className="px-6 py-3 text-sm font-semibold bg-[var(--tech-accent)] hover:bg-[var(--tech-accent-hover)] text-[var(--tech-bg)]"
+              >
+                Launch Token
+              </Button>
+              <Button
+                onClick={() => setShowModal(true)}
+                variant="outline"
+                className="px-6 py-3 text-sm font-semibold border-[var(--tech-border-elevated)] hover:border-[var(--tech-accent)] text-[var(--text-primary)]"
+              >
+                Connect Wallet
+              </Button>
+            </div>
           </div>
         </section>
       </div>
