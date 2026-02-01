@@ -127,9 +127,21 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.015;
-  background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  opacity: 0.03;
+  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size: 24px 24px;
+}
+
+/* Copper / steampunk accents - subtle */
+.copper-rim {
+  box-shadow: inset 0 1px 0 var(--copper-border);
+}
+.copper-rim-bottom {
+  border-bottom: 1px solid var(--copper-border);
+}
+.font-display-title {
+  font-family: var(--font-display);
+  letter-spacing: 0.04em;
 }
 
 /* Legacy mountain-bg (kept for compatibility) */

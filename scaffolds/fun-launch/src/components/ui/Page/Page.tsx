@@ -27,10 +27,10 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
       {/* Sigil pattern as separate layer */}
       <div className="sigil-pattern" />
       
-      {/* Layered atmospheric background - kept for compatibility */}
-      <div className="atmosphere-layer opacity-0" />
-      <div className="steam-layer opacity-30" />
-      <div className="castle-silhouette opacity-20" />
+      {/* Layered atmospheric background - subtle cyber/steam */}
+      <div className="atmosphere-layer opacity-20" />
+      <div className="steam-layer" />
+      <div className="castle-silhouette opacity-0" />
       <div className="dacian-pattern" />
       
       <Header />

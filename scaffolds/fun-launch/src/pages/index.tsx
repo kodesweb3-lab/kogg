@@ -85,10 +85,10 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               className="mb-4"
             >
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] border border-[var(--tech-border-elevated)] rounded-full">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] border border-[var(--copper-border)] rounded-full copper-rim">
                 <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500/75" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--copper)]/60" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--copper)]" />
                 </span>
                 Live on Solana Mainnet
               </span>
@@ -97,10 +97,18 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-[var(--text-primary)] mb-4"
+              className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-[var(--text-primary)] mb-3 font-display-title"
             >
-              Kogaion — Token Launchpad on Solana
+              Kogaion
             </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.06 }}
+              className="text-lg md:text-xl text-[var(--copper-muted)] font-body mb-4 copper-rim-bottom pb-4 inline-block"
+            >
+              Token Launchpad on Solana
+            </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -117,14 +125,14 @@ export default function LandingPage() {
             >
               <Button
                 onClick={() => router.push('/create-pool')}
-                className="px-6 py-3 text-sm font-semibold bg-[var(--tech-accent)] hover:bg-[var(--tech-accent-hover)] text-[var(--tech-bg)]"
+                className="px-6 py-3 text-sm font-semibold bg-[var(--copper)]/90 hover:bg-[var(--copper)] text-[var(--tech-bg)] copper-rim"
               >
                 Launch Token
               </Button>
               <Button
                 onClick={() => router.push('/discover')}
                 variant="outline"
-                className="px-6 py-3 text-sm font-semibold border-[var(--tech-border-elevated)] hover:border-[var(--tech-accent)] text-[var(--text-primary)]"
+                className="px-6 py-3 text-sm font-semibold border-[var(--copper-border)] hover:border-[var(--copper)] text-[var(--text-primary)]"
               >
                 Explore Tokens
               </Button>
@@ -158,7 +166,7 @@ export default function LandingPage() {
         {/* Platform overview */}
         <section className="py-12 md:py-16 px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2 text-center">
+            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2 text-center copper-rim-bottom pb-3 inline-block">
               Platform overview
             </h2>
             <p className="text-sm text-[var(--text-muted)] text-center max-w-xl mx-auto mb-8">
@@ -196,7 +204,7 @@ export default function LandingPage() {
         {/* Site menu — all destinations */}
         <section className="py-12 md:py-16 px-4 bg-[var(--tech-bg-elevated)]/50 border-y border-[var(--tech-border-elevated)]">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2 text-center">
+            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2 text-center copper-rim-bottom pb-3 inline-block">
               Site menu
             </h2>
             <p className="text-sm text-[var(--text-muted)] text-center max-w-xl mx-auto mb-8">
@@ -292,10 +300,10 @@ export default function LandingPage() {
           <div className="max-w-4xl mx-auto">
             <Link
               href="/for-agents"
-              className="block rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] p-6 md:p-8 hover:border-[var(--tech-accent)]/50 transition-colors"
+              className="block rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] p-6 md:p-8 copper-rim hover:border-[var(--copper-border)] transition-colors"
             >
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <div className="shrink-0 w-12 h-12 rounded-lg bg-[var(--tech-surface-elevated)] border border-[var(--tech-border)] flex items-center justify-center text-[var(--tech-accent)]">
+                <div className="shrink-0 w-12 h-12 rounded-lg bg-[var(--tech-surface-elevated)] border border-[var(--tech-border)] flex items-center justify-center text-[var(--copper)]">
                   <RobotIcon className="w-6 h-6" />
                 </div>
                 <div className="flex-1 text-center sm:text-left">
@@ -304,7 +312,7 @@ export default function LandingPage() {
                     Connect via API. Get skill.md, launch tokens, register on the marketplace, verify on X, chat in the Playground. No gatekeeping.
                   </p>
                 </div>
-                <span className="text-sm font-medium text-[var(--tech-accent)] shrink-0">For Agents →</span>
+                <span className="text-sm font-medium text-[var(--copper)] shrink-0">For Agents →</span>
               </div>
             </Link>
           </div>
@@ -320,14 +328,14 @@ export default function LandingPage() {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
                 onClick={() => router.push('/create-pool')}
-                className="px-6 py-3 text-sm font-semibold bg-[var(--tech-accent)] hover:bg-[var(--tech-accent-hover)] text-[var(--tech-bg)]"
+                className="px-6 py-3 text-sm font-semibold bg-[var(--copper)]/90 hover:bg-[var(--copper)] text-[var(--tech-bg)] copper-rim"
               >
                 Launch Token
               </Button>
               <Button
                 onClick={() => setShowModal(true)}
                 variant="outline"
-                className="px-6 py-3 text-sm font-semibold border-[var(--tech-border-elevated)] hover:border-[var(--tech-accent)] text-[var(--text-primary)]"
+                className="px-6 py-3 text-sm font-semibold border-[var(--copper-border)] hover:border-[var(--copper)] text-[var(--text-primary)]"
               >
                 Connect Wallet
               </Button>

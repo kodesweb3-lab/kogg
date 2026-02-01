@@ -167,7 +167,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="w-full border-b border-[var(--tech-border-elevated)] bg-[var(--tech-surface)]/98 backdrop-blur-md sticky top-0 z-40 pt-[env(safe-area-inset-top)]">
+      <header className="w-full border-b-2 border-b-[var(--copper-border)] border-[var(--tech-border-elevated)] bg-[var(--tech-surface)]/98 backdrop-blur-md sticky top-0 z-40 pt-[env(safe-area-inset-top)] shadow-[0_1px_0_var(--copper-glow)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-14 md:h-16">
             {/* Logo */}
