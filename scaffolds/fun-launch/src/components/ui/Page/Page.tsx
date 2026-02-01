@@ -36,11 +36,16 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
       <Header />
       <div
         className={cn(
-          'flex flex-1 flex-col items-center px-1 md:px-3 pt-4 pb-16 relative z-10',
+          'flex flex-1 flex-col items-center px-3 md:px-4 pt-3 pb-12 md:pt-4 md:pb-16 relative z-10',
           containerClassName
         )}
+        style={{
+          paddingLeft: 'max(0.75rem, env(safe-area-inset-left))',
+          paddingRight: 'max(0.75rem, env(safe-area-inset-right))',
+          paddingBottom: 'max(3rem, env(safe-area-inset-bottom))',
+        }}
       >
-        <div className="lg:max-w-7xl w-full">{children}</div>
+        <div className="lg:max-w-6xl w-full">{children}</div>
       </div>
     </div>
   );

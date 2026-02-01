@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default function DevLogPage() {
   return (
     <Page>
-      <div className="min-h-screen text-[var(--text-primary)] py-12 md:py-20 px-4 relative z-10">
+      <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Hero Section */}
           <motion.div

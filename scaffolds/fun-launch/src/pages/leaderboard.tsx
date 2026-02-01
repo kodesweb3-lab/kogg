@@ -60,7 +60,7 @@ export default function LeaderboardPage() {
 
   return (
     <Page>
-      <div className="min-h-screen text-mystic-steam-parchment py-12 px-4 relative z-10">
+      <div className="min-h-screen text-mystic-steam-parchment py-8 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <motion.div

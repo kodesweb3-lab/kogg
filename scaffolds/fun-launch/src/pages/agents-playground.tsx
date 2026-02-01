@@ -145,7 +145,7 @@ export default function AgentsPlaygroundPage() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-8"
+            className="text-center mb-6"
           >
             <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2 text-aureate-base">
               Agents Playground

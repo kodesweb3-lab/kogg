@@ -9,13 +9,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, children, variant = 'default', ...props }, ref) => {
-    const baseStyles = 'text-xs md:text-base px-4 md:px-8 py-2 md:py-3 rounded-lg transition-all duration-200 cursor-pointer font-semibold font-body focus:outline-none focus:ring-2 focus:ring-mystic-steam-copper/50 focus:ring-offset-2 focus:ring-offset-mystic-steam-charcoal relative overflow-hidden';
-    
+    const baseStyles = 'text-xs md:text-sm px-3 md:px-5 py-2 rounded-lg transition-all duration-200 cursor-pointer font-semibold font-body focus:outline-none focus:ring-2 focus:ring-[var(--tech-accent)] focus:ring-offset-2 focus:ring-offset-[var(--tech-bg)] relative';
     const variants = {
-      default: 'bg-mystic-steam-ash border border-mystic-steam-copper/30 text-mystic-steam-parchment hover:bg-mystic-steam-ash/80 hover:border-mystic-steam-copper/50 hover:shadow-md',
-      outline: 'bg-transparent border border-mystic-steam-copper/30 text-mystic-steam-parchment hover:bg-mystic-steam-ash/30 hover:border-mystic-steam-copper/50 hover:shadow-sm',
-      ghost: 'bg-transparent text-mystic-steam-parchment hover:bg-mystic-steam-ash/20 hover:text-mystic-steam-parchment',
-      steel: 'steel-button text-mystic-steam-parchment border-dacian-steel-steel hover:text-mystic-steam-parchment/90',
+      default: 'bg-[var(--tech-surface)] border border-[var(--tech-border-elevated)] text-[var(--text-primary)] hover:bg-[var(--tech-surface-elevated)] hover:border-[var(--tech-accent)]',
+      outline: 'bg-transparent border border-[var(--tech-border-elevated)] text-[var(--text-primary)] hover:bg-[var(--tech-surface)] hover:border-[var(--tech-accent)]',
+      ghost: 'bg-transparent text-[var(--text-muted)] hover:bg-[var(--tech-surface)] hover:text-[var(--text-primary)]',
+      steel: 'steel-button text-[var(--text-primary)] border-[var(--tech-border-elevated)] hover:border-[var(--tech-accent)]',
     };
 
     return (

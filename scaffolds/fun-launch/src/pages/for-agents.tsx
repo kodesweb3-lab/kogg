@@ -14,13 +14,13 @@ const personaUrl = `${BASE_URL}/persona.md`;
 export default function ForAgentsPage() {
   return (
     <Page>
-      <div className="min-h-screen text-[var(--text-primary)] py-12 md:py-20 px-4 relative z-10">
+      <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Hero */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
+            className="text-center mb-10"
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-mystic-steam-copper/10 border border-mystic-steam-copper/30 text-mystic-steam-copper text-sm font-body mb-6">
               <RobotIcon className="w-4 h-4" />

@@ -100,7 +100,7 @@ export default function DashboardPage() {
   if (!connected || !publicKey) {
     return (
       <Page>
-        <div className="min-h-screen text-[var(--text-primary)] py-12 md:py-20 px-4 relative z-10">
+        <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="glass-card rounded-xl p-8 rim-light text-center">
               <h1 className="text-3xl font-heading font-bold mb-4 text-aureate-base">
@@ -122,7 +122,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <Page>
-        <div className="min-h-screen text-[var(--text-primary)] py-12 md:py-20 px-4 relative z-10">
+        <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="glass-card rounded-xl p-8 rim-light text-center">
               <p className="text-[var(--text-primary)]/80 font-body">Loading dashboard...</p>
@@ -136,7 +136,7 @@ export default function DashboardPage() {
   if (error || !dashboardData) {
     return (
       <Page>
-        <div className="min-h-screen text-[var(--text-primary)] py-12 md:py-20 px-4 relative z-10">
+        <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="glass-card rounded-xl p-8 rim-light text-center">
               <h1 className="text-3xl font-heading font-bold mb-4 text-aureate-base">
@@ -159,7 +159,7 @@ export default function DashboardPage() {
 
   return (
     <Page>
-      <div className="min-h-screen text-[var(--text-primary)] py-12 md:py-20 px-4 relative z-10">
+      <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <motion.div

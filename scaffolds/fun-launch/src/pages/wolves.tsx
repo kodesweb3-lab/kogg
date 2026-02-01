@@ -119,7 +119,7 @@ export default function WolvesPage() {
 
   return (
     <Page>
-      <div className="min-h-screen text-mystic-steam-parchment py-20 px-4 relative z-10">
+      <div className="min-h-screen text-mystic-steam-parchment py-8 md:py-12 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <motion.div

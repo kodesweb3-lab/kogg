@@ -15,8 +15,9 @@ export default {
         xxs: ['0.5rem', { lineHeight: '0.625rem' }],
       },
       fontFamily: {
-        heading: ['Cinzel', 'Cormorant', 'Playfair Display SC', 'serif'],
-        body: ['Inter', 'Source Serif 4', 'sans-serif'],
+        heading: ['Inter', 'sans-serif'],
+        display: ['Cinzel', 'Cormorant', 'Playfair Display SC', 'serif'],
+        body: ['Inter', 'sans-serif'],
       },
       letterSpacing: {
         tighter: '-0.05em',
@@ -59,41 +60,43 @@ export default {
         textPrimary: 'var(--text-primary)',
         textMuted: 'var(--text-muted)',
         textSubtle: 'var(--text-subtle)',
-        // Mystic Steampunk Ritual Palette (kept for backwards compatibility)
-        'mystic-steam': {
-          // Main colors
-          charcoal: '#0E0F11',      // Dark Charcoal - main background
-          ash: '#16181D',           // Deep Ash - cards/panels
-          copper: '#B87333',        // Antique Copper - primary accent
-          bronze: '#8C5A2B',        // Burnt Bronze - secondary accent
-          oxidized: '#6F4E37',      // Oxidized Copper - subtle accent
-          parchment: '#E6E1D6',     // Parchment Off-White - main text
-          // Accents (very minimal use)
-          umber: '#4A2E1F',         // Blood Umber - warnings/danger
-          gold: '#9C7A3C',          // Muted Gold - status/highlights
-          // Background variants
-          bg: '#0E0F11',            // Alias for charcoal
-          bgElevated: '#16181D',    // Alias for ash
-          bgHover: '#1a1a2e',       // Slightly lighter for hover states
+        tech: {
+          bg: 'var(--tech-bg)',
+          'bg-elevated': 'var(--tech-bg-elevated)',
+          surface: 'var(--tech-surface)',
+          'surface-elevated': 'var(--tech-surface-elevated)',
+          border: 'var(--tech-border)',
+          'border-elevated': 'var(--tech-border-elevated)',
+          accent: 'var(--tech-accent)',
+          'accent-hover': 'var(--tech-accent-hover)',
+          glow: 'var(--tech-glow)',
         },
-        // Dacian Steel & Professional Palette (2026)
+        'mystic-steam': {
+          charcoal: 'var(--mystic-steam-charcoal)',
+          ash: 'var(--mystic-steam-ash)',
+          copper: 'var(--mystic-steam-copper)',
+          bronze: 'var(--mystic-steam-bronze)',
+          oxidized: 'var(--mystic-steam-oxidized)',
+          parchment: 'var(--mystic-steam-parchment)',
+          umber: 'var(--mystic-steam-umber)',
+          gold: 'var(--mystic-steam-gold)',
+          bg: 'var(--mystic-steam-bg)',
+          bgElevated: 'var(--mystic-steam-bg-elevated)',
+          bgHover: 'var(--mystic-steam-bg-hover)',
+        },
         'dacian-steel': {
-          // Steel tones - professional metallic
-          gunmetal: '#1a1d23',      // Gunmetal gray - primary steel
-          steel: '#252932',         // Steel gray - secondary
-          steelBlue: '#2d3748',     // Steel blue - cool accent
-          brushed: '#3a4451',       // Brushed silver - highlights
-          dark: '#14161a',          // Dark steel - deep backgrounds
-          // Dacian copper - refined, more muted
-          copper: '#8B6F47',        // Refined Dacian copper
-          copperDark: '#6B5233',    // Dark oxidized copper
-          copperLight: '#A6895A',  // Light copper accent
-          // Castle stone - deep charcoals with warm undertones
-          stone: '#0d0f12',         // Castle stone base
-          stoneWarm: '#14161a',      // Warm stone variant
-          // Draco accents - deep bronze for wolf/Draco elements
-          draco: '#5d4e37',         // Draco bronze
-          dracoDark: '#4a3e2d',     // Dark draco
+          gunmetal: 'var(--dacian-steel-gunmetal)',
+          steel: 'var(--dacian-steel-steel)',
+          steelBlue: 'var(--dacian-steel-steel-blue)',
+          brushed: 'var(--dacian-steel-brushed)',
+          dark: 'var(--dacian-steel-dark)',
+          copper: 'var(--dacian-copper)',
+          copperDark: 'var(--dacian-copper-dark)',
+          copperLight: 'var(--dacian-copper-light)',
+          stone: 'var(--castle-stone)',
+          stoneWarm: 'var(--castle-stone-warm)',
+          draco: 'var(--draco-bronze)',
+          dracoDark: 'var(--draco-bronze-dark)',
         },
         // Steam mist - subtle overlay effects
         'steam-mist': {

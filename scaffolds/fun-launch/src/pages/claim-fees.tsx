@@ -35,7 +35,7 @@ export default function ClaimFeesPage({ isFeeClaimer, walletAddress }: ClaimFees
 
   return (
     <Page>
-      <div className="min-h-screen py-12 px-4">
+      <div className="min-h-screen py-8 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="steel-panel rounded-lg p-8">
             <h1 className="text-3xl font-heading font-bold text-mystic-steam-copper mb-4">

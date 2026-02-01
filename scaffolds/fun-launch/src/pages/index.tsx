@@ -51,7 +51,7 @@ export default function LandingPage() {
     <Page>
       <div className="min-h-screen text-mystic-steam-parchment relative z-10">
         {/* Hero Section - Compact & Action-Focused */}
-        <section className="relative py-12 md:py-20 px-4">
+        <section className="relative py-8 md:py-12 px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-8 md:mb-12">
               {/* Beta Badge */}
@@ -148,7 +148,7 @@ export default function LandingPage() {
 
         {/* Recent Launches */}
         {recentTokens.length > 0 && (
-          <section className="py-12 px-4">
+          <section className="py-8 px-4">
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl md:text-3xl font-heading font-bold text-mystic-steam-copper">
@@ -207,13 +207,13 @@ export default function LandingPage() {
         )}
 
         {/* Key Features for Creators */}
-        <section className="py-16 md:py-20 px-4">
+        <section className="py-10 md:py-14 px-4">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-12 md:mb-16"
+              className="text-center mb-8 md:mb-12"
             >
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-heading font-bold mb-4 text-mystic-steam-copper">
                 Why Launch on Kogaion?
@@ -310,7 +310,7 @@ export default function LandingPage() {
         </section>
 
         {/* For Agents / Moltbook CTA */}
-        <section className="py-12 md:py-16 px-4">
+        <section className="py-8 md:py-12 px-4">
           <div className="max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -404,7 +404,7 @@ export default function LandingPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="py-16 md:py-20 px-4">
+        <section className="py-10 md:py-14 px-4">
           <div className="max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}

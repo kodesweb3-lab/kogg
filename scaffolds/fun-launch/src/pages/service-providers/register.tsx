@@ -78,7 +78,7 @@ export default function ServiceProviderRegisterPage() {
   if (isVerified) {
     return (
       <Page>
-        <div className="min-h-screen py-12 px-4">
+        <div className="min-h-screen py-8 px-4">
           <div className="max-w-2xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
@@ -104,7 +104,7 @@ export default function ServiceProviderRegisterPage() {
 
   return (
     <Page>
-      <div className="min-h-screen py-12 px-4">
+      <div className="min-h-screen py-8 px-4">
         <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: -20 }}

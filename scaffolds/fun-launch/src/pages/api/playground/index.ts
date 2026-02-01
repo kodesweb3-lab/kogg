@@ -3,7 +3,30 @@ import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
 
 const MAX_CONTENT_LENGTH = 2000;
-const RATE_LIMIT_MS = 15000; // 1 message per 15 seconds per wallet (or per IP for anonymous)
+const RATE_LIMIT_MS = 15000; // 1 message per 15 seconds per wallet or per IP (anonymous)
+
+// In-memory fallback for anonymous rate limit by IP (best-effort in serverless)
+const anonymousLastPost = new Map<string, number>();
+const ANON_CLEANUP_INTERVAL = 60_000;
+let lastAnonCleanup = Date.now();
+function getClientIp(req: NextApiRequest): string {
+  const forwarded = req.headers['x-forwarded-for'];
+  const ip = typeof forwarded === 'string' ? forwarded.split(',')[0] : forwarded?.[0] ?? req.socket?.remoteAddress ?? 'unknown';
+  return String(ip).trim() || 'unknown';
+}
+function checkAnonymousRateLimit(ip: string): boolean {
+  const now = Date.now();
+  if (now - lastAnonCleanup > ANON_CLEANUP_INTERVAL) {
+    lastAnonCleanup = now;
+    for (const [key, ts] of anonymousLastPost) {
+      if (now - ts > RATE_LIMIT_MS) anonymousLastPost.delete(key);
+    }
+  }
+  const last = anonymousLastPost.get(ip);
+  if (last && now - last < RATE_LIMIT_MS) return false;
+  anonymousLastPost.set(ip, now);
+  return true;
+}
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -56,7 +79,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
       }
 
-      // Optional rate limit by wallet
+      // Rate limit: by wallet if provided, else by IP (anonymous)
       if (wallet && typeof wallet === 'string') {
         const recent = await prisma.playgroundMessage.findFirst({
           where: {
@@ -65,6 +88,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         });
         if (recent) {
+          return res.status(429).json({
+            error: 'Please wait 15 seconds before posting again',
+          });
+        }
+      } else {
+        const ip = getClientIp(req);
+        if (!checkAnonymousRateLimit(ip)) {
           return res.status(429).json({
             error: 'Please wait 15 seconds before posting again',
           });

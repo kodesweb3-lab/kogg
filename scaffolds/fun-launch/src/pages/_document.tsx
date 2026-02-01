@@ -5,6 +5,8 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta name="theme-color" content="#0c0e12" />
         <meta name="description" content="Kogaion - Summon Tokens. Ascend Markets. The ritual begins here. Launch your token on Solana with the power of the pack." />
         <meta property="og:title" content="Kogaion - Token Launchpad" />
         <meta property="og:description" content="Summon Tokens. Ascend Markets. The ritual begins here." />

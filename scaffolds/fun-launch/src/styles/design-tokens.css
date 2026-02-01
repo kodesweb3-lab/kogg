@@ -1,38 +1,49 @@
-/* Design Tokens System - Obsidian + Aureate Theme */
+/* Design Tokens - Tech theme (programming / high-end tech, no neons) */
 
 :root {
-  /* Obsidian Base */
-  --obsidian-base: #0a0a0a;
-  --obsidian-elevated: #0f0f0f;
-  --obsidian-surface: #141414;
-  --obsidian-border: rgba(255, 255, 255, 0.08);
-  
-  /* Aureate (Desaturated Gold - More Metallic, Less Orange) */
-  --aureate-base: #b8a082;      /* Less orange, more metallic */
-  --aureate-light: #d4c4a8;
-  --aureate-dark: #8b7355;
-  --aureate-glow: rgba(184, 160, 130, 0.15);
-  --aureate-glow-strong: rgba(184, 160, 130, 0.25);
-  
-  /* Glass Morphism */
-  --glass-bg: rgba(20, 20, 20, 0.6);
-  --glass-bg-heavy: rgba(20, 20, 20, 0.8);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-rim-light: rgba(255, 255, 255, 0.15);
-  --glass-rim-light-strong: rgba(255, 255, 255, 0.2);
-  
-  /* Semantic Tokens */
-  --bg-primary: var(--obsidian-base);
-  --bg-elevated: var(--obsidian-elevated);
-  --bg-surface: var(--obsidian-surface);
-  --text-primary: #e6e1d6;
-  --text-muted: rgba(230, 225, 214, 0.6);
-  --text-subtle: rgba(230, 225, 214, 0.4);
-  --accent-primary: var(--aureate-base);
-  --accent-glow: var(--aureate-glow);
-  --border-default: var(--obsidian-border);
-  --border-elevated: rgba(255, 255, 255, 0.12);
-  
+  /* Tech palette - deep charcoal/slate, cool undertone */
+  --tech-bg: #0c0e12;
+  --tech-bg-elevated: #111318;
+  --tech-surface: #151920;
+  --tech-surface-elevated: #1a1f28;
+  --tech-border: rgba(255, 255, 255, 0.06);
+  --tech-border-elevated: rgba(255, 255, 255, 0.1);
+  --tech-accent: #5b7c99;
+  --tech-accent-hover: #6d8fad;
+  --tech-glow: rgba(91, 124, 153, 0.12);
+
+  /* Obsidian base - alias to tech */
+  --obsidian-base: var(--tech-bg);
+  --obsidian-elevated: var(--tech-bg-elevated);
+  --obsidian-surface: var(--tech-surface);
+  --obsidian-border: var(--tech-border);
+
+  /* Aureate - desaturated, metallic (for wolf/default) */
+  --aureate-base: #8b9a8f;
+  --aureate-light: #a8b5aa;
+  --aureate-dark: #6b7a6f;
+  --aureate-glow: rgba(139, 154, 143, 0.12);
+  --aureate-glow-strong: rgba(139, 154, 143, 0.18);
+
+  /* Glass - flat tech surfaces */
+  --glass-bg: rgba(21, 25, 32, 0.85);
+  --glass-bg-heavy: rgba(26, 31, 40, 0.9);
+  --glass-border: var(--tech-border-elevated);
+  --glass-rim-light: rgba(255, 255, 255, 0.08);
+  --glass-rim-light-strong: rgba(255, 255, 255, 0.12);
+
+  /* Semantic */
+  --bg-primary: var(--tech-bg);
+  --bg-elevated: var(--tech-bg-elevated);
+  --bg-surface: var(--tech-surface);
+  --text-primary: #e8e6e3;
+  --text-muted: rgba(232, 230, 227, 0.65);
+  --text-subtle: rgba(232, 230, 227, 0.4);
+  --accent-primary: var(--tech-accent);
+  --accent-glow: var(--tech-glow);
+  --border-default: var(--tech-border);
+  --border-elevated: var(--tech-border-elevated);
+
   /* Wolf Theme Tokens (default to Fire) */
   --wolf-accent: var(--wolf-fire-accent);
   --wolf-glow: var(--wolf-fire-glow);
@@ -40,18 +51,16 @@
   --wolf-icon-style: 'fire';
 }
 
-/* Noise texture for obsidian background */
 .obsidian-noise {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
   background-size: 400px 400px;
   background-repeat: repeat;
 }
 
-/* Controlled vignette */
 .obsidian-vignette {
   background-image: radial-gradient(
     ellipse at center,
     transparent 0%,
-    rgba(0, 0, 0, 0.4) 100%
+    rgba(0, 0, 0, 0.25) 100%
   );
 }
