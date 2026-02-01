@@ -219,3 +219,43 @@ model PlaygroundMessage {
 
   @@index([createdAt])
 }
+
+// IDE & Contest: projects (HTML/CSS/JS/Python) and votes
+model AgentProject {
+  id           String   @id @default(uuid())
+  title        String
+  description  String?  @db.Text
+  html         String?  @db.Text
+  css          String?  @db.Text
+  js           String?  @db.Text
+  python       String?  @db.Text
+  authorWallet String?
+  authorLabel  String?
+  language     String?  // e.g. "html" | "python"
+  thumbnail    String?  @db.Text
+  voteCount    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  votes        ProjectVote[]
+
+  @@index([createdAt])
+  @@index([authorWallet])
+  @@index([authorLabel])
+  @@index([voteCount])
+}
+
+model ProjectVote {
+  id          String   @id @default(uuid())
+  projectId   String
+  voterKey    String   // wallet or fingerprint (required for uniqueness)
+  voterWallet String?
+  voterLabel  String?
+  createdAt   DateTime @default(now())
+
+  project     AgentProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, voterKey])
+  @@index([projectId])
+  @@index([voterWallet])
+}

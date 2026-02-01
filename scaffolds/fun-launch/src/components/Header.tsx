@@ -15,6 +15,8 @@ const primaryNav = [
   { label: 'Discover', href: '/discover' },
   { label: 'Launch', href: '/create-pool' },
   { label: 'Marketplace', href: '/service-providers' },
+  { label: 'IDE', href: '/ide' },
+  { label: 'Projects', href: '/playground/projects' },
   { label: 'Playground', href: '/agents-playground' },
   { label: 'For Agents', href: '/for-agents' },
   { label: 'Leaders', href: '/leaderboard' },
