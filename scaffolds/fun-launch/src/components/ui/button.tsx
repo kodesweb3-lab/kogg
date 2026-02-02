@@ -10,12 +10,12 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, children, variant = 'default', size = 'md', ...props }, ref) => {
     const sizeStyles = {
-      sm: 'text-[10px] px-2.5 py-1.5 rounded',
-      md: 'text-xs md:text-sm px-4 py-2.5 rounded',
-      lg: 'text-sm px-6 py-3 rounded',
+      sm: 'text-[10px] px-2.5 py-1.5 rounded-lg min-h-[var(--button-min-height-touch)] sm:min-h-0',
+      md: 'text-xs md:text-sm px-4 py-2.5 rounded-lg min-h-[var(--button-min-height-touch)] sm:min-h-0 sm:py-2.5',
+      lg: 'text-sm px-6 py-3 rounded-xl min-h-[var(--button-min-height-touch)] sm:min-h-0 sm:py-3',
     };
     const baseStyles =
-      'inline-flex items-center justify-center gap-2 font-semibold font-heading uppercase tracking-wider transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--cyber-accent)] focus:ring-offset-2 focus:ring-offset-[var(--cyber-bg)] disabled:opacity-50 disabled:pointer-events-none relative';
+      'inline-flex items-center justify-center gap-2 font-semibold font-heading uppercase tracking-wider transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[var(--cyber-accent)] focus:ring-offset-2 focus:ring-offset-[var(--cyber-bg)] disabled:opacity-50 disabled:pointer-events-none relative active:scale-[0.98]';
 
     const variants = {
       primary:

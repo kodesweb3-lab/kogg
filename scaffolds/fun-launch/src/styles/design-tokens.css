@@ -17,6 +17,8 @@
   --cyber-glow: rgba(0, 245, 255, 0.15);
   --cyber-glow-2: rgba(236, 72, 153, 0.12);
 
+  --button-min-height-touch: 44px;
+
   /* Tech palette - alias to cyber for compatibility */
   --tech-bg: var(--cyber-bg);
   --tech-bg-elevated: var(--cyber-bg-elevated);

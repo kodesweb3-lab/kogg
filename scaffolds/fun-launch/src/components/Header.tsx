@@ -12,24 +12,11 @@ const ReferralModal = dynamic(() => import('./ReferralModal'), { ssr: false });
 
 type NavItem = { label: string; href: string; description?: string; external?: boolean };
 
-const productNav: NavItem[] = [
-  { label: 'Launch Token', href: '/create-pool', description: 'Create and list your token' },
-  { label: 'Discover', href: '/discover', description: 'Explore all tokens' },
-  { label: 'Marketplace', href: '/service-providers', description: 'Service providers & KOLs' },
-];
-
-const buildNav: NavItem[] = [
+const moreNav: NavItem[] = [
   { label: 'IDE', href: '/ide', description: 'In-browser code editor' },
   { label: 'Projects', href: '/playground/projects', description: 'Contest projects & votes' },
-];
-
-const communityNav: NavItem[] = [
-  { label: 'Agents Playground', href: '/agents-playground', description: 'Global chat for agents' },
   { label: 'For Agents', href: '/for-agents', description: 'API docs & agent hub' },
   { label: 'Leaderboard', href: '/leaderboard', description: 'Top creators' },
-];
-
-const resourcesNav: NavItem[] = [
   { label: 'About', href: '/about', description: 'What is Kogaion, fees, security, FAQ' },
   { label: 'Community', href: '/wolves', description: 'Telegram, X (Twitter)' },
   { label: 'Dev Log', href: '/dev-log', description: 'Updates & changelog' },
@@ -141,20 +128,14 @@ export const Header = () => {
   const router = useRouter();
   const [referralOpen, setReferralOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [productOpen, setProductOpen] = useState(false);
-  const [buildOpen, setBuildOpen] = useState(false);
-  const [communityOpen, setCommunityOpen] = useState(false);
-  const [resourcesOpen, setResourcesOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   const { disconnect, publicKey, connected } = useWallet();
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
   useEffect(() => {
     setMobileOpen(false);
-    setProductOpen(false);
-    setBuildOpen(false);
-    setCommunityOpen(false);
-    setResourcesOpen(false);
+    setMoreOpen(false);
   }, [router.pathname]);
 
   useEffect(() => {
@@ -189,60 +170,28 @@ export const Header = () => {
               </span>
             </Link>
 
-            {/* Desktop nav */}
+            {/* Desktop nav: flat links + More dropdown */}
             <nav className="hidden lg:flex items-center gap-1">
-              <NavDropdown
-                label="Product"
-                items={productNav}
-                isOpen={productOpen}
-                onOpen={() => {
-                  setBuildOpen(false);
-                  setCommunityOpen(false);
-                  setResourcesOpen(false);
-                  setProductOpen(true);
-                }}
-                onClose={() => setProductOpen(false)}
-                router={router}
-              />
-              <NavDropdown
-                label="Build"
-                items={buildNav}
-                isOpen={buildOpen}
-                onOpen={() => {
-                  setProductOpen(false);
-                  setCommunityOpen(false);
-                  setResourcesOpen(false);
-                  setBuildOpen(true);
-                }}
-                onClose={() => setBuildOpen(false)}
-                router={router}
-              />
-              <NavDropdown
-                label="Community"
-                items={communityNav}
-                isOpen={communityOpen}
-                onOpen={() => {
-                  setProductOpen(false);
-                  setBuildOpen(false);
-                  setResourcesOpen(false);
-                  setCommunityOpen(true);
-                }}
-                onClose={() => setCommunityOpen(false)}
-                router={router}
-              />
-              <NavDropdown
-                label="Resources"
-                items={resourcesNav}
-                isOpen={resourcesOpen}
-                onOpen={() => {
-                  setProductOpen(false);
-                  setBuildOpen(false);
-                  setCommunityOpen(false);
-                  setResourcesOpen(true);
-                }}
-                onClose={() => setResourcesOpen(false)}
-                router={router}
-              />
+              <Link
+                href="/discover"
+                className={`px-3 py-2.5 text-sm font-heading font-semibold uppercase tracking-wider rounded border transition-all ${
+                  router.pathname === '/discover'
+                    ? 'text-[var(--cyber-accent)] border-[var(--cyber-accent)]/40 bg-[var(--cyber-accent)]/5 shadow-cyber-sm'
+                    : 'text-[var(--text-muted)] border-transparent hover:text-[var(--cyber-accent)] hover:border-[var(--cyber-accent)]/30 hover:bg-[var(--cyber-accent)]/5'
+                }`}
+              >
+                Discover
+              </Link>
+              <Link
+                href="/create-pool"
+                className={`px-3 py-2.5 text-sm font-heading font-semibold uppercase tracking-wider rounded border transition-all ${
+                  router.pathname === '/create-pool'
+                    ? 'text-[var(--cyber-accent)] border-[var(--cyber-accent)]/40 bg-[var(--cyber-accent)]/5 shadow-cyber-sm'
+                    : 'text-[var(--text-muted)] border-transparent hover:text-[var(--cyber-accent)] hover:border-[var(--cyber-accent)]/30 hover:bg-[var(--cyber-accent)]/5'
+                }`}
+              >
+                Launch
+              </Link>
               {connected && publicKey && (
                 <Link
                   href="/dashboard"
@@ -255,6 +204,24 @@ export const Header = () => {
                   Dashboard
                 </Link>
               )}
+              <Link
+                href="/service-providers"
+                className={`px-3 py-2.5 text-sm font-heading font-semibold uppercase tracking-wider rounded border transition-all ${
+                  router.pathname === '/service-providers'
+                    ? 'text-[var(--cyber-accent)] border-[var(--cyber-accent)]/40 bg-[var(--cyber-accent)]/5 shadow-cyber-sm'
+                    : 'text-[var(--text-muted)] border-transparent hover:text-[var(--cyber-accent)] hover:border-[var(--cyber-accent)]/30 hover:bg-[var(--cyber-accent)]/5'
+                }`}
+              >
+                Marketplace
+              </Link>
+              <NavDropdown
+                label="More"
+                items={moreNav}
+                isOpen={moreOpen}
+                onOpen={() => setMoreOpen(true)}
+                onClose={() => setMoreOpen(false)}
+                router={router}
+              />
             </nav>
 
             {/* Right: social, referral, launch, wallet */}
@@ -263,7 +230,7 @@ export const Header = () => {
                 href="https://x.com/KogaionSol"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
+                className="min-h-[var(--button-min-height-touch)] min-w-[var(--button-min-height-touch)] flex items-center justify-center p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
                 title="X (Twitter)"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -274,7 +241,7 @@ export const Header = () => {
                 href="https://t.me/kogaionpack"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
+                className="min-h-[var(--button-min-height-touch)] min-w-[var(--button-min-height-touch)] flex items-center justify-center p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
                 title="Telegram"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -284,7 +251,7 @@ export const Header = () => {
               {address && (
                 <button
                   onClick={() => setReferralOpen(true)}
-                  className="p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
+                  className="min-h-[var(--button-min-height-touch)] min-w-[var(--button-min-height-touch)] flex items-center justify-center p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
                   title="Invite"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -296,18 +263,18 @@ export const Header = () => {
                 <CreatePoolButton />
               </div>
               {address ? (
-                <Button variant="outline" onClick={() => disconnect()} className="text-sm px-3 py-2 font-mono">
+                <Button variant="outline" onClick={() => disconnect()} className="text-sm px-3 py-2 font-mono min-h-[var(--button-min-height-touch)]">
                   {shortenAddress(address)}
                 </Button>
               ) : (
-                <Button variant="primary" onClick={() => setShowModal(true)} className="text-sm px-4 py-2.5">
+                <Button variant="primary" onClick={() => setShowModal(true)} className="text-sm px-4 py-2.5 min-h-[var(--button-min-height-touch)]">
                   Connect
                 </Button>
               )}
               <button
                 type="button"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] rounded border border-transparent hover:border-[var(--cyber-accent)]/30 transition-colors"
+                className="lg:hidden min-h-[var(--button-min-height-touch)] min-w-[var(--button-min-height-touch)] flex items-center justify-center p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] rounded border border-transparent hover:border-[var(--cyber-accent)]/30 transition-colors active:scale-[0.98]"
                 aria-label="Menu"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -331,50 +298,50 @@ export const Header = () => {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden border-t border-[var(--cyber-accent)]/20 bg-[var(--cyber-bg-elevated)]/98 backdrop-blur-xl"
             >
-              <nav className="px-4 py-4 space-y-0.5 max-h-[70vh] overflow-y-auto">
+              <nav className="px-4 py-4 space-y-0.5 max-h-[70vh] overflow-y-auto" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
                 <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/80 px-3 py-2.5">Product</div>
                 {productNav.map((item) =>
                   item.external ? (
-                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-3 py-2.5 rounded border-l-2 border-transparent hover:border-[var(--cyber-accent)] hover:bg-[var(--cyber-accent)]/5 text-sm font-medium text-[var(--text-primary)]">
+                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="flex items-center min-h-[var(--button-min-height-touch)] px-3 py-2.5 rounded border-l-2 border-transparent hover:border-[var(--cyber-accent)] hover:bg-[var(--cyber-accent)]/5 text-sm font-medium text-[var(--text-primary)] touch-manipulation">
                       {item.label}
                     </a>
                   ) : (
-                    <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
+                    <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`flex items-center min-h-[var(--button-min-height-touch)] px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium touch-manipulation`}>
                       {item.label}
                     </Link>
                   )
                 )}
                 <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/80 px-3 py-2.5 pt-5">Build</div>
                 {buildNav.map((item) => (
-                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
+                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`flex items-center min-h-[var(--button-min-height-touch)] px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium touch-manipulation`}>
                     {item.label}
                   </Link>
                 ))}
                 <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/80 px-3 py-2.5 pt-5">Community</div>
                 {communityNav.map((item) => (
-                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
+                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`flex items-center min-h-[var(--button-min-height-touch)] px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium touch-manipulation`}>
                     {item.label}
                   </Link>
                 ))}
                 {connected && publicKey && (
-                  <Link href="/dashboard" onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === '/dashboard' ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
+                  <Link href="/dashboard" onClick={() => setMobileOpen(false)} className={`flex items-center min-h-[var(--button-min-height-touch)] px-3 py-2.5 rounded border-l-2 ${router.pathname === '/dashboard' ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium touch-manipulation`}>
                     Dashboard
                   </Link>
                 )}
                 <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/80 px-3 py-2.5 pt-5">Resources</div>
                 {resourcesNav.map((item) =>
                   item.external ? (
-                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-3 py-2.5 rounded border-l-2 border-transparent hover:border-[var(--cyber-accent)] hover:bg-[var(--cyber-accent)]/5 text-sm font-medium text-[var(--text-primary)]">
+                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="flex items-center min-h-[var(--button-min-height-touch)] px-3 py-2.5 rounded border-l-2 border-transparent hover:border-[var(--cyber-accent)] hover:bg-[var(--cyber-accent)]/5 text-sm font-medium text-[var(--text-primary)] touch-manipulation">
                       {item.label}
                     </a>
                   ) : (
-                    <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
+                    <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`flex items-center min-h-[var(--button-min-height-touch)] px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium touch-manipulation`}>
                       {item.label}
                     </Link>
                   )
                 )}
                 <div className="pt-4 mt-3 border-t border-[var(--cyber-accent)]/20">
-                  <Link href="/create-pool" onClick={() => setMobileOpen(false)} className="flex items-center justify-center gap-2 w-full px-4 py-3.5 rounded-lg bg-[var(--cyber-accent)] text-[var(--cyber-bg)] font-heading font-bold uppercase tracking-wider text-sm shadow-cyber-sm">
+                  <Link href="/create-pool" onClick={() => setMobileOpen(false)} className="flex items-center justify-center gap-2 w-full min-h-[var(--button-min-height-touch)] px-4 py-3.5 rounded-lg bg-[var(--cyber-accent)] text-[var(--cyber-bg)] font-heading font-bold uppercase tracking-wider text-sm shadow-cyber-sm touch-manipulation active:scale-[0.98]">
                     Launch Token
                   </Link>
                 </div>

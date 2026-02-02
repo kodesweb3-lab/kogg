@@ -15,9 +15,9 @@ export const MobileExploreTabs = () => {
   const { mobileTab, setMobileTab, pausedTabs } = useExplore();
   return (
     <div className="sticky inset-x-0 top-0 z-20 border-b border-neutral-850 shadow-md shadow-neutral-950 lg:hidden bg-black">
-      <div className="px-2 py-1">
+      <div className="px-2 py-2">
         <ToggleGroupPrimitive.Root
-          className="flex h-9 w-full min-w-fit items-center gap-1 text-sm"
+          className="flex min-h-[var(--button-min-height-touch)] w-full min-w-fit items-center gap-1 text-sm"
           type="single"
           value={mobileTab}
           onValueChange={(value) => {
