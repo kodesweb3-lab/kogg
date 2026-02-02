@@ -1,17 +1,32 @@
-/* Design Tokens - Tech theme (programming / high-end tech, no neons) */
+/* Design Tokens - Cyberpunk / high-tech utility-first */
 
 :root {
-  /* Tech palette - deep charcoal/slate, cool undertone */
-  --tech-bg: #0c0e12;
-  --tech-bg-elevated: #111318;
-  --tech-surface: #151920;
-  --tech-surface-elevated: #1a1f28;
-  --tech-border: rgba(255, 255, 255, 0.06);
-  --tech-border-elevated: rgba(255, 255, 255, 0.1);
-  /* Accent: copper-blue (cyber / steampunk, not neon) */
-  --tech-accent: #6b8a9e;
-  --tech-accent-hover: #7d9eb3;
-  --tech-glow: rgba(107, 138, 158, 0.14);
+  /* Cyberpunk palette (plan: navy/charcoal, cyan, magenta) */
+  --cyber-bg: #0a0e17;
+  --cyber-bg-elevated: #0d1117;
+  --cyber-surface: #151920;
+  --cyber-surface-elevated: #1a1f28;
+  --cyber-border: rgba(255, 255, 255, 0.06);
+  --cyber-border-elevated: rgba(255, 255, 255, 0.1);
+  --cyber-accent: #00f5ff;
+  --cyber-accent-hover: #22d3ee;
+  --cyber-accent-2: #ec4899;
+  --cyber-accent-2-hover: #f472b6;
+  --cyber-text: #e8e6e3;
+  --cyber-muted: rgba(232, 230, 227, 0.65);
+  --cyber-glow: rgba(0, 245, 255, 0.15);
+  --cyber-glow-2: rgba(236, 72, 153, 0.12);
+
+  /* Tech palette - alias to cyber for compatibility */
+  --tech-bg: var(--cyber-bg);
+  --tech-bg-elevated: var(--cyber-bg-elevated);
+  --tech-surface: var(--cyber-surface);
+  --tech-surface-elevated: var(--cyber-surface-elevated);
+  --tech-border: var(--cyber-border);
+  --tech-border-elevated: var(--cyber-border-elevated);
+  --tech-accent: var(--cyber-accent);
+  --tech-accent-hover: var(--cyber-accent-hover);
+  --tech-glow: var(--cyber-glow);
 
   /* Copper / brass steampunk accents (subtle) */
   --copper: #b8956e;
@@ -41,16 +56,16 @@
   --glass-rim-light-strong: rgba(255, 255, 255, 0.12);
 
   /* Semantic */
-  --bg-primary: var(--tech-bg);
-  --bg-elevated: var(--tech-bg-elevated);
-  --bg-surface: var(--tech-surface);
-  --text-primary: #e8e6e3;
-  --text-muted: rgba(232, 230, 227, 0.65);
+  --bg-primary: var(--cyber-bg);
+  --bg-elevated: var(--cyber-bg-elevated);
+  --bg-surface: var(--cyber-surface);
+  --text-primary: var(--cyber-text);
+  --text-muted: var(--cyber-muted);
   --text-subtle: rgba(232, 230, 227, 0.4);
-  --accent-primary: var(--tech-accent);
-  --accent-glow: var(--tech-glow);
-  --border-default: var(--tech-border);
-  --border-elevated: var(--tech-border-elevated);
+  --accent-primary: var(--cyber-accent);
+  --accent-glow: var(--cyber-glow);
+  --border-default: var(--cyber-border);
+  --border-elevated: var(--cyber-border-elevated);
 
   /* Wolf Theme Tokens (default to Fire) */
   --wolf-accent: var(--wolf-fire-accent);

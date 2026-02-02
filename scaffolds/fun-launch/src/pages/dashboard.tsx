@@ -12,6 +12,7 @@ import { ReadableNumber } from '@/components/ui/ReadableNumber';
 import { useState, useMemo } from 'react';
 import { useWatchlist } from '@/hooks/useWatchlist';
 import { ServiceProviderEditModal } from '@/components/ServiceProvider/ServiceProviderEditModal';
+import { ClaimCreatorFeesModal } from '@/components/ClaimCreatorFeesModal';
 
 type DashboardData = {
   wallet: string;
@@ -64,6 +65,8 @@ export default function DashboardPage() {
   const [sortBy, setSortBy] = useState<'name' | 'createdAt' | 'type'>('createdAt');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isClaimCreatorFeesModalOpen, setIsClaimCreatorFeesModalOpen] = useState(false);
+  const [preselectedMintForClaim, setPreselectedMintForClaim] = useState<string | null>(null);
 
   const { data: dashboardData, isLoading, error, refetch } = useQuery<DashboardData>({
     queryKey: ['dashboard', publicKey?.toBase58()],
@@ -381,7 +384,17 @@ export default function DashboardPage() {
                 Token Portfolio
               </h2>
               {dashboardData.tokensCreated.length > 0 && (
-                <div className="flex gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      setPreselectedMintForClaim(null);
+                      setIsClaimCreatorFeesModalOpen(true);
+                    }}
+                  >
+                    Claim creator fees
+                  </Button>
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as 'name' | 'createdAt' | 'type')}
@@ -454,11 +467,23 @@ export default function DashboardPage() {
                           })}
                         </td>
                         <td className="py-4 px-4 text-right">
-                          <Link href={`/token/${token.mint}`}>
-                            <Button variant="outline" size="sm">
-                              View
+                          <div className="flex items-center justify-end gap-2">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setPreselectedMintForClaim(token.mint);
+                                setIsClaimCreatorFeesModalOpen(true);
+                              }}
+                            >
+                              Claim fees
                             </Button>
-                          </Link>
+                            <Link href={`/token/${token.mint}`}>
+                              <Button variant="outline" size="sm">
+                                View
+                              </Button>
+                            </Link>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -517,6 +542,16 @@ export default function DashboardPage() {
           onSuccess={handleEditSuccess}
         />
       )}
+
+      {/* Claim Creator Fees Modal */}
+      <ClaimCreatorFeesModal
+        isOpen={isClaimCreatorFeesModalOpen}
+        onClose={() => {
+          setIsClaimCreatorFeesModalOpen(false);
+          setPreselectedMintForClaim(null);
+        }}
+        preselectedMint={preselectedMintForClaim}
+      />
     </Page>
   );
 }

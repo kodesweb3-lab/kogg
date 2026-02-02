@@ -67,6 +67,7 @@ export default function LandingPage() {
       { label: 'Leaderboard', href: '/leaderboard' },
     ]},
     { label: 'Resources', items: [
+      { label: 'About', href: '/about' },
       { label: 'Dev Log', href: '/dev-log' },
       { label: 'Lore', href: '/lore' },
       { label: 'Wolves', href: '/wolves' },

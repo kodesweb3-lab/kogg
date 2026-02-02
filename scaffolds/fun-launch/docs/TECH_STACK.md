@@ -28,7 +28,7 @@ Meteora's Dynamic Bonding Curve is an on-chain protocol for token launches that 
 
 ### Pool Configuration
 
-- **Pool Config Key**: `GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL`
+- **Pool Config Key**: `BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t`
 - **Quote Mint**: wSOL (So11111111111111111111111111111111111111112)
 - **Fee Claimer**: Treasury wallet (`5hDrp6eTjMKrUFx96wqeQHhXNa7zvp3ba1Z9nTY3tBjA`)
 - **Leftover Receiver**: Treasury wallet

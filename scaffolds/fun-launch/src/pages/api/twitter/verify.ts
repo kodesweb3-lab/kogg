@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
+import { requireJsonContentType, invalidField } from '@/lib/apiErrors';
 
 // This endpoint will verify the tweet by checking Twitter API
 // For now, it's a placeholder that requires manual confirmation
@@ -10,19 +11,35 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!requireJsonContentType(req.headers['content-type'], res)) return;
+
   try {
-    const { verificationId, tweetId, twitterHandle } = req.body;
+    const body = req.body;
+    if (body === undefined || body === null) {
+      return res.status(400).json({
+        error: 'Request body must be valid JSON',
+        code: 'VALIDATION_ERROR',
+      });
+    }
+    const { verificationId, tweetId, twitterHandle } = body as {
+      verificationId?: string;
+      tweetId?: string;
+      twitterHandle?: string;
+    };
 
     if (!verificationId || typeof verificationId !== 'string') {
-      return res.status(400).json({ error: 'Verification ID is required' });
+      invalidField(res, 'Verification ID is required', 'verificationId', 'missing');
+      return;
     }
 
     if (!tweetId || typeof tweetId !== 'string') {
-      return res.status(400).json({ error: 'Tweet ID is required' });
+      invalidField(res, 'Tweet ID is required', 'tweetId', 'missing');
+      return;
     }
 
     if (!twitterHandle || typeof twitterHandle !== 'string') {
-      return res.status(400).json({ error: 'Twitter handle is required' });
+      invalidField(res, 'Twitter handle is required', 'twitterHandle', 'missing');
+      return;
     }
 
     // Find verification

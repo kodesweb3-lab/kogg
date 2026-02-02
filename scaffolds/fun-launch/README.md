@@ -64,9 +64,8 @@ PINATA_JWT=your_pinata_jwt_token
 RPC_URL=your_rpc_url
 
 # Pool Configuration (DBC config key)
-# Default: GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL
-# You can override this if you have a custom DBC config
-POOL_CONFIG_KEY=GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL
+# DBC partner config key (override if you have a custom DBC config)
+POOL_CONFIG_KEY=BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t
 
 # PostgreSQL Database URL (required)
 # Format: postgresql://user:password@host:port/database
@@ -105,7 +104,7 @@ The RPC URL must be a valid Solana RPC endpoint. The application will validate t
 
 The `POOL_CONFIG_KEY` is the Dynamic Bonding Curve (DBC) configuration public key. 
 
-- **Default value**: `GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL`
+- **Default value**: `BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t`
 - This is pre-configured and works out of the box
 - You only need to change it if you're deploying a custom DBC configuration
 - Must be a valid Solana public key (validated on startup)
@@ -224,7 +223,7 @@ pnpm dev
    - Add all the environment variables from your `.env` file:
      - `PINATA_JWT` (your Pinata JWT token)
      - `RPC_URL` (your Solana RPC URL - **required**)
-     - `POOL_CONFIG_KEY` (DBC config key, defaults to `GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL`)
+     - `POOL_CONFIG_KEY` (DBC config key, defaults to `BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t`)
      - `DATABASE_URL` (PostgreSQL connection string - **required**)
      - `ENCRYPTION_KEY` (for bot token encryption - required if using bots)
      - `HUGGINGFACE_API_KEY` (for AI bot responses - required if using bots)

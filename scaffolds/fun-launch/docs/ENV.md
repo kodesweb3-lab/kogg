@@ -68,7 +68,7 @@ RPC_URL=https://mainnet.helius-rpc.com/?api-key=YOUR_KEY
 
 **Where Used**: Web service (`src/pages/api/create-pool-transaction.ts`)
 
-**Default**: `GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL`
+**Default**: `BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t`
 
 **What It Enforces**:
 - quoteMint: wSOL (`So11111111111111111111111111111111111111112`)
@@ -79,7 +79,7 @@ RPC_URL=https://mainnet.helius-rpc.com/?api-key=YOUR_KEY
 
 **Example**:
 ```bash
-POOL_CONFIG_KEY=GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL
+POOL_CONFIG_KEY=BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t
 ```
 
 **Validation**: Must be valid Solana PublicKey format

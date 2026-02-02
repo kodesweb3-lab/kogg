@@ -3,6 +3,7 @@ import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
 import { validateWalletAddress } from '@/lib/validation/wallet';
 import { isPredefinedTag } from '@/lib/service-provider-tags';
+import { requireJsonContentType, validationError, invalidField } from '@/lib/apiErrors';
 
 type UpdateRequest = {
   wallet: string;
@@ -18,17 +19,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!requireJsonContentType(req.headers['content-type'], res)) return;
+
   try {
-    const { wallet, email, telegram, twitterHandle, description, tags } = req.body as UpdateRequest;
+    const body = req.body;
+    if (body === undefined || body === null) {
+      return res.status(400).json({
+        error: 'Request body must be valid JSON',
+        code: 'VALIDATION_ERROR',
+      });
+    }
+    const { wallet, email, telegram, twitterHandle, description, tags } = body as UpdateRequest;
 
     // Validate wallet
     if (!wallet || typeof wallet !== 'string') {
-      return res.status(400).json({ error: 'Wallet address is required' });
+      invalidField(res, 'Wallet address is required', 'wallet', 'missing');
+      return;
     }
 
     const walletValidation = validateWalletAddress(wallet);
     if (!walletValidation.valid) {
-      return res.status(400).json({ error: walletValidation.error });
+      invalidField(res, walletValidation.error ?? 'Invalid wallet', 'wallet', 'invalid');
+      return;
     }
 
     // Check if service provider exists
@@ -44,25 +56,31 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Validate tags if provided
     if (tags !== undefined) {
       if (!Array.isArray(tags) || tags.length === 0) {
-        return res.status(400).json({ error: 'At least one tag is required' });
+        validationError(res, 'At least one tag is required', [{ field: 'tags', reason: 'missing' }]);
+        return;
       }
 
       // Validate tag format (max 50 chars, no special chars except spaces and hyphens)
       const tagRegex = /^[a-zA-Z0-9\s-]{1,50}$/;
       for (const tag of tags) {
         if (typeof tag !== 'string' || !tag.trim()) {
-          return res.status(400).json({ error: 'Invalid tag format' });
+          validationError(res, 'Invalid tag format', [{ field: 'tags', reason: 'invalid' }]);
+          return;
         }
         if (!tagRegex.test(tag.trim())) {
-          return res.status(400).json({ error: `Invalid tag format: ${tag}` });
+          validationError(res, `Invalid tag format: ${tag}`, [{ field: 'tags', reason: 'invalid' }]);
+          return;
         }
       }
     }
 
     // Validate description length if provided
     if (description !== undefined && description !== null) {
-      if (description.length > 500) {
-        return res.status(400).json({ error: 'Description must be 500 characters or less' });
+      if (typeof description === 'string' && description.length > 500) {
+        validationError(res, 'Description must be 500 characters or less', [
+          { field: 'description', reason: 'too_long' },
+        ]);
+        return;
       }
     }
 

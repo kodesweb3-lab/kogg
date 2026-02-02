@@ -1,16 +1,26 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
+import { requireJsonContentType, validationError } from '@/lib/apiErrors';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = req.query.id as string;
   if (!id) {
-    return res.status(400).json({ error: 'Project id is required' });
+    validationError(res, 'Project id is required', [{ field: 'id', reason: 'missing' }]);
+    return;
   }
 
   if (req.method === 'POST') {
+    if (!requireJsonContentType(req.headers['content-type'], res)) return;
     try {
-      const { voterWallet, voterLabel, voterFingerprint } = req.body as {
+      const body = req.body;
+      if (body === undefined || body === null) {
+        return res.status(400).json({
+          error: 'Request body must be valid JSON',
+          code: 'VALIDATION_ERROR',
+        });
+      }
+      const { voterWallet, voterLabel, voterFingerprint } = body as {
         voterWallet?: string;
         voterLabel?: string;
         voterFingerprint?: string;
@@ -19,9 +29,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const voterKey =
         (voterWallet as string)?.trim() || (voterFingerprint as string)?.trim() || null;
       if (!voterKey) {
-        return res.status(400).json({
-          error: 'Either voterWallet or voterFingerprint is required',
-        });
+        validationError(res, 'Either voterWallet or voterFingerprint is required', [
+          { field: 'voterWallet', reason: 'missing' },
+          { field: 'voterFingerprint', reason: 'missing' },
+        ]);
+        return;
       }
 
       const project = await prisma.agentProject.findUnique({ where: { id } });
@@ -71,17 +83,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'DELETE') {
+    if (!requireJsonContentType(req.headers['content-type'], res)) return;
     try {
-      const { voterWallet, voterFingerprint } = req.body as {
+      const body = req.body;
+      if (body === undefined || body === null) {
+        return res.status(400).json({
+          error: 'Request body must be valid JSON',
+          code: 'VALIDATION_ERROR',
+        });
+      }
+      const { voterWallet, voterFingerprint } = body as {
         voterWallet?: string;
         voterFingerprint?: string;
       };
       const voterKey =
         (voterWallet as string)?.trim() || (voterFingerprint as string)?.trim() || null;
       if (!voterKey) {
-        return res.status(400).json({
-          error: 'Either voterWallet or voterFingerprint is required',
-        });
+        validationError(res, 'Either voterWallet or voterFingerprint is required', [
+          { field: 'voterWallet', reason: 'missing' },
+          { field: 'voterFingerprint', reason: 'missing' },
+        ]);
+        return;
       }
 
       const vote = await prisma.projectVote.findUnique({

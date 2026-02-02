@@ -35,34 +35,8 @@ Use this checklist to verify the rebrand is complete and functional.
 
 ## Functional Verification
 
-### Token Personality Builder
-- [ ] Preset tab shows 5 wolves (Fire, Frost, Blood, Moon, Stone)
-- [ ] Selecting preset populates fields
-- [ ] Custom tab allows starting from scratch
-- [ ] System prompt editor is always editable
-- [ ] Style sliders work (chaos, friendliness, formality, aggression, humor)
-- [ ] Branding fields work (catchphrases, emojis, voice style)
-- [ ] Rules fields work (allowed, forbidden topics)
-- [ ] Live preview chat sandbox works (uses HuggingFace)
-- [ ] Save button stores persona data
-
-### Ask Kogaion Helper
-- [ ] Floating button appears (bottom-right, 🐺 icon)
-- [ ] Clicking opens chat modal
-- [ ] Chat uses Kogaion system prompt (platform guide only)
-- [ ] Responses are helpful and mythic
-- [ ] Never acts as token bot
-- [ ] Never leaks secrets
-
-### Bot Activation
-- [ ] "Activate Token Bot" button appears on token page (if wallet connected)
-- [ ] Clicking opens BotActivationModal
-- [ ] Modal shows Token Personality Builder
-- [ ] User can build persona and save
-- [ ] User can enter BotFather token
-- [ ] Payment transaction created (0.1 SOL to treasury)
-- [ ] Bot activates after payment confirmation
-- [ ] Worker loads bot with USER'S persona (not Kogaion voice)
+### ~~Token Personality Builder / Ask Kogaion / Bot Activation~~ (Removed)
+- Token personality builder, Ask Kogaion widget, and token bot activation have been removed per redesign. No verification needed.
 
 ### Database
 - [ ] `BotPersona` table has new fields: `personaStyleJson`, `brandingJson`, `presetUsed`
@@ -72,11 +46,8 @@ Use this checklist to verify the rebrand is complete and functional.
 
 ## Separation of Concerns
 
-### Platform Helper (Ask Kogaion)
-- [ ] Uses strict Kogaion system prompt
-- [ ] Only helps with platform features
-- [ ] Never acts as token bot
-- [ ] Never represents specific tokens
+### ~~Platform Helper (Ask Kogaion)~~ (Removed)
+- Ask Kogaion and token bot features have been removed. Platform is utility-first (launch, discover, dashboard, claim fees, agents).
 
 ### Token Bots
 - [ ] Use 100% user-owned system prompt

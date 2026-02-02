@@ -24,7 +24,7 @@ PINATA_JWT=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQi
 RPC_URL=https://mainnet.helius-rpc.com/?api-key=c5c3877c-bac1-436e-9487-567aa20fdeb2
 
 # DBC Pool Configuration Key
-POOL_CONFIG_KEY=GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL
+POOL_CONFIG_KEY=BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t
 
 # Treasury Wallet (for reference, also hardcoded in bot/confirm.ts)
 TREASURY_WALLET=5hDrp6eTjMKrUFx96wqeQHhXNa7zvp3ba1Z9nTY3tBjA

@@ -1,16 +1,10 @@
 import { PublicKey } from '@solana/web3.js';
 
 /**
- * Default DBC config key
- * 
- * This config key enforces:
- * - quoteMint: wSOL (So11111111111111111111111111111111111111112)
- * - feeClaimer: Treasury (5hDrp6eTjMKrUFx96wqeQHhXNa7zvp3ba1Z9nTY3tBjA)
- * - leftoverReceiver: Treasury (5hDrp6eTjMKrUFx96wqeQHhXNa7zvp3ba1Z9nTY3tBjA)
- * - Trading fee: 1.5% (150 bps)
- * - creatorTradingFeePercentage: 0% (all fees to partner/treasury)
+ * Default DBC config key (partner program)
+ * Set via POOL_CONFIG_KEY env to override. New pools use this config (feeClaimer, creatorTradingFeePercentage, etc.).
  */
-export const DEFAULT_POOL_CONFIG_KEY = 'GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL';
+export const DEFAULT_POOL_CONFIG_KEY = 'BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t';
 
 /**
  * Application configuration loaded from environment variables

@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
+import { requireJsonContentType, invalidField } from '@/lib/apiErrors';
 
 type PatchBody = {
   title?: string;
@@ -16,7 +17,8 @@ type PatchBody = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const id = req.query.id as string;
   if (!id) {
-    return res.status(400).json({ error: 'Project id is required' });
+    invalidField(res, 'Project id is required', 'id', 'missing');
+    return;
   }
 
   if (req.method === 'GET') {
@@ -54,6 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'PATCH') {
+    if (!requireJsonContentType(req.headers['content-type'], res)) return;
     try {
       const project = await prisma.agentProject.findUnique({ where: { id } });
       if (!project) {
@@ -61,6 +64,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
 
       const body = req.body as PatchBody & { authorWallet?: string; authorLabel?: string };
+      if (body === undefined || body === null) {
+        return res.status(400).json({
+          error: 'Request body must be valid JSON',
+          code: 'VALIDATION_ERROR',
+        });
+      }
       const {
         authorWallet,
         authorLabel,

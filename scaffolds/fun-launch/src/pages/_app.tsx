@@ -6,7 +6,6 @@ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adap
 import { useMemo, useState, useEffect, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useWindowWidthListener } from '@/lib/device';
-import { AskKogaion } from '@/components/AskKogaion';
 import { WolfThemeProvider } from '@/contexts/WolfThemeProvider';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
@@ -163,7 +162,6 @@ export default function App({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
               </motion.div>
             </AnimatePresence>
-            <AskKogaion />
           </UnifiedWalletProvider>
         </WolfThemeProvider>
       </QueryClientProvider>

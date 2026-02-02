@@ -2,17 +2,28 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import crypto from 'crypto';
 import { BASE_URL } from '@/constants';
+import { requireJsonContentType, invalidField } from '@/lib/apiErrors';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!requireJsonContentType(req.headers['content-type'], res)) return;
+
   try {
-    const { serviceProviderId } = req.body;
+    const body = req.body;
+    if (body === undefined || body === null) {
+      return res.status(400).json({
+        error: 'Request body must be valid JSON',
+        code: 'VALIDATION_ERROR',
+      });
+    }
+    const { serviceProviderId } = body as { serviceProviderId?: string };
 
     if (!serviceProviderId || typeof serviceProviderId !== 'string') {
-      return res.status(400).json({ error: 'Service provider ID is required' });
+      invalidField(res, 'Service provider ID is required', 'serviceProviderId', 'missing');
+      return;
     }
 
     // Check if provider exists

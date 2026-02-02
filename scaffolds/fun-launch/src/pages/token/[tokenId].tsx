@@ -8,16 +8,11 @@ import Page from '@/components/ui/Page/Page';
 import { DataStreamProvider, useDataStream } from '@/contexts/DataStreamProvider';
 import { TokenChartProvider } from '@/contexts/TokenChartProvider';
 import { useTokenAddress, useTokenInfo } from '@/hooks/queries';
-import { BotActivationModal } from '@/components/BotActivationModal';
-import { Button } from '@/components/ui/button';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
-import { useWallet } from '@jup-ag/wallet-adapter';
-import { WolfIcon } from '@/components/icons/MiscIcons';
+import { useEffect } from 'react';
 import { TokenShareButtons } from '@/components/TokenShareButtons';
 
 const SwapPanel = dynamic(() => import('@/components/SwapPanel'), { ssr: false });
-const TokenChat = dynamic(() => import('@/components/TokenChat'), { ssr: false });
 
 const SwapWidget = () => {
   const tokenId = useTokenAddress();
@@ -34,8 +29,6 @@ export const TokenPageWithContext = () => {
   const tokenId = useTokenAddress();
   const { data: poolId, isLoading: isLoadingToken } = useTokenInfo((data) => data?.id);
   const { subscribeTxns, unsubscribeTxns, subscribePools, unsubscribePools } = useDataStream();
-  const { publicKey } = useWallet();
-  const [isBotModalOpen, setIsBotModalOpen] = useState(false);
 
   // Subscribe to token txns
   useEffect(() => {
@@ -90,23 +83,6 @@ export const TokenPageWithContext = () => {
             <div>
               <SwapWidget />
             </div>
-            {tokenId && (
-              <div className="mt-4">
-                <TokenChat tokenMint={tokenId} />
-              </div>
-            )}
-            {publicKey && tokenId && (
-              <div className="mt-4">
-                <Button
-                  onClick={() => setIsBotModalOpen(true)}
-                  className="w-full flex items-center justify-center gap-2"
-                  variant="outline"
-                >
-                  <WolfIcon className="w-4 h-4" />
-                  Activate Token Bot
-                </Button>
-              </div>
-            )}
           </div>
 
           <div className={'border-neutral-850 w-full max-sm:order-2 flex flex-col'}>
@@ -126,18 +102,6 @@ export const TokenPageWithContext = () => {
           </div>
         </div>
       </div>
-
-      {/* Bot Activation Modal */}
-      {tokenId && (
-        <BotActivationModal
-          tokenMint={tokenId}
-          isOpen={isBotModalOpen}
-          onClose={() => setIsBotModalOpen(false)}
-          onSuccess={() => {
-            // Refresh or show success message
-          }}
-        />
-      )}
     </Page>
   );
 };

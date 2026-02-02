@@ -1,9 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
+import { requireJsonContentType, validationError, invalidField } from '@/lib/apiErrors';
 
 const MAX_CONTENT_LENGTH = 2000;
 const RATE_LIMIT_MS = 15000; // 1 message per 15 seconds per wallet or per IP (anonymous)
+const RATE_LIMIT_SECONDS = Math.ceil(RATE_LIMIT_MS / 1000);
 
 // In-memory fallback for anonymous rate limit by IP (best-effort in serverless)
 const anonymousLastPost = new Map<string, number>();
@@ -58,25 +60,36 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'POST') {
+    if (!requireJsonContentType(req.headers['content-type'], res)) return;
     try {
-      const { wallet, authorLabel, content } = req.body as {
+      const body = req.body;
+      if (body === undefined || body === null) {
+        return res.status(400).json({
+          error: 'Request body must be valid JSON',
+          code: 'VALIDATION_ERROR',
+        });
+      }
+      const { wallet, authorLabel, content } = body as {
         wallet?: string;
         authorLabel?: string;
         content?: string;
       };
 
       if (!content || typeof content !== 'string') {
-        return res.status(400).json({ error: 'content is required' });
+        invalidField(res, 'content is required', 'content', 'missing');
+        return;
       }
 
       const trimmed = content.trim();
       if (trimmed.length === 0) {
-        return res.status(400).json({ error: 'content cannot be empty' });
+        invalidField(res, 'content cannot be empty', 'content', 'too_short');
+        return;
       }
       if (trimmed.length > MAX_CONTENT_LENGTH) {
-        return res.status(400).json({
-          error: `content too long (max ${MAX_CONTENT_LENGTH} characters)`,
-        });
+        validationError(res, `content too long (max ${MAX_CONTENT_LENGTH} characters)`, [
+          { field: 'content', reason: 'too_long' },
+        ]);
+        return;
       }
 
       // Rate limit: by wallet if provided, else by IP (anonymous)
@@ -88,15 +101,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           },
         });
         if (recent) {
+          res.setHeader('Retry-After', String(RATE_LIMIT_SECONDS));
           return res.status(429).json({
             error: 'Please wait 15 seconds before posting again',
+            retryAfterSeconds: RATE_LIMIT_SECONDS,
           });
         }
       } else {
         const ip = getClientIp(req);
         if (!checkAnonymousRateLimit(ip)) {
+          res.setHeader('Retry-After', String(RATE_LIMIT_SECONDS));
           return res.status(429).json({
             error: 'Please wait 15 seconds before posting again',
+            retryAfterSeconds: RATE_LIMIT_SECONDS,
           });
         }
       }

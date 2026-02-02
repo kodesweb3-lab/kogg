@@ -102,7 +102,7 @@ PINATA_JWT=your_pinata_jwt_token_here
 RPC_URL=https://your-rpc-url.com
 
 # DBC Pool Configuration Key
-POOL_CONFIG_KEY=GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL
+POOL_CONFIG_KEY=BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t
 
 # Database URL (from PostgreSQL plugin)
 DATABASE_URL=postgresql://user:password@host:port/database

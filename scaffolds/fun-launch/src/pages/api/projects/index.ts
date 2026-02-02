@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import { logger } from '@/lib/logger';
+import { requireJsonContentType, validationError } from '@/lib/apiErrors';
 
 type CreateProjectBody = {
   title: string;
@@ -78,8 +79,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (req.method === 'POST') {
+    if (!requireJsonContentType(req.headers['content-type'], res)) return;
     try {
-      const body = req.body as CreateProjectBody;
+      const body = req.body;
+      if (body === undefined || body === null) {
+        return res.status(400).json({
+          error: 'Request body must be valid JSON',
+          code: 'VALIDATION_ERROR',
+        });
+      }
       const {
         title,
         description,
@@ -91,10 +99,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         authorLabel,
         language,
         thumbnail,
-      } = body;
+      } = body as CreateProjectBody;
 
       if (!title || typeof title !== 'string' || title.trim().length === 0) {
-        return res.status(400).json({ error: 'title is required' });
+        validationError(res, 'title is required', [{ field: 'title', reason: 'missing' }]);
+        return;
       }
 
       const hasContent =
@@ -102,9 +111,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           (v) => typeof v === 'string' && v.trim().length > 0
         );
       if (!hasContent) {
-        return res.status(400).json({
-          error: 'At least one of html, css, js, or python must have content',
-        });
+        validationError(res, 'At least one of html, css, js, or python must have content', [
+          { field: 'html', reason: 'missing' },
+          { field: 'css', reason: 'missing' },
+          { field: 'js', reason: 'missing' },
+          { field: 'python', reason: 'missing' },
+        ]);
+        return;
       }
 
       const project = await prisma.agentProject.create({

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { PinataSDK } from 'pinata';
 import { logger } from '@/lib/logger';
 import { BASE_URL } from '@/constants';
+import { requireJsonContentType, validationError, invalidField } from '@/lib/apiErrors';
 
 // Environment variables
 const PINATA_JWT = process.env.PINATA_JWT as string;
@@ -47,53 +48,63 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!requireJsonContentType(req.headers['content-type'], res)) return;
+
   try {
-    const { 
-      name, 
-      symbol, 
-      description, 
+    const body = req.body;
+    if (body === undefined || body === null) {
+      return res.status(400).json({
+        error: 'Request body must be valid JSON',
+        code: 'VALIDATION_ERROR',
+      });
+    }
+    const {
+      name,
+      symbol,
+      description,
       imageUrl,
       tokenType,
       assetType,
       assetDescription,
       assetValue,
       assetLocation,
-      documents
-    } = req.body as MetadataRequest;
+      documents,
+    } = body as MetadataRequest;
 
     // Validate required fields
-    if (!name || !symbol || !imageUrl) {
-      return res.status(400).json({ 
-        error: 'Missing required fields: name, symbol, and imageUrl are required' 
-      });
+    const missing: { field: string; reason: 'missing' }[] = [];
+    if (!name) missing.push({ field: 'name', reason: 'missing' });
+    if (!symbol) missing.push({ field: 'symbol', reason: 'missing' });
+    if (!imageUrl) missing.push({ field: 'imageUrl', reason: 'missing' });
+    if (missing.length > 0) {
+      validationError(res, 'Missing required fields: name, symbol, and imageUrl are required', missing);
+      return;
     }
 
     // Validate name length
     if (name.length < 3) {
-      return res.status(400).json({ 
-        error: 'Name must be at least 3 characters long' 
-      });
+      invalidField(res, 'Name must be at least 3 characters long', 'name', 'too_short');
+      return;
     }
 
     // Validate symbol length
     if (symbol.length < 1 || symbol.length > 10) {
-      return res.status(400).json({ 
-        error: 'Symbol must be between 1 and 10 characters long' 
-      });
+      validationError(res, 'Symbol must be between 1 and 10 characters long', [
+        { field: 'symbol', reason: symbol.length < 1 ? 'too_short' : 'too_long' },
+      ]);
+      return;
     }
 
     // Validate imageUrl format
     if (!imageUrl.startsWith('http://') && !imageUrl.startsWith('https://') && !imageUrl.startsWith('ipfs://')) {
-      return res.status(400).json({ 
-        error: 'Invalid imageUrl format. Must be a valid HTTP/HTTPS URL or IPFS URI' 
-      });
+      invalidField(res, 'Invalid imageUrl format. Must be a valid HTTP/HTTPS URL or IPFS URI', 'imageUrl', 'invalid');
+      return;
     }
 
     // Validate tokenType if provided
     if (tokenType && tokenType !== 'MEMECOIN' && tokenType !== 'RWA') {
-      return res.status(400).json({ 
-        error: 'Invalid tokenType. Must be either MEMECOIN or RWA' 
-      });
+      invalidField(res, 'Invalid tokenType. Must be either MEMECOIN or RWA', 'tokenType', 'invalid');
+      return;
     }
 
     // Create metadata object

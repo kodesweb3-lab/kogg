@@ -30,6 +30,7 @@ const communityNav: NavItem[] = [
 ];
 
 const resourcesNav: NavItem[] = [
+  { label: 'About', href: '/about', description: 'What is Kogaion, fees, security, FAQ' },
   { label: 'Dev Log', href: '/dev-log', description: 'Updates & changelog' },
   { label: 'Lore', href: '/lore', description: 'Brand & story' },
   { label: 'Wolves', href: '/wolves', description: 'Community' },

@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import { getConfig } from '@/lib/config';
 import { logger } from '@/lib/logger';
+import { requireJsonContentType, validationError } from '@/lib/apiErrors';
 
 type CreateTokenRequest = {
   mint: string;
@@ -21,14 +22,22 @@ type CreateTokenRequest = {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
+    if (!requireJsonContentType(req.headers['content-type'], res)) return;
     try {
-      const { 
-        mint, 
-        name, 
-        symbol, 
-        imageUrl, 
-        metadataUri, 
-        dbcPool, 
+      const body = req.body;
+      if (body === undefined || body === null) {
+        return res.status(400).json({
+          error: 'Request body must be valid JSON',
+          code: 'VALIDATION_ERROR',
+        });
+      }
+      const {
+        mint,
+        name,
+        symbol,
+        imageUrl,
+        metadataUri,
+        dbcPool,
         creatorWallet,
         tokenType,
         assetType,
@@ -36,26 +45,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         assetValue,
         assetLocation,
         documents,
-      } = req.body as CreateTokenRequest;
+      } = body as CreateTokenRequest;
 
       // Validate required fields
-      if (!mint || !name || !symbol || !metadataUri || !creatorWallet) {
-        return res.status(400).json({
-          error: 'Missing required fields: mint, name, symbol, metadataUri, and creatorWallet are required',
-        });
+      const missing: { field: string; reason: 'missing' }[] = [];
+      if (!mint) missing.push({ field: 'mint', reason: 'missing' });
+      if (!name) missing.push({ field: 'name', reason: 'missing' });
+      if (!symbol) missing.push({ field: 'symbol', reason: 'missing' });
+      if (!metadataUri) missing.push({ field: 'metadataUri', reason: 'missing' });
+      if (!creatorWallet) missing.push({ field: 'creatorWallet', reason: 'missing' });
+      if (missing.length > 0) {
+        validationError(
+          res,
+          'Missing required fields: mint, name, symbol, metadataUri, and creatorWallet are required',
+          missing
+        );
+        return;
       }
 
       // Validate RWA fields if tokenType is RWA
       if (tokenType === 'RWA') {
         if (!assetType) {
-          return res.status(400).json({
-            error: 'assetType is required for RWA tokens',
-          });
+          validationError(res, 'assetType is required for RWA tokens', [
+            { field: 'assetType', reason: 'missing' },
+          ]);
+          return;
         }
         if (!assetDescription) {
-          return res.status(400).json({
-            error: 'assetDescription is required for RWA tokens',
-          });
+          validationError(res, 'assetDescription is required for RWA tokens', [
+            { field: 'assetDescription', reason: 'missing' },
+          ]);
+          return;
         }
       }
 
@@ -149,24 +169,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
       // Validate pagination
       if (pageNum < 1 || limitNum < 1 || limitNum > 100) {
-        return res.status(400).json({
-          error: 'Invalid pagination parameters. Page must be >= 1, limit must be between 1 and 100',
-        });
+        validationError(res, 'Invalid pagination parameters. Page must be >= 1, limit must be between 1 and 100', [
+          { field: 'page', reason: 'invalid' },
+          { field: 'limit', reason: 'invalid' },
+        ]);
+        return;
       }
 
       // Validate sortBy
       const validSortFields = ['createdAt', 'name', 'symbol', 'mint'];
       if (!validSortFields.includes(sortBy as string)) {
-        return res.status(400).json({
-          error: `Invalid sortBy field. Must be one of: ${validSortFields.join(', ')}`,
-        });
+        validationError(res, `Invalid sortBy field. Must be one of: ${validSortFields.join(', ')}`, [
+          { field: 'sortBy', reason: 'invalid' },
+        ]);
+        return;
       }
 
       // Validate sortOrder
       if (sortOrder !== 'asc' && sortOrder !== 'desc') {
-        return res.status(400).json({
-          error: "Invalid sortOrder. Must be 'asc' or 'desc'",
-        });
+        validationError(res, "Invalid sortOrder. Must be 'asc' or 'desc'", [
+          { field: 'sortOrder', reason: 'invalid' },
+        ]);
+        return;
       }
 
       // Build where clause

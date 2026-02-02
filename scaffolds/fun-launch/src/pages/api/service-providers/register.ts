@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/db';
 import { validateWalletAddress } from '@/lib/validation/wallet';
 import { isPredefinedTag } from '@/lib/service-provider-tags';
+import { requireJsonContentType, validationError, invalidField } from '@/lib/apiErrors';
 
 interface RegisterRequest {
   wallet: string;
@@ -17,28 +18,41 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!requireJsonContentType(req.headers['content-type'], res)) return;
+
   try {
-    const { wallet, email, telegram, twitterHandle, description, tags } = req.body as RegisterRequest;
+    const body = req.body;
+    if (body === undefined || body === null) {
+      return res.status(400).json({
+        error: 'Request body must be valid JSON',
+        code: 'VALIDATION_ERROR',
+      });
+    }
+    const { wallet, email, telegram, twitterHandle, description, tags } = body as RegisterRequest;
 
     // Validate wallet
     const walletValidation = validateWalletAddress(wallet);
     if (!walletValidation.valid) {
-      return res.status(400).json({ error: walletValidation.error });
+      invalidField(res, walletValidation.error ?? 'Invalid wallet', 'wallet', 'invalid');
+      return;
     }
 
     // Validate tags
     if (!tags || !Array.isArray(tags) || tags.length === 0) {
-      return res.status(400).json({ error: 'At least one tag is required' });
+      validationError(res, 'At least one tag is required', [{ field: 'tags', reason: 'missing' }]);
+      return;
     }
 
     // Validate tag format (max 50 chars, no special chars except spaces and hyphens)
     const tagRegex = /^[a-zA-Z0-9\s-]{1,50}$/;
     for (const tag of tags) {
       if (typeof tag !== 'string' || !tag.trim()) {
-        return res.status(400).json({ error: 'Invalid tag format' });
+        validationError(res, 'Invalid tag format', [{ field: 'tags', reason: 'invalid' }]);
+        return;
       }
       if (!tagRegex.test(tag.trim())) {
-        return res.status(400).json({ error: `Invalid tag format: ${tag}` });
+        validationError(res, `Invalid tag format: ${tag}`, [{ field: 'tags', reason: 'invalid' }]);
+        return;
       }
     }
 

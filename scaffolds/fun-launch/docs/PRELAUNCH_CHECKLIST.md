@@ -51,7 +51,7 @@ This checklist must be completed before launching Kogaion to production. **The p
   - Health check shows RPC status: `ok`
 
 - [ ] **Pool config key is correct**
-  - `POOL_CONFIG_KEY=GvoZ6trCqQhNWiDnS5x27XE5tTyKhGepn4dcqg9bLpmL`
+  - `POOL_CONFIG_KEY=BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t`
   - Config key enforces correct settings (verified on-chain or in docs)
 
 **Files to check**: `src/lib/config.ts`, `src/pages/api/create-pool-transaction.ts`
