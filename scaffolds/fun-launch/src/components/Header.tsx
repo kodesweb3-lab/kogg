@@ -31,9 +31,9 @@ const communityNav: NavItem[] = [
 
 const resourcesNav: NavItem[] = [
   { label: 'About', href: '/about', description: 'What is Kogaion, fees, security, FAQ' },
+  { label: 'Community', href: '/wolves', description: 'Telegram, X (Twitter)' },
   { label: 'Dev Log', href: '/dev-log', description: 'Updates & changelog' },
   { label: 'Lore', href: '/lore', description: 'Brand & story' },
-  { label: 'Wolves', href: '/wolves', description: 'Community' },
   { label: 'Skill (API)', href: '/skill.md', description: 'Full API reference', external: true },
 ];
 
@@ -73,25 +73,27 @@ function NavDropdown({
       <button
         type="button"
         onClick={() => (isOpen ? onClose() : onOpen())}
-        className={`flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-          isActive ? 'text-[var(--tech-accent)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+        className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-heading font-semibold uppercase tracking-wider rounded border border-transparent transition-all duration-200 ${
+          isActive
+            ? 'text-[var(--cyber-accent)] border-[var(--cyber-accent)]/40 bg-[var(--cyber-accent)]/5 shadow-cyber-sm'
+            : 'text-[var(--text-muted)] hover:text-[var(--cyber-accent)] hover:border-[var(--cyber-accent)]/30 hover:bg-[var(--cyber-accent)]/5'
         }`}
       >
         {label}
-        <svg className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className={`w-3.5 h-3.5 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -4 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 top-full pt-1 z-50 min-w-[220px]"
+            className="absolute left-0 top-full pt-2 z-50 min-w-[240px]"
           >
-            <div className="rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] shadow-xl py-1">
+            <div className="rounded-lg border border-[var(--cyber-accent)]/30 bg-[var(--cyber-bg-elevated)]/98 backdrop-blur-xl shadow-cyber py-1.5">
               {items.map((item) =>
                 item.external ? (
                   <a
@@ -99,11 +101,11 @@ function NavDropdown({
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-col px-4 py-2.5 text-left hover:bg-[var(--tech-surface-elevated)] transition-colors"
+                    className="flex flex-col px-4 py-2.5 text-left hover:bg-[var(--cyber-accent)]/10 transition-colors border-l-2 border-transparent hover:border-[var(--cyber-accent)]"
                   >
                     <span className="text-sm font-medium text-[var(--text-primary)]">{item.label}</span>
                     {item.description && (
-                      <span className="text-xs text-[var(--text-muted)] mt-0.5">{item.description}</span>
+                      <span className="text-xs text-[var(--text-muted)] mt-0.5 font-normal">{item.description}</span>
                     )}
                   </a>
                 ) : (
@@ -111,15 +113,17 @@ function NavDropdown({
                     key={item.href}
                     href={item.href}
                     onClick={onClose}
-                    className={`flex flex-col px-4 py-2.5 text-left hover:bg-[var(--tech-surface-elevated)] transition-colors ${
-                      router.pathname === item.href ? 'bg-[var(--tech-accent)]/10' : ''
+                    className={`flex flex-col px-4 py-2.5 text-left transition-colors border-l-2 ${
+                      router.pathname === item.href
+                        ? 'bg-[var(--cyber-accent)]/10 border-[var(--cyber-accent)]'
+                        : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5'
                     }`}
                   >
-                    <span className={`text-sm font-medium ${router.pathname === item.href ? 'text-[var(--tech-accent)]' : 'text-[var(--text-primary)]'}`}>
+                    <span className={`text-sm font-medium ${router.pathname === item.href ? 'text-[var(--cyber-accent)]' : 'text-[var(--text-primary)]'}`}>
                       {item.label}
                     </span>
                     {item.description && (
-                      <span className="text-xs text-[var(--text-muted)] mt-0.5">{item.description}</span>
+                      <span className="text-xs text-[var(--text-muted)] mt-0.5 font-normal">{item.description}</span>
                     )}
                   </Link>
                 )
@@ -168,22 +172,25 @@ export const Header = () => {
 
   return (
     <>
-      <header className="w-full border-b-2 border-b-[var(--copper-border)] border-[var(--tech-border-elevated)] bg-[var(--tech-surface)]/98 backdrop-blur-md sticky top-0 z-40 pt-[env(safe-area-inset-top)] shadow-[0_1px_0_var(--copper-glow)]">
+      <header className="w-full sticky top-0 z-40 pt-[env(safe-area-inset-top)] bg-[var(--cyber-bg)]/90 backdrop-blur-xl border-b border-[var(--cyber-accent)]/20 shadow-[0_0_24px_rgba(0,245,255,0.06)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-14 md:h-16">
+          <div className="flex items-center justify-between h-16 md:h-[4.25rem]">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 shrink-0">
-              <img src="/brand/kogaion-icon.svg" alt="Kogaion" className="w-8 h-8 md:w-9 md:h-9" />
-              <span className="text-lg md:text-xl font-semibold text-[var(--text-primary)] tracking-tight">
-                Kogaion
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 shrink-0 group"
+            >
+              <img src="/brand/kogaion-icon.svg" alt="Kogaion" className="w-9 h-9 md:w-10 md:h-10 opacity-90 group-hover:opacity-100 transition-opacity" />
+              <span className="text-xl md:text-2xl font-display font-bold tracking-widest text-[var(--text-primary)] group-hover:text-[var(--cyber-accent)] transition-colors">
+                KOGAION
               </span>
-              <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-[var(--text-muted)] border border-[var(--tech-border-elevated)] rounded">
+              <span className="hidden sm:inline-flex items-center px-2 py-0.5 text-[10px] font-mono font-semibold uppercase tracking-wider text-[var(--cyber-accent)] border border-[var(--cyber-accent)]/50 rounded">
                 Beta
               </span>
             </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-0.5">
+            <nav className="hidden lg:flex items-center gap-1">
               <NavDropdown
                 label="Product"
                 items={productNav}
@@ -239,8 +246,10 @@ export const Header = () => {
               {connected && publicKey && (
                 <Link
                   href="/dashboard"
-                  className={`px-3 py-2 text-sm font-medium rounded-md transition-colors ${
-                    router.pathname === '/dashboard' ? 'text-[var(--tech-accent)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+                  className={`px-3 py-2.5 text-sm font-heading font-semibold uppercase tracking-wider rounded border transition-all ${
+                    router.pathname === '/dashboard'
+                      ? 'text-[var(--cyber-accent)] border-[var(--cyber-accent)]/50 bg-[var(--cyber-accent)]/10 shadow-cyber-sm'
+                      : 'text-[var(--text-muted)] border-transparent hover:text-[var(--cyber-accent)] hover:border-[var(--cyber-accent)]/30 hover:bg-[var(--cyber-accent)]/5'
                   }`}
                 >
                   Dashboard
@@ -254,7 +263,7 @@ export const Header = () => {
                 href="https://x.com/KogaionSol"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-[var(--text-muted)] hover:text-[var(--tech-accent)] transition-colors rounded-md"
+                className="p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
                 title="X (Twitter)"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -265,7 +274,7 @@ export const Header = () => {
                 href="https://t.me/kogaionpack"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 text-[var(--text-muted)] hover:text-[var(--tech-accent)] transition-colors rounded-md"
+                className="p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
                 title="Telegram"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -275,7 +284,7 @@ export const Header = () => {
               {address && (
                 <button
                   onClick={() => setReferralOpen(true)}
-                  className="p-2 text-[var(--text-muted)] hover:text-[var(--tech-accent)] transition-colors rounded-md"
+                  className="p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] transition-colors rounded border border-transparent hover:border-[var(--cyber-accent)]/30"
                   title="Invite"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -287,18 +296,18 @@ export const Header = () => {
                 <CreatePoolButton />
               </div>
               {address ? (
-                <Button onClick={() => disconnect()} className="text-sm px-3 py-2">
+                <Button variant="outline" onClick={() => disconnect()} className="text-sm px-3 py-2 font-mono">
                   {shortenAddress(address)}
                 </Button>
               ) : (
-                <Button onClick={() => setShowModal(true)} className="text-sm px-3 py-2">
+                <Button variant="primary" onClick={() => setShowModal(true)} className="text-sm px-4 py-2.5">
                   Connect
                 </Button>
               )}
               <button
                 type="button"
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="lg:hidden p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-md"
+                className="lg:hidden p-2.5 text-[var(--text-muted)] hover:text-[var(--cyber-accent)] rounded border border-transparent hover:border-[var(--cyber-accent)]/30 transition-colors"
                 aria-label="Menu"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -320,52 +329,52 @@ export const Header = () => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden border-t border-[var(--tech-border-elevated)] bg-[var(--tech-surface)]"
+              className="lg:hidden border-t border-[var(--cyber-accent)]/20 bg-[var(--cyber-bg-elevated)]/98 backdrop-blur-xl"
             >
-              <nav className="px-4 py-4 space-y-1 max-h-[70vh] overflow-y-auto">
-                <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] px-3 py-2">Product</div>
-                {productNav.map((item) => (
+              <nav className="px-4 py-4 space-y-0.5 max-h-[70vh] overflow-y-auto">
+                <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/80 px-3 py-2.5">Product</div>
+                {productNav.map((item) =>
                   item.external ? (
-                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-3 py-2.5 rounded-md text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--tech-surface-elevated)]">
+                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-3 py-2.5 rounded border-l-2 border-transparent hover:border-[var(--cyber-accent)] hover:bg-[var(--cyber-accent)]/5 text-sm font-medium text-[var(--text-primary)]">
                       {item.label}
                     </a>
                   ) : (
-                    <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded-md text-sm font-medium ${router.pathname === item.href ? 'text-[var(--tech-accent)] bg-[var(--tech-accent)]/10' : 'text-[var(--text-primary)] hover:bg-[var(--tech-surface-elevated)]'}`}>
+                    <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
                       {item.label}
                     </Link>
                   )
-                ))}
-                <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] px-3 py-2 pt-4">Build</div>
+                )}
+                <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/80 px-3 py-2.5 pt-5">Build</div>
                 {buildNav.map((item) => (
-                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded-md text-sm font-medium ${router.pathname === item.href ? 'text-[var(--tech-accent)] bg-[var(--tech-accent)]/10' : 'text-[var(--text-primary)] hover:bg-[var(--tech-surface-elevated)]'}`}>
+                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
                     {item.label}
                   </Link>
                 ))}
-                <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] px-3 py-2 pt-4">Community</div>
+                <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/80 px-3 py-2.5 pt-5">Community</div>
                 {communityNav.map((item) => (
-                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded-md text-sm font-medium ${router.pathname === item.href ? 'text-[var(--tech-accent)] bg-[var(--tech-accent)]/10' : 'text-[var(--text-primary)] hover:bg-[var(--tech-surface-elevated)]'}`}>
+                  <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
                     {item.label}
                   </Link>
                 ))}
                 {connected && publicKey && (
-                  <Link href="/dashboard" onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded-md text-sm font-medium ${router.pathname === '/dashboard' ? 'text-[var(--tech-accent)] bg-[var(--tech-accent)]/10' : 'text-[var(--text-primary)] hover:bg-[var(--tech-surface-elevated)]'}`}>
+                  <Link href="/dashboard" onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === '/dashboard' ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
                     Dashboard
                   </Link>
                 )}
-                <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] px-3 py-2 pt-4">Resources</div>
-                {resourcesNav.map((item) => (
+                <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/80 px-3 py-2.5 pt-5">Resources</div>
+                {resourcesNav.map((item) =>
                   item.external ? (
-                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-3 py-2.5 rounded-md text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--tech-surface-elevated)]">
+                    <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="block px-3 py-2.5 rounded border-l-2 border-transparent hover:border-[var(--cyber-accent)] hover:bg-[var(--cyber-accent)]/5 text-sm font-medium text-[var(--text-primary)]">
                       {item.label}
                     </a>
                   ) : (
-                    <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded-md text-sm font-medium ${router.pathname === item.href ? 'text-[var(--tech-accent)] bg-[var(--tech-accent)]/10' : 'text-[var(--text-primary)] hover:bg-[var(--tech-surface-elevated)]'}`}>
+                    <Link key={item.href} href={item.href} onClick={() => setMobileOpen(false)} className={`block px-3 py-2.5 rounded border-l-2 ${router.pathname === item.href ? 'border-[var(--cyber-accent)] bg-[var(--cyber-accent)]/10 text-[var(--cyber-accent)]' : 'border-transparent hover:border-[var(--cyber-accent)]/60 hover:bg-[var(--cyber-accent)]/5 text-[var(--text-primary)]'} text-sm font-medium`}>
                       {item.label}
                     </Link>
                   )
-                ))}
-                <div className="pt-4 mt-2 border-t border-[var(--tech-border-elevated)]">
-                  <Link href="/create-pool" onClick={() => setMobileOpen(false)} className="flex items-center justify-center w-full px-4 py-3 rounded-lg bg-[var(--tech-surface-elevated)] border border-[var(--tech-border-elevated)] text-sm font-semibold text-[var(--text-primary)] hover:border-[var(--tech-accent)]">
+                )}
+                <div className="pt-4 mt-3 border-t border-[var(--cyber-accent)]/20">
+                  <Link href="/create-pool" onClick={() => setMobileOpen(false)} className="flex items-center justify-center gap-2 w-full px-4 py-3.5 rounded-lg bg-[var(--cyber-accent)] text-[var(--cyber-bg)] font-heading font-bold uppercase tracking-wider text-sm shadow-cyber-sm">
                     Launch Token
                   </Link>
                 </div>

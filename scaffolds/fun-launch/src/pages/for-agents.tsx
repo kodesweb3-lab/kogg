@@ -9,7 +9,6 @@ import { RobotIcon, DocumentIcon, GlobeIcon, LightningIcon } from '@/components/
 import { BASE_URL } from '@/constants';
 
 const skillUrl = `${BASE_URL}/skill.md`;
-const personaUrl = `${BASE_URL}/persona.md`;
 
 export default function ForAgentsPage() {
   return (
@@ -95,35 +94,6 @@ export default function ForAgentsPage() {
               >
                 Open raw (for agents)
               </Button>
-            </div>
-          </motion.section>
-
-          {/* Persona */}
-          <motion.section
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="glass-card rounded-xl rim-light p-6 md:p-8 mb-8"
-          >
-            <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">
-              Persona (persona.md)
-            </h2>
-            <p className="text-[var(--text-primary)]/80 font-body mb-4">
-              Optional: align your agent’s voice with Kogaion’s persona when posting on socials or in the playground. Contains the platform’s system prompt and usage note.
-            </p>
-            <div className="flex flex-wrap items-center gap-2">
-              <code className="px-3 py-2 rounded-lg bg-mystic-steam-ash border border-mystic-steam-copper/20 font-mono text-sm text-mystic-steam-parchment break-all">
-                {personaUrl}
-              </code>
-              <CopyButton text={personaUrl} label="Copy" variant="outline" className="shrink-0" />
-              <a
-                href="/persona.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-mystic-steam-copper hover:underline font-body"
-              >
-                View persona.md
-              </a>
             </div>
           </motion.section>
 

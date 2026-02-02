@@ -42,12 +42,12 @@ function ErrorBoundaryWrapper({ children }: { children: ReactNode }) {
 // Fallback UI for critical errors
 function FallbackUI({ error }: { error?: Error }) {
   return (
-    <div className="min-h-screen bg-obsidian-base text-[var(--text-primary)] flex items-center justify-center p-4">
-      <div className="max-w-md w-full glass-card rounded-xl p-8 rim-light">
-        <h1 className="text-2xl font-heading font-bold mb-4 text-aureate-base">
-          Kogaion
+    <div className="min-h-screen bg-[var(--cyber-bg)] text-[var(--text-primary)] flex items-center justify-center p-4">
+      <div className="max-w-md w-full card-cyber rounded-xl p-8">
+        <h1 className="text-2xl font-display font-bold tracking-widest mb-4 text-[var(--cyber-accent)]">
+          KOGAION
         </h1>
-        <p className="text-[var(--text-primary)]/80 mb-4">
+        <p className="text-[var(--text-muted)] mb-4">
           {error 
             ? 'An error occurred while loading the application. Please refresh the page.'
             : 'Loading...'}
@@ -55,7 +55,7 @@ function FallbackUI({ error }: { error?: Error }) {
         {error && (
           <button
             onClick={() => window.location.reload()}
-            className="px-6 py-3 bg-aureate-base/80 hover:bg-aureate-base text-obsidian-base font-heading font-bold rounded-lg transition-all"
+            className="px-6 py-3 bg-[var(--cyber-accent)] text-[var(--cyber-bg)] font-heading font-bold uppercase tracking-wider rounded transition-all shadow-cyber-sm hover:shadow-cyber"
           >
             Refresh Page
           </button>
@@ -157,7 +157,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                style={{ background: 'var(--obsidian-base, #0a0a0a)' }}
+                style={{ background: 'var(--cyber-bg)' }}
               >
                 <Component {...pageProps} />
               </motion.div>

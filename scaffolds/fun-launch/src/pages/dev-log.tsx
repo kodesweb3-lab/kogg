@@ -146,18 +146,6 @@ export default function DevLogPage() {
 
               <div className="glass-card rounded-xl p-6 md:p-8 rim-light border-wolf-border/30">
                 <h3 className="text-xl font-heading font-bold mb-3 text-aureate-light">
-                  Enhanced AI Bot Capabilities
-                </h3>
-                <p className="text-[var(--text-primary)]/80 font-body leading-relaxed">
-                  Significant enhancements to our AI bot system including multi-agent swarms, advanced analytics, predictive market analysis, and cross-platform deployment. All while maintaining the 100% user-owned personality system.
-                </p>
-                <p className="text-[var(--text-muted)] font-body text-sm mt-3">
-                  Timeline: Q2-Q4 2026
-                </p>
-              </div>
-
-              <div className="glass-card rounded-xl p-6 md:p-8 rim-light border-wolf-border/30">
-                <h3 className="text-xl font-heading font-bold mb-3 text-aureate-light">
                   Mobile Application
                 </h3>
                 <p className="text-[var(--text-primary)]/80 font-body leading-relaxed">

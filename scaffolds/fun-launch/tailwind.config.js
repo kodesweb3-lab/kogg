@@ -15,9 +15,15 @@ export default {
         xxs: ['0.5rem', { lineHeight: '0.625rem' }],
       },
       fontFamily: {
-        heading: ['Inter', 'sans-serif'],
-        display: ['Cinzel', 'Cormorant', 'Playfair Display SC', 'serif'],
+        heading: ['Orbitron', 'Inter', 'sans-serif'],
+        display: ['Orbitron', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      boxShadow: {
+        'cyber': '0 0 20px rgba(0, 245, 255, 0.2), 0 0 40px rgba(0, 245, 255, 0.08)',
+        'cyber-sm': '0 0 12px rgba(0, 245, 255, 0.15)',
+        'cyber-inner': 'inset 0 0 20px rgba(0, 245, 255, 0.06)',
       },
       letterSpacing: {
         tighter: '-0.05em',

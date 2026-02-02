@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
 @import './design-tokens.css';
 @import './wolf-themes.css';
 
@@ -44,9 +44,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-heading: 'Inter', sans-serif;
-  --font-display: 'Cinzel', 'Cormorant', 'Playfair Display SC', serif;
+  --font-heading: 'Orbitron', 'Inter', sans-serif;
+  --font-display: 'Orbitron', sans-serif;
   --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 body {
@@ -80,7 +81,7 @@ body::before {
   background-repeat: repeat;
 }
 
-/* Layered Atmospheric Background System */
+/* Cyberpunk background */
 .atmosphere-layer {
   position: fixed;
   inset: 0;
@@ -88,11 +89,26 @@ body::before {
   z-index: 0;
   background: linear-gradient(
     180deg,
-    #0d0f12 0%,
-    #14161a 30%,
-    #0d0f12 70%,
-    #0a0c0f 100%
+    #06090f 0%,
+    #0a0e17 25%,
+    #0d1117 50%,
+    #0a0e17 75%,
+    #06090f 100%
   );
+}
+
+/* Subtle cyan grid */
+.cyber-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent 70%);
 }
 
 .steam-layer {
@@ -103,8 +119,8 @@ body::before {
   height: 100vh;
   pointer-events: none;
   z-index: 1;
-  background: radial-gradient(ellipse at 50% 100%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
-  opacity: 0.4;
+  background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0, 245, 255, 0.04) 0%, transparent 50%);
+  opacity: 0.6;
 }
 
 @keyframes steamDrift {
@@ -127,9 +143,9 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.03;
-  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-  background-size: 24px 24px;
+  opacity: 0.04;
+  background-image: linear-gradient(rgba(0, 245, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 245, 255, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
 }
 
 /* Copper / steampunk accents - subtle */
@@ -140,8 +156,9 @@ body::before {
   border-bottom: 1px solid var(--copper-border);
 }
 .font-display-title {
-  font-family: var(--font-display);
-  letter-spacing: 0.04em;
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.08em;
+  font-weight: 700;
 }
 
 /* Legacy mountain-bg (kept for compatibility) */
@@ -357,11 +374,35 @@ h4 {
   z-index: 1;
 }
 
+/* Cyberpunk utilities */
+.cyber-glow {
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.15), 0 0 40px rgba(0, 245, 255, 0.08);
+}
+.cyber-glow-sm {
+  box-shadow: 0 0 12px rgba(0, 245, 255, 0.12);
+}
+.border-cyber {
+  border: 1px solid rgba(0, 245, 255, 0.35);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.border-cyber:hover {
+  border-color: var(--cyber-accent);
+  box-shadow: 0 0 16px rgba(0, 245, 255, 0.12);
+}
+.card-cyber {
+  background: rgba(13, 17, 23, 0.85);
+  border: 1px solid rgba(0, 245, 255, 0.2);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card-cyber:hover {
+  border-color: rgba(0, 245, 255, 0.5);
+  box-shadow: 0 0 24px rgba(0, 245, 255, 0.1);
+}
+
 .copper-border {
   border: 1px solid var(--tech-border-elevated);
   transition: border-color 0.2s ease;
 }
-
 .copper-border:hover {
   border-color: var(--tech-accent);
 }

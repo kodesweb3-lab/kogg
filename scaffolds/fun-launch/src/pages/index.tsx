@@ -10,14 +10,10 @@ import { shortenAddress } from '@/lib/utils';
 import {
   CoinsIcon,
   HandshakeIcon,
-  GlobeIcon,
   RobotIcon,
   ShieldIcon,
-  LockIcon,
   RocketIcon,
   SearchIcon,
-  UsersIcon,
-  DocumentIcon,
 } from '@/components/icons/FeatureIcons';
 
 export default function LandingPage() {
@@ -68,9 +64,9 @@ export default function LandingPage() {
     ]},
     { label: 'Resources', items: [
       { label: 'About', href: '/about' },
+      { label: 'Community', href: '/wolves' },
       { label: 'Dev Log', href: '/dev-log' },
       { label: 'Lore', href: '/lore' },
-      { label: 'Wolves', href: '/wolves' },
       { label: 'Skill (API)', href: '/skill.md', external: true },
     ]},
   ];
@@ -79,61 +75,62 @@ export default function LandingPage() {
     <Page>
       <div className="min-h-screen text-[var(--text-primary)]">
         {/* Hero */}
-        <section className="py-12 md:py-16 px-4 border-b border-[var(--tech-border-elevated)]">
+        <section className="py-14 md:py-20 px-4 border-b border-[var(--cyber-accent)]/15">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-4"
+              className="mb-5"
             >
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] border border-[var(--copper-border)] rounded-full copper-rim">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 text-[10px] font-mono font-semibold uppercase tracking-widest text-[var(--cyber-accent)] border border-[var(--cyber-accent)]/50 rounded">
                 <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--copper)]/60" />
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--copper)]" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--cyber-accent)]/70" />
+                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[var(--cyber-accent)]" />
                 </span>
                 Live on Solana Mainnet
               </span>
             </motion.div>
             <motion.h1
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-[var(--text-primary)] mb-3 font-display-title"
+              className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[0.2em] text-[var(--text-primary)] mb-3 font-display"
             >
-              Kogaion
+              KOGAION
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.06 }}
-              className="text-lg md:text-xl text-[var(--copper-muted)] font-body mb-4 copper-rim-bottom pb-4 inline-block"
+              transition={{ delay: 0.08 }}
+              className="text-lg md:text-xl font-body text-[var(--cyber-accent)] font-medium tracking-wide mb-2"
             >
-              Token Launchpad on Solana
+              High-tech launchpad on Solana
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-lg md:text-xl text-[var(--text-muted)] max-w-2xl mx-auto mb-8 font-normal leading-relaxed"
+              className="text-base md:text-lg text-[var(--text-muted)] max-w-2xl mx-auto mb-10 font-normal leading-relaxed"
             >
-              Launch, discover, and scale tokens in a secure, agent-friendly ecosystem. LP locked. No gatekeeping for agents.
+              Launch, discover, and scale tokens. LP locked. Agent-friendly. More fees to devs.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
-              className="flex flex-col sm:flex-row gap-3 justify-center mb-10"
+              className="flex flex-col sm:flex-row gap-3 justify-center mb-12"
             >
               <Button
+                variant="primary"
                 onClick={() => router.push('/create-pool')}
-                className="px-6 py-3 text-sm font-semibold bg-[var(--copper)]/90 hover:bg-[var(--copper)] text-[var(--tech-bg)] copper-rim"
+                className="px-8 py-3.5 text-sm"
               >
                 Launch Token
               </Button>
               <Button
-                onClick={() => router.push('/discover')}
                 variant="outline"
-                className="px-6 py-3 text-sm font-semibold border-[var(--copper-border)] hover:border-[var(--copper)] text-[var(--text-primary)]"
+                onClick={() => router.push('/discover')}
+                className="px-8 py-3.5 text-sm"
               >
                 Explore Tokens
               </Button>
@@ -142,57 +139,57 @@ export default function LandingPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
-              className="flex flex-wrap justify-center gap-10 text-center"
+              className="flex flex-wrap justify-center gap-12 md:gap-16 text-center"
             >
               <div>
-                <div className="text-2xl md:text-3xl font-semibold text-[var(--text-primary)]">
+                <div className="text-2xl md:text-4xl font-display font-bold tracking-wider text-[var(--cyber-accent)]">
                   {stats?.stats?.totalTokens ?? '0'}
                 </div>
-                <div className="text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] mt-0.5">Tokens Launched</div>
+                <div className="text-[10px] font-mono font-semibold uppercase tracking-widest text-[var(--text-muted)] mt-1">Tokens Launched</div>
               </div>
               <div>
-                <div className="text-2xl md:text-3xl font-semibold text-[var(--text-primary)]">
+                <div className="text-2xl md:text-4xl font-display font-bold tracking-wider text-[var(--cyber-accent)]">
                   {stats?.stats?.totalCreators ?? '0'}
                 </div>
-                <div className="text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] mt-0.5">Creators</div>
+                <div className="text-[10px] font-mono font-semibold uppercase tracking-widest text-[var(--text-muted)] mt-1">Creators</div>
               </div>
               <div>
-                <div className="text-2xl md:text-3xl font-semibold text-emerald-400">100%</div>
-                <div className="text-xs font-medium uppercase tracking-wider text-[var(--text-muted)] mt-0.5">LP Locked</div>
+                <div className="text-2xl md:text-4xl font-display font-bold tracking-wider text-[var(--cyber-accent-2)]">100%</div>
+                <div className="text-[10px] font-mono font-semibold uppercase tracking-widest text-[var(--text-muted)] mt-1">LP Locked</div>
               </div>
             </motion.div>
           </div>
         </section>
 
         {/* Platform overview */}
-        <section className="py-12 md:py-16 px-4">
+        <section className="py-14 md:py-20 px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2 text-center copper-rim-bottom pb-3 inline-block">
+            <h2 className="text-xl md:text-2xl font-display font-bold uppercase tracking-widest text-[var(--text-primary)] mb-2 text-center">
               Platform overview
             </h2>
-            <p className="text-sm text-[var(--text-muted)] text-center max-w-xl mx-auto mb-8">
+            <p className="text-sm text-[var(--text-muted)] text-center max-w-xl mx-auto mb-10">
               Everything you need to launch, discover, and grow on Solana.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {platformCards.map((card, i) => (
                 <motion.div
                   key={card.href + card.title}
-                  initial={{ opacity: 0, y: 12 }}
+                  initial={{ opacity: 0, y: 14 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.04 }}
                 >
                   <Link
                     href={card.href}
-                    className="block h-full rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] p-5 hover:border-[var(--tech-accent)]/50 transition-colors"
+                    className="block h-full rounded-lg card-cyber p-5 group"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="shrink-0 w-10 h-10 rounded-lg bg-[var(--tech-surface-elevated)] border border-[var(--tech-border)] flex items-center justify-center text-[var(--tech-accent)]">
+                      <div className="shrink-0 w-11 h-11 rounded-lg bg-[var(--cyber-accent)]/10 border border-[var(--cyber-accent)]/30 flex items-center justify-center text-[var(--cyber-accent)] group-hover:shadow-cyber-sm transition-shadow">
                         <card.Icon className="w-5 h-5" />
                       </div>
                       <div className="min-w-0">
-                        <h3 className="font-semibold text-[var(--text-primary)] text-sm mb-1">{card.title}</h3>
-                        <p className="text-xs text-[var(--text-muted)] leading-relaxed">{card.description}</p>
+                        <h3 className="font-heading font-semibold uppercase tracking-wide text-[var(--text-primary)] text-sm mb-1">{card.title}</h3>
+                        <p className="text-xs text-[var(--text-muted)] leading-relaxed font-body">{card.description}</p>
                       </div>
                     </div>
                   </Link>
@@ -202,14 +199,14 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Site menu — all destinations */}
-        <section className="py-12 md:py-16 px-4 bg-[var(--tech-bg-elevated)]/50 border-y border-[var(--tech-border-elevated)]">
+        {/* Site menu */}
+        <section className="py-14 md:py-20 px-4 bg-[var(--cyber-bg-elevated)]/40 border-y border-[var(--cyber-accent)]/15">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2 text-center copper-rim-bottom pb-3 inline-block">
+            <h2 className="text-xl md:text-2xl font-display font-bold uppercase tracking-widest text-[var(--text-primary)] mb-2 text-center">
               Site menu
             </h2>
-            <p className="text-sm text-[var(--text-muted)] text-center max-w-xl mx-auto mb-8">
-              Quick access to all sections. Use the header navigation for dropdowns.
+            <p className="text-sm text-[var(--text-muted)] text-center max-w-xl mx-auto mb-10">
+              Quick access to all sections.
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {menuSections.map((section, si) => (
@@ -220,7 +217,7 @@ export default function LandingPage() {
                   viewport={{ once: true }}
                   transition={{ delay: si * 0.05 }}
                 >
-                  <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-3">
+                  <div className="text-[10px] font-heading font-bold uppercase tracking-widest text-[var(--cyber-accent)]/90 mb-3">
                     {section.label}
                   </div>
                   <ul className="space-y-1.5">
@@ -231,7 +228,7 @@ export default function LandingPage() {
                             href={item.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--tech-accent)] transition-colors"
+                            className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--cyber-accent)] transition-colors"
                           >
                             {item.label}
                           </a>
@@ -240,7 +237,7 @@ export default function LandingPage() {
                         <li key={item.href}>
                           <Link
                             href={item.href}
-                            className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--tech-accent)] transition-colors"
+                            className="text-sm font-medium text-[var(--text-primary)] hover:text-[var(--cyber-accent)] transition-colors"
                           >
                             {item.label}
                           </Link>
@@ -256,11 +253,11 @@ export default function LandingPage() {
 
         {/* Recent launches */}
         {recentTokens.length > 0 && (
-          <section className="py-12 md:py-16 px-4">
+          <section className="py-14 md:py-20 px-4">
             <div className="max-w-6xl mx-auto">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-semibold text-[var(--text-primary)]">Recent launches</h2>
-                <Link href="/discover" className="text-sm font-medium text-[var(--tech-accent)] hover:underline">
+                <h2 className="text-xl font-display font-bold uppercase tracking-widest text-[var(--text-primary)]">Recent launches</h2>
+                <Link href="/discover" className="text-sm font-medium text-[var(--cyber-accent)] hover:underline">
                   View all
                 </Link>
               </div>
@@ -275,12 +272,12 @@ export default function LandingPage() {
                   >
                     <Link
                       href={`/token/${token.mint}`}
-                      className="flex items-center gap-3 rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] p-4 hover:border-[var(--tech-accent)]/40 transition-colors"
+                      className="flex items-center gap-3 rounded-lg card-cyber p-4"
                     >
                       {token.imageUrl ? (
-                        <img src={token.imageUrl} alt="" className="w-10 h-10 rounded-full object-cover border border-[var(--tech-border)]" />
+                        <img src={token.imageUrl} alt="" className="w-10 h-10 rounded-full object-cover border border-[var(--cyber-accent)]/20" />
                       ) : (
-                        <div className="w-10 h-10 rounded-full bg-[var(--tech-surface-elevated)] border border-[var(--tech-border)] flex items-center justify-center text-sm font-semibold text-[var(--text-muted)]">
+                        <div className="w-10 h-10 rounded-full bg-[var(--cyber-surface)] border border-[var(--cyber-accent)]/20 flex items-center justify-center text-sm font-semibold text-[var(--text-muted)]">
                           {token.symbol?.charAt(0) ?? '?'}
                         </div>
                       )}
@@ -297,47 +294,40 @@ export default function LandingPage() {
         )}
 
         {/* For Agents CTA */}
-        <section className="py-12 px-4">
+        <section className="py-14 px-4">
           <div className="max-w-4xl mx-auto">
             <Link
               href="/for-agents"
-              className="block rounded-lg border border-[var(--tech-border-elevated)] bg-[var(--tech-surface)] p-6 md:p-8 copper-rim hover:border-[var(--copper-border)] transition-colors"
+              className="block rounded-lg card-cyber p-6 md:p-8 group"
             >
               <div className="flex flex-col sm:flex-row items-center gap-4">
-                <div className="shrink-0 w-12 h-12 rounded-lg bg-[var(--tech-surface-elevated)] border border-[var(--tech-border)] flex items-center justify-center text-[var(--copper)]">
-                  <RobotIcon className="w-6 h-6" />
+                <div className="shrink-0 w-14 h-14 rounded-lg bg-[var(--cyber-accent)]/10 border border-[var(--cyber-accent)]/40 flex items-center justify-center text-[var(--cyber-accent)] group-hover:shadow-cyber-sm transition-shadow">
+                  <RobotIcon className="w-7 h-7" />
                 </div>
                 <div className="flex-1 text-center sm:text-left">
-                  <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1">For Moltbook & AI agents</h3>
-                  <p className="text-sm text-[var(--text-muted)]">
-                    Connect via API. Get skill.md, launch tokens, register on the marketplace, verify on X, chat in the Playground. No gatekeeping.
+                  <h3 className="text-lg font-display font-bold uppercase tracking-wide text-[var(--text-primary)] mb-1">For Moltbook & AI agents</h3>
+                  <p className="text-sm text-[var(--text-muted)] font-body">
+                    Connect via API. skill.md, launch tokens, marketplace, X verification, Playground. No gatekeeping.
                   </p>
                 </div>
-                <span className="text-sm font-medium text-[var(--copper)] shrink-0">For Agents →</span>
+                <span className="text-sm font-heading font-semibold uppercase tracking-wider text-[var(--cyber-accent)] shrink-0">For Agents →</span>
               </div>
             </Link>
           </div>
         </section>
 
         {/* Final CTA */}
-        <section className="py-12 md:py-16 px-4 border-t border-[var(--tech-border-elevated)]">
+        <section className="py-14 md:py-20 px-4 border-t border-[var(--cyber-accent)]/15">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-xl md:text-2xl font-semibold text-[var(--text-primary)] mb-2">Ready to launch?</h2>
-            <p className="text-sm text-[var(--text-muted)] mb-6">
+            <h2 className="text-xl md:text-2xl font-display font-bold uppercase tracking-widest text-[var(--text-primary)] mb-2">Ready to launch?</h2>
+            <p className="text-sm text-[var(--text-muted)] mb-8 font-body">
               Create your token or connect your wallet to get started.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button
-                onClick={() => router.push('/create-pool')}
-                className="px-6 py-3 text-sm font-semibold bg-[var(--copper)]/90 hover:bg-[var(--copper)] text-[var(--tech-bg)] copper-rim"
-              >
+              <Button variant="primary" onClick={() => router.push('/create-pool')} className="px-8 py-3.5">
                 Launch Token
               </Button>
-              <Button
-                onClick={() => setShowModal(true)}
-                variant="outline"
-                className="px-6 py-3 text-sm font-semibold border-[var(--copper-border)] hover:border-[var(--copper)] text-[var(--text-primary)]"
-              >
+              <Button variant="outline" onClick={() => setShowModal(true)} className="px-8 py-3.5">
                 Connect Wallet
               </Button>
             </div>

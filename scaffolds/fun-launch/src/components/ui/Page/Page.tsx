@@ -14,24 +14,16 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
   return (
     <div
       className={cn(
-        'flex min-h-screen flex-col justify-between bg-obsidian-base text-[var(--text-primary)] relative',
+        'flex min-h-screen flex-col justify-between text-[var(--text-primary)] relative',
         pageClassName
       )}
-      style={{
-        backgroundImage: `
-          radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.3) 100%),
-          var(--obsidian-base)
-        `,
-      }}
+      style={{ background: 'var(--cyber-bg)' }}
     >
-      {/* Sigil pattern as separate layer */}
-      <div className="sigil-pattern" />
-      
-      {/* Layered atmospheric background - subtle cyber/steam */}
-      <div className="atmosphere-layer opacity-20" />
-      <div className="steam-layer" />
-      <div className="castle-silhouette opacity-0" />
+      <div className="atmosphere-layer" />
+      <div className="cyber-grid" />
       <div className="dacian-pattern" />
+      <div className="steam-layer" />
+      <div className="sigil-pattern" />
       
       <Header />
       <div

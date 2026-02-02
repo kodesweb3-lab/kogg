@@ -24,26 +24,6 @@ const roadmapPhases: RoadmapPhase[] = [
     index: 0,
   },
   {
-    id: 'ai-bot',
-    title: 'AI Bot Personalization',
-    description: 'Advanced customizable AI agents for each token',
-    status: 'coming-soon',
-    features: [
-      'Customizable AI bot per token',
-      'Advanced personality builder',
-      'Multi-language support',
-      'Bot analytics dashboard',
-      'Autonomous responses',
-    ],
-    icon: (
-      <svg className="w-8 h-8 text-mystic-steam-gold" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-      </svg>
-    ),
-    glowColor: 'rgba(156,122,60,0.15)',
-    index: 1,
-  },
-  {
     id: 'gamification',
     title: 'Gamification System',
     description: 'Pack levels, rewards, and creator incentives',
@@ -61,7 +41,7 @@ const roadmapPhases: RoadmapPhase[] = [
       </svg>
     ),
     glowColor: 'rgba(140,90,43,0.15)',
-    index: 2,
+    index: 1,
   },
   {
     id: 'games-contests',
@@ -81,7 +61,7 @@ const roadmapPhases: RoadmapPhase[] = [
       </svg>
     ),
     glowColor: 'rgba(140,90,43,0.15)',
-    index: 3,
+    index: 2,
   },
   {
     id: 'advanced',
@@ -101,7 +81,7 @@ const roadmapPhases: RoadmapPhase[] = [
       </svg>
     ),
     glowColor: 'rgba(111,78,55,0.15)',
-    index: 4,
+    index: 3,
   },
 ];
 
