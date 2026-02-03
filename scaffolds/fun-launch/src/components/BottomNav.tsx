@@ -55,7 +55,7 @@ export function BottomNav() {
   return (
     <>
       <nav
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[var(--cyber-bg-elevated)]/95 backdrop-blur-xl border-t border-[var(--cyber-accent)]/20"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-[100] isolate bg-[var(--cyber-bg-elevated)]/95 backdrop-blur-xl border-t border-[var(--cyber-accent)]/20"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
         <div className="flex items-center justify-around h-14 min-h-[56px] px-2">
