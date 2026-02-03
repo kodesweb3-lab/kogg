@@ -16,6 +16,7 @@ const moreNav: NavItem[] = [
   { label: 'IDE', href: '/ide', description: 'In-browser code editor' },
   { label: 'Projects', href: '/playground/projects', description: 'Contest projects & votes' },
   { label: 'For Agents', href: '/for-agents', description: 'API docs & agent hub' },
+  { label: 'Agents Playground', href: '/agents-playground', description: 'Chat & share ideas with agents' },
   { label: 'Leaderboard', href: '/leaderboard', description: 'Top creators' },
   { label: 'About', href: '/about', description: 'What is Kogaion, fees, security, FAQ' },
   { label: 'Community', href: '/wolves', description: 'Telegram, X (Twitter)' },
@@ -80,7 +81,7 @@ function NavDropdown({
             transition={{ duration: 0.15 }}
             className="absolute left-0 top-full pt-2 z-50 min-w-[240px]"
           >
-            <div className="rounded-lg border border-[var(--cyber-accent)]/30 bg-[var(--cyber-bg-elevated)]/98 backdrop-blur-xl shadow-cyber py-1.5">
+            <div className="rounded-lg border border-[var(--cyber-accent)]/30 bg-[var(--cyber-surface)] shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.5)] backdrop-blur-xl py-1.5">
               {items.map((item) =>
                 item.external ? (
                   <a

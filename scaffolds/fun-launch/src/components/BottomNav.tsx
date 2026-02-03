@@ -23,6 +23,7 @@ const MORE_LINKS = [
   { href: '/ide', label: 'IDE' },
   { href: '/playground/projects', label: 'Projects' },
   { href: '/for-agents', label: 'For Agents' },
+  { href: '/agents-playground', label: 'Agents Playground' },
   { href: '/leaderboard', label: 'Leaderboard' },
   { href: '/about', label: 'About' },
   { href: '/wolves', label: 'Community' },
