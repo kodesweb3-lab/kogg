@@ -23,7 +23,7 @@ export default function LandingPage() {
 
   return (
     <Page>
-      <div className="min-h-screen text-[var(--text-primary)]">
+      <div className="min-h-0 text-[var(--text-primary)] lg:min-h-screen">
         {/* Minimal hub: hero + CTAs + recent strip */}
         <section className="py-14 md:py-20 px-4 border-b border-[var(--cyber-accent)]/15">
           <div className="max-w-4xl mx-auto text-center">

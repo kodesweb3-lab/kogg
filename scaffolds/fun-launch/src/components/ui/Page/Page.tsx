@@ -15,7 +15,9 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
   return (
     <div
       className={cn(
-        'flex min-h-screen flex-col justify-between text-[var(--text-primary)] relative',
+        'flex flex-col text-[var(--text-primary)] relative',
+        'h-[100dvh] max-h-[100dvh] overflow-hidden',
+        'lg:h-auto lg:min-h-screen lg:max-h-none lg:overflow-visible lg:justify-between',
         pageClassName
       )}
       style={{ background: 'var(--cyber-bg)' }}
@@ -25,11 +27,12 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
       <div className="dacian-pattern" />
       <div className="steam-layer" />
       <div className="sigil-pattern" />
-      
+
       <Header />
       <div
         className={cn(
-          'flex flex-1 flex-col items-center px-3 md:px-4 pt-3 pb-24 lg:pb-16 md:pt-4 relative z-10',
+          'flex flex-1 flex-col items-center min-h-0 overflow-y-auto overflow-x-hidden lg:overflow-visible',
+          'px-3 md:px-4 pt-3 pb-24 lg:pb-16 md:pt-4 relative z-10',
           containerClassName
         )}
         style={{

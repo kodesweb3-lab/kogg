@@ -100,8 +100,8 @@ export function BottomNav() {
 
       <Dialog open={moreOpen} onOpenChange={setMoreOpen}>
         <DialogContent
-          className="max-w-sm mx-auto rounded-t-2xl rounded-b-none fixed bottom-0 left-0 right-0 p-0 pb-[env(safe-area-inset-bottom)] max-h-[70vh] overflow-hidden flex flex-col"
-          animate={true}
+          className="z-[60] !left-0 !right-0 !top-auto !translate-x-0 !translate-y-0 max-w-sm mx-auto rounded-t-2xl rounded-b-none fixed bottom-0 left-0 right-0 p-0 pb-[env(safe-area-inset-bottom)] max-h-[70vh] overflow-hidden flex flex-col"
+          animate={false}
         >
           <DialogTitle className="sr-only">More</DialogTitle>
           <div className="flex items-center justify-between px-4 pt-4 pb-2 border-b border-[var(--cyber-border-elevated)]">

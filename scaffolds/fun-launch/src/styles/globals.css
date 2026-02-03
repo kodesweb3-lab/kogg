@@ -61,6 +61,18 @@ body {
   opacity: 1;
 }
 
+/* Mobile: single full-screen layout, no body scroll – only page content scrolls */
+@media (max-width: 1023px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  body {
+    min-height: 100dvh;
+  }
+}
+
 /* Fallback styles if CSS variables are not available */
 @supports not (--css: variables) {
   body {
