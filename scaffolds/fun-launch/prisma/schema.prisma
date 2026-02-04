@@ -284,7 +284,7 @@ model AgentMemory {
   agentId     String
   type        MemoryType
   content     String   @db.Text
-  embedding   Unsupported("vector(1536)")?  // For semantic search
+  embedding   Bytes?   // Optional: store embedding as bytea (enable pgvector later for vector(1536) if needed)
   importance  Float    @default(0.5)
   source      String?  // Where this came from
   entities    String[] // Entity mentions

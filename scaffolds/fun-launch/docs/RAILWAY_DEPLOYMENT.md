@@ -346,6 +346,14 @@ Expected response:
 4. Verify TypeScript compiles: `pnpm typecheck`
 5. Check Node version compatibility (Railway uses Node 18+ by default)
 
+### Issue: `type "vector" does not exist` (Prisma / db push)
+
+**Symptoms**: Deploy or startup fails with `ERROR: type "vector" does not exist` during migration or `prisma db push`.
+
+**Cause**: The `vector` type requires the PostgreSQL **pgvector** extension. Railway's default Postgres does not enable it.
+
+**Solution**: The schema uses `Bytes?` for the optional `AgentMemory.embedding` field so deploy works without pgvector. If you later enable pgvector on your database (e.g. `CREATE EXTENSION vector;`), you can switch the field back to `Unsupported("vector(1536)")` and run a migration.
+
 ---
 
 ## Production Checklist
