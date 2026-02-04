@@ -310,3 +310,11 @@ export async function initializeAgent(name: string, description?: string) {
   
   return agent;
 }
+
+// Named export for LangChain integration (expects AgentMemoryService object)
+export const AgentMemoryService = {
+  startSession,
+  storeMemory,
+  getRecentMemories,
+  initializeAgent,
+};

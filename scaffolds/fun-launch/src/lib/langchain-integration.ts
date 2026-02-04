@@ -6,12 +6,7 @@
  * This demo version uses local reasoning without external dependencies
  */
 
-import { PrismaClient } from '@prisma/client';
-import { 
-  AgentMemoryService 
-} from './agent-memory';
-
-const prisma = new PrismaClient();
+import { AgentMemoryService } from './agent-memory';
 
 // ==================== SIMPLE AGENT REASONING ====================
 
@@ -36,14 +31,7 @@ class SimpleAgentReasoning {
 
   remember(fact: string): void {
     this.context.memories.push(fact);
-    // Persist to PostgreSQL asynchronously
-    prisma.memory.create({
-      data: { 
-        key: `memory_${Date.now()}`,
-        value: fact,
-        type: 'EPISODIC'
-      }
-    }).catch(() => {}); // Ignore errors
+    // Persisted via PostgresMemory.saveContext / AgentMemoryService when agent name is set
   }
 
   setSession(sessionId: string): void {
@@ -136,7 +124,6 @@ export class KogaionAgent {
 export const langChain = {
   createAgent: (config: KogaionAgentConfig): KogaionAgent => new KogaionAgent(config),
   createReasoning: (): SimpleAgentReasoning => new SimpleAgentReasoning(),
-  memory: prisma.memory
 };
 
 export type { SimpleAgentReasoning, AgentContext };
