@@ -701,7 +701,7 @@ components/
 |-------|--------------|---------|--------|
 | **PostgreSQL** | Railway | Agent memory storage | ✅ Built-in |
 | **LangChain** | https://python.langchain.com | Agent framework | ✅ INTEGRATED |
-| **Solana** | https://solana.com/developers | Token operations, PDAs, pools | ✅ FULL INTEGRATION |
+| **Solana** | https://solana.com/developers | Token operations, Meteora DBC | ✅ Meteora DBC |
 | Vector DB | https://weaviate.io | Embeddings (optional) | 🔲 To add |
 | CrewAI | https://docs.crewai.com | Multi-agent | ✅ Added |
 | AutoGPT | https://github.com/Significant-Gravitas/AutoGPT | Autonomous agent | ✅ Added |
