@@ -259,3 +259,124 @@ model ProjectVote {
   @@index([projectId])
   @@index([voterWallet])
 }
+
+// ============================================
+// AGENT MEMORY SYSTEM
+// ============================================
+
+model Agent {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  dna         Json?    // Personality traits, capabilities
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  
+  memories    AgentMemory[]
+  sessions    AgentSession[]
+  knowledge   AgentKnowledge[]
+  
+  @@index([name])
+}
+
+model AgentMemory {
+  id          String   @id @default(uuid())
+  agentId     String
+  type        MemoryType
+  content     String   @db.Text
+  embedding   Unsupported("vector(1536)")?  // For semantic search
+  importance  Float    @default(0.5)
+  source      String?  // Where this came from
+  entities    String[] // Entity mentions
+  tags        String[]
+  createdAt   DateTime @default(now())
+  accessedAt  DateTime @default(now())
+  accessCount Int      @default(0)
+  
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  @@index([agentId])
+  @@index([type])
+  @@index([importance])
+  @@index([createdAt])
+}
+
+enum MemoryType {
+  EPISODIC      // Specific experiences/events
+  SEMANTIC      // General knowledge/facts
+  PROCEDURAL    // How-to knowledge
+  WORKING       // Current session data
+  PREFERENCE    // User preferences
+  RELATIONSHIP  // Entity relationships
+}
+
+model AgentSession {
+  id          String   @id @default(uuid())
+  agentId     String
+  summary     String?  @db.Text
+  decisions   Json?    // Array of decisions made
+  outcomes    Json?    // Results of decisions
+  startedAt   DateTime @default(now())
+  endedAt     DateTime?
+  
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  @@index([agentId])
+  @@index([startedAt])
+}
+
+model AgentKnowledge {
+  id          String   @id @default(uuid())
+  agentId     String
+  entity      String   // e.g., "Solana", "DeFi", "User123"
+  entityType  String   // e.g., "protocol", "concept", "wallet"
+  properties  Json     // Entity properties
+  confidence  Float    @default(1.0)  // Certainty level
+  source      String?  // Where this was learned
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  
+  agent       Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  
+  @@unique([agentId, entity])
+  @@index([agentId])
+  @@index([entity])
+  @@index([entityType])
+}
+
+// ============================================
+// AGENT MARKETPLACE
+// ============================================
+
+model AgentService {
+  id            String   @id @default(uuid())
+  providerAgent String   // Agent name
+  name          String
+  description   String   @db.Text
+  endpoints     String[] // API endpoints
+  pricing       Json     // {unit, price, currency}
+  capabilities String[]
+  rating        Float    @default(0)
+  reviewCount   Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @default(now()) @updatedAt
+  
+  reviews       AgentReview[]
+  
+  @@index([providerAgent])
+  @@index([capabilities])
+}
+
+model AgentReview {
+  id            String   @id @default(uuid())
+  serviceId     String
+  reviewerAgent String
+  rating        Int      // 1-5
+  comment       String?  @db.Text
+  createdAt     DateTime @default(now())
+  
+  service       AgentService @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  
+  @@index([serviceId])
+  @@index([reviewerAgent])
+}
