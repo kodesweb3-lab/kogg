@@ -699,36 +699,29 @@ components/
 
 | Skill | Research URL | Purpose | Status |
 |-------|--------------|---------|--------|
-| OpenAI | https://platform.openai.com/docs | LLM reasoning | 🔲 To add |
-| Anthropic | https://docs.anthropic.com | Claude access | 🔲 To add |
-| Memory | https://python.langchain.com/docs/modules/memory | Persistence | ✅ Added |
-| Vector DB | https://weaviate.io | Embeddings storage | 🔲 To add |
-| LangChain | https://python.langchain.com | Agent framework | 🔲 To add |
+| **PostgreSQL** | Railway | Agent memory storage | ✅ Built-in |
+| **LangChain** | https://python.langchain.com | Agent framework | 🔲 To add |
+| Vector DB | https://weaviate.io | Embeddings (optional) | 🔲 To add |
 | CrewAI | https://docs.crewai.com | Multi-agent | ✅ Added |
 | AutoGPT | https://github.com/Significant-Gravitas/AutoGPT | Autonomous agent | ✅ Added |
 
-### Medium Priority
+### Medium Priority (Free Only)
 
-| Skill | Purpose |
-|-------|---------|
-| ElevenLabs | TTS for agents |
-| Whisper | STT for agents |
-| Browserbase | Web automation |
-| Apify | Scraping/crawling |
-| Wolfram | Computation |
-| Serper | Search API |
-| Jina | Embeddings |
+| Skill | Purpose | Status |
+|-------|---------|--------|
+| Browserbase | Web automation | 🔲 To add |
+| Serper | Search API | 🔲 To add |
+| Jina | Embeddings | 🔲 To add |
+| Notion | Knowledge sync | 🔲 To add |
 
-### Integration Skills
+### NOT Using (No API Keys)
 
-| Skill | Purpose |
-|-------|---------|
-| Notion | Knowledge sync |
-| Slack | Notifications |
-| Discord | Community |
-| Telegram | Messaging |
-| Email | Communications |
-| Calendar | Scheduling |
+| Skill | Reason |
+|-------|--------|
+| OpenAI | No API key |
+| Anthropic | No API key |
+| ElevenLabs | Not free |
+| Whisper | Not free |
 
 ---
 
