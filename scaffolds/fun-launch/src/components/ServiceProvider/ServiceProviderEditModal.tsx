@@ -112,7 +112,7 @@ export function ServiceProviderEditModal({
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="glass-card rounded-xl p-6 md:p-8 rim-light max-w-2xl w-full max-h-[90vh] overflow-y-auto pointer-events-auto"
+              className="glass-card rounded-xl p-6 md:p-8  max-w-2xl w-full max-h-[90vh] overflow-y-auto pointer-events-auto"
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl md:text-3xl font-heading font-bold text-aureate-base">

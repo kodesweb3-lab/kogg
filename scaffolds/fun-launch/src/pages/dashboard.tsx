@@ -105,7 +105,7 @@ export default function DashboardPage() {
       <Page>
         <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="glass-card rounded-xl p-8 rim-light text-center">
+            <div className="glass-card rounded-xl p-8  text-center">
               <h1 className="text-3xl font-heading font-bold mb-4 text-aureate-base">
                 Dashboard
               </h1>
@@ -127,7 +127,7 @@ export default function DashboardPage() {
       <Page>
         <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="glass-card rounded-xl p-8 rim-light text-center">
+            <div className="glass-card rounded-xl p-8  text-center">
               <p className="text-[var(--text-primary)]/80 font-body">Loading dashboard...</p>
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function DashboardPage() {
       <Page>
         <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="glass-card rounded-xl p-8 rim-light text-center">
+            <div className="glass-card rounded-xl p-8  text-center">
               <h1 className="text-3xl font-heading font-bold mb-4 text-aureate-base">
                 Error
               </h1>
@@ -203,7 +203,7 @@ export default function DashboardPage() {
             transition={{ delay: 0.1 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8"
           >
-            <div className="glass-card rounded-xl p-6 rim-light border-aureate-base/30">
+            <div className="glass-card rounded-xl p-6  border-aureate-base/30">
               <div className="text-sm text-[var(--text-muted)] font-body mb-2">Portfolio Value</div>
               <div className="text-3xl font-heading font-bold text-aureate-base">
                 <ReadableNumber format="compact" num={stats.totalMarketCap} prefix="$" />
@@ -213,7 +213,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="glass-card rounded-xl p-6 rim-light">
+            <div className="glass-card rounded-xl p-6 ">
               <div className="text-sm text-[var(--text-muted)] font-body mb-2">Total Tokens</div>
               <div className="text-3xl font-heading font-bold text-aureate-base">
                 {stats.totalTokens}
@@ -223,7 +223,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="glass-card rounded-xl p-6 rim-light">
+            <div className="glass-card rounded-xl p-6 ">
               <div className="text-sm text-[var(--text-muted)] font-body mb-2">Total Volume</div>
               <div className="text-3xl font-heading font-bold text-aureate-base">
                 <ReadableNumber format="compact" num={stats.totalVolume} prefix="$" />
@@ -233,7 +233,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="glass-card rounded-xl p-6 rim-light">
+            <div className="glass-card rounded-xl p-6 ">
               <div className="text-sm text-[var(--text-muted)] font-body mb-2">Total Holders</div>
               <div className="text-3xl font-heading font-bold text-aureate-base">
                 <ReadableNumber format="compact" num={stats.totalHolders} />
@@ -251,7 +251,7 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="glass-card rounded-xl p-6 md:p-8 rim-light"
+                className="glass-card rounded-xl p-6 md:p-8 "
               >
                 <h2 className="text-xl font-heading font-bold mb-4 text-aureate-light">
                   Service Provider
@@ -307,7 +307,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="glass-card rounded-xl p-6 md:p-8 rim-light"
+              className="glass-card rounded-xl p-6 md:p-8 "
             >
               <h2 className="text-xl font-heading font-bold mb-4 text-aureate-light">
                 Performance Metrics
@@ -339,7 +339,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="glass-card rounded-xl p-6 md:p-8 rim-light"
+              className="glass-card rounded-xl p-6 md:p-8 "
             >
               <h2 className="text-xl font-heading font-bold mb-4 text-aureate-light">
                 Referral Network
@@ -377,7 +377,7 @@ export default function DashboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="glass-card rounded-xl p-6 md:p-8 rim-light"
+            className="glass-card rounded-xl p-6 md:p-8 "
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
               <h2 className="text-2xl font-heading font-bold text-aureate-light mb-4 md:mb-0">
@@ -499,7 +499,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="glass-card rounded-xl p-6 md:p-8 rim-light mt-8"
+              className="glass-card rounded-xl p-6 md:p-8  mt-8"
             >
               <h2 className="text-2xl font-heading font-bold mb-6 text-aureate-light">
                 Token Creation Timeline

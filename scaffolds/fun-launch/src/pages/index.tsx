@@ -233,6 +233,7 @@ export default function LandingPage() {
     sortOrder: 'desc',
   });
   const recentTokens = recentTokensData?.data || [];
+  const totalTokensLaunched = recentTokensData?.pagination?.total ?? 0;
   const hasWallet = connected;
 
   // Track mouse for parallax effect
@@ -430,28 +431,37 @@ export default function LandingPage() {
               )}
             </motion.div>
 
-            {/* Stats with social proof */}
+            {/* Stats — real data only */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-wrap justify-center gap-8 md:gap-16"
             >
-              {[
-                { value: '3', suffix: '', label: 'Tokens Launched' },
-                { value: '100+', suffix: '', label: 'Agents Active' },
-                { value: '5', suffix: '', label: 'Integrations' },
-                { value: '24/7', suffix: '', label: 'Live' },
-              ].map((stat, idx) => (
-                <div key={idx} className="text-center">
-                  <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
-                    <StatsCounter value={stat.value} suffix={stat.suffix} delay={idx * 0.1} />
-                  </div>
-                  <div className="text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-wider mt-1">
-                    {stat.label}
-                  </div>
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
+                  <StatsCounter value={String(totalTokensLaunched)} suffix="" delay={0} />
                 </div>
-              ))}
+                <div className="text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-wider mt-1">
+                  Tokens Launched
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
+                  Agent-ready
+                </div>
+                <div className="text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-wider mt-1">
+                  API & skills
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
+                  24/7
+                </div>
+                <div className="text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-wider mt-1">
+                  Live on Solana
+                </div>
+              </div>
             </motion.div>
           </div>
 

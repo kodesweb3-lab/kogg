@@ -6,7 +6,6 @@ import { PhantomWalletAdapter, SolflareWalletAdapter } from '@solana/wallet-adap
 import { useMemo, useState, useEffect, ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useWindowWidthListener } from '@/lib/device';
-import { WolfThemeProvider } from '@/contexts/WolfThemeProvider';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 
@@ -132,8 +131,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ErrorBoundaryWrapper>
       <QueryClientProvider client={queryClient}>
-        <WolfThemeProvider>
-          <UnifiedWalletProvider
+        <UnifiedWalletProvider
             wallets={wallets}
             config={{
               env: 'mainnet-beta',
@@ -163,7 +161,6 @@ export default function App({ Component, pageProps }: AppProps) {
               </motion.div>
             </AnimatePresence>
           </UnifiedWalletProvider>
-        </WolfThemeProvider>
       </QueryClientProvider>
     </ErrorBoundaryWrapper>
   );

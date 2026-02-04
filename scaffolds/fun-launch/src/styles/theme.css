@@ -1,0 +1,77 @@
+/**
+ * Kogaion UI — Liquid Glass + Fluent–inspired design system (2026)
+ * References: Apple Liquid Glass, Microsoft Fluent Design
+ */
+
+:root {
+  /* —— Fluent: semantic colors —— */
+  --bg-base: #0f1114;
+  --bg-layer: #161a1f;
+  --bg-elevated: #1c2128;
+  --bg-overlay: rgba(22, 26, 31, 0.92);
+  --text-primary: #f0f2f5;
+  --text-secondary: #b4b9c4;
+  --text-muted: #7d8590;
+  --accent: #58a6ff;
+  --accent-hover: #79b8ff;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.12);
+  --focus-ring: 0 0 0 2px var(--bg-base), 0 0 0 4px var(--accent);
+
+  /* —— Liquid Glass: translucency & blur —— */
+  --glass-bg: rgba(22, 26, 31, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-blur: 20px;
+  --glass-blur-strong: 32px;
+
+  /* —— Depth & motion (Fluent) —— */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+
+  /* —— Touch & a11y —— */
+  --touch-min: 44px;
+
+  /* Compatibility aliases (for gradual migration) */
+  --tech-bg: var(--bg-base);
+  --tech-bg-elevated: var(--bg-elevated);
+  --tech-surface: var(--bg-layer);
+  --tech-surface-elevated: var(--bg-elevated);
+  --tech-accent: var(--accent);
+  --tech-border: var(--border-subtle);
+  --tech-border-elevated: var(--border-default);
+  --cyber-bg: var(--bg-base);
+  --cyber-bg-elevated: var(--bg-elevated);
+  --cyber-surface: var(--bg-layer);
+  --cyber-accent: var(--accent);
+  --cyber-border-elevated: var(--border-default);
+  --button-min-height-touch: var(--touch-min);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+
+  /* Legacy aliases (Tailwind theme references these) */
+  --obsidian-base: var(--bg-base);
+  --obsidian-elevated: var(--bg-elevated);
+  --obsidian-surface: var(--bg-layer);
+  --obsidian-border: var(--border-default);
+  --aureate-base: var(--accent);
+  --aureate-light: var(--accent-hover);
+  --aureate-dark: var(--text-muted);
+  --aureate-glow: var(--accent);
+  --wolf-border: var(--border-default);
+}
+
+/* Glass panel utility */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+}

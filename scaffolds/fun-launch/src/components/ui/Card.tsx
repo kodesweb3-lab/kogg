@@ -28,9 +28,9 @@ export function GlassCard({ children, className, featured = false, onClick }: Gl
       }
       className={cn(
         'glass-card rounded-[var(--radius-lg)] p-6 transition-all',
-        featured && 'border-aureate-base/50 shadow-lg shadow-aureate-glow/30',
+        featured && 'border-[var(--accent)]/50 shadow-[var(--shadow-lg)]',
         onClick &&
-          'cursor-pointer hover:scale-[1.02] hover:shadow-aureate-glow/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]',
+          'cursor-pointer hover:scale-[1.02] hover:shadow-[var(--shadow-md)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]',
         className
       )}
     >

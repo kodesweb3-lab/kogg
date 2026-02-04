@@ -20,14 +20,8 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
         'lg:h-auto lg:min-h-screen lg:max-h-none lg:overflow-visible lg:justify-between',
         pageClassName
       )}
-      style={{ background: 'var(--cyber-bg)' }}
+      style={{ background: 'var(--bg-base)' }}
     >
-      <div className="atmosphere-layer" />
-      <div className="cyber-grid" />
-      <div className="dacian-pattern" />
-      <div className="steam-layer" />
-      <div className="sigil-pattern" />
-
       <Header />
       <div
         className={cn(

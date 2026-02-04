@@ -35,7 +35,7 @@ export default function DevLogPage() {
             </h2>
             
             <div className="space-y-6">
-              <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+              <div className="glass-card rounded-xl p-6 md:p-8 ">
                 <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-light">
                   Obsidian + Aureate Design System
                 </h3>
@@ -45,14 +45,14 @@ export default function DevLogPage() {
                 <ul className="list-disc list-inside space-y-2 text-[var(--text-muted)] font-body ml-4">
                   <li>Design tokens system with CSS variables</li>
                   <li>Global Wolf Theming with 5 pack themes (Fire, Frost, Blood, Moon, Stone)</li>
-                  <li>Glass-morphic cards with rim-light effects</li>
+                  <li>Glass-morphic cards with  effects</li>
                   <li>Sigil icon system for status badges and ranks</li>
                   <li>Consistent motion system with Framer Motion</li>
                   <li>Fluid typography with responsive scaling</li>
                 </ul>
               </div>
 
-              <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+              <div className="glass-card rounded-xl p-6 md:p-8 ">
                 <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-light">
                   Service Providers Marketplace
                 </h3>
@@ -68,7 +68,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+              <div className="glass-card rounded-xl p-6 md:p-8 ">
                 <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-light">
                   Real World Assets (RWA) Tokenization
                 </h3>
@@ -84,7 +84,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+              <div className="glass-card rounded-xl p-6 md:p-8 ">
                 <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-light">
                   Motion System & Micro-interactions
                 </h3>
@@ -113,7 +113,7 @@ export default function DevLogPage() {
               What We're Building
             </h2>
             
-            <div className="glass-card rounded-xl p-6 md:p-8 rim-light">
+            <div className="glass-card rounded-xl p-6 md:p-8 ">
               <p className="text-[var(--text-primary)]/80 font-body leading-relaxed">
                 Currently focused on platform optimizations, performance improvements, and enhancing the user experience across all features. We're continuously refining the design system and adding new capabilities based on community feedback.
               </p>
@@ -132,7 +132,7 @@ export default function DevLogPage() {
             </h2>
             
             <div className="space-y-6">
-              <div className="glass-card rounded-xl p-6 md:p-8 rim-light border-wolf-border/30">
+              <div className="glass-card rounded-xl p-6 md:p-8  border-wolf-border/30">
                 <h3 className="text-xl font-heading font-bold mb-3 text-aureate-light">
                   Genesis SDK Anti-Rug Integration
                 </h3>
@@ -144,7 +144,7 @@ export default function DevLogPage() {
                 </p>
               </div>
 
-              <div className="glass-card rounded-xl p-6 md:p-8 rim-light border-wolf-border/30">
+              <div className="glass-card rounded-xl p-6 md:p-8  border-wolf-border/30">
                 <h3 className="text-xl font-heading font-bold mb-3 text-aureate-light">
                   Mobile Application
                 </h3>
@@ -170,7 +170,7 @@ export default function DevLogPage() {
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="glass-card rounded-xl p-6 rim-light">
+              <div className="glass-card rounded-xl p-6 ">
                 <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
                   Design System
                 </h3>
@@ -182,7 +182,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="glass-card rounded-xl p-6 rim-light">
+              <div className="glass-card rounded-xl p-6 ">
                 <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
                   Frontend Stack
                 </h3>
@@ -194,7 +194,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="glass-card rounded-xl p-6 rim-light">
+              <div className="glass-card rounded-xl p-6 ">
                 <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
                   Blockchain Integration
                 </h3>
@@ -206,7 +206,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="glass-card rounded-xl p-6 rim-light">
+              <div className="glass-card rounded-xl p-6 ">
                 <h3 className="text-lg font-heading font-bold mb-3 text-aureate-light">
                   Infrastructure
                 </h3>
@@ -231,7 +231,7 @@ export default function DevLogPage() {
               The Direction
             </h2>
             
-            <div className="glass-card rounded-xl p-8 md:p-12 rim-light">
+            <div className="glass-card rounded-xl p-8 md:p-12 ">
               <p className="text-lg font-body leading-relaxed text-[var(--text-primary)]/80 mb-6">
                 <strong className="text-aureate-base">Kogaion</strong> is evolving into the most comprehensive and secure launchpad. We're building beyond just token launches—we're creating an ecosystem.
               </p>
@@ -276,7 +276,7 @@ export default function DevLogPage() {
             transition={{ delay: 0.6 }}
             className="text-center"
           >
-            <div className="glass-card rounded-xl p-8 rim-light">
+            <div className="glass-card rounded-xl p-8 ">
               <h3 className="text-2xl font-heading font-bold mb-4 text-aureate-base">
                 Join the Pack
               </h3>
@@ -288,7 +288,7 @@ export default function DevLogPage() {
                   href="https://x.com/KogaionSol"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-aureate-base/80 hover:bg-aureate-base text-obsidian-base font-heading font-bold rounded-lg transition-all rim-light"
+                  className="px-6 py-3 bg-aureate-base/80 hover:bg-aureate-base text-obsidian-base font-heading font-bold rounded-lg transition-all "
                 >
                   Follow on X
                 </a>
@@ -296,7 +296,7 @@ export default function DevLogPage() {
                   href="https://t.me/kogaionpack"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-obsidian-surface hover:bg-obsidian-elevated text-[var(--text-primary)] font-heading font-bold rounded-lg border border-aureate-base/30 transition-all rim-light"
+                  className="px-6 py-3 bg-obsidian-surface hover:bg-obsidian-elevated text-[var(--text-primary)] font-heading font-bold rounded-lg border border-aureate-base/30 transition-all "
                 >
                   Join Telegram
                 </a>

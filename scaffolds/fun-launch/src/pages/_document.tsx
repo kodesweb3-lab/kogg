@@ -6,10 +6,10 @@ export default function Document() {
     <Html lang="en">
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#0c0e12" />
-        <meta name="description" content="Kogaion - Summon Tokens. Ascend Markets. The ritual begins here. Launch your token on Solana with the power of the pack." />
+        <meta name="theme-color" content="#0f1114" />
+        <meta name="description" content="Kogaion - The Agent Economy Launchpad. Launch tokens on Solana with API, agents, and marketplace." />
         <meta property="og:title" content="Kogaion - Token Launchpad" />
-        <meta property="og:description" content="Summon Tokens. Ascend Markets. The ritual begins here." />
+        <meta property="og:description" content="The Agent Economy Launchpad. Launch tokens on Solana." />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Kogaion" />
