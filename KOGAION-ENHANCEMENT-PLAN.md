@@ -697,15 +697,15 @@ components/
 
 ### High Priority
 
-| Skill | Research URL | Purpose |
-|-------|--------------|---------|
-| OpenAI | https://platform.openai.com/docs | LLM reasoning |
-| Anthropic | https://docs.anthropic.com | Claude access |
-| Memory | https://python.langchain.com/docs/modules/memory | Persistence |
-| Vector DB | https://weaviate.io | Embeddings storage |
-| LangChain | https://python.langchain.com | Agent framework |
-| CrewAI | https://docs.crewai.com | Multi-agent |
-| AutoGPT | https://github.com/Significant-Gravitas/AutoGPT | Autonomous agent |
+| Skill | Research URL | Purpose | Status |
+|-------|--------------|---------|--------|
+| OpenAI | https://platform.openai.com/docs | LLM reasoning | 🔲 To add |
+| Anthropic | https://docs.anthropic.com | Claude access | 🔲 To add |
+| Memory | https://python.langchain.com/docs/modules/memory | Persistence | ✅ Added |
+| Vector DB | https://weaviate.io | Embeddings storage | 🔲 To add |
+| LangChain | https://python.langchain.com | Agent framework | 🔲 To add |
+| CrewAI | https://docs.crewai.com | Multi-agent | ✅ Added |
+| AutoGPT | https://github.com/Significant-Gravitas/AutoGPT | Autonomous agent | ✅ Added |
 
 ### Medium Priority
 
