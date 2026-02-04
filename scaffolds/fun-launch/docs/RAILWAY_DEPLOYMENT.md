@@ -67,7 +67,8 @@ Kogaion requires **3 services**:
    - **Root Directory**: Leave empty (deploys from root)
    - **Build Command**: `pnpm install && pnpm build`
    - **Start Command**: `pnpm start`
-   - **Healthcheck Path**: `/api/health`
+   - **Healthcheck Path**: `/api/health` (or `/health` — both return the same JSON via rewrite)
+   - **Healthcheck Timeout**: Set to **60–120 seconds** so the first request after cold start can complete (Next.js may be slow to respond on first hit)
    - **Port**: Railway auto-detects (Next.js uses PORT env var)
 
 ### Step 4: Create Worker Service
@@ -204,19 +205,16 @@ After running migrations, verify tables exist:
 **Web Service:**
 ```bash
 curl https://your-web-service.railway.app/api/health
+# or
+curl https://your-web-service.railway.app/health
 ```
 
-Expected response:
+Expected response (both paths):
 ```json
 {
   "status": "healthy",
-  "checks": [
-    { "name": "database", "status": "ok", "latency": 5 },
-    { "name": "rpc", "status": "ok", "latency": 120 },
-    { "name": "pinata", "status": "ok", "latency": 200 }
-  ],
   "timestamp": "2024-01-01T00:00:00.000Z",
-  "service": "web"
+  "service": "kogaion-web"
 }
 ```
 
@@ -272,6 +270,16 @@ Expected response:
 ---
 
 ## Troubleshooting
+
+### Issue: Web Healthcheck Fails on Railway
+
+**Symptoms**: Railway reports health check failed; deployment marked unhealthy.
+
+**Solutions**:
+1. **Path**: Use **Health Check Path** `/api/health` or `/health` (both work; `/health` rewrites to `/api/health`).
+2. **Timeout**: Set **Healthcheck Timeout** to **60–120 seconds**. Next.js can be slow on first request after cold start; a short timeout (e.g. 10s) may cause false failures.
+3. **Port**: Ensure the service uses Railway’s `PORT` (Next.js reads it by default).
+4. **Verify manually**: After deploy, run `curl https://your-app.railway.app/api/health` and confirm you get `{"status":"healthy",...}` with HTTP 200.
 
 ### Issue: Database Connection Failed
 

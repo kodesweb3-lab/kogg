@@ -15,7 +15,7 @@ const DialogCloseButton = React.forwardRef<
   <DialogPrimitive.Close
     ref={ref}
     className={cn(
-      'flex items-center justify-center rounded-lg p-2 text-neutral-500 hover:bg-neutral-800 hover:text-neutral-200 focus:outline-primary',
+      'flex items-center justify-center min-h-[var(--button-min-height-touch)] min-w-[var(--button-min-height-touch)] rounded-[var(--radius-md)] p-2 text-[var(--text-muted)] hover:bg-[var(--cyber-surface)] hover:text-[var(--text-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]',
       className
     )}
     {...props}
@@ -29,10 +29,10 @@ const DialogOverlay = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Overlay>,
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
-    ref={ref}
-    className={cn(
-      'fixed inset-0 z-50 bg-black/20 backdrop-blur-sm',
+    <DialogPrimitive.Overlay
+      ref={ref}
+      className={cn(
+        'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm',
       'data-[state=open]:animate-fade-in',
       'data-[state=closed]:animate-fade-out',
       className
@@ -58,7 +58,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl border border-neutral-850 bg-neutral-925 shadow-lg duration-200',
+        'fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)] border border-[var(--cyber-border-elevated)] bg-[var(--cyber-surface)] shadow-lg duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]',
         animate &&
           'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-[0.98] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
         animate &&
@@ -93,7 +93,7 @@ const DialogTitle = React.forwardRef<
   <DialogPrimitive.Title
     ref={ref}
     className={cn(
-      'text-base font-semibold leading-none tracking-tight text-neutral-200',
+      'text-base font-semibold leading-none tracking-tight text-[var(--text-primary)]',
       className
     )}
     {...props}
@@ -113,8 +113,8 @@ const DialogSubmitButton: React.FC<React.ComponentProps<'button'>> = ({ classNam
   return (
     <button
       className={cn(
-        'w-full rounded-lg bg-primary py-2.5 text-base font-semibold text-neutral-950',
-        'enabled:hover:bg-primary-300',
+        'w-full min-h-[var(--button-min-height-touch)] rounded-[var(--radius-md)] bg-[var(--cyber-accent)] py-2.5 text-base font-semibold text-[var(--cyber-bg)]',
+        'enabled:hover:brightness-110 transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]',
         'disabled:opacity-50',
         className
       )}

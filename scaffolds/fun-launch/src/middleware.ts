@@ -37,6 +37,11 @@ function checkRateLimit(
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
+  // Healthcheck routes are never rate-limited (matcher already excludes /api/health and /health)
+  if (pathname === '/api/health' || pathname === '/health') {
+    return NextResponse.next();
+  }
+
   // Apply rate limiting to specific routes
   if (pathname.startsWith('/api/upload/')) {
     const key = getRateLimitKey(request);

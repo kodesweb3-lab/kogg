@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
 
+  // Healthcheck: /health and /api/health both return same JSON (Railway may use either path)
+  async rewrites() {
+    return [{ source: '/health', destination: '/api/health' }];
+  },
+
   // CORS headers for API routes (agents e.g. Moltbook/OpenClaw can call from any origin)
   // Production: set ALLOWED_ORIGIN=* or leave unset to allow cross-origin API calls
   async headers() {

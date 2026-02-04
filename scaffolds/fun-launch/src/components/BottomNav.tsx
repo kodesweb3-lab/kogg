@@ -71,7 +71,7 @@ export function BottomNav() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="flex flex-col items-center justify-center gap-0.5 min-w-[64px] min-h-[var(--button-min-height-touch)] rounded-lg transition-colors touch-manipulation active:scale-[0.98]"
+                className="flex flex-col items-center justify-center gap-0.5 min-w-[64px] min-h-[var(--button-min-height-touch)] rounded-[var(--radius-md)] transition-colors duration-200 touch-manipulation active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg-elevated)]"
                 aria-current={isActive ? 'page' : undefined}
               >
                 <Icon
@@ -90,7 +90,7 @@ export function BottomNav() {
           <button
             type="button"
             onClick={() => setMoreOpen(true)}
-            className="flex flex-col items-center justify-center gap-0.5 min-w-[64px] min-h-[var(--button-min-height-touch)] rounded-lg transition-colors text-[var(--text-muted)] touch-manipulation active:scale-[0.98]"
+            className="flex flex-col items-center justify-center gap-0.5 min-w-[64px] min-h-[var(--button-min-height-touch)] rounded-[var(--radius-md)] transition-colors duration-200 text-[var(--text-muted)] touch-manipulation active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg-elevated)]"
             aria-label="More menu"
           >
             <MoreIcon className="w-6 h-6" />
@@ -119,7 +119,7 @@ export function BottomNav() {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center min-h-[var(--button-min-height-touch)] px-4 py-3 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--cyber-accent)]/10 border-l-2 border-transparent hover:border-[var(--cyber-accent)] touch-manipulation"
+                  className="flex items-center min-h-[var(--button-min-height-touch)] px-4 py-3 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--cyber-accent)]/10 border-l-2 border-transparent hover:border-[var(--cyber-accent)] touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--cyber-accent)]"
                   onClick={() => setMoreOpen(false)}
                 >
                   {link.label}
@@ -128,7 +128,7 @@ export function BottomNav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="flex items-center min-h-[var(--button-min-height-touch)] px-4 py-3 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--cyber-accent)]/10 border-l-2 border-transparent hover:border-[var(--cyber-accent)] touch-manipulation"
+                  className="flex items-center min-h-[var(--button-min-height-touch)] px-4 py-3 text-sm font-medium text-[var(--text-primary)] hover:bg-[var(--cyber-accent)]/10 border-l-2 border-transparent hover:border-[var(--cyber-accent)] touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[var(--cyber-accent)]"
                   onClick={() => setMoreOpen(false)}
                 >
                   {link.label}

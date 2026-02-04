@@ -61,7 +61,7 @@ function NavDropdown({
       <button
         type="button"
         onClick={() => (isOpen ? onClose() : onOpen())}
-        className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-heading font-semibold uppercase tracking-wider rounded border border-transparent transition-all duration-200 ${
+        className={`flex items-center gap-1.5 px-3 py-2.5 text-sm font-heading font-semibold uppercase tracking-wider rounded-[var(--radius-md)] border border-transparent transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)] min-h-[var(--button-min-height-touch)] ${
           isActive
             ? 'text-[var(--cyber-accent)] border-[var(--cyber-accent)]/40 bg-[var(--cyber-accent)]/5 shadow-cyber-sm'
             : 'text-[var(--text-muted)] hover:text-[var(--cyber-accent)] hover:border-[var(--cyber-accent)]/30 hover:bg-[var(--cyber-accent)]/5'

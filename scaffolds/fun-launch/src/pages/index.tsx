@@ -115,12 +115,15 @@ function FeatureCard({ feature, index }: { feature: typeof agentFeatures[0]; ind
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -8, scale: 1.02 }}
-      className="group relative overflow-hidden rounded-2xl p-6 text-center cursor-pointer"
+      className="group relative overflow-hidden rounded-[var(--radius-xl)] p-6 text-center cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]"
       style={{
-        background: 'linear-gradient(135deg, rgba(15,20,35,0.9), rgba(15,20,35,0.4))',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--glass-bg)',
+        border: '1px solid var(--cyber-border-elevated)',
       }}
       onClick={() => router.push(feature.link)}
+      onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); router.push(feature.link); } }}
+      tabIndex={0}
+      role="button"
     >
       {/* Gradient overlay on hover */}
       <div 
@@ -132,7 +135,7 @@ function FeatureCard({ feature, index }: { feature: typeof agentFeatures[0]; ind
       
       {/* Glow effect */}
       <motion.div
-        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute inset-0 rounded-[var(--radius-xl)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         style={{
           boxShadow: `0 0 40px ${feature.color}25`,
         }}
@@ -176,7 +179,7 @@ function TrustBadge({ icon, label }: { icon: string; label: string }) {
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className="flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)]"
+      className="flex items-center gap-2 px-4 py-2 rounded-[var(--radius-full)] bg-[var(--cyber-surface)] border border-[var(--cyber-border-elevated)]"
     >
       <span>{icon}</span>
       <span className="text-sm text-[var(--text-muted)]">{label}</span>
@@ -289,7 +292,7 @@ export default function LandingPage() {
         </div>
 
         {/* Hero Section - Hero-Centric Pattern */}
-        <section className="relative py-20 md:py-28 px-4 border-b border-[rgba(0,245,255,0.1)]">
+          <section className="relative py-20 md:py-28 px-4 border-b border-[var(--cyber-accent)]/10">
           <div className="max-w-5xl mx-auto text-center relative z-10">
             
             {/* Live badge with trust indicator */}
@@ -297,7 +300,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-[rgba(0,245,255,0.1)] border border-[rgba(0,245,255,0.3)] mb-8"
+              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-[var(--radius-full)] bg-[var(--cyber-accent)]/10 border border-[var(--cyber-accent)]/30 mb-8"
             >
               <motion.span
                 className="relative flex h-3 w-3"
