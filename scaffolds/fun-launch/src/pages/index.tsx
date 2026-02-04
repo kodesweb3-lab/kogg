@@ -72,7 +72,7 @@ function StatsCounter({ value, suffix = '', prefix = '', delay = 0 }) {
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
           setHasAnimated(true);
-          const target = parseInt(value.replace(/,/g, '').replace(/+/g, '')) || 0;
+          const target = parseInt(value.replace(/,/g, '').replace(/\+/g, '')) || 0;
           const duration = 2000;
           const steps = 60;
           const increment = target / steps;
