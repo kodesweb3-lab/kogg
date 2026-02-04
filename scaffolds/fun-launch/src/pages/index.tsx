@@ -210,7 +210,7 @@ function TestimonialCard({
     >
       <p className="text-[var(--text-primary)] mb-4 italic">"{quote}"</p>
       <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6]" />
+        <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)]" />
         <div>
           <div className="font-bold text-[var(--text-primary)]">{author}</div>
           <div className="text-sm text-[var(--text-muted)]">{role}</div>
@@ -258,7 +258,7 @@ export default function LandingPage() {
           <motion.div
             className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]"
             style={{
-              background: 'linear-gradient(135deg, #00f5ff, #8b5cf6)',
+              background: 'var(--gradient-hero)',
               transform: `translate(${mousePos.x * 0.3}px, ${mousePos.y * 0.3}px)`,
             }}
             animate={{
@@ -270,7 +270,7 @@ export default function LandingPage() {
           <motion.div
             className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full opacity-15 blur-[100px]"
             style={{
-              background: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
+              background: 'var(--gradient-hero-alt)',
               transform: `translate(${mousePos.x * -0.2}px, ${mousePos.y * -0.2}px)`,
             }}
             animate={{
@@ -282,7 +282,7 @@ export default function LandingPage() {
           <motion.div
             className="absolute top-[40%] left-[60%] w-[400px] h-[400px] rounded-full opacity-10 blur-[80px]"
             style={{
-              background: 'linear-gradient(135deg, #10b981, #00f5ff)',
+              background: 'var(--gradient-hero)',
             }}
             animate={{
               scale: [1, 1.4, 1],
@@ -308,10 +308,10 @@ export default function LandingPage() {
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
               >
-                <span className="absolute inline-flex h-full w-full rounded-full bg-[#10b981] opacity-75 animate-ping" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#10b981]" />
+                <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75 animate-ping" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-[var(--accent)]" />
               </motion.span>
-              <span className="text-xs md:text-sm font-mono font-semibold uppercase tracking-wider text-[#10b981]">
+              <span className="text-xs md:text-sm font-mono font-semibold uppercase tracking-wider" style={{ color: 'var(--accent)' }}>
                 ● Live on Solana Mainnet
               </span>
             </motion.div>
@@ -323,7 +323,7 @@ export default function LandingPage() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-[0.15em] mb-6 font-display"
             >
-              <span className="bg-gradient-to-r from-[#00f5ff] via-[#8b5cf6] to-[#ec4899] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] bg-clip-text text-transparent">
                 KOGAION
               </span>
             </motion.h1>
@@ -335,7 +335,7 @@ export default function LandingPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-xl md:text-2xl text-[var(--text-secondary)] mb-6 font-light tracking-wide"
             >
-              The <span className="text-[#00f5ff] font-semibold">Agent Economy</span> Launchpad
+              The <span className="font-semibold" style={{ color: 'var(--accent)' }}>Agent Economy</span> Launchpad
             </motion.p>
 
             {/* Subtitle with value prop */}
@@ -377,13 +377,14 @@ export default function LandingPage() {
                   onClick={() => router.push('/discover')}
                   className="relative px-8 py-4 text-sm font-bold tracking-wider uppercase overflow-hidden group"
                   style={{
-                    background: 'linear-gradient(135deg, #00f5ff, #8b5cf6)',
+                    background: 'var(--gradient-hero)',
                     border: 'none',
                   }}
                 >
                   <span className="relative z-10">Discover</span>
                   <motion.span
-                    className="absolute inset-0 bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: 'var(--gradient-hero-alt)' }}
                   />
                 </Button>
               </motion.div>
@@ -395,8 +396,8 @@ export default function LandingPage() {
                 <Button
                   variant="primary"
                   onClick={() => router.push('/create-pool')}
-                  className="px-8 py-4 text-sm font-bold tracking-wider uppercase border-2 border-[rgba(139,92,246,0.5)] hover:border-[#8b5cf6] bg-transparent"
-                  style={{ '--tw-border-opacity': '0.5' } as React.CSSProperties}
+                  className="px-8 py-4 text-sm font-bold tracking-wider uppercase border-2 bg-transparent hover:opacity-90"
+                  style={{ borderColor: 'rgba(88, 166, 255, 0.5)', color: 'var(--accent)' }}
                 >
                   Launch Token
                 </Button>
@@ -410,7 +411,8 @@ export default function LandingPage() {
                   <Button
                     variant="outline"
                     onClick={() => router.push('/dashboard')}
-                    className="px-8 py-4 text-sm font-bold tracking-wider uppercase border-[rgba(0,245,255,0.3)] hover:border-[#00f5ff] hover:bg-[rgba(0,245,255,0.1)]"
+                    className="px-8 py-4 text-sm font-bold tracking-wider uppercase"
+                    style={{ borderColor: 'rgba(88, 166, 255, 0.3)' }}
                   >
                     Dashboard
                   </Button>
@@ -423,7 +425,8 @@ export default function LandingPage() {
                   <Button
                     variant="outline"
                     onClick={() => setShowModal(true)}
-                    className="px-8 py-4 text-sm font-bold tracking-wider uppercase border-[rgba(0,245,255,0.3)] hover:border-[#00f5ff] hover:bg-[rgba(0,245,255,0.1)]"
+                    className="px-8 py-4 text-sm font-bold tracking-wider uppercase"
+                    style={{ borderColor: 'rgba(88, 166, 255, 0.3)' }}
                   >
                     Connect Wallet
                   </Button>
@@ -439,15 +442,15 @@ export default function LandingPage() {
               className="flex flex-wrap justify-center gap-8 md:gap-16"
             >
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
-                  <StatsCounter value={String(totalTokensLaunched)} suffix="" delay={0} />
-                </div>
+              <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] bg-clip-text text-transparent">
+                    <StatsCounter value={String(totalTokensLaunched)} suffix="" delay={0} />
+                  </div>
                 <div className="text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-wider mt-1">
                   Tokens Launched
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] bg-clip-text text-transparent">
                   Agent-ready
                 </div>
                 <div className="text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-wider mt-1">
@@ -455,7 +458,7 @@ export default function LandingPage() {
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
+                <div className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] bg-clip-text text-transparent">
                   24/7
                 </div>
                 <div className="text-xs md:text-sm text-[var(--text-muted)] uppercase tracking-wider mt-1">
@@ -476,12 +479,13 @@ export default function LandingPage() {
             <motion.div
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-5 h-8 rounded-full border-2 border-[rgba(0,245,255,0.4)] flex items-start justify-center p-1"
+              className="w-5 h-8 rounded-full border-2 flex items-start justify-center p-1"
+              style={{ borderColor: 'rgba(88, 166, 255, 0.4)' }}
             >
               <motion.div
                 animate={{ y: [0, 12, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
-                className="w-1.5 h-1.5 rounded-full bg-[#00f5ff]"
+                className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"
               />
             </motion.div>
           </motion.div>
@@ -498,7 +502,7 @@ export default function LandingPage() {
               className="text-center mb-12"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] bg-clip-text text-transparent">
                   Agent Ecosystem
                 </span>
               </h2>
@@ -526,7 +530,7 @@ export default function LandingPage() {
               className="text-center mb-12"
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                <span className="bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[var(--accent)] to-[var(--accent-hover)] bg-clip-text text-transparent">
                   Trusted by Agents
                 </span>
               </h2>
@@ -564,7 +568,8 @@ export default function LandingPage() {
               </h2>
               <Link
                 href="/discover"
-                className="text-sm font-medium text-[#00f5ff] hover:underline flex items-center gap-2"
+                className="text-sm font-medium hover:underline flex items-center gap-2"
+                style={{ color: 'var(--accent)' }}
               >
                 View all
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -601,24 +606,22 @@ export default function LandingPage() {
                             className="w-14 h-14 rounded-xl object-cover"
                           />
                           <motion.div
-                            className="absolute inset-0 rounded-xl border-2 border-[#00f5ff] opacity-0 group-hover:opacity-100 transition-opacity"
-                            style={{
-                              boxShadow: '0 0 20px rgba(0,245,255,0.3)',
-                            }}
+                            className="absolute inset-0 rounded-xl border-2 opacity-0 group-hover:opacity-100 transition-opacity border-[var(--accent)]"
+                            style={{ boxShadow: '0 0 20px rgba(88, 166, 255, 0.3)' }}
                           />
                         </div>
                       ) : (
                         <div className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold"
                           style={{
-                            background: 'linear-gradient(135deg, #00f5ff20, #8b5cf620)',
-                            border: '1px solid rgba(139,92,246,0.3)',
+                            background: 'linear-gradient(135deg, rgba(88, 166, 255, 0.12), rgba(88, 166, 255, 0.06))',
+                            border: '1px solid rgba(88, 166, 255, 0.3)',
                           }}
                         >
                           {token.symbol?.charAt(0) ?? '?'}
                         </div>
                       )}
                       <div className="min-w-0 flex-1">
-                        <div className="font-bold text-[var(--text-primary)] truncate group-hover:text-[#00f5ff] transition-colors">
+                        <div className="font-bold text-[var(--text-primary)] truncate transition-colors group-hover:text-[var(--accent)]">
                           {token.name}
                         </div>
                         <div className="text-sm font-mono text-[var(--text-muted)] truncate">
@@ -626,7 +629,7 @@ export default function LandingPage() {
                         </div>
                       </div>
                       <motion.div
-                        className="text-[#00f5ff] opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="opacity-0 group-hover:opacity-100 transition-opacity text-[var(--accent)]"
                         whileHover={{ x: 4 }}
                       >
                         →
@@ -653,9 +656,7 @@ export default function LandingPage() {
                 <Link
                   href="/create-pool"
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-bold uppercase tracking-wider"
-                  style={{
-                    background: 'linear-gradient(135deg, #00f5ff, #8b5cf6)',
-                  }}
+                  style={{ background: 'var(--gradient-hero)' }}
                 >
                   Launch Now
                 </Link>
@@ -698,10 +699,7 @@ export default function LandingPage() {
                       variant="primary"
                       onClick={() => router.push('/create-pool')}
                       className="px-8 py-4 text-sm font-bold tracking-wider uppercase"
-                      style={{
-                        background: 'linear-gradient(135deg, #00f5ff, #8b5cf6)',
-                        border: 'none',
-                      }}
+                      style={{ background: 'var(--gradient-hero)', border: 'none' }}
                     >
                       Launch Token
                     </Button>
@@ -710,7 +708,8 @@ export default function LandingPage() {
                     <Button
                       variant="outline"
                       onClick={() => router.push('/for-agents')}
-                      className="px-8 py-4 text-sm font-bold tracking-wider uppercase border-[rgba(139,92,246,0.5)]"
+                      className="px-8 py-4 text-sm font-bold tracking-wider uppercase"
+                      style={{ borderColor: 'rgba(88, 166, 255, 0.5)' }}
                     >
                       Learn More
                     </Button>
@@ -734,7 +733,7 @@ export default function LandingPage() {
                 <motion.div
                   key={idx}
                   whileHover={{ scale: 1.05 }}
-                  className="cursor-pointer p-4 rounded-lg hover:bg-[rgba(0,245,255,0.05)] transition-colors"
+                  className="cursor-pointer p-4 rounded-lg transition-colors hover:bg-[var(--accent)]/5"
                   onClick={() => router.push(link.href)}
                 >
                   <div className="text-3xl mb-2">{link.icon}</div>

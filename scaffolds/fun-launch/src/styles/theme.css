@@ -14,6 +14,8 @@
   --text-muted: #7d8590;
   --accent: #58a6ff;
   --accent-hover: #79b8ff;
+  --gradient-hero: linear-gradient(135deg, #58a6ff, #79b8ff);
+  --gradient-hero-alt: linear-gradient(135deg, #79b8ff, #58a6ff);
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-default: rgba(255, 255, 255, 0.12);
   --focus-ring: 0 0 0 2px var(--bg-base), 0 0 0 4px var(--accent);
