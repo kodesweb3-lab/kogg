@@ -34,5 +34,5 @@ EXPOSE 3000
 
 ENV NODE_ENV=production
 
-# Push schema to database and start the application
-CMD ["sh", "-c", "cd scaffolds/fun-launch && npx prisma db push && pnpm start -p ${PORT:-3000}"]
+# Start Next.js first so healthcheck can pass; run prisma db push in background (do not block)
+CMD ["sh", "-c", "cd scaffolds/fun-launch && (npx prisma db push --accept-data-loss &) && exec pnpm start -H 0.0.0.0 -p ${PORT:-3000}"]

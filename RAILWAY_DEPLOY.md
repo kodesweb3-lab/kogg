@@ -46,6 +46,10 @@ After deploy, check:
 
 ## Troubleshooting
 
+**Healthcheck fails (service unavailable):**
+- The repo **Dockerfile** starts Next.js first and runs `prisma db push` in the background so the server listens quickly; it also binds to `0.0.0.0` so Railway’s healthcheck can reach `/api/health`. If you use a custom start command, avoid blocking on DB migrations before starting the server.
+- Ensure Health Check Path is `/api/health` and timeout is at least 60s.
+
 **Site doesn't load:**
 - Check Deployments → Logs for errors
 - Verify Public Networking is ON

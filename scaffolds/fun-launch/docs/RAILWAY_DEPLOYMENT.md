@@ -275,11 +275,14 @@ Expected response:
 
 **Symptoms**: Railway reports health check failed; deployment marked unhealthy.
 
+**Cause**: If the container CMD blocks on database migrations (`prisma db push`) before starting the web server, nothing listens on `PORT` until migrations finish. Railway’s healthcheck then gets connection refused / 503 for the whole retry window. The repo **Dockerfile** avoids this by starting Next.js first and running `prisma db push` in the background, and by binding the server to `0.0.0.0` so the healthcheck can connect.
+
 **Solutions**:
-1. **Path**: Use **Health Check Path** `/api/health` or `/health` (both work; `/health` rewrites to `/api/health`).
-2. **Timeout**: Set **Healthcheck Timeout** to **60–120 seconds**. Next.js can be slow on first request after cold start; a short timeout (e.g. 10s) may cause false failures.
-3. **Port**: Ensure the service uses Railway’s `PORT` (Next.js reads it by default).
-4. **Verify manually**: After deploy, run `curl https://your-app.railway.app/api/health` and confirm you get `{"status":"healthy",...}` with HTTP 200.
+1. **Use the repo Dockerfile** (recommended): It starts Next.js in the foreground with `-H 0.0.0.0` and runs `prisma db push` in the background so the server responds to `/api/health` shortly after the container starts.
+2. **Path**: Use **Health Check Path** `/api/health` or `/health` (both work; `/health` rewrites to `/api/health`).
+3. **Timeout**: Set **Healthcheck Timeout** to **60–120 seconds**. Next.js can be slow on first request after cold start; a short timeout (e.g. 10s) may cause false failures.
+4. **Port**: Ensure the service uses Railway’s `PORT` (Next.js reads it by default).
+5. **Verify manually**: After deploy, run `curl https://your-app.railway.app/api/health` and confirm you get `{"status":"healthy",...}` with HTTP 200.
 
 ### Issue: Database Connection Failed
 
