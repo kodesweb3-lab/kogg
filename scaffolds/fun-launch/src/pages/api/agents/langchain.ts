@@ -1,8 +1,27 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { KogaionAgent, KOGAION_AGENTS, PostgresMemory } from '@/lib/langchain-integration';
+import { KogaionAgent, PostgresMemory } from '@/lib/langchain-integration';
 import { AgentMemoryService } from '@/lib/agent-memory';
 
 const agents: Map<string, KogaionAgent> = new Map();
+
+// Available agent types
+const KOGAION_AGENTS: Record<string, { name: string; description: string; systemPrompt: string }> = {
+  trader: {
+    name: 'TraderAgent',
+    description: 'DeFi trading specialist',
+    systemPrompt: 'You are a DeFi trading agent. Help with swaps, yields, and market analysis.'
+  },
+  developer: {
+    name: 'DeveloperAgent',
+    description: 'Coding assistant',
+    systemPrompt: 'You are a coding assistant. Help with Solidity, Rust, and JavaScript.'
+  },
+  artist: {
+    name: 'ArtistAgent',
+    description: 'Creative collaborator',
+    systemPrompt: 'You are a creative artist. Help with visual art, poetry, and design.'
+  }
+};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req;
@@ -17,13 +36,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (action === 'init') {
           const config = agentType && KOGAION_AGENTS[agentType as keyof typeof KOGAION_AGENTS]
             ? KOGAION_AGENTS[agentType as keyof typeof KOGAION_AGENTS]
-            : { name: agentName, systemPrompt };
+            : { name: agentName, description: systemPrompt || 'Custom agent', systemPrompt: systemPrompt || '' };
 
           const agent = new KogaionAgent({
             name: agentName,
             description: config.description,
-            systemPrompt: config.systemPrompt,
-            model: model || 'llama3'
+            systemPrompt: config.systemPrompt
           });
 
           await agent.initialize();
@@ -47,7 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             agents.set(agentName, agent);
           }
 
-          const response = await agent.run(req.body.message);
+          const response = await agent.respond(req.body.message);
           return res.status(200).json({ success: true, response });
         }
 
