@@ -38,7 +38,7 @@ export function RWABadge({ assetType, className = '', size = 'md' }: RWABadgePro
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 ${sizeClasses[size]} bg-dacian-steel-copper/20 border border-dacian-steel-copper/40 rounded-full text-dacian-steel-copper font-medium ${className}`}
+      className={`inline-flex items-center gap-1.5 ${sizeClasses[size]} bg-[var(--accent)]/20 border border-[var(--accent)]/40 rounded-full text-[var(--accent)] font-medium ${className}`}
       title={`Real World Asset: ${label}`}
     >
       <span>{icon}</span>
@@ -54,7 +54,7 @@ interface RWATypeBadgeProps {
 export function RWATypeBadge({ className = '' }: RWATypeBadgeProps) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 bg-dacian-steel-copper/20 border border-dacian-steel-copper/40 rounded-full text-dacian-steel-copper text-sm font-medium ${className}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1 bg-[var(--accent)]/20 border border-[var(--accent)]/40 rounded-full text-[var(--accent)] text-sm font-medium ${className}`}
       title="Real World Asset Token"
     >
       <span>🌍</span>

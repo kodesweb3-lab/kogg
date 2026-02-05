@@ -92,7 +92,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
               href={`https://solscan.io/tx/${signature}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-mystic-steam-copper hover:underline"
+              className="text-xs text-[var(--accent)] hover:underline"
             >
               Solscan
             </a>
@@ -121,7 +121,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
     <div
       ref={(el) => rowRef(el, pool.id)}
       data-pool-id={pool.id}
-      className="relative flex cursor-pointer items-center border-mystic-steam-copper/20 py-3 pl-1.5 pr-2 text-xs has-hover:hover:bg-mystic-steam-ash/50 [&:nth-child(n+2)]:border-t hover:border-mystic-steam-copper/40 transition-all"
+      className="relative flex cursor-pointer items-center border-[var(--border-default)] py-3 pl-1.5 pr-2 text-xs has-hover:hover:bg-[var(--bg-elevated)] [&:nth-child(n+2)]:border-t hover:border-[var(--accent)]/40 transition-all"
     >
       <div className="shrink-0 pl-2 pr-4">
         <TrenchesPoolTokenIcon width={54} height={54} pool={pool} />
@@ -142,10 +142,10 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
 
               {/* Status Sigil */}
               {!pool.baseAsset.graduatedAt && (
-                <NewbornSigil className="ml-1 w-3 h-3 text-aureate-base opacity-70" />
+                <NewbornSigil className="ml-1 w-3 h-3 text-[var(--accent)] opacity-70" />
               )}
               {pool.baseAsset.graduatedAt && (
-                <AscendedSigil className="ml-1 w-3 h-3 text-aureate-base opacity-70" />
+                <AscendedSigil className="ml-1 w-3 h-3 text-[var(--accent)] opacity-70" />
               )}
               
               {/* RWA Badge */}
@@ -209,7 +209,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
             )}
             {/* Asset Value for RWA */}
             {pool.baseAsset.tokenType === 'RWA' && pool.baseAsset.assetValue && (
-              <span className="text-xs text-mystic-steam-parchment/60 font-body">
+              <span className="text-xs text-[var(--text-muted)] font-body">
                 ${pool.baseAsset.assetValue.toLocaleString()}
               </span>
             )}

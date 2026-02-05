@@ -14,24 +14,24 @@ export function LiveFeed() {
   const tokens = data?.data || [];
 
   return (
-    <div className="bg-mystic-steam-ash rounded-xl border border-mystic-steam-copper/30 overflow-hidden">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-mystic-steam-copper/20">
+    <div className="bg-[var(--bg-layer)] rounded-xl border border-[var(--border-default)] overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-[var(--border-default)]">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mystic-steam-copper opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-mystic-steam-copper"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]"></span>
           </span>
-          <h3 className="font-heading font-bold text-mystic-steam-copper">Live Rituals</h3>
+          <h3 className="font-heading font-bold text-[var(--accent)]">Live Rituals</h3>
         </div>
         <Link 
           href="/discover" 
-          className="text-sm text-mystic-steam-parchment/60 hover:text-mystic-steam-parchment transition-colors font-body"
+          className="text-sm text-[var(--text-primary)]/60 hover:text-[var(--text-primary)] transition-colors font-body"
         >
           View all
         </Link>
       </div>
 
-      <div className="divide-y divide-mystic-steam-copper/10">
+      <div className="divide-y divide-[var(--border-default)]">
         {status === 'pending' ? (
           Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="flex items-center gap-3 px-4 py-3">
@@ -44,7 +44,7 @@ export function LiveFeed() {
             </div>
           ))
         ) : tokens.length === 0 ? (
-          <div className="px-4 py-8 text-center text-mystic-steam-parchment/50 font-body">
+          <div className="px-4 py-8 text-center text-[var(--text-primary)]/50 font-body">
             No tokens launched yet. Be the first!
           </div>
         ) : (
@@ -59,7 +59,7 @@ export function LiveFeed() {
               >
                 <Link
                   href={`/token/${token.mint}`}
-                  className="flex items-center gap-3 px-4 py-3 hover:bg-mystic-steam-charcoal transition-colors"
+                  className="flex items-center gap-3 px-4 py-3 hover:bg-[var(--bg-elevated)] transition-colors"
                 >
                   {/* Token Image */}
                   <div className="relative">
@@ -67,16 +67,16 @@ export function LiveFeed() {
                       <img
                         src={token.imageUrl}
                         alt={token.symbol}
-                        className="h-10 w-10 rounded-full object-cover border border-mystic-steam-copper/20"
+                        className="h-10 w-10 rounded-full object-cover border border-[var(--border-default)]"
                       />
                     ) : (
-                      <div className="h-10 w-10 rounded-full bg-mystic-steam-charcoal flex items-center justify-center text-mystic-steam-copper font-bold">
+                      <div className="h-10 w-10 rounded-full bg-[var(--bg-elevated)] flex items-center justify-center text-[var(--accent)] font-bold">
                         {token.symbol?.charAt(0) || '?'}
                       </div>
                     )}
                     {/* New badge for very recent tokens */}
                     {isNew(token.createdAt) && (
-                      <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-[8px] font-bold bg-mystic-steam-copper text-mystic-steam-parchment rounded-full">
+                      <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-[8px] font-bold bg-[var(--accent)] text-[var(--text-primary)] rounded-full">
                         NEW
                       </span>
                     )}
@@ -85,21 +85,21 @@ export function LiveFeed() {
                   {/* Token Info */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-heading font-semibold text-mystic-steam-parchment truncate">
+                      <span className="font-heading font-semibold text-[var(--text-primary)] truncate">
                         {token.symbol}
                       </span>
-                      <span className="text-xs text-mystic-steam-parchment/50 truncate font-body">
+                      <span className="text-xs text-[var(--text-primary)]/50 truncate font-body">
                         {token.name}
                       </span>
                     </div>
-                    <div className="text-xs text-mystic-steam-parchment/60 font-body">
+                    <div className="text-xs text-[var(--text-primary)]/60 font-body">
                       {formatTimeAgo(token.createdAt)}
                     </div>
                   </div>
 
                   {/* Arrow */}
                   <svg
-                    className="w-4 h-4 text-mystic-steam-parchment/50"
+                    className="w-4 h-4 text-[var(--text-primary)]/50"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

@@ -131,14 +131,14 @@ export function TwitterVerificationButton({
 
   if (verificationCode && tweetMessage) {
     return (
-      <div className="space-y-4 p-4 steel-panel rounded-lg">
+      <div className="space-y-4 p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-lg">
         <div>
-          <p className="text-sm text-mystic-steam-parchment/70 mb-2">
+          <p className="text-sm text-[var(--text-muted)] mb-2">
             Tweet posted? Paste the URL below to verify:
           </p>
-          <div className="p-3 bg-dacian-steel-dark rounded border border-dacian-steel-steel/30 mb-3">
-            <p className="text-xs text-mystic-steam-parchment/60 mb-1">Verification Code:</p>
-            <p className="text-sm font-mono text-mystic-steam-copper font-bold">
+          <div className="p-3 bg-[var(--bg-elevated)] rounded border border-[var(--border-default)] mb-3">
+            <p className="text-xs text-[var(--text-muted)] mb-1">Verification Code:</p>
+            <p className="text-sm font-mono text-[var(--accent)] font-bold">
               {verificationCode}
             </p>
           </div>
@@ -148,7 +148,7 @@ export function TwitterVerificationButton({
               const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetMessage)}`;
               window.open(twitterUrl, '_blank');
             }}
-            className="text-sm text-dacian-steel-copper hover:text-dacian-steel-copper-light underline"
+            className="text-sm text-[var(--accent)] hover:opacity-90 underline"
           >
             Open Twitter again →
           </button>
@@ -156,7 +156,7 @@ export function TwitterVerificationButton({
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm text-mystic-steam-parchment/70 mb-2">
+            <label className="block text-sm text-[var(--text-muted)] mb-2">
               Paste Your Tweet URL
             </label>
             <input
@@ -164,16 +164,16 @@ export function TwitterVerificationButton({
               value={tweetUrl}
               onChange={(e) => handleUrlChange(e.target.value)}
               placeholder="https://x.com/username/status/1234567890"
-              className="w-full min-h-[44px] px-3 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+              className="w-full min-h-[44px] px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
             />
-            <p className="text-xs text-mystic-steam-parchment/50 mt-1">
+            <p className="text-xs text-[var(--text-muted)]/80 mt-1">
               After posting the tweet above, copy its URL and paste it here
             </p>
             {extractedData && (
-              <div className="mt-2 p-2 bg-dacian-steel-dark/50 rounded border border-dacian-steel-copper/30">
-                <p className="text-xs text-mystic-steam-parchment/70 mb-1">Detected:</p>
-                <p className="text-sm text-mystic-steam-copper font-mono">@{extractedData.handle}</p>
-                <p className="text-xs text-mystic-steam-parchment/50 font-mono">Tweet ID: {extractedData.tweetId}</p>
+              <div className="mt-2 p-2 bg-[var(--bg-elevated)]/80 rounded border border-[var(--accent)]/30">
+                <p className="text-xs text-[var(--text-muted)] mb-1">Detected:</p>
+                <p className="text-sm text-[var(--accent)] font-mono">@{extractedData.handle}</p>
+                <p className="text-xs text-[var(--text-muted)]/80 font-mono">Tweet ID: {extractedData.tweetId}</p>
               </div>
             )}
             {tweetUrl && !extractedData && (

@@ -112,10 +112,10 @@ export function ServiceProviderEditModal({
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="glass-card rounded-xl p-6 md:p-8  max-w-2xl w-full max-h-[90vh] overflow-y-auto pointer-events-auto"
+              className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto pointer-events-auto"
             >
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl md:text-3xl font-heading font-bold text-aureate-base">
+                <h2 className="text-2xl md:text-3xl font-heading font-bold text-[var(--accent)]">
                   Edit Service Provider Profile
                 </h2>
                 <button
@@ -140,7 +140,7 @@ export function ServiceProviderEditModal({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="your@email.com"
-                      className="w-full px-4 py-2 bg-obsidian-surface border border-obsidian-border rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-aureate-base/50"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50"
                     />
                   </div>
 
@@ -153,7 +153,7 @@ export function ServiceProviderEditModal({
                       value={telegram}
                       onChange={(e) => setTelegram(e.target.value)}
                       placeholder="@username or username"
-                      className="w-full px-4 py-2 bg-obsidian-surface border border-obsidian-border rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-aureate-base/50"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50"
                     />
                   </div>
 
@@ -166,7 +166,7 @@ export function ServiceProviderEditModal({
                       value={twitterHandle}
                       onChange={(e) => setTwitterHandle(e.target.value)}
                       placeholder="@username or username"
-                      className="w-full px-4 py-2 bg-obsidian-surface border border-obsidian-border rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-aureate-base/50"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50"
                     />
                     <p className="text-xs text-[var(--text-muted)] mt-1">
                       Note: Changing your Twitter handle may require re-verification
@@ -183,7 +183,7 @@ export function ServiceProviderEditModal({
                       placeholder="Describe your services and expertise..."
                       rows={4}
                       maxLength={500}
-                      className="w-full px-4 py-2 bg-obsidian-surface border border-obsidian-border rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-aureate-base/50 resize-none"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/50 resize-none"
                     />
                     <p className="text-xs text-[var(--text-muted)] mt-1">
                       {description.length} / 500 characters
@@ -205,7 +205,7 @@ export function ServiceProviderEditModal({
                   <Button
                     type="submit"
                     disabled={isSubmitting || tags.length === 0}
-                    className="bg-aureate-base/80 hover:bg-aureate-base text-obsidian-base"
+                    className="bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)]"
                   >
                     {isSubmitting ? 'Saving...' : 'Save Changes'}
                   </Button>

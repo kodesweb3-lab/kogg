@@ -83,13 +83,13 @@ export default function ServiceProviderRegisterPage() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="steel-panel rounded-xl p-8"
+              className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8"
             >
               <div className="text-6xl mb-4">✓</div>
-              <h1 className="text-3xl font-heading font-bold text-mystic-steam-copper mb-4">
+              <h1 className="text-3xl font-heading font-bold text-[var(--accent)] mb-4">
                 Verification Complete!
               </h1>
-              <p className="text-mystic-steam-parchment/70 mb-6">
+              <p className="text-[var(--text-muted)] mb-6">
                 Your service provider profile has been verified and is now live on the marketplace.
               </p>
               <Button onClick={() => router.push('/service-providers')}>
@@ -111,83 +111,83 @@ export default function ServiceProviderRegisterPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-4xl font-heading font-bold text-mystic-steam-copper mb-4">
+            <h1 className="text-4xl font-heading font-bold text-[var(--accent)] mb-4">
               Register as Service Provider
             </h1>
-            <p className="text-mystic-steam-parchment/70">
+            <p className="text-[var(--text-muted)]">
               Join the Kogaion marketplace and connect with token creators. Showcase your services
               and grow your network.
             </p>
           </motion.div>
 
           {!connected ? (
-            <div className="steel-panel rounded-xl p-8 text-center">
-              <p className="text-mystic-steam-parchment/70 mb-4">
+            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8 text-center">
+              <p className="text-[var(--text-muted)] mb-4">
                 Please connect your Solana wallet to continue.
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="steel-panel rounded-xl p-6">
-                <h2 className="text-xl font-heading font-bold text-mystic-steam-copper mb-4">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+                <h2 className="text-xl font-heading font-bold text-[var(--accent)] mb-4">
                   Basic Information
                 </h2>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-2">
+                    <label className="block text-sm font-body font-medium text-[var(--text-muted)] mb-2">
                       Wallet Address
                     </label>
                     <input
                       type="text"
                       value={publicKey?.toBase58() || ''}
                       disabled
-                      className="w-full px-4 py-2 bg-dacian-steel-dark border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment/50 font-mono text-sm cursor-not-allowed"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-muted)] font-mono text-sm cursor-not-allowed"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-2">
-                      Email <span className="text-mystic-steam-parchment/40">(optional)</span>
+                    <label className="block text-sm font-body font-medium text-[var(--text-muted)] mb-2">
+                      Email <span className="text-[var(--text-muted)]/80">(optional)</span>
                     </label>
                     <input
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="your@email.com"
-                      className="w-full px-4 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-2">
-                      Telegram <span className="text-mystic-steam-parchment/40">(optional)</span>
+                    <label className="block text-sm font-body font-medium text-[var(--text-muted)] mb-2">
+                      Telegram <span className="text-[var(--text-muted)]/80">(optional)</span>
                     </label>
                     <input
                       type="text"
                       value={telegram}
                       onChange={(e) => setTelegram(e.target.value)}
                       placeholder="@username or username"
-                      className="w-full px-4 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-2">
-                      Twitter Handle <span className="text-mystic-steam-parchment/40">(optional)</span>
+                    <label className="block text-sm font-body font-medium text-[var(--text-muted)] mb-2">
+                      Twitter Handle <span className="text-[var(--text-muted)]/80">(optional)</span>
                     </label>
                     <input
                       type="text"
                       value={twitterHandle}
                       onChange={(e) => setTwitterHandle(e.target.value)}
                       placeholder="@username or username"
-                      className="w-full px-4 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-2">
-                      Description <span className="text-mystic-steam-parchment/40">(optional)</span>
+                    <label className="block text-sm font-body font-medium text-[var(--text-muted)] mb-2">
+                      Description <span className="text-[var(--text-muted)]/80">(optional)</span>
                     </label>
                     <textarea
                       value={description}
@@ -195,20 +195,20 @@ export default function ServiceProviderRegisterPage() {
                       placeholder="Describe your services and expertise..."
                       rows={4}
                       maxLength={500}
-                      className="w-full px-4 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper resize-none"
+                      className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] resize-none"
                     />
-                    <p className="text-xs text-mystic-steam-parchment/50 mt-1">
+                    <p className="text-xs text-[var(--text-muted)]/80 mt-1">
                       {description.length} / 500 characters
                     </p>
                   </div>
                 </div>
               </div>
 
-              <div className="steel-panel rounded-xl p-6">
-                <h2 className="text-xl font-heading font-bold text-mystic-steam-copper mb-4">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+                <h2 className="text-xl font-heading font-bold text-[var(--accent)] mb-4">
                   Services & Tags
                 </h2>
-                <p className="text-sm text-mystic-steam-parchment/60 mb-4">
+                <p className="text-sm text-[var(--text-muted)] mb-4">
                   Select tags that describe your services. You can choose from predefined tags or
                   create custom ones.
                 </p>
@@ -234,12 +234,12 @@ export default function ServiceProviderRegisterPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-8 steel-panel rounded-xl p-6"
+              className="mt-8 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6"
             >
-              <h2 className="text-xl font-heading font-bold text-mystic-steam-copper mb-4">
+              <h2 className="text-xl font-heading font-bold text-[var(--accent)] mb-4">
                 Verify Your Twitter Account
               </h2>
-              <p className="text-sm text-mystic-steam-parchment/70 mb-4">
+              <p className="text-sm text-[var(--text-muted)] mb-4">
                 Verify your Twitter account to get a verified badge and increase your visibility in
                 the marketplace.
               </p>

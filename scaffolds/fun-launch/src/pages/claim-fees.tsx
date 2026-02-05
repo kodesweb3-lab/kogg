@@ -37,58 +37,58 @@ export default function ClaimFeesPage({ isFeeClaimer, walletAddress }: ClaimFees
     <Page>
       <div className="min-h-screen py-8 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="steel-panel rounded-lg p-8">
-            <h1 className="text-3xl font-heading font-bold text-mystic-steam-copper mb-4">
+          <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+            <h1 className="text-3xl font-heading font-bold text-[var(--accent)] mb-4">
               Claim Partner Fees
             </h1>
 
             {!isFeeClaimer ? (
               <div className="space-y-4">
-                <p className="text-mystic-steam-parchment/70">
+                <p className="text-[var(--text-muted)]">
                   You are not authorized to claim partner fees. Only the configured feeClaimer wallet can access this page.
                 </p>
                 {walletAddress && (
-                  <p className="text-sm text-mystic-steam-parchment/50 font-mono">
+                  <p className="text-sm text-[var(--text-muted)]/80 font-mono">
                     Wallet checked: {walletAddress}
                   </p>
                 )}
                 <Link href="/">
-                  <Button className="bg-mystic-steam-copper hover:bg-mystic-steam-copper/90 text-mystic-steam-charcoal font-heading font-bold">
+                  <Button className="bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-heading font-bold">
                     Return to Home
                   </Button>
                 </Link>
               </div>
             ) : !connected ? (
               <div className="space-y-4">
-                <p className="text-mystic-steam-parchment/70">
+                <p className="text-[var(--text-muted)]">
                   Please connect your wallet to claim partner fees.
                 </p>
                 {walletAddress && (
-                  <p className="text-sm text-mystic-steam-parchment/50">
+                  <p className="text-sm text-[var(--text-muted)]/80">
                     Authorized wallet: <span className="font-mono">{walletAddress}</span>
                   </p>
                 )}
               </div>
             ) : currentWallet !== walletAddress ? (
               <div className="space-y-4">
-                <p className="text-mystic-steam-parchment/70">
+                <p className="text-[var(--text-muted)]">
                   The connected wallet does not match the authorized feeClaimer wallet.
                 </p>
-                <p className="text-sm text-mystic-steam-parchment/50">
+                <p className="text-sm text-[var(--text-muted)]/80">
                   Connected: <span className="font-mono">{currentWallet}</span>
                 </p>
-                <p className="text-sm text-mystic-steam-parchment/50">
+                <p className="text-sm text-[var(--text-muted)]/80">
                   Authorized: <span className="font-mono">{walletAddress}</span>
                 </p>
               </div>
             ) : (
               <div className="space-y-6">
-                <p className="text-mystic-steam-parchment/70">
+                <p className="text-[var(--text-muted)]">
                   You are authorized to claim partner trading fees. Select a token below to claim fees.
                 </p>
                 <Button
                   onClick={() => setIsModalOpen(true)}
-                  className="bg-mystic-steam-copper hover:bg-mystic-steam-copper/90 text-mystic-steam-charcoal font-heading font-bold"
+                  className="bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-heading font-bold"
                 >
                   Claim Partner Fees
                 </Button>

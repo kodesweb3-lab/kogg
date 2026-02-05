@@ -17,7 +17,7 @@ export function WolfThemeSelector({ className }: { className?: string }) {
 
   return (
     <div className={`flex items-center gap-2 ${className || ''}`}>
-      <span className="text-xs text-mystic-steam-parchment/60 font-body mr-2">Pack:</span>
+      <span className="text-xs text-[var(--text-muted)] font-body mr-2">Pack:</span>
       <div className="flex gap-1">
         {WOLF_OPTIONS.map((wolf) => {
           const Icon = wolf.Icon;
@@ -30,8 +30,8 @@ export function WolfThemeSelector({ className }: { className?: string }) {
                 w-8 h-8 rounded-lg border transition-all
                 flex items-center justify-center
                 ${isSelected 
-                  ? 'border-wolf-accent bg-wolf-bg-tint shadow-lg shadow-wolf-glow' 
-                  : 'border-obsidian-border bg-obsidian-surface hover:border-wolf-border'
+                  ? 'border-[var(--accent)] bg-[var(--bg-elevated)] shadow-lg shadow-[var(--accent)]/20' 
+                  : 'border-[var(--border-default)] bg-[var(--bg-layer)] hover:border-[var(--text-muted)]/50'
                 }
               `}
               whileHover={{ scale: 1.1 }}
@@ -39,7 +39,7 @@ export function WolfThemeSelector({ className }: { className?: string }) {
               title={wolf.label}
             >
               <Icon 
-                className={`w-4 h-4 ${isSelected ? 'text-wolf-accent' : 'text-mystic-steam-parchment/40'}`}
+                className={`w-4 h-4 ${isSelected ? 'text-[var(--accent)]' : 'text-[var(--text-muted)]'}`}
               />
             </motion.button>
           );

@@ -163,17 +163,17 @@ export function ClaimCreatorFeesModal({
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-2xl bg-mystic-steam-charcoal border border-mystic-steam-copper/30 rounded-lg shadow-xl overflow-hidden"
+            className="relative w-full max-w-2xl bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-lg shadow-xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="px-6 py-4 border-b border-mystic-steam-copper/30 bg-mystic-steam-ash/50">
+            <div className="px-6 py-4 border-b border-[var(--border-default)] bg-[var(--bg-elevated)]/80">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-heading font-bold text-mystic-steam-copper">
+                <h2 className="text-xl font-heading font-bold text-[var(--accent)]">
                   Claim Creator Fees
                 </h2>
                 <button
                   onClick={onClose}
-                  className="text-mystic-steam-parchment/60 hover:text-mystic-steam-parchment transition-colors"
+                  className="text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -189,28 +189,28 @@ export function ClaimCreatorFeesModal({
 
             <div className="p-6 space-y-6">
               {!publicKey ? (
-                <div className="p-4 text-center text-mystic-steam-parchment/70">
+                <div className="p-4 text-center text-[var(--text-muted)]">
                   Connect your wallet to see tokens you created and claim creator fees.
                 </div>
               ) : (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-mystic-steam-parchment mb-2">
+                    <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
                       Your token
                     </label>
                     {isLoadingTokens ? (
-                      <div className="p-4 text-center text-mystic-steam-parchment/60">
+                      <div className="p-4 text-center text-[var(--text-muted)]">
                         Loading your tokens...
                       </div>
                     ) : tokens.length === 0 ? (
-                      <div className="p-4 text-center text-mystic-steam-parchment/60">
+                      <div className="p-4 text-center text-[var(--text-muted)]">
                         You have not created any tokens yet.
                       </div>
                     ) : (
                       <select
                         value={selectedToken}
                         onChange={(e) => setSelectedToken(e.target.value)}
-                        className="w-full px-4 py-2 bg-mystic-steam-ash border border-mystic-steam-copper/30 rounded-lg text-mystic-steam-parchment focus:outline-none focus:border-mystic-steam-copper focus:ring-1 focus:ring-mystic-steam-copper"
+                        className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
                       >
                         <option value="">-- Select a token --</option>
                         {tokens.map((token) => (
@@ -223,7 +223,7 @@ export function ClaimCreatorFeesModal({
                   </div>
 
                   {selectedTokenData && (
-                    <div className="p-4 bg-mystic-steam-ash/50 border border-mystic-steam-copper/20 rounded-lg">
+                    <div className="p-4 bg-[var(--bg-elevated)]/80 border border-[var(--accent)]/20 rounded-lg">
                       <div className="flex items-center gap-3">
                         {selectedTokenData.imageUrl && (
                           <img
@@ -233,13 +233,13 @@ export function ClaimCreatorFeesModal({
                           />
                         )}
                         <div>
-                          <div className="font-heading font-bold text-mystic-steam-copper">
+                          <div className="font-heading font-bold text-[var(--accent)]">
                             {selectedTokenData.symbol}
                           </div>
-                          <div className="text-sm text-mystic-steam-parchment/70">
+                          <div className="text-sm text-[var(--text-muted)]">
                             {selectedTokenData.name}
                           </div>
-                          <div className="text-xs text-mystic-steam-parchment/50 font-mono mt-1">
+                          <div className="text-xs text-[var(--text-muted)]/80 font-mono mt-1">
                             {selectedTokenData.mint.slice(0, 8)}...{selectedTokenData.mint.slice(-8)}
                           </div>
                         </div>
@@ -248,33 +248,33 @@ export function ClaimCreatorFeesModal({
                   )}
 
                   {selectedToken && (
-                    <div className="p-4 bg-mystic-steam-ash/30 border border-mystic-steam-copper/20 rounded-lg">
+                    <div className="p-4 bg-[var(--bg-elevated)]/50 border border-[var(--accent)]/20 rounded-lg">
                       {isLoadingMetrics ? (
-                        <p className="text-sm text-mystic-steam-parchment/70">
+                        <p className="text-sm text-[var(--text-muted)]">
                           Loading fee metrics...
                         </p>
                       ) : feeMetrics ? (
-                        <div className="text-sm text-mystic-steam-parchment/80 space-y-1">
+                        <div className="text-sm text-[var(--text-secondary)] space-y-1">
                           <p>
                             Creator fees available: base {feeMetrics.creatorBaseFee}, quote{' '}
                             {feeMetrics.creatorQuoteFee} (raw units).
                           </p>
                           {!hasCreatorFees && (
-                            <p className="text-mystic-steam-parchment/60">
+                            <p className="text-[var(--text-muted)]">
                               No creator fees to claim for this token yet.
                             </p>
                           )}
                         </div>
                       ) : (
-                        <p className="text-sm text-mystic-steam-parchment/60">
+                        <p className="text-sm text-[var(--text-muted)]">
                           Could not load fee metrics (pool may not exist yet).
                         </p>
                       )}
                     </div>
                   )}
 
-                  <div className="p-4 bg-mystic-steam-ash/30 border border-mystic-steam-copper/20 rounded-lg">
-                    <p className="text-sm text-mystic-steam-parchment/70">
+                  <div className="p-4 bg-[var(--bg-elevated)]/50 border border-[var(--accent)]/20 rounded-lg">
+                    <p className="text-sm text-[var(--text-muted)]">
                       Claim your share of trading fees as the token creator. Fees will be sent to your
                       connected wallet. Only available when the pool config allocates a percentage to
                       creators (creatorTradingFeePercentage &gt; 0).
@@ -284,11 +284,11 @@ export function ClaimCreatorFeesModal({
               )}
             </div>
 
-            <div className="px-6 py-4 border-t border-mystic-steam-copper/30 bg-mystic-steam-ash/50 flex items-center justify-end gap-3">
+            <div className="px-6 py-4 border-t border-[var(--border-default)] bg-[var(--bg-elevated)]/80 flex items-center justify-end gap-3">
               <Button
                 onClick={onClose}
                 variant="outline"
-                className="border-mystic-steam-copper/30 text-mystic-steam-parchment hover:bg-mystic-steam-ash"
+                className="border-[var(--border-default)] text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]"
               >
                 Cancel
               </Button>
@@ -301,7 +301,7 @@ export function ClaimCreatorFeesModal({
                   isLoadingTokens ||
                   !hasCreatorFees
                 }
-                className="bg-mystic-steam-copper hover:bg-mystic-steam-copper/90 text-mystic-steam-charcoal font-heading font-bold"
+                className="bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-heading font-bold"
               >
                 {isSending ? 'Claiming...' : 'Claim Creator Fees'}
               </Button>

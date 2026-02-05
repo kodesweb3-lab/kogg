@@ -82,17 +82,17 @@ export default function ServiceProvidersMarketplacePage() {
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <h1 className="text-4xl font-heading font-bold text-mystic-steam-copper mb-2">
+                <h1 className="text-4xl font-heading font-bold text-[var(--accent)] mb-2">
                   Service Providers Marketplace
                 </h1>
-                <p className="text-mystic-steam-parchment/70">
+                <p className="text-[var(--text-muted)]">
                   Connect with KOLs, marketers, moderators, and other service providers in the
                   Solana ecosystem.
                 </p>
               </div>
               <Button
                 onClick={() => router.push('/service-providers/register')}
-                variant="steel"
+                variant="outline"
                 className="w-full md:w-auto"
               >
                 Register as Provider
@@ -105,12 +105,12 @@ export default function ServiceProvidersMarketplacePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-8 steel-panel rounded-xl p-6"
+            className="mb-8 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Search */}
               <div>
-                <label className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-2">
+                <label className="block text-sm font-body font-medium text-[var(--text-muted)] mb-2">
                   Search
                 </label>
                 <input
@@ -121,13 +121,13 @@ export default function ServiceProvidersMarketplacePage() {
                     setPage(1);
                   }}
                   placeholder="Search providers..."
-                  className="w-full px-4 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                  className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                 />
               </div>
 
               {/* Tag Filter */}
               <div>
-                <label className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-2">
+                <label className="block text-sm font-body font-medium text-[var(--text-muted)] mb-2">
                   Filter by Tag
                 </label>
                 <select
@@ -136,7 +136,7 @@ export default function ServiceProvidersMarketplacePage() {
                     setSelectedTag(e.target.value);
                     setPage(1);
                   }}
-                  className="w-full px-4 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                  className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                 >
                   <option value="">All Tags</option>
                   {PREDEFINED_TAGS.map((tag) => (
@@ -157,9 +157,9 @@ export default function ServiceProvidersMarketplacePage() {
                       setShowVerifiedOnly(e.target.checked);
                       setPage(1);
                     }}
-                    className="w-4 h-4 rounded border-dacian-steel-steel bg-dacian-steel-gunmetal text-dacian-steel-copper focus:ring-dacian-steel-copper"
+                    className="w-4 h-4 rounded border-[var(--border-default)] bg-[var(--bg-elevated)] text-[var(--accent)] focus:ring-[var(--accent)]"
                   />
-                  <span className="text-sm text-mystic-steam-parchment/70">
+                  <span className="text-sm text-[var(--text-muted)]">
                     Verified only
                   </span>
                 </label>
@@ -170,16 +170,16 @@ export default function ServiceProvidersMarketplacePage() {
           {/* Results */}
           {isLoading ? (
             <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-mystic-steam-copper"></div>
-              <p className="text-mystic-steam-parchment/60 mt-4">Loading providers...</p>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--accent)]"></div>
+              <p className="text-[var(--text-muted)] mt-4">Loading providers...</p>
             </div>
           ) : error ? (
-            <div className="text-center py-12 steel-panel rounded-xl">
-              <p className="text-mystic-steam-parchment/70">Failed to load service providers.</p>
+            <div className="text-center py-12 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl">
+              <p className="text-[var(--text-muted)]">Failed to load service providers.</p>
             </div>
           ) : !data || data.providers.length === 0 ? (
-            <div className="text-center py-12 steel-panel rounded-xl">
-              <p className="text-mystic-steam-parchment/70 mb-4">No service providers found.</p>
+            <div className="text-center py-12 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl">
+              <p className="text-[var(--text-muted)] mb-4">No service providers found.</p>
               <Button onClick={() => router.push('/service-providers/register')}>
                 Be the first to register
               </Button>
@@ -187,41 +187,41 @@ export default function ServiceProvidersMarketplacePage() {
           ) : (
             <>
               {/* Premium Table Layout */}
-              <div className="steel-panel rounded-xl overflow-hidden mb-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl overflow-hidden mb-8">
                 <div className="overflow-x-auto">
                   <table className="w-full">
-                    <thead className="bg-dacian-steel-gunmetal/50 border-b border-dacian-steel-steel/30">
+                    <thead className="bg-[var(--bg-elevated)] border-b border-[var(--border-default)]">
                       <tr>
-                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-[var(--accent)] uppercase tracking-wider">
                           Provider
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-[var(--accent)] uppercase tracking-wider">
                           Services
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-[var(--accent)] uppercase tracking-wider">
                           Contact
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-[var(--accent)] uppercase tracking-wider">
                           Status
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-mystic-steam-copper uppercase tracking-wider">
+                        <th className="px-6 py-4 text-left text-xs font-heading font-bold text-[var(--accent)] uppercase tracking-wider">
                           Actions
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-dacian-steel-steel/20">
+                    <tbody className="divide-y divide-[var(--border-default)]">
                       {data.providers.map((provider, index) => (
                         <motion.tr
                           key={provider.id}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: index * 0.02 }}
-                          className="hover:bg-dacian-steel-gunmetal/30 transition-colors"
+                          className="hover:bg-[var(--bg-elevated)]/50 transition-colors"
                         >
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex flex-col">
                               <div className="flex items-center gap-2">
-                                <span className="font-mono text-sm font-medium text-mystic-steam-parchment">
+                                <span className="font-mono text-sm font-medium text-[var(--text-primary)]">
                                   {provider.wallet.slice(0, 4)}...{provider.wallet.slice(-4)}
                                 </span>
                                 {provider.verified && (
@@ -235,7 +235,7 @@ export default function ServiceProvidersMarketplacePage() {
                                   href={`https://x.com/${provider.twitterHandle}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-xs text-dacian-steel-copper hover:text-dacian-steel-copper-light mt-1"
+                                  className="text-xs text-[var(--accent)] hover:opacity-90 mt-1"
                                 >
                                   @{provider.twitterHandle}
                                 </Link>
@@ -245,7 +245,7 @@ export default function ServiceProvidersMarketplacePage() {
                           <td className="px-6 py-4">
                             <div className="flex flex-col gap-2">
                               {provider.description && (
-                                <p className="text-sm text-mystic-steam-parchment/80 line-clamp-2 max-w-md">
+                                <p className="text-sm text-[var(--text-primary)]/80 line-clamp-2 max-w-md">
                                   {provider.description}
                                 </p>
                               )}
@@ -254,13 +254,13 @@ export default function ServiceProvidersMarketplacePage() {
                                   {provider.tags.slice(0, 4).map((tagItem) => (
                                     <span
                                       key={tagItem.tag}
-                                      className="px-2 py-0.5 bg-dacian-steel-steel/50 text-mystic-steam-parchment/70 rounded text-xs border border-dacian-steel-steel/30"
+                                      className="px-2 py-0.5 bg-[var(--bg-elevated)] text-[var(--text-muted)] rounded text-xs border border-[var(--border-default)]"
                                     >
                                       {tagItem.tag}
                                     </span>
                                   ))}
                                   {provider.tags.length > 4 && (
-                                    <span className="px-2 py-0.5 text-mystic-steam-parchment/50 text-xs">
+                                    <span className="px-2 py-0.5 text-[var(--text-primary)]/50 text-xs">
                                       +{provider.tags.length - 4}
                                     </span>
                                   )}
@@ -275,7 +275,7 @@ export default function ServiceProvidersMarketplacePage() {
                                   href={`https://t.me/${provider.telegram.replace(/^@/, '')}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors border border-dacian-steel-steel/30"
+                                  className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors border border-[var(--border-default)]"
                                 >
                                   Telegram
                                 </Link>
@@ -285,7 +285,7 @@ export default function ServiceProvidersMarketplacePage() {
                                   href={`https://x.com/${provider.twitterHandle}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors border border-dacian-steel-steel/30"
+                                  className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors border border-[var(--border-default)]"
                                 >
                                   Twitter
                                 </Link>
@@ -293,13 +293,13 @@ export default function ServiceProvidersMarketplacePage() {
                               {provider.email && (
                                 <a
                                   href={`mailto:${provider.email}`}
-                                  className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors border border-dacian-steel-steel/30"
+                                  className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors border border-[var(--border-default)]"
                                 >
                                   Email
                                 </a>
                               )}
                               {!provider.telegram && !provider.twitterHandle && !provider.email && (
-                                <span className="text-xs text-mystic-steam-parchment/50">No contact info</span>
+                                <span className="text-xs text-[var(--text-primary)]/50">No contact info</span>
                               )}
                             </div>
                           </td>
@@ -314,7 +314,7 @@ export default function ServiceProvidersMarketplacePage() {
                                   Pending
                                 </span>
                               )}
-                              <span className="text-xs text-mystic-steam-parchment/50">
+                              <span className="text-xs text-[var(--text-primary)]/50">
                                 {new Date(provider.createdAt).toLocaleDateString()}
                               </span>
                             </div>
@@ -332,7 +332,7 @@ export default function ServiceProvidersMarketplacePage() {
                                       window.location.href = `mailto:${provider.email}`;
                                     }
                                   }}
-                                  className="px-4 py-2 bg-mystic-steam-copper/80 hover:bg-mystic-steam-copper text-mystic-steam-parchment rounded text-xs font-medium transition-colors"
+                                  className="px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] rounded text-xs font-medium transition-colors"
                                 >
                                   Contact
                                 </button>
@@ -356,7 +356,7 @@ export default function ServiceProvidersMarketplacePage() {
                   >
                     Previous
                   </Button>
-                  <span className="text-mystic-steam-parchment/70">
+                  <span className="text-[var(--text-muted)]">
                     Page {data.pagination.page} of {data.pagination.totalPages}
                   </span>
                   <Button

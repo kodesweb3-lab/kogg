@@ -2,7 +2,8 @@ import { useMemo, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { z } from 'zod';
-import Header from '../components/Header';
+import Page from '@/components/ui/Page/Page';
+import { PageTitle } from '@/components/ui/PageTitle';
 
 import { useForm } from '@tanstack/react-form';
 import { useQueryClient } from '@tanstack/react-query';
@@ -366,7 +367,7 @@ export default function CreatePool() {
               <div className="flex items-center gap-2">
                 <a
                   href={`/token/${tokenMint}`}
-                  className="text-xs text-mystic-steam-copper hover:underline"
+                  className="text-xs text-[var(--accent)] hover:underline"
                 >
                   View Token
                 </a>
@@ -418,28 +419,13 @@ export default function CreatePool() {
 
       <Confetti trigger={showConfetti} />
 
-      <div className="min-h-screen bg-dacian-steel-dark text-mystic-steam-parchment relative">
-        {/* Layered atmospheric background */}
-        <div className="atmosphere-layer" />
-        <div className="steam-layer" />
-        <div className="castle-silhouette" />
-        <div className="dacian-pattern" />
-        
-        {/* Header */}
-        <Header />
+      <Page>
+        <PageTitle
+          title="Summon Your Token"
+          description="Begin the ritual. Launch your token and start the ascent."
+        />
 
-        {/* Page Content */}
-        <main className="container mx-auto px-4 py-10 relative z-10">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold mb-2 text-mystic-steam-copper ">
-                Summon Your Token
-              </h1>
-              <p className="text-mystic-steam-parchment/70 font-body">Begin the ritual. Launch your token and start the ascent.</p>
-            </div>
-          </div>
-
-          {poolCreated && !isLoading ? (
+        {poolCreated && !isLoading ? (
             <PoolCreationSuccess />
           ) : (
             <form
@@ -450,9 +436,9 @@ export default function CreatePool() {
               className="space-y-8"
             >
               {/* Token Type Selector */}
-              <div className="steel-panel rounded-xl p-8">
-                <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Token Type</h2>
-                <p className="text-mystic-steam-parchment/70 mb-4 font-body text-sm">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+                <h2 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">Token Type</h2>
+                <p className="text-[var(--text-muted)] mb-4 font-body text-sm">
                   Choose between a memecoin or tokenize a real-world asset (product, service, or asset)
                 </p>
                 {form.Field({
@@ -464,8 +450,8 @@ export default function CreatePool() {
                         onClick={() => field.handleChange('MEMECOIN')}
                         className={`flex-1 min-h-[60px] sm:min-h-[80px] p-4 md:p-6 rounded-lg border-2 transition-all font-body ${
                           field.state.value === 'MEMECOIN'
-                            ? 'border-dacian-steel-copper bg-dacian-steel-copper/20 text-mystic-steam-copper'
-                            : 'border-dacian-steel-steel/30 bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:border-dacian-steel-steel/50'
+                            ? 'border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]'
+                            : 'border-[var(--border-default)] bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:border-[var(--text-muted)]/50'
                         }`}
                       >
                         <div className="font-bold mb-1 text-base md:text-lg">Memecoin</div>
@@ -476,8 +462,8 @@ export default function CreatePool() {
                         onClick={() => field.handleChange('RWA')}
                         className={`flex-1 min-h-[60px] sm:min-h-[80px] p-4 md:p-6 rounded-lg border-2 transition-all font-body ${
                           field.state.value === 'RWA'
-                            ? 'border-dacian-steel-copper bg-dacian-steel-copper/20 text-mystic-steam-copper'
-                            : 'border-dacian-steel-steel/30 bg-dacian-steel-gunmetal text-mystic-steam-parchment/70 hover:border-dacian-steel-steel/50'
+                            ? 'border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]'
+                            : 'border-[var(--border-default)] bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:border-[var(--text-muted)]/50'
                         }`}
                       >
                         <div className="font-bold mb-1 text-base md:text-lg">Real World Asset (RWA)</div>
@@ -489,15 +475,15 @@ export default function CreatePool() {
               </div>
 
               {/* Token Details Section */}
-              <div className="steel-panel rounded-xl p-8">
-                <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Token Details</h2>
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+                <h2 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">Token Details</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <div className="mb-4">
                       <label
                         htmlFor="tokenName"
-                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                        className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                       >
                         Token Name*
                       </label>
@@ -508,7 +494,7 @@ export default function CreatePool() {
                             id="tokenName"
                             name={field.name}
                             type="text"
-                            className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             placeholder="e.g. Virtual Coin"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -522,7 +508,7 @@ export default function CreatePool() {
                     <div className="mb-4">
                       <label
                         htmlFor="tokenSymbol"
-                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                        className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                       >
                         Token Symbol*
                       </label>
@@ -533,7 +519,7 @@ export default function CreatePool() {
                             id="tokenSymbol"
                             name={field.name}
                             type="text"
-                            className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             placeholder="e.g. VRTL"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -548,7 +534,7 @@ export default function CreatePool() {
                   <div>
                       <label
                         htmlFor="tokenLogo"
-                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                        className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                       >
                         Token Logo*
                       </label>
@@ -570,13 +556,13 @@ export default function CreatePool() {
                         
                         return (
                           <div>
-                            <div className="border-2 border-dashed border-mystic-steam-copper/30 rounded-lg p-8 text-center">
+                            <div className="border-2 border-dashed border-[var(--accent)]/30 rounded-lg p-8 text-center">
                               {form.state.values.logoPreview || field.state.value ? (
                                 <div className="space-y-4">
                                   <img
                                     src={form.state.values.logoPreview || (field.state.value ? URL.createObjectURL(field.state.value) : '')}
                                     alt="Logo preview"
-                                    className="mx-auto max-h-32 max-w-32 rounded-lg object-contain border border-mystic-steam-copper/20"
+                                    className="mx-auto max-h-32 max-w-32 rounded-lg object-contain border border-[var(--accent)]/20"
                                   />
                                   <div>
                                     <p className="text-gray-400 text-xs mb-2">
@@ -584,7 +570,7 @@ export default function CreatePool() {
                                     </p>
                                     <label
                                       htmlFor="tokenLogo"
-                                      className="bg-dacian-steel-gunmetal px-4 py-2 rounded-lg text-sm hover:bg-dacian-steel-steel transition cursor-pointer text-mystic-steam-parchment/70 font-body inline-block"
+                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-lg text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
                                     >
                                       Change Image
                                     </label>
@@ -596,7 +582,7 @@ export default function CreatePool() {
                                   <p className="text-gray-400 text-xs mb-2">PNG, JPG or SVG (max. 10MB)</p>
                                   <label
                                     htmlFor="tokenLogo"
-                                    className="bg-dacian-steel-gunmetal px-4 py-2 rounded-lg text-sm hover:bg-dacian-steel-steel transition cursor-pointer text-mystic-steam-parchment/70 font-body inline-block"
+                                    className="bg-[var(--bg-elevated)] px-4 py-2 rounded-lg text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
                                   >
                                     Choose File
                                   </label>
@@ -619,8 +605,8 @@ export default function CreatePool() {
               </div>
 
               {/* Dev Buy Section */}
-              <div className="steel-panel rounded-xl p-8">
-                <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Initial Buy (Optional)</h2>
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+                <h2 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">Initial Buy (Optional)</h2>
                 <p className="text-gray-400 text-sm mb-4 font-body">
                   Buy tokens immediately after launch. Be the first holder of your own token.
                 </p>
@@ -628,7 +614,7 @@ export default function CreatePool() {
                 <div className="max-w-xs">
                   <label
                     htmlFor="devBuyAmount"
-                    className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                    className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                   >
                     Amount (SOL)
                   </label>
@@ -662,7 +648,7 @@ export default function CreatePool() {
                             name={field.name}
                             type="text"
                             inputMode="decimal"
-                            className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             placeholder="0.1 sau 0,1"
                             value={displayValue}
                             onChange={handleChange}
@@ -678,14 +664,14 @@ export default function CreatePool() {
               </div>
 
               {/* Social Links Section */}
-              <div className="steel-panel rounded-xl p-8">
-                <h2 className="text-2xl font-heading font-bold mb-6 text-mystic-steam-copper">Social Links (Optional)</h2>
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+                <h2 className="text-2xl font-heading font-bold mb-6 text-[var(--accent)]">Social Links (Optional)</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="mb-4">
                     <label
                       htmlFor="website"
-                      className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                      className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                     >
                       Website
                     </label>
@@ -696,7 +682,7 @@ export default function CreatePool() {
                           id="website"
                           name={field.name}
                           type="url"
-                          className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                           placeholder="https://yourwebsite.com"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -708,7 +694,7 @@ export default function CreatePool() {
                   <div className="mb-4">
                     <label
                       htmlFor="twitter"
-                      className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                      className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                     >
                       Twitter
                     </label>
@@ -719,7 +705,7 @@ export default function CreatePool() {
                           id="twitter"
                           name={field.name}
                           type="url"
-                          className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                           placeholder="https://twitter.com/yourusername"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -731,7 +717,7 @@ export default function CreatePool() {
                   <div className="mb-4">
                     <label
                       htmlFor="telegram"
-                      className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                      className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                     >
                       Telegram
                     </label>
@@ -742,7 +728,7 @@ export default function CreatePool() {
                           id="telegram"
                           name={field.name}
                           type="url"
-                          className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                           placeholder="https://t.me/yourchannel"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -755,9 +741,9 @@ export default function CreatePool() {
 
               {/* RWA Fields Section - Only show when tokenType is RWA */}
               {form.state.values.tokenType === 'RWA' && (
-                <div className="steel-panel rounded-xl p-8">
-                  <h2 className="text-2xl font-heading font-bold mb-4 text-mystic-steam-copper">Asset Information</h2>
-                  <p className="text-mystic-steam-parchment/70 mb-6 font-body text-sm">
+                <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+                  <h2 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">Asset Information</h2>
+                  <p className="text-[var(--text-muted)] mb-6 font-body text-sm">
                     Provide details about the real-world asset you're tokenizing
                   </p>
 
@@ -766,7 +752,7 @@ export default function CreatePool() {
                     <div>
                       <label
                         htmlFor="assetType"
-                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                        className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                       >
                         Asset Type*
                       </label>
@@ -776,7 +762,7 @@ export default function CreatePool() {
                           <select
                             id="assetType"
                             name={field.name}
-                            className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             value={field.state.value || ''}
                             onChange={(e) => field.handleChange(e.target.value)}
                             required
@@ -797,7 +783,7 @@ export default function CreatePool() {
                     <div>
                       <label
                         htmlFor="assetDescription"
-                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                        className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                       >
                         Asset Description*
                       </label>
@@ -808,7 +794,7 @@ export default function CreatePool() {
                             id="assetDescription"
                             name={field.name}
                             rows={4}
-                            className="w-full min-h-[120px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                            className="w-full min-h-[120px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             placeholder="Describe your asset in detail..."
                             value={field.state.value || ''}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -823,7 +809,7 @@ export default function CreatePool() {
                       <div>
                         <label
                           htmlFor="assetValue"
-                          className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                          className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                         >
                           Estimated Value (USD)
                         </label>
@@ -836,7 +822,7 @@ export default function CreatePool() {
                               type="number"
                               step="0.01"
                               min="0"
-                              className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                              className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                               placeholder="0.00"
                               value={field.state.value || ''}
                               onChange={(e) => field.handleChange(e.target.value ? parseFloat(e.target.value) : undefined)}
@@ -848,7 +834,7 @@ export default function CreatePool() {
                       <div>
                         <label
                           htmlFor="assetLocation"
-                          className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                          className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                         >
                           Location (Optional)
                         </label>
@@ -859,7 +845,7 @@ export default function CreatePool() {
                               id="assetLocation"
                               name={field.name}
                               type="text"
-                              className="w-full min-h-[44px] p-3 md:p-4 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment font-body text-base focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                              className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                               placeholder="e.g., New York, USA"
                               value={field.state.value || ''}
                               onChange={(e) => field.handleChange(e.target.value)}
@@ -873,11 +859,11 @@ export default function CreatePool() {
                     <div>
                       <label
                         htmlFor="documents"
-                        className="block text-sm font-body font-medium text-mystic-steam-parchment/70 mb-1"
+                        className="block text-sm font-body font-medium text-[var(--text-muted)] mb-1"
                       >
                         Supporting Documents (Optional)
                       </label>
-                      <p className="text-xs text-mystic-steam-parchment/50 mb-2 font-body">
+                      <p className="text-xs text-[var(--text-muted)]/80 mb-2 font-body">
                         Upload certificates, invoices, photos, or other documents (PDF, images, documents). Max 10 files, 20MB each.
                       </p>
                       {form.Field({
@@ -893,22 +879,22 @@ export default function CreatePool() {
 
                           return (
                             <div>
-                              <div className="border-2 border-dashed border-dacian-steel-steel/30 rounded-lg p-6 text-center">
+                              <div className="border-2 border-dashed border-[var(--border-default)] rounded-lg p-6 text-center">
                                 {field.state.value && field.state.value.length > 0 ? (
                                   <div className="space-y-2">
-                                    <div className="text-sm text-mystic-steam-parchment/70 mb-2">
+                                    <div className="text-sm text-[var(--text-muted)] mb-2">
                                       {field.state.value.length} file(s) selected
                                     </div>
                                     <div className="space-y-1 max-h-32 overflow-y-auto">
                                       {field.state.value.map((file, index) => (
-                                        <div key={index} className="text-xs text-mystic-steam-parchment/60 text-left">
+                                        <div key={index} className="text-xs text-[var(--text-muted)] text-left">
                                           • {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
                                         </div>
                                       ))}
                                     </div>
                                     <label
                                       htmlFor="documents"
-                                      className="bg-dacian-steel-gunmetal px-4 py-2 rounded-lg text-sm hover:bg-dacian-steel-steel transition cursor-pointer text-mystic-steam-parchment/70 font-body inline-block mt-2"
+                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-lg text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block mt-2"
                                     >
                                       Change Files
                                     </label>
@@ -919,7 +905,7 @@ export default function CreatePool() {
                                     <p className="text-gray-400 text-xs mb-2">PDF, images, or documents</p>
                                     <label
                                       htmlFor="documents"
-                                      className="bg-dacian-steel-gunmetal px-4 py-2 rounded-lg text-sm hover:bg-dacian-steel-steel transition cursor-pointer text-mystic-steam-parchment/70 font-body inline-block"
+                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-lg text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
                                     >
                                       Choose Files
                                     </label>
@@ -965,9 +951,8 @@ export default function CreatePool() {
                 <SubmitButton isSubmitting={isLoading} />
               </div>
             </form>
-          )}
-        </main>
-      </div>
+        )}
+      </Page>
     </>
   );
 }
@@ -1004,18 +989,18 @@ const SubmitButton = ({ isSubmitting }: { isSubmitting: boolean }) => {
 const PoolCreationSuccess = () => {
   return (
     <>
-      <div className="steel-panel rounded-xl p-8 text-center">
+      <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8 text-center">
         <div className="bg-green-500/20 p-4 rounded-full inline-flex mb-6">
           <span className="iconify ph--check-bold w-12 h-12 text-green-500" />
         </div>
-        <h2 className="text-3xl font-heading font-bold mb-4 text-mystic-steam-copper ">The Ritual is Complete! 🎉</h2>
-        <p className="text-mystic-steam-parchment/70 mb-8 max-w-lg mx-auto font-body">
+        <h2 className="text-3xl font-heading font-bold mb-4 text-[var(--accent)] ">The Ritual is Complete! 🎉</h2>
+        <p className="text-[var(--text-muted)] mb-8 max-w-lg mx-auto font-body">
           Your token has been summoned. The pack awaits. Begin the ascent.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/"
-            className="bg-dacian-steel-gunmetal px-6 py-3 rounded-xl font-body font-medium hover:bg-dacian-steel-steel transition text-mystic-steam-parchment/70"
+            className="bg-[var(--bg-elevated)] px-6 py-3 rounded-xl font-body font-medium hover:bg-[var(--bg-layer)] transition text-[var(--text-muted)]"
           >
             Discover Tokens
           </Link>
@@ -1023,7 +1008,7 @@ const PoolCreationSuccess = () => {
             onClick={() => {
               window.location.reload();
             }}
-            className="cursor-pointer bg-gradient-to-r from-mystic-steam-copper to-mystic-steam-copper/80 px-6 py-3 rounded-xl font-body font-medium hover:shadow-[0_0_20px_rgba(85,234,212,0.5)] transition text-black"
+            className="cursor-pointer bg-[var(--accent)] px-6 py-3 rounded-xl font-body font-medium hover:bg-[var(--accent-hover)] transition text-[var(--bg-base)]"
           >
             Launch Another Token
           </button>

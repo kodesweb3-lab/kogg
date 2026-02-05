@@ -18,7 +18,7 @@ export function TimelineConnector({ isActive = false, isLast = false, className 
         transition={{ duration: 0.5, delay: 0.2 }}
         className={`
           w-0.5 h-12 md:h-16
-          ${isActive ? 'bg-mystic-steam-copper/50' : 'bg-mystic-steam-copper/20'}
+          ${isActive ? 'bg-[var(--accent)]/50' : 'bg-[var(--accent)]/20'}
           relative
         `}
       >
@@ -29,8 +29,8 @@ export function TimelineConnector({ isActive = false, isLast = false, className 
           className={`
             absolute -left-2 top-1/2 -translate-y-1/2
             w-4 h-4 rounded-full
-            ${isActive ? 'bg-mystic-steam-copper' : 'bg-mystic-steam-copper/30'}
-            border-2 border-mystic-steam-charcoal
+            ${isActive ? 'bg-[var(--accent)]' : 'bg-[var(--accent)]/30'}
+            border-2 border-[var(--bg-base)]
           `}
         />
       </motion.div>

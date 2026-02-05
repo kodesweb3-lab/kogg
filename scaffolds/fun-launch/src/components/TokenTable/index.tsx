@@ -19,7 +19,7 @@ export const TokenBottomPanel: React.FC<TokenBottomPanelProps> = memo(({ classNa
 
   return (
     <Tabs
-      className={cn('flex flex-col overflow-hidden bg-obsidian-surface/50 rounded-lg border border-obsidian-border', className)}
+      className={cn('flex flex-col overflow-hidden bg-[var(--bg-layer)]/80 rounded-lg border border-[var(--border-default)]', className)}
       value={tab}
       onValueChange={(value) => setTab(value as BottomPanelTab)}
     >

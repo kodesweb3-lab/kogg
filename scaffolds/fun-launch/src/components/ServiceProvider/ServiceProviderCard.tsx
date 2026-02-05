@@ -27,13 +27,13 @@ export function ServiceProviderCard({ provider }: ServiceProviderCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="steel-panel rounded-xl p-6 hover:border-dacian-steel-steel/60 transition-all"
+      className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 hover:border-[var(--border-default)] transition-all"
     >
       {/* Header */}
       <div className="flex items-start justify-between mb-4">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-mono text-sm text-mystic-steam-parchment/70">
+            <span className="font-mono text-sm text-[var(--text-muted)]">
               {truncateWallet(provider.wallet)}
             </span>
             {provider.verified && (
@@ -47,7 +47,7 @@ export function ServiceProviderCard({ provider }: ServiceProviderCardProps) {
               href={`https://x.com/${provider.twitterHandle}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-dacian-steel-copper hover:text-dacian-steel-copper-light text-sm"
+              className="text-[var(--accent)] hover:opacity-90 text-sm"
             >
               @{provider.twitterHandle}
             </Link>
@@ -57,7 +57,7 @@ export function ServiceProviderCard({ provider }: ServiceProviderCardProps) {
 
       {/* Description */}
       {provider.description && (
-        <p className="text-mystic-steam-parchment/80 text-sm mb-4 line-clamp-3">
+        <p className="text-[var(--text-secondary)] text-sm mb-4 line-clamp-3">
           {provider.description}
         </p>
       )}
@@ -68,13 +68,13 @@ export function ServiceProviderCard({ provider }: ServiceProviderCardProps) {
           {provider.tags.slice(0, 5).map((tagItem) => (
             <span
               key={tagItem.tag}
-              className="px-2 py-1 bg-dacian-steel-steel/50 text-mystic-steam-parchment/70 rounded text-xs"
+              className="px-2 py-1 bg-[var(--bg-elevated)] text-[var(--text-muted)] rounded text-xs"
             >
               {tagItem.tag}
             </span>
           ))}
           {provider.tags.length > 5 && (
-            <span className="px-2 py-1 text-mystic-steam-parchment/50 text-xs">
+            <span className="px-2 py-1 text-[var(--text-muted)] text-xs">
               +{provider.tags.length - 5} more
             </span>
           )}
@@ -82,13 +82,13 @@ export function ServiceProviderCard({ provider }: ServiceProviderCardProps) {
       )}
 
       {/* Contact Buttons */}
-      <div className="flex flex-wrap gap-2 pt-4 border-t border-dacian-steel-steel/30">
+      <div className="flex flex-wrap gap-2 pt-4 border-t border-[var(--border-default)]">
         {provider.telegram && (
           <Link
             href={`https://t.me/${provider.telegram.replace(/^@/, '')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors"
+            className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors"
           >
             Telegram
           </Link>
@@ -98,7 +98,7 @@ export function ServiceProviderCard({ provider }: ServiceProviderCardProps) {
             href={`https://x.com/${provider.twitterHandle}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors"
+            className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors"
           >
             Twitter
           </Link>
@@ -106,7 +106,7 @@ export function ServiceProviderCard({ provider }: ServiceProviderCardProps) {
         {provider.email && (
           <a
             href={`mailto:${provider.email}`}
-            className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors"
+            className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors"
           >
             Email
           </a>

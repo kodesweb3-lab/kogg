@@ -8,7 +8,7 @@ export const motionVariants: Record<string, Variants> = {
     transition: { duration: 0.2, ease: 'easeOut' },
   },
   hoverGlow: {
-    boxShadow: '0 0 20px var(--wolf-glow)',
+    boxShadow: '0 0 20px var(--accent)',
     transition: { duration: 0.3 },
   },
   hoverScale: {

@@ -16,7 +16,7 @@ export function WalletConnectionRitual({ isConnecting, onComplete }: WalletConne
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-obsidian-base/95 backdrop-blur-sm flex items-center justify-center"
+          className="fixed inset-0 z-50 bg-[var(--bg-base)]/95 backdrop-blur-sm flex items-center justify-center"
           onAnimationComplete={onComplete}
         >
           <motion.div
@@ -26,12 +26,12 @@ export function WalletConnectionRitual({ isConnecting, onComplete }: WalletConne
             className="text-center"
           >
             <div className="mb-4">
-              <div className="w-16 h-16 mx-auto border-2 border-aureate-base rounded-full flex items-center justify-center">
-                <div className="w-8 h-8 border-2 border-aureate-base border-t-transparent rounded-full animate-spin" />
+              <div className="w-16 h-16 mx-auto border-2 border-[var(--accent)] rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
               </div>
             </div>
-            <p className="text-aureate-base font-heading text-xl">Entering Kogaion...</p>
-            <p className="text-mystic-steam-parchment/60 font-body text-sm mt-2">
+            <p className="text-[var(--accent)] font-heading text-xl">Entering Kogaion...</p>
+            <p className="text-[var(--text-muted)] font-body text-sm mt-2">
               The chain awaits your connection
             </p>
           </motion.div>

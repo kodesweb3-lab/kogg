@@ -71,13 +71,13 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
         {selectedTags.map((tag) => (
           <span
             key={tag}
-            className="inline-flex items-center gap-1 px-3 py-1 bg-dacian-steel-steel text-mystic-steam-parchment rounded-full text-sm"
+            className="inline-flex items-center gap-1 px-3 py-1 bg-[var(--bg-elevated)] text-[var(--text-primary)] rounded-full text-sm"
           >
             {tag}
             <button
               type="button"
               onClick={() => handleTagRemove(tag)}
-              className="hover:text-mystic-steam-copper transition-colors"
+              className="hover:text-[var(--accent)] transition-colors"
             >
               ×
             </button>
@@ -90,7 +90,7 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="w-full px-4 py-2 bg-dacian-steel-gunmetal border border-dacian-steel-steel/30 rounded-lg text-mystic-steam-parchment text-left focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+            className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] text-left focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           >
             {isOpen ? 'Select tags...' : '+ Add Tag'}
           </button>
@@ -101,23 +101,23 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
-                className="absolute z-50 w-full mt-2 steel-panel rounded-lg shadow-lg max-h-96 overflow-y-auto"
+                className="absolute z-50 w-full mt-2 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-lg shadow-lg max-h-96 overflow-y-auto"
               >
                 {/* Search input */}
-                <div className="p-2 border-b border-dacian-steel-steel/30">
+                <div className="p-2 border-b border-[var(--border-default)]"">
                   <input
                     type="text"
                     placeholder="Search tags..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-3 py-2 bg-dacian-steel-dark border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                    className="w-full px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                   />
                 </div>
 
                 {/* Predefined tags list */}
                 {filteredTags.length > 0 && (
                   <div className="p-2">
-                    <div className="text-xs text-mystic-steam-parchment/60 mb-2 px-2 sticky top-0 bg-dacian-steel-gunmetal py-1 rounded">
+                    <div className="text-xs text-[var(--text-muted)] mb-2 px-2 sticky top-0 bg-[var(--bg-elevated)] py-1 rounded">
                       Predefined Tags ({filteredTags.length} available)
                     </div>
                     <div className="space-y-1">
@@ -126,7 +126,7 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
                           key={tag}
                           type="button"
                           onClick={() => handleTagSelect(tag)}
-                          className="w-full text-left px-3 py-2 hover:bg-dacian-steel-steel rounded text-sm text-mystic-steam-parchment transition-colors"
+                          className="w-full text-left px-3 py-2 hover:bg-[var(--bg-layer)] rounded text-sm text-[var(--text-primary)] transition-colors"
                         >
                           {tag}
                         </button>
@@ -136,8 +136,8 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
                 )}
 
                 {/* Custom tag input */}
-                <div className="p-2 border-t border-dacian-steel-steel/30">
-                  <div className="text-xs text-mystic-steam-parchment/60 mb-2 px-2">Custom Tag</div>
+                <div className="p-2 border-t border-[var(--border-default)]"">
+                  <div className="text-xs text-[var(--text-muted)] mb-2 px-2">Custom Tag</div>
                   <div className="flex gap-2">
                     <input
                       type="text"
@@ -151,12 +151,12 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
                         }
                       }}
                       maxLength={50}
-                      className="flex-1 px-3 py-2 bg-dacian-steel-dark border border-dacian-steel-steel/30 rounded text-mystic-steam-parchment focus:outline-none focus:ring-2 focus:ring-dacian-steel-copper"
+                      className="flex-1 px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                     />
                     <button
                       type="button"
                       onClick={handleCustomTagAdd}
-                      className="px-4 py-2 bg-dacian-steel-copper hover:bg-dacian-steel-copper/90 text-mystic-steam-charcoal rounded font-medium transition-colors"
+                      className="px-4 py-2 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] rounded font-medium transition-colors"
                     >
                       Add
                     </button>
@@ -169,7 +169,7 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
       )}
 
       {selectedTags.length > 0 && (
-        <p className="text-xs text-mystic-steam-parchment/50 mt-1">
+        <p className="text-xs text-[var(--text-muted)]/80 mt-1">
           {selectedTags.length} / {maxTags} tags selected
         </p>
       )}

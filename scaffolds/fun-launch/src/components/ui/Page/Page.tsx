@@ -5,39 +5,54 @@ import { cn } from '@/lib/utils';
 interface IProps {
   containerClassName?: string;
   pageClassName?: string;
+  /** Use narrow content width (editorial) */
+  narrow?: boolean;
+  /** Omit bottom nav (e.g. for full-screen pages) */
+  noBottomNav?: boolean;
 }
 
 const Page: React.FC<React.PropsWithChildren<IProps>> = ({
   containerClassName,
   children,
   pageClassName,
+  narrow = false,
+  noBottomNav = false,
 }) => {
   return (
     <div
       className={cn(
         'flex flex-col text-[var(--text-primary)] relative',
-        'h-[100dvh] max-h-[100dvh] overflow-hidden',
-        'lg:h-auto lg:min-h-screen lg:max-h-none lg:overflow-visible lg:justify-between',
+        'min-h-[100dvh]',
+        'lg:min-h-screen',
         pageClassName
       )}
       style={{ background: 'var(--bg-base)' }}
     >
       <Header />
-      <div
+      <main
         className={cn(
-          'flex flex-1 flex-col items-center min-h-0 overflow-y-auto overflow-x-hidden lg:overflow-visible',
-          'px-3 md:px-4 pt-3 pb-24 lg:pb-16 md:pt-4 relative z-0 lg:z-10',
+          'flex-1 flex flex-col w-full min-h-0',
+          'overflow-y-auto overflow-x-hidden',
+          noBottomNav ? 'pb-8 lg:pb-12' : 'pb-24 lg:pb-12',
           containerClassName
         )}
         style={{
-          paddingLeft: 'max(0.75rem, env(safe-area-inset-left))',
-          paddingRight: 'max(0.75rem, env(safe-area-inset-right))',
-          paddingBottom: 'max(5rem, env(safe-area-inset-bottom))',
+          paddingLeft: 'max(var(--content-padding), env(safe-area-inset-left))',
+          paddingRight: 'max(var(--content-padding), env(safe-area-inset-right))',
+          paddingTop: 'var(--content-padding)',
+          paddingBottom: noBottomNav ? 'max(2rem, env(safe-area-inset-bottom))' : 'max(5rem, env(safe-area-inset-bottom))',
         }}
       >
-        <div className="lg:max-w-6xl w-full">{children}</div>
-      </div>
-      <BottomNav />
+        <div
+          className={cn(
+            'w-full mx-auto flex flex-col',
+            narrow ? 'max-w-[var(--content-narrow)]' : 'max-w-[var(--content-max-width)]'
+          )}
+        >
+          {children}
+        </div>
+      </main>
+      {!noBottomNav && <BottomNav />}
     </div>
   );
 };

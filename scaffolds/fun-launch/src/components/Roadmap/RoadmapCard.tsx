@@ -28,19 +28,18 @@ export function RoadmapCard({ phase, className }: RoadmapCardProps) {
       transition={{ delay: phase.index * 0.1 }}
       whileHover={{ scale: 1.02, y: -4 }}
       className={cn(
-        'relative bg-mystic-steam-ash',
-        'border rounded-xl p-6 backdrop-blur-sm',
-        'border-mystic-steam-copper/30',
-        'hover:border-mystic-steam-copper/50',
+        'relative bg-[var(--bg-layer)]',
+        'border border-[var(--border-default)] rounded-xl p-6 backdrop-blur-sm',
+        'hover:border-[var(--accent)]/50',
         'transition-all duration-300',
         className
       )}
     >
       {/* Decorative screws */}
-      <div className="absolute -top-2 -left-2 w-4 h-4 rounded-full border-2 border-mystic-steam-bronze bg-mystic-steam-oxidized/50" />
-      <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full border-2 border-mystic-steam-bronze bg-mystic-steam-oxidized/50" />
-      <div className="absolute -bottom-2 -left-2 w-4 h-4 rounded-full border-2 border-mystic-steam-bronze bg-mystic-steam-oxidized/50" />
-      <div className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full border-2 border-mystic-steam-bronze bg-mystic-steam-oxidized/50" />
+      <div className="absolute -top-2 -left-2 w-4 h-4 rounded-full border-2 border-[var(--border-default)] bg-[var(--bg-elevated)]" />
+      <div className="absolute -top-2 -right-2 w-4 h-4 rounded-full border-2 border-[var(--border-default)] bg-[var(--bg-elevated)]" />
+      <div className="absolute -bottom-2 -left-2 w-4 h-4 rounded-full border-2 border-[var(--border-default)] bg-[var(--bg-elevated)]" />
+      <div className="absolute -bottom-2 -right-2 w-4 h-4 rounded-full border-2 border-[var(--border-default)] bg-[var(--bg-elevated)]" />
 
       {/* Icon */}
       <div className="mb-4 flex items-center justify-between">
@@ -49,12 +48,12 @@ export function RoadmapCard({ phase, className }: RoadmapCardProps) {
       </div>
 
       {/* Title */}
-      <h3 className="text-xl font-heading font-bold mb-2 text-mystic-steam-parchment">
+      <h3 className="text-xl font-heading font-bold mb-2 text-[var(--text-primary)]">
         {phase.title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm text-mystic-steam-parchment/60 font-body mb-4">{phase.description}</p>
+      <p className="text-sm text-[var(--text-muted)] font-body mb-4">{phase.description}</p>
 
       {/* Features */}
       <FeatureList features={phase.features} />

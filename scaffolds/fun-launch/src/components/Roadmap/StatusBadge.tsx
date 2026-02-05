@@ -10,22 +10,22 @@ interface StatusBadgeProps {
 const statusConfig: Record<Status, { label: string; color: string; glow: string }> = {
   active: {
     label: 'Active',
-    color: 'text-mystic-steam-copper',
+    color: 'text-[var(--accent)]',
     glow: '',
   },
   'coming-soon': {
     label: 'Coming Soon',
-    color: 'text-mystic-steam-gold',
+    color: 'text-[var(--accent)]',
     glow: '',
   },
   planned: {
     label: 'Planned',
-    color: 'text-mystic-steam-bronze',
+    color: 'text-[var(--text-secondary)]',
     glow: '',
   },
   vision: {
     label: 'Vision',
-    color: 'text-mystic-steam-oxidized',
+    color: 'text-[var(--text-muted)]',
     glow: '',
   },
 };

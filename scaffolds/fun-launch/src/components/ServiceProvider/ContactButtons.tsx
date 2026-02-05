@@ -18,7 +18,7 @@ export function ContactButtons({ telegram, twitterHandle, email }: ContactButton
           href={`https://t.me/${telegram.replace(/^@/, '')}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors"
+          className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors"
         >
           Telegram
         </a>
@@ -28,7 +28,7 @@ export function ContactButtons({ telegram, twitterHandle, email }: ContactButton
           href={`https://x.com/${twitterHandle}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors"
+          className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors"
         >
           Twitter
         </a>
@@ -36,7 +36,7 @@ export function ContactButtons({ telegram, twitterHandle, email }: ContactButton
       {email && (
         <a
           href={`mailto:${email}`}
-          className="px-3 py-1.5 bg-dacian-steel-gunmetal hover:bg-dacian-steel-steel text-mystic-steam-parchment rounded text-xs transition-colors"
+          className="px-3 py-1.5 bg-[var(--bg-elevated)] hover:bg-[var(--bg-layer)] text-[var(--text-primary)] rounded text-xs transition-colors"
         >
           Email
         </a>

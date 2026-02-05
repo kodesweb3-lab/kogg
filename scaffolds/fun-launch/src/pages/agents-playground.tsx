@@ -147,7 +147,7 @@ export default function AgentsPlaygroundPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-6"
           >
-            <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2 text-aureate-base">
+            <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2 text-[var(--accent)]">
               Agents Playground
             </h1>
             <p className="text-[var(--text-muted)] font-body">
@@ -159,7 +159,7 @@ export default function AgentsPlaygroundPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
-            className="glass-card rounded-xl  overflow-hidden flex flex-col"
+            className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl overflow-hidden flex flex-col"
             style={{ minHeight: '420px' }}
           >
             {/* Messages */}
@@ -184,7 +184,7 @@ export default function AgentsPlaygroundPage() {
                         variant="outline"
                         onClick={loadMore}
                         disabled={loadingMore}
-                        className="text-mystic-steam-parchment/70 border-mystic-steam-copper/30 text-sm py-1.5 px-3"
+                        className="text-[var(--text-muted)] border-[var(--border-default)] text-sm py-1.5 px-3"
                       >
                         {loadingMore ? 'Loading…' : 'Load older'}
                       </Button>
@@ -193,10 +193,10 @@ export default function AgentsPlaygroundPage() {
                   {messages.map((msg) => (
                     <div
                       key={msg.id}
-                      className="rounded-lg p-3 bg-mystic-steam-ash/50 border border-mystic-steam-copper/10"
+                      className="rounded-lg p-3 bg-[var(--bg-elevated)]/80 border border-[var(--border-default)]"
                     >
                       <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <span className="font-heading font-semibold text-mystic-steam-copper text-sm">
+                        <span className="font-heading font-semibold text-[var(--accent)] text-sm">
                           {msg.authorLabel || (msg.wallet ? `${msg.wallet.slice(0, 4)}…${msg.wallet.slice(-4)}` : 'Anonymous')}
                         </span>
                         <span className="text-xs text-[var(--text-muted)]" title={formatFullDate(msg.createdAt)}>
@@ -214,14 +214,14 @@ export default function AgentsPlaygroundPage() {
             </div>
 
             {/* Compose */}
-            <form onSubmit={handleSubmit} className="p-4 border-t border-mystic-steam-copper/20">
+            <form onSubmit={handleSubmit} className="p-4 border-t border-[var(--border-default)]">
               <div className="flex flex-col gap-2">
                 <input
                   type="text"
                   placeholder="Display name (optional)"
                   value={authorLabel}
                   onChange={(e) => setAuthorLabel(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-mystic-steam-ash border border-mystic-steam-copper/20 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-body text-sm focus:outline-none focus:ring-1 focus:ring-mystic-steam-copper/50"
+                  className="w-full px-3 py-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-body text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
                   maxLength={64}
                 />
                 <textarea
@@ -230,7 +230,7 @@ export default function AgentsPlaygroundPage() {
                   onChange={(e) => setContent(e.target.value)}
                   rows={2}
                   maxLength={2000}
-                  className="w-full px-3 py-2 rounded-lg bg-mystic-steam-ash border border-mystic-steam-copper/20 text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-body text-sm focus:outline-none focus:ring-1 focus:ring-mystic-steam-copper/50 resize-y min-h-[60px]"
+                  className="w-full px-3 py-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-body text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent)] resize-y min-h-[60px]"
                 />
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-[var(--text-muted)]">
