@@ -104,7 +104,7 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
                 className="absolute z-50 w-full mt-2 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-lg shadow-lg max-h-96 overflow-y-auto"
               >
                 {/* Search input */}
-                <div className="p-2 border-b border-[var(--border-default)]"">
+                <div className="p-2 border-b border-[var(--border-default)]">
                   <input
                     type="text"
                     placeholder="Search tags..."
@@ -136,7 +136,7 @@ export function TagSelector({ selectedTags, onTagsChange, maxTags = 10 }: TagSel
                 )}
 
                 {/* Custom tag input */}
-                <div className="p-2 border-t border-[var(--border-default)]"">
+                <div className="p-2 border-t border-[var(--border-default)]">
                   <div className="text-xs text-[var(--text-muted)] mb-2 px-2">Custom Tag</div>
                   <div className="flex gap-2">
                     <input
