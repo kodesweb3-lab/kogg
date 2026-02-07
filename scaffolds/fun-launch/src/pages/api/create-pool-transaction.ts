@@ -141,5 +141,17 @@ async function createPoolTransaction({
   poolTx.feePayer = new PublicKey(userWallet);
   poolTx.recentBlockhash = blockhash;
 
+  // Simulate with sigVerify: false so we don't need real signatures (Phantom recommendation:
+  // "simulate the transaction with sigVerify: false ... to ensure they will not fail onchain")
+  const simulation = await connection.simulateTransaction(poolTx, {
+    sigVerify: false,
+    commitment: 'confirmed',
+  } as { sigVerify?: boolean; commitment?: string });
+  if (simulation.value.err) {
+    throw new Error(
+      `Transaction simulation failed (tx would fail onchain): ${JSON.stringify(simulation.value.err)}`
+    );
+  }
+
   return poolTx;
 }

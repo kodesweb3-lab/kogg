@@ -227,13 +227,14 @@ export default function CreatePool() {
         const { poolTx } = await poolTxResponse.json();
         const transaction = Transaction.from(Buffer.from(poolTx, 'base64'));
 
-        // Step 4: Sign with keypair first
-        transaction.sign(keyPair);
-
-        // Step 5: Then sign with user's wallet
+        // Step 4: Sign with user's wallet first (Phantom recommendation: "sign it with Phantom first
+        // using signTransaction ... then collect signatures from the other signers")
         toast.loading('Please sign the transaction in your wallet...', { id: 'sign-tx' });
         const signedTransaction = await signTransaction(transaction);
         toast.success('Transaction signed', { id: 'sign-tx' });
+
+        // Step 5: Add mint keypair signature (second signer)
+        signedTransaction.sign(keyPair);
 
         // Step 6: Send signed transaction
         toast.loading('Sending transaction to Solana...', { id: 'send-tx' });
