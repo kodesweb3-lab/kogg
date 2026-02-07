@@ -172,7 +172,7 @@ export const Header = () => {
   return (
     <>
       <header
-        className="w-full sticky top-0 z-40 pt-[env(safe-area-inset-top)]"
+        className="w-full sticky top-0 z-[1000] isolate pt-[env(safe-area-inset-top)]"
         style={{
           height: 'var(--header-height)',
           background: 'var(--glass-bg)',
@@ -305,7 +305,11 @@ export const Header = () => {
                         <Link
                           key={item.href}
                           href={item.href}
-                          onClick={() => setMobileOpen(false)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setMobileOpen(false);
+                            router.push(item.href);
+                          }}
                           className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
                             router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
                           }`}
@@ -317,7 +321,11 @@ export const Header = () => {
                     {connected && publicKey && (
                       <Link
                         href="/dashboard"
-                        onClick={() => setMobileOpen(false)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setMobileOpen(false);
+                          router.push('/dashboard');
+                        }}
                         className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
                           router.pathname === '/dashboard' ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
                         }`}
@@ -334,7 +342,11 @@ export const Header = () => {
                       <Link
                         key={item.href}
                         href={item.href}
-                        onClick={() => setMobileOpen(false)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setMobileOpen(false);
+                          router.push(item.href);
+                        }}
                         className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
                           router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
                         }`}
@@ -351,7 +363,11 @@ export const Header = () => {
                       <Link
                         key={item.href}
                         href={item.href}
-                        onClick={() => setMobileOpen(false)}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setMobileOpen(false);
+                          router.push(item.href);
+                        }}
                         className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
                           router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
                         }`}
@@ -368,7 +384,11 @@ export const Header = () => {
                         <Link
                           key={item.href}
                           href={item.href}
-                          onClick={() => setMobileOpen(false)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setMobileOpen(false);
+                            router.push(item.href);
+                          }}
                           className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
                             router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
                           }`}
@@ -381,7 +401,11 @@ export const Header = () => {
                 </div>
                 <Link
                   href="/create-pool"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setMobileOpen(false);
+                    router.push('/create-pool');
+                  }}
                   className="flex items-center justify-center w-full min-h-12 rounded-xl font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-95"
                   style={{ background: 'var(--accent)' }}
                 >

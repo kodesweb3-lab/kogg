@@ -30,7 +30,7 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
       <Header />
       <main
         className={cn(
-          'flex-1 flex flex-col w-full min-h-0',
+          'flex-1 flex flex-col w-full min-h-0 relative z-0',
           'overflow-x-hidden',
           'max-lg:overflow-y-visible lg:overflow-y-auto',
           noBottomNav ? 'pb-8 lg:pb-12' : 'pb-24 lg:pb-12',

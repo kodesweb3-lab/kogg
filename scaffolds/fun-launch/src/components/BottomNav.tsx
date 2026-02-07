@@ -71,7 +71,7 @@ export function BottomNav() {
   return (
     <>
       <nav
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-[100] flex items-center justify-around gap-1 px-2 pt-3 pb-[env(safe-area-inset-bottom)] min-h-[64px]"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-[1000] isolate flex items-center justify-around gap-1 px-2 pt-3 pb-[env(safe-area-inset-bottom)] min-h-[64px]"
         style={{
           background: 'var(--glass-bg)',
           backdropFilter: 'blur(var(--glass-blur))',
@@ -90,6 +90,10 @@ export function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+                router.push(item.href);
+              }}
               className={`relative flex flex-col items-center justify-center gap-1 min-w-[72px] min-h-[52px] rounded-2xl transition-all touch-manipulation active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] ${
                 isActive ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-[var(--text-muted)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]'
               }`}
