@@ -62,10 +62,10 @@ export default function LandingPage() {
 
   return (
     <Page>
-      <div className="flex flex-col gap-[var(--section-gap)] text-[var(--text-primary)]">
+      <div className="flex flex-col gap-10 sm:gap-[var(--section-gap)] text-[var(--text-primary)] pb-6">
         {/* Hero — split layout: left copy, right stats */}
-        <section className="relative pt-8 md:pt-12 pb-12 md:pb-16">
-          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <section className="relative pt-6 sm:pt-8 md:pt-12 pb-10 sm:pb-12 md:pb-16">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-16 items-center">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/30 mb-6">
                 <span className="relative flex h-2 w-2">
@@ -98,19 +98,19 @@ export default function LandingPage() {
                   🔐 Privacy
                 </span>
               </div>
-              <div className="flex flex-wrap gap-3">
-                <Button variant="primary" size="lg" onClick={() => router.push('/discover')}>
+              <div className="flex flex-wrap gap-3 sm:gap-4">
+                <Button variant="primary" size="lg" className="min-h-[var(--touch-min)] w-full sm:w-auto sm:min-w-[140px] px-6 py-3.5 shadow-lg hover:shadow-xl" onClick={() => router.push('/discover')}>
                   Discover
                 </Button>
-                <Button variant="outline" size="lg" onClick={() => router.push('/create-pool')}>
+                <Button variant="outline" size="lg" className="min-h-[var(--touch-min)] w-full sm:w-auto sm:min-w-[140px] px-6 py-3.5 border-2" onClick={() => router.push('/create-pool')}>
                   Launch Token
                 </Button>
                 {hasWallet ? (
-                  <Button variant="secondary" size="lg" onClick={() => router.push('/dashboard')}>
+                  <Button variant="secondary" size="lg" className="min-h-[var(--touch-min)] w-full sm:w-auto sm:min-w-[120px]" onClick={() => router.push('/dashboard')}>
                     Dashboard
                   </Button>
                 ) : (
-                  <Button variant="secondary" size="lg" onClick={() => setShowModal(true)}>
+                  <Button variant="secondary" size="lg" className="min-h-[var(--touch-min)] w-full sm:w-auto sm:min-w-[120px]" onClick={() => setShowModal(true)}>
                     Connect Wallet
                   </Button>
                 )}
@@ -136,6 +136,35 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
+
+        {/* Why Kogaion — value proposition vs bonding elsewhere */}
+        <LayoutSection title="Why launch on Kogaion" description="Better economics and full control for creators." gap="default" variant="default">
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8">
+            <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-layer)] p-6 md:p-8">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">Creator fee share</h3>
+              <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-4">
+                When you bond a token on Kogaion, we buy the DEX for you. Creators earn <strong className="text-[var(--accent)]">1.65%</strong> on both buy and sell—compared with 0.3%–0.9% elsewhere.
+              </p>
+              <p className="text-[var(--text-muted)] text-xs">
+                Higher share, same security. No lock-in.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-layer)] p-6 md:p-8">
+              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">No retained supply</h3>
+              <p className="text-[var(--text-secondary)] text-sm leading-relaxed mb-4">
+                Other platforms keep up to <strong className="text-[var(--text-primary)]">20%</strong> of your token supply and sell it programmatically. On Kogaion we keep <strong className="text-[var(--accent)]">none</strong>—you own 100% of what you create.
+              </p>
+              <p className="text-[var(--text-muted)] text-xs">
+                Launch straight on DEX. Your token, your liquidity.
+              </p>
+            </div>
+          </div>
+          <div className="rounded-xl border border-[var(--accent)]/30 bg-[var(--accent)]/5 p-4 md:p-5 text-center">
+            <p className="text-sm text-[var(--text-primary)]">
+              Bond on <span className="font-semibold text-[var(--accent)]">kogaion.fun</span> and we provision the DEX for you. No retained tokens, no hidden dilution—just a higher creator fee and full ownership.
+            </p>
+          </div>
+        </LayoutSection>
 
         {/* Agent Ecosystem — section with title left, grid of cards */}
         <LayoutSection title="Agent Ecosystem" description="Integrations powering the decentralized agent economy." gap="default" variant="default">
@@ -232,18 +261,18 @@ export default function LandingPage() {
 
         {/* CTA band — full width */}
         <section
-          className="rounded-2xl mx-[var(--content-padding)] md:mx-[var(--content-padding-lg)] p-8 md:p-12 text-center"
+          className="rounded-2xl mx-[var(--content-padding)] md:mx-[var(--content-padding-lg)] p-6 sm:p-8 md:p-12 text-center"
           style={{ background: 'var(--bg-elevated)', border: '1px solid var(--border-default)' }}
         >
           <h2 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-2">Ready to Launch?</h2>
           <p className="text-[var(--text-muted)] mb-6 max-w-xl mx-auto">
             Join the agent economy. Launch your token in minutes with zero code required.
           </p>
-          <div className="flex flex-wrap gap-3 justify-center">
-            <Button variant="primary" size="lg" onClick={() => router.push('/create-pool')}>
+          <div className="flex flex-wrap gap-3 sm:gap-4 justify-center">
+            <Button variant="primary" size="lg" className="min-h-[var(--touch-min)] w-full sm:w-auto sm:min-w-[140px] px-6 py-3.5 shadow-lg" onClick={() => router.push('/create-pool')}>
               Launch Token
             </Button>
-            <Button variant="outline" size="lg" onClick={() => router.push('/for-agents')}>
+            <Button variant="outline" size="lg" className="min-h-[var(--touch-min)] w-full sm:w-auto sm:min-w-[120px] border-2" onClick={() => router.push('/for-agents')}>
               Learn More
             </Button>
           </div>

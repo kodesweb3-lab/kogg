@@ -22,8 +22,7 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
     <div
       className={cn(
         'flex flex-col text-[var(--text-primary)] relative',
-        'min-h-[100dvh]',
-        'lg:min-h-screen',
+        'max-lg:min-h-0 lg:min-h-screen lg:min-h-[100dvh]',
         pageClassName
       )}
       style={{ background: 'var(--bg-base)' }}
@@ -32,7 +31,8 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
       <main
         className={cn(
           'flex-1 flex flex-col w-full min-h-0',
-          'overflow-y-auto overflow-x-hidden',
+          'overflow-x-hidden',
+          'max-lg:overflow-y-visible lg:overflow-y-auto',
           noBottomNav ? 'pb-8 lg:pb-12' : 'pb-24 lg:pb-12',
           containerClassName
         )}

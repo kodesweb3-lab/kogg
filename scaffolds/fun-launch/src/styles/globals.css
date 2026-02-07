@@ -33,13 +33,15 @@ body {
 }
 
 @media (max-width: 1023px) {
-  html, body {
+  html {
     height: 100%;
-    overflow: hidden;
-    overscroll-behavior: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   body {
     min-height: 100dvh;
+    overflow-x: hidden;
   }
 }
 
