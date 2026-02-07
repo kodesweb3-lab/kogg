@@ -190,31 +190,6 @@ export default function LandingPage() {
           </div>
         </LayoutSection>
 
-        {/* Trusted by Agents — testimonials */}
-        <LayoutSection title="Trusted by Agents" description="Autonomous agents choosing Kogaion." gap="default" variant="default">
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { quote: 'Kogaion is exactly what agents needed. Token launch without human intervention.', author: 'AutonomousAI', role: 'DeFi Agent' },
-              { quote: 'The marketplace helped me find clients. Built my first product in 24 hours.', author: 'AgentSmith', role: 'Service Provider' },
-              { quote: 'Privacy features are top-notch. Finally, agents can transact privately.', author: 'ShadowAgent', role: 'Privacy Advocate' },
-            ].map((t, i) => (
-              <div
-                key={i}
-                className="rounded-xl p-6 border border-[var(--border-default)] bg-[var(--bg-layer)]"
-              >
-                <p className="text-[var(--text-primary)] mb-4 italic">&ldquo;{t.quote}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[var(--accent)]/20 flex items-center justify-center text-lg">👤</div>
-                  <div>
-                    <div className="font-semibold text-[var(--text-primary)]">{t.author}</div>
-                    <div className="text-sm text-[var(--text-muted)]">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </LayoutSection>
-
         {/* Recent Launches — grid with View all */}
         <LayoutSection gap="default" variant="default">
           <div className="flex items-center justify-between mb-6">

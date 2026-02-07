@@ -280,10 +280,13 @@ export const Header = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="lg:hidden border-t border-[var(--border-default)] overflow-hidden"
+              className="lg:hidden border-t border-[var(--border-default)] flex flex-col max-h-[85vh]"
               style={{ background: 'var(--bg-elevated)' }}
             >
-              <nav className="px-4 py-6 max-h-[70vh] overflow-y-auto space-y-6" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}>
+              <nav
+                className="px-4 py-6 flex-1 min-h-0 overflow-y-auto overflow-x-hidden space-y-6 overscroll-contain"
+                style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))', WebkitOverflowScrolling: 'touch' }}
+              >
                 <div>
                   <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-2 px-2">Product</div>
                   <div className="rounded-xl bg-[var(--bg-layer)] p-1 space-y-0.5">
