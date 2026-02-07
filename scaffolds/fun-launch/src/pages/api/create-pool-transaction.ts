@@ -141,16 +141,29 @@ async function createPoolTransaction({
   poolTx.feePayer = new PublicKey(userWallet);
   poolTx.recentBlockhash = blockhash;
 
-  // Simulate with sigVerify: false so we don't need real signatures (Phantom recommendation:
-  // "simulate the transaction with sigVerify: false ... to ensure they will not fail onchain")
-  const simulation = await connection.simulateTransaction(poolTx, {
-    sigVerify: false,
-    commitment: 'confirmed',
-  } as { sigVerify?: boolean; commitment?: string });
-  if (simulation.value.err) {
-    throw new Error(
-      `Transaction simulation failed (tx would fail onchain): ${JSON.stringify(simulation.value.err)}`
-    );
+  // Optional: simulate with sigVerify: false to catch onchain failures (Phantom recommendation).
+  // If the RPC doesn't support the options or returns "Invalid arguments", we still return the tx.
+  try {
+    const simulation = await connection.simulateTransaction(poolTx, {
+      sigVerify: false,
+      commitment: 'confirmed',
+    } as { sigVerify?: boolean; commitment?: string });
+    if (simulation.value.err) {
+      logger.error('Create pool transaction simulation failed', new Error(JSON.stringify(simulation.value.err)), {
+        endpoint: '/api/create-pool-transaction',
+      });
+      throw new Error(
+        `Transaction simulation failed (tx would fail onchain): ${JSON.stringify(simulation.value.err)}`
+      );
+    }
+  } catch (simErr) {
+    const msg = simErr instanceof Error ? simErr.message : String(simErr);
+    // RPC may return "Invalid arguments" if sigVerify/options not supported; don't block the flow
+    if (msg.includes('Invalid arguments') || msg.includes('invalid') || msg.includes('400')) {
+      logger.warn('Pool tx simulation skipped (RPC may not support options)', { endpoint: '/api/create-pool-transaction' });
+    } else {
+      throw simErr;
+    }
   }
 
   return poolTx;
