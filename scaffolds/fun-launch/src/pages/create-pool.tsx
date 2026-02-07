@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { z } from 'zod';
@@ -14,6 +14,9 @@ import { toast } from 'sonner';
 import dynamic from 'next/dynamic';
 import { getMicrocopy } from '@/lib/microcopy';
 import { TokenLaunchSigil } from '@/components/rituals/TokenLaunchSigil';
+import { createLogger } from '@/lib/logger';
+
+const poolLogger = createLogger('create-pool');
 
 const Confetti = dynamic(() => import('@/components/Confetti'), { ssr: false });
 
@@ -54,6 +57,19 @@ export default function CreatePool() {
   const [poolCreated, setPoolCreated] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showSigil, setShowSigil] = useState(false);
+
+  // Track object URLs for logo preview to prevent memory leaks
+  const logoObjectUrlRef = useRef<string | null>(null);
+
+  // Revoke object URL on unmount
+  useEffect(() => {
+    return () => {
+      if (logoObjectUrlRef.current) {
+        URL.revokeObjectURL(logoObjectUrlRef.current);
+        logoObjectUrlRef.current = null;
+      }
+    };
+  }, []);
 
   const form = useForm({
     defaultValues: {
@@ -159,7 +175,7 @@ export default function CreatePool() {
             }));
             toast.success(`${uploadedDocuments.length} document(s) uploaded successfully`, { id: 'upload-documents' });
           } catch (docError) {
-            console.error('Document upload error:', docError);
+            poolLogger.error('Document upload error', docError instanceof Error ? docError : new Error(String(docError)));
             toast.error('Document upload failed, but continuing with token creation', { id: 'upload-documents' });
           }
         }
@@ -233,10 +249,10 @@ export default function CreatePool() {
         const signedTransaction = await signTransaction(transaction);
         toast.success('Transaction signed', { id: 'sign-tx' });
 
-        // Step 5: Add mint keypair signature (second signer)
-        signedTransaction.sign(keyPair);
+        // Step 5: Add mint keypair signature (partialSign keeps Phantom's signature)
+        signedTransaction.partialSign(keyPair);
 
-        // Step 6: Send signed transaction
+        // Step 6: Send signed transaction (requireAllSignatures: false so server can add treasury sig)
         toast.loading('Sending transaction to Solana...', { id: 'send-tx' });
         const sendResponse = await fetch('/api/send-transaction', {
           method: 'POST',
@@ -244,7 +260,9 @@ export default function CreatePool() {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            signedTransaction: signedTransaction.serialize().toString('base64'),
+            signedTransaction: signedTransaction
+              .serialize({ requireAllSignatures: false, verifySignatures: false })
+              .toString('base64'),
           }),
         });
 
@@ -290,7 +308,7 @@ export default function CreatePool() {
 
             if (!saveTokenResponse.ok) {
               const error = await saveTokenResponse.json();
-              console.error('Failed to save token to database:', error);
+              poolLogger.error('Failed to save token to database', error instanceof Error ? error : new Error(String(error)));
               toast.error('The ritual succeeded, but the seal was not recorded.', { id: 'save-token' });
             } else {
               toast.success(getMicrocopy('success'), { id: 'save-token' });
@@ -299,7 +317,7 @@ export default function CreatePool() {
               queryClient.invalidateQueries({ queryKey: ['explore', 'local-tokens'] });
             }
           } catch (dbError) {
-            console.error('Error saving token to database:', dbError);
+            poolLogger.error('Error saving token to database', dbError instanceof Error ? dbError : new Error(String(dbError)));
             toast.error('Token launched but failed to save to database', { id: 'save-token' });
           }
 
@@ -353,7 +371,7 @@ export default function CreatePool() {
                 }
               }
             } catch (swapError) {
-              console.error('Dev buy error:', swapError);
+              poolLogger.error('Dev buy error', swapError instanceof Error ? swapError : new Error(String(swapError)));
               toast.error('The ritual failed. Gas was not enough. Your token remains.', { id: 'dev-buy' });
             }
           }
@@ -389,7 +407,7 @@ export default function CreatePool() {
           setPoolCreated(true);
         }
       } catch (error) {
-        console.error('Error creating pool:', error);
+        poolLogger.error('Error creating pool', error instanceof Error ? error : new Error(String(error)));
         const errorMessage = error instanceof Error ? error.message : 'Failed to summon token. The ritual must begin again.';
         toast.error(errorMessage);
       } finally {
@@ -437,7 +455,7 @@ export default function CreatePool() {
               className="space-y-8"
             >
               {/* Token Type Selector */}
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8" style={{background:'var(--gradient-card)'}}>
                 <h2 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">Token Type</h2>
                 <p className="text-[var(--text-muted)] mb-4 font-body text-sm">
                   Choose between a memecoin or tokenize a real-world asset (product, service, or asset)
@@ -449,7 +467,7 @@ export default function CreatePool() {
                       <button
                         type="button"
                         onClick={() => field.handleChange('MEMECOIN')}
-                        className={`flex-1 min-h-[60px] sm:min-h-[80px] p-4 md:p-6 rounded-lg border-2 transition-all font-body ${
+                        className={`flex-1 min-h-[60px] sm:min-h-[80px] p-4 md:p-6 rounded-[var(--radius-sm)] border-2 transition-all font-body ${
                           field.state.value === 'MEMECOIN'
                             ? 'border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]'
                             : 'border-[var(--border-default)] bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:border-[var(--text-muted)]/50'
@@ -461,7 +479,7 @@ export default function CreatePool() {
                       <button
                         type="button"
                         onClick={() => field.handleChange('RWA')}
-                        className={`flex-1 min-h-[60px] sm:min-h-[80px] p-4 md:p-6 rounded-lg border-2 transition-all font-body ${
+                        className={`flex-1 min-h-[60px] sm:min-h-[80px] p-4 md:p-6 rounded-[var(--radius-sm)] border-2 transition-all font-body ${
                           field.state.value === 'RWA'
                             ? 'border-[var(--accent)] bg-[var(--accent)]/20 text-[var(--accent)]'
                             : 'border-[var(--border-default)] bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:border-[var(--text-muted)]/50'
@@ -476,7 +494,7 @@ export default function CreatePool() {
               </div>
 
               {/* Token Details Section */}
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8" style={{background:'var(--gradient-card)'}}>
                 <h2 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">Token Details</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -495,7 +513,7 @@ export default function CreatePool() {
                             id="tokenName"
                             name={field.name}
                             type="text"
-                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             placeholder="e.g. Virtual Coin"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -520,7 +538,7 @@ export default function CreatePool() {
                             id="tokenSymbol"
                             name={field.name}
                             type="text"
-                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             placeholder="e.g. VRTL"
                             value={field.state.value}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -546,7 +564,14 @@ export default function CreatePool() {
                           const file = e.target.files?.[0];
                           if (file) {
                             field.handleChange(file);
-                            // Create preview
+                            // Revoke previous object URL to prevent memory leak
+                            if (logoObjectUrlRef.current) {
+                              URL.revokeObjectURL(logoObjectUrlRef.current);
+                              logoObjectUrlRef.current = null;
+                            }
+                            // Create a new object URL for immediate preview
+                            logoObjectUrlRef.current = URL.createObjectURL(file);
+                            // Create base64 preview (replaces object URL once ready)
                             const reader = new FileReader();
                             reader.onloadend = () => {
                               form.setFieldValue('logoPreview', reader.result as string);
@@ -557,13 +582,13 @@ export default function CreatePool() {
                         
                         return (
                           <div>
-                            <div className="border-2 border-dashed border-[var(--accent)]/30 rounded-lg p-8 text-center">
+                            <div className="border-2 border-dashed border-[var(--accent)]/30 rounded-[var(--radius-sm)] p-8 text-center">
                               {form.state.values.logoPreview || field.state.value ? (
                                 <div className="space-y-4">
                                   <img
-                                    src={form.state.values.logoPreview || (field.state.value ? URL.createObjectURL(field.state.value) : '')}
+                                    src={form.state.values.logoPreview || logoObjectUrlRef.current || ''}
                                     alt="Logo preview"
-                                    className="mx-auto max-h-32 max-w-32 rounded-lg object-contain border border-[var(--accent)]/20"
+                                    className="mx-auto max-h-32 max-w-32 rounded-[var(--radius-sm)] object-contain border border-[var(--accent)]/20"
                                   />
                                   <div>
                                     <p className="text-gray-400 text-xs mb-2">
@@ -571,7 +596,7 @@ export default function CreatePool() {
                                     </p>
                                     <label
                                       htmlFor="tokenLogo"
-                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-lg text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
+                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-[var(--radius-sm)] text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
                                     >
                                       Change Image
                                     </label>
@@ -583,7 +608,7 @@ export default function CreatePool() {
                                   <p className="text-gray-400 text-xs mb-2">PNG, JPG or SVG (max. 10MB)</p>
                                   <label
                                     htmlFor="tokenLogo"
-                                    className="bg-[var(--bg-elevated)] px-4 py-2 rounded-lg text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
+                                    className="bg-[var(--bg-elevated)] px-4 py-2 rounded-[var(--radius-sm)] text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
                                   >
                                     Choose File
                                   </label>
@@ -606,7 +631,7 @@ export default function CreatePool() {
               </div>
 
               {/* Dev Buy Section */}
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8" style={{background:'var(--gradient-card)'}}>
                 <h2 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">Initial Buy (Optional)</h2>
                 <p className="text-gray-400 text-sm mb-4 font-body">
                   Buy tokens immediately after launch. Be the first holder of your own token.
@@ -649,7 +674,7 @@ export default function CreatePool() {
                             name={field.name}
                             type="text"
                             inputMode="decimal"
-                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             placeholder="0.1 sau 0,1"
                             value={displayValue}
                             onChange={handleChange}
@@ -665,7 +690,7 @@ export default function CreatePool() {
               </div>
 
               {/* Social Links Section */}
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8" style={{background:'var(--gradient-card)'}}>
                 <h2 className="text-2xl font-heading font-bold mb-6 text-[var(--accent)]">Social Links (Optional)</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -683,7 +708,7 @@ export default function CreatePool() {
                           id="website"
                           name={field.name}
                           type="url"
-                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                           placeholder="https://yourwebsite.com"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -706,7 +731,7 @@ export default function CreatePool() {
                           id="twitter"
                           name={field.name}
                           type="url"
-                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                           placeholder="https://twitter.com/yourusername"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -729,7 +754,7 @@ export default function CreatePool() {
                           id="telegram"
                           name={field.name}
                           type="url"
-                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                          className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                           placeholder="https://t.me/yourchannel"
                           value={field.state.value}
                           onChange={(e) => field.handleChange(e.target.value)}
@@ -742,7 +767,7 @@ export default function CreatePool() {
 
               {/* RWA Fields Section - Only show when tokenType is RWA */}
               {form.state.values.tokenType === 'RWA' && (
-                <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
+                <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8" style={{background:'var(--gradient-card)'}}>
                   <h2 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">Asset Information</h2>
                   <p className="text-[var(--text-muted)] mb-6 font-body text-sm">
                     Provide details about the real-world asset you're tokenizing
@@ -763,7 +788,7 @@ export default function CreatePool() {
                           <select
                             id="assetType"
                             name={field.name}
-                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                            className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             value={field.state.value || ''}
                             onChange={(e) => field.handleChange(e.target.value)}
                             required
@@ -795,7 +820,7 @@ export default function CreatePool() {
                             id="assetDescription"
                             name={field.name}
                             rows={4}
-                            className="w-full min-h-[120px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                            className="w-full min-h-[120px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                             placeholder="Describe your asset in detail..."
                             value={field.state.value || ''}
                             onChange={(e) => field.handleChange(e.target.value)}
@@ -823,7 +848,7 @@ export default function CreatePool() {
                               type="number"
                               step="0.01"
                               min="0"
-                              className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                              className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                               placeholder="0.00"
                               value={field.state.value || ''}
                               onChange={(e) => field.handleChange(e.target.value ? parseFloat(e.target.value) : undefined)}
@@ -846,7 +871,7 @@ export default function CreatePool() {
                               id="assetLocation"
                               name={field.name}
                               type="text"
-                              className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+                              className="w-full min-h-[44px] p-3 md:p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] font-body text-base focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                               placeholder="e.g., New York, USA"
                               value={field.state.value || ''}
                               onChange={(e) => field.handleChange(e.target.value)}
@@ -880,7 +905,7 @@ export default function CreatePool() {
 
                           return (
                             <div>
-                              <div className="border-2 border-dashed border-[var(--border-default)] rounded-lg p-6 text-center">
+                              <div className="border-2 border-dashed border-[var(--accent)]/30 rounded-[var(--radius-sm)] p-6 text-center">
                                 {field.state.value && field.state.value.length > 0 ? (
                                   <div className="space-y-2">
                                     <div className="text-sm text-[var(--text-muted)] mb-2">
@@ -895,7 +920,7 @@ export default function CreatePool() {
                                     </div>
                                     <label
                                       htmlFor="documents"
-                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-lg text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block mt-2"
+                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-[var(--radius-sm)] text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block mt-2"
                                     >
                                       Change Files
                                     </label>
@@ -906,7 +931,7 @@ export default function CreatePool() {
                                     <p className="text-gray-400 text-xs mb-2">PDF, images, or documents</p>
                                     <label
                                       htmlFor="documents"
-                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-lg text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
+                                      className="bg-[var(--bg-elevated)] px-4 py-2 rounded-[var(--radius-sm)] text-sm hover:bg-[var(--bg-layer)] transition cursor-pointer text-[var(--text-muted)] font-body inline-block"
                                     >
                                       Choose Files
                                     </label>
@@ -931,7 +956,7 @@ export default function CreatePool() {
               )}
 
               {form.state.errors && form.state.errors.length > 0 && (
-                <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 space-y-2">
+                <div className="bg-red-500/20 border border-red-500/50 rounded-[var(--radius-sm)] p-4 space-y-2">
                   {form.state.errors.map((error, index) =>
                     Object.entries(error || {}).map(([, value]) => (
                       <div key={index} className="flex items-start gap-2">
@@ -971,7 +996,7 @@ const SubmitButton = ({ isSubmitting }: { isSubmitting: boolean }) => {
   }
 
   return (
-    <Button className="flex items-center gap-2" type="submit" disabled={isSubmitting}>
+    <Button className="flex items-center gap-2 font-bold" type="submit" disabled={isSubmitting} style={{background:'var(--gradient-primary)'}}>
       {isSubmitting ? (
         <>
           <span className="iconify ph--spinner w-5 h-5 animate-spin" />
@@ -990,18 +1015,18 @@ const SubmitButton = ({ isSubmitting }: { isSubmitting: boolean }) => {
 const PoolCreationSuccess = () => {
   return (
     <>
-      <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8 text-center">
+      <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8 text-center" style={{background:'var(--gradient-card)'}}>
         <div className="bg-green-500/20 p-4 rounded-full inline-flex mb-6">
           <span className="iconify ph--check-bold w-12 h-12 text-green-500" />
         </div>
-        <h2 className="text-3xl font-heading font-bold mb-4 text-[var(--accent)] ">The Ritual is Complete! 🎉</h2>
+        <h2 className="text-3xl font-heading font-bold mb-4 gradient-text">The Ritual is Complete! 🎉</h2>
         <p className="text-[var(--text-muted)] mb-8 max-w-lg mx-auto font-body">
           Your token has been summoned. The pack awaits. Begin the ascent.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/"
-            className="bg-[var(--bg-elevated)] px-6 py-3 rounded-xl font-body font-medium hover:bg-[var(--bg-layer)] transition text-[var(--text-muted)]"
+            className="bg-[var(--bg-elevated)] px-6 py-3 rounded-[var(--radius-lg)] font-body font-medium hover:bg-[var(--bg-layer)] transition text-[var(--text-muted)]"
           >
             Discover Tokens
           </Link>
@@ -1009,7 +1034,7 @@ const PoolCreationSuccess = () => {
             onClick={() => {
               window.location.reload();
             }}
-            className="cursor-pointer bg-[var(--accent)] px-6 py-3 rounded-xl font-body font-medium hover:bg-[var(--accent-hover)] transition text-[var(--bg-base)]"
+            className="cursor-pointer bg-[var(--accent)] px-6 py-3 rounded-[var(--radius-lg)] font-body font-medium hover:bg-[var(--accent-hover)] transition text-[var(--bg-base)]"
           >
             Launch Another Token
           </button>

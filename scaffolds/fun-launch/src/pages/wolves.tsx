@@ -9,7 +9,7 @@ export default function WolvesPage() {
           <motion.h1
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-3xl md:text-4xl font-display font-bold tracking-widest text-[var(--text-primary)] mb-4"
+            className="text-3xl md:text-4xl font-heading font-bold tracking-widest gradient-text mb-4"
           >
             Community
           </motion.h1>
@@ -31,7 +31,7 @@ export default function WolvesPage() {
               href="https://t.me/kogaionpack"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border-2 border-[var(--cyber-accent)]/50 text-[var(--cyber-accent)] font-heading font-semibold uppercase tracking-wider hover:bg-[var(--cyber-accent)]/10 transition-colors"
+              className="glow-card inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[var(--radius-md)] border-2 border-[var(--accent)]/50 text-[var(--accent)] font-heading font-semibold uppercase tracking-wider hover:bg-[var(--accent)]/10 transition-colors"
             >
               Telegram
             </a>
@@ -39,7 +39,7 @@ export default function WolvesPage() {
               href="https://x.com/KogaionSol"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border-2 border-[var(--cyber-accent)]/50 text-[var(--cyber-accent)] font-heading font-semibold uppercase tracking-wider hover:bg-[var(--cyber-accent)]/10 transition-colors"
+              className="glow-card inline-flex items-center justify-center gap-2 px-6 py-3 rounded-[var(--radius-md)] border-2 border-[var(--accent)]/50 text-[var(--accent)] font-heading font-semibold uppercase tracking-wider hover:bg-[var(--accent)]/10 transition-colors"
             >
               X (Twitter)
             </a>

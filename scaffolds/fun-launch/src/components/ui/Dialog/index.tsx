@@ -15,7 +15,7 @@ const DialogCloseButton = React.forwardRef<
   <DialogPrimitive.Close
     ref={ref}
     className={cn(
-      'flex items-center justify-center min-h-[var(--button-min-height-touch)] min-w-[var(--button-min-height-touch)] rounded-[var(--radius-md)] p-2 text-[var(--text-muted)] hover:bg-[var(--cyber-surface)] hover:text-[var(--text-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]',
+      'flex items-center justify-center min-h-[var(--button-min-height-touch)] min-w-[var(--button-min-height-touch)] rounded-[var(--radius-md)] p-2 text-[var(--text-muted)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]',
       className
     )}
     {...props}
@@ -58,7 +58,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        'fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)] border border-[var(--cyber-border-elevated)] bg-[var(--cyber-surface)] shadow-lg duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]',
+        'fixed left-1/2 top-1/2 z-50 grid w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-layer)] shadow-glow-sm duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]',
         animate &&
           'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-[0.98] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
         animate &&
@@ -113,11 +113,12 @@ const DialogSubmitButton: React.FC<React.ComponentProps<'button'>> = ({ classNam
   return (
     <button
       className={cn(
-        'w-full min-h-[var(--button-min-height-touch)] rounded-[var(--radius-md)] bg-[var(--cyber-accent)] py-2.5 text-base font-semibold text-[var(--cyber-bg)]',
-        'enabled:hover:brightness-110 transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--cyber-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--cyber-bg)]',
+        'w-full min-h-[var(--button-min-height-touch)] rounded-[var(--radius-md)] py-2.5 text-base font-heading font-semibold text-[var(--bg-base)]',
+        'enabled:hover:brightness-110 transition-all duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]',
         'disabled:opacity-50',
         className
       )}
+      style={{background:'var(--gradient-primary)'}}
       {...props}
     />
   );

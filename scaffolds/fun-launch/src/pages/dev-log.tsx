@@ -15,7 +15,7 @@ export default function DevLogPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 text-[var(--accent)]">
+            <h1 className="text-4xl md:text-6xl font-heading font-bold mb-6 gradient-text">
               Dev Log
             </h1>
             <p className="text-xl md:text-2xl text-[var(--text-muted)] font-body max-w-3xl mx-auto">
@@ -30,12 +30,12 @@ export default function DevLogPage() {
             transition={{ delay: 0.1 }}
             className="mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-[var(--accent)] border-b border-[var(--accent)]/30 pb-4">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 gradient-text border-b border-[var(--accent)]/30 pb-4">
               What We've Built
             </h2>
             
             <div className="space-y-6">
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8">
                 <h3 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">
                   Obsidian + Aureate Design System
                 </h3>
@@ -52,7 +52,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8">
                 <h3 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">
                   Service Providers Marketplace
                 </h3>
@@ -68,7 +68,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8">
                 <h3 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">
                   Real World Assets (RWA) Tokenization
                 </h3>
@@ -84,7 +84,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8">
                 <h3 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">
                   Motion System & Micro-interactions
                 </h3>
@@ -109,11 +109,11 @@ export default function DevLogPage() {
             transition={{ delay: 0.2 }}
             className="mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-[var(--accent)] border-b border-[var(--accent)]/30 pb-4">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 gradient-text border-b border-[var(--accent)]/30 pb-4">
               What We're Building
             </h2>
             
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8">
+            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8">
               <p className="text-[var(--text-primary)]/80 font-body leading-relaxed">
                 Currently focused on platform optimizations, performance improvements, and enhancing the user experience across all features. We're continuously refining the design system and adding new capabilities based on community feedback.
               </p>
@@ -127,12 +127,12 @@ export default function DevLogPage() {
             transition={{ delay: 0.3 }}
             className="mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-[var(--accent)] border-b border-[var(--accent)]/30 pb-4">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 gradient-text border-b border-[var(--accent)]/30 pb-4">
               What's Next
             </h2>
             
             <div className="space-y-6">
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8 border-[var(--border-default)]">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8 border-[var(--border-default)]">
                 <h3 className="text-xl font-heading font-bold mb-3 text-[var(--accent)]">
                   Genesis SDK Anti-Rug Integration
                 </h3>
@@ -144,7 +144,7 @@ export default function DevLogPage() {
                 </p>
               </div>
 
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8 border-[var(--border-default)]">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8 border-[var(--border-default)]">
                 <h3 className="text-xl font-heading font-bold mb-3 text-[var(--accent)]">
                   Mobile Application
                 </h3>
@@ -165,12 +165,12 @@ export default function DevLogPage() {
             transition={{ delay: 0.4 }}
             className="mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-[var(--accent)] border-b border-[var(--accent)]/30 pb-4">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 gradient-text border-b border-[var(--accent)]/30 pb-4">
               Technical Architecture
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6">
                 <h3 className="text-lg font-heading font-bold mb-3 text-[var(--accent)]">
                   Design System
                 </h3>
@@ -182,7 +182,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6">
                 <h3 className="text-lg font-heading font-bold mb-3 text-[var(--accent)]">
                   Frontend Stack
                 </h3>
@@ -194,7 +194,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6">
                 <h3 className="text-lg font-heading font-bold mb-3 text-[var(--accent)]">
                   Blockchain Integration
                 </h3>
@@ -206,7 +206,7 @@ export default function DevLogPage() {
                 </ul>
               </div>
 
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6">
                 <h3 className="text-lg font-heading font-bold mb-3 text-[var(--accent)]">
                   Infrastructure
                 </h3>
@@ -227,35 +227,35 @@ export default function DevLogPage() {
             transition={{ delay: 0.5 }}
             className="mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-[var(--accent)] border-b border-[var(--accent)]/30 pb-4">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 gradient-text border-b border-[var(--accent)]/30 pb-4">
               The Direction
             </h2>
             
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8 md:p-12">
+            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8 md:p-12">
               <p className="text-lg font-body leading-relaxed text-[var(--text-primary)]/80 mb-6">
                 <strong className="text-[var(--accent)]">Kogaion</strong> is evolving into the most comprehensive and secure launchpad. We're building beyond just token launches—we're creating an ecosystem.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
-                <div className="bg-[var(--bg-elevated)]/80 rounded-lg p-4 border border-[var(--accent)]/20">
+                <div className="glow-card bg-[var(--bg-elevated)]/80 rounded-[var(--radius-md)] p-4 border border-[var(--accent)]/20">
                   <h3 className="font-heading font-bold text-[var(--accent)] mb-2">Genesis SDK Integration</h3>
                   <p className="text-sm text-[var(--text-muted)]">
                     Anti-rug protection, standardized tokenomics, and enhanced security for all launches.
                   </p>
                 </div>
-                <div className="bg-[var(--bg-elevated)]/80 rounded-lg p-4 border border-[var(--accent)]/20">
+                <div className="glow-card bg-[var(--bg-elevated)]/80 rounded-[var(--radius-md)] p-4 border border-[var(--accent)]/20">
                   <h3 className="font-heading font-bold text-[var(--accent)] mb-2">AI & Automation</h3>
                   <p className="text-sm text-[var(--text-muted)]">
                     Autonomous AI agents, smart contract automation, and intelligent market analysis.
                   </p>
                 </div>
-                <div className="bg-[var(--bg-elevated)]/80 rounded-lg p-4 border border-[var(--accent)]/20">
+                <div className="glow-card bg-[var(--bg-elevated)]/80 rounded-[var(--radius-md)] p-4 border border-[var(--accent)]/20">
                   <h3 className="font-heading font-bold text-[var(--accent)] mb-2">Real World Assets</h3>
                   <p className="text-sm text-[var(--text-muted)]">
                     Tokenize products, services, and assets. Beyond memecoins, into real value.
                   </p>
                 </div>
-                <div className="bg-[var(--bg-elevated)]/80 rounded-lg p-4 border border-[var(--accent)]/20">
+                <div className="glow-card bg-[var(--bg-elevated)]/80 rounded-[var(--radius-md)] p-4 border border-[var(--accent)]/20">
                   <h3 className="font-heading font-bold text-[var(--accent)] mb-2">Service Marketplace</h3>
                   <p className="text-sm text-[var(--text-muted)]">
                     Connect with KOLs, marketers, moderators, and service providers. Build your pack.
@@ -276,8 +276,8 @@ export default function DevLogPage() {
             transition={{ delay: 0.6 }}
             className="text-center"
           >
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
-              <h3 className="text-2xl font-heading font-bold mb-4 text-[var(--accent)]">
+            <div className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8">
+              <h3 className="text-2xl font-heading font-bold gradient-text mb-4">
                 Join the Pack
               </h3>
               <p className="text-[var(--text-primary)]/70 font-body mb-6 max-w-2xl mx-auto">
@@ -288,7 +288,7 @@ export default function DevLogPage() {
                   href="https://x.com/KogaionSol"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-heading font-bold rounded-lg transition-all"
+                  className="px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-heading font-bold rounded-[var(--radius-md)] transition-all"
                 >
                   Follow on X
                 </a>
@@ -296,7 +296,7 @@ export default function DevLogPage() {
                   href="https://t.me/kogaionpack"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-[var(--bg-layer)] hover:bg-[var(--bg-elevated)] text-[var(--text-primary)] font-heading font-bold rounded-lg border border-[var(--accent)]/30 transition-all"
+                  className="px-6 py-3 bg-[var(--bg-layer)] hover:bg-[var(--bg-elevated)] text-[var(--text-primary)] font-heading font-bold rounded-[var(--radius-md)] border border-[var(--accent)]/30 transition-all"
                 >
                   Join Telegram
                 </a>

@@ -21,12 +21,20 @@ const Page: React.FC<React.PropsWithChildren<IProps>> = ({
   return (
     <div
       className={cn(
-        'flex flex-col text-[var(--text-primary)] relative',
-        'max-lg:min-h-0 lg:min-h-screen lg:min-h-[100dvh]',
+        'flex flex-col text-[var(--text-primary)] relative min-h-screen',
+        'max-lg:min-h-0 lg:min-h-[100dvh]',
         pageClassName
       )}
       style={{ background: 'var(--bg-base)' }}
     >
+      {/* Animated mesh gradient background */}
+      <div
+        className="fixed inset-0 pointer-events-none z-[-1]"
+        style={{
+          backgroundImage: 'var(--gradient-mesh)',
+          opacity: 0.7,
+        }}
+      />
       <Header />
       <main
         className={cn(

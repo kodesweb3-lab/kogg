@@ -82,7 +82,7 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="relative bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 max-w-sm w-full shadow-2xl"
+            className="relative bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6 max-w-sm w-full shadow-glow-sm"
           >
             {/* Close button */}
             <button
@@ -113,7 +113,7 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
             </div>
 
             {/* Stats Card */}
-            <div className="bg-[var(--bg-elevated)] rounded-xl p-4 mb-4 border border-[var(--border-default)]">
+            <div className="bg-[var(--bg-elevated)] rounded-[var(--radius-md)] p-4 mb-4 border border-[var(--border-default)]">
               <div className="text-center mb-3">
                 <div className="text-4xl font-heading font-bold text-[var(--text-primary)]">
                   {isLoading ? (
@@ -162,7 +162,7 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
                   type="text"
                   readOnly
                   value={data?.referralLink || 'Loading...'}
-                  className="flex-1 px-3 py-2.5 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] font-mono text-xs truncate focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30"
+                  className="flex-1 px-3 py-2.5 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-[var(--radius-md)] text-[var(--text-primary)] font-mono text-xs truncate focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30"
                 />
                 <Button 
                   onClick={handleCopy} 
@@ -177,7 +177,8 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
             {/* Share Button */}
             <Button
               onClick={handleShare}
-              className="w-full bg-[var(--accent)]/80 hover:bg-[var(--accent)] text-[var(--text-primary)] font-bold py-3"
+              className="w-full hover:opacity-90 text-[var(--bg-base)] font-heading font-bold py-3"
+              style={{background:'var(--gradient-primary)'}}
             >
               <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />

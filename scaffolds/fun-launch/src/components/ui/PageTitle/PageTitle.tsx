@@ -27,7 +27,7 @@ export function PageTitle({ title, description, back, actions, className }: Page
       )}
       <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] tracking-tight font-heading gradient-text">
             {title}
           </h1>
           {description && (

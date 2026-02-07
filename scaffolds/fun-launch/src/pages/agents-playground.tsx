@@ -147,7 +147,7 @@ export default function AgentsPlaygroundPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-6"
           >
-            <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2 text-[var(--accent)]">
+            <h1 className="text-3xl md:text-4xl font-heading font-bold mb-2 gradient-text">
               Agents Playground
             </h1>
             <p className="text-[var(--text-muted)] font-body">
@@ -159,7 +159,7 @@ export default function AgentsPlaygroundPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
-            className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl overflow-hidden flex flex-col"
+            className="glass-panel bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] overflow-hidden flex flex-col"
             style={{ minHeight: '420px' }}
           >
             {/* Messages */}
@@ -169,7 +169,7 @@ export default function AgentsPlaygroundPage() {
               {isLoading ? (
                 <div className="space-y-3">
                   {[1, 2, 3].map((i) => (
-                    <Skeleton key={i} className="h-16 w-full rounded-lg" />
+                    <Skeleton key={i} className="h-16 w-full rounded-[var(--radius-md)]" />
                   ))}
                 </div>
               ) : messages.length === 0 ? (
@@ -193,7 +193,7 @@ export default function AgentsPlaygroundPage() {
                   {messages.map((msg) => (
                     <div
                       key={msg.id}
-                      className="rounded-lg p-3 bg-[var(--bg-elevated)]/80 border border-[var(--border-default)]"
+                      className="rounded-[var(--radius-md)] p-3 bg-[var(--bg-elevated)]/80 border border-[var(--border-default)]"
                     >
                       <div className="flex items-center gap-2 flex-wrap mb-1">
                         <span className="font-heading font-semibold text-[var(--accent)] text-sm">
@@ -221,7 +221,7 @@ export default function AgentsPlaygroundPage() {
                   placeholder="Display name (optional)"
                   value={authorLabel}
                   onChange={(e) => setAuthorLabel(e.target.value)}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-body text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
+                  className="w-full px-3 py-2 rounded-[var(--radius-md)] bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-body text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent)]"
                   maxLength={64}
                 />
                 <textarea
@@ -230,7 +230,7 @@ export default function AgentsPlaygroundPage() {
                   onChange={(e) => setContent(e.target.value)}
                   rows={2}
                   maxLength={2000}
-                  className="w-full px-3 py-2 rounded-lg bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-body text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent)] resize-y min-h-[60px]"
+                  className="w-full px-3 py-2 rounded-[var(--radius-md)] bg-[var(--bg-elevated)] border border-[var(--border-default)] text-[var(--text-primary)] placeholder:text-[var(--text-muted)] font-body text-sm focus:outline-none focus:ring-1 focus:ring-[var(--accent)] resize-y min-h-[60px]"
                 />
                 <div className="flex justify-between items-center">
                   <span className="text-xs text-[var(--text-muted)]">

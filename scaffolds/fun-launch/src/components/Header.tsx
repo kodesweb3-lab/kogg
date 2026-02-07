@@ -4,7 +4,7 @@ import { useUnifiedWalletContext, useWallet } from '@jup-ag/wallet-adapter';
 import Link from 'next/link';
 import { Button } from './ui/button';
 import { CreatePoolButton } from './CreatePoolButton';
-import { useMemo, useState, useEffect, useRef } from 'react';
+import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { shortenAddress } from '@/lib/utils';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
@@ -69,11 +69,11 @@ function NavDropdown({
   const isActive = items.some((i) => i.href === router.pathname || (router.pathname.startsWith(i.href) && i.href !== '/'));
 
   useEffect(() => {
-    const h = (e: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) onClose();
     };
-    document.addEventListener('mouseleave', h);
-    return () => document.removeEventListener('mouseleave', h);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [onClose]);
 
   return (
@@ -81,25 +81,27 @@ function NavDropdown({
       <button
         type="button"
         onClick={() => (isOpen ? onClose() : onOpen())}
-        className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium rounded-full transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] min-h-[var(--touch-min)] ${
-          isActive ? 'text-[var(--accent)] bg-[var(--accent)]/10' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
+        className={`flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] min-h-[var(--touch-min)] rounded-[var(--radius-sm)] ${
+          isActive
+            ? 'text-[var(--accent)]'
+            : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
         }`}
       >
         {label}
-        <svg className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -4 }}
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 top-full pt-2 z-50 min-w-[220px]"
+            className="absolute left-0 top-full pt-2 z-50 min-w-[240px]"
           >
-            <div className="rounded-2xl border border-[var(--border-default)] bg-[var(--bg-elevated)]/95 backdrop-blur-xl shadow-lg py-2">
+            <div className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-elevated)]/95 backdrop-blur-xl shadow-lg py-2">
               {items.map((item) =>
                 item.external ? (
                   <a
@@ -107,7 +109,7 @@ function NavDropdown({
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex flex-col px-4 py-2.5 text-left hover:bg-[var(--accent)]/10 transition-colors rounded-lg mx-1"
+                    className="flex flex-col px-4 py-2.5 text-left hover:bg-[var(--accent)]/8 transition-colors rounded-[var(--radius-sm)] mx-1.5"
                   >
                     <span className="text-sm font-medium text-[var(--text-primary)]">{item.label}</span>
                     {item.description && <span className="text-xs text-[var(--text-muted)] mt-0.5">{item.description}</span>}
@@ -117,8 +119,8 @@ function NavDropdown({
                     key={item.href}
                     href={item.href}
                     onClick={onClose}
-                    className={`flex flex-col px-4 py-2.5 text-left transition-colors rounded-lg mx-1 ${
-                      router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'hover:bg-[var(--accent)]/10 text-[var(--text-primary)]'
+                    className={`flex flex-col px-4 py-2.5 text-left transition-colors rounded-[var(--radius-sm)] mx-1.5 ${
+                      router.pathname === item.href ? 'text-[var(--accent)] bg-[var(--accent)]/8' : 'hover:bg-[var(--accent)]/8 text-[var(--text-primary)]'
                     }`}
                   >
                     <span className="text-sm font-medium">{item.label}</span>
@@ -144,11 +146,22 @@ export const Header = () => {
   const { disconnect, publicKey, connected } = useWallet();
   const address = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
+  // Close menus on route change
   useEffect(() => {
     setMobileOpen(false);
     setMoreOpen(false);
   }, [router.pathname]);
 
+  // Escape key closes mobile menu
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Referral tracking
   useEffect(() => {
     if (publicKey && typeof window !== 'undefined') {
       const refWallet = new URLSearchParams(window.location.search).get('ref');
@@ -162,12 +175,38 @@ export const Header = () => {
     }
   }, [publicKey]);
 
-  const navLinkClass = (path: string) =>
-    `px-3 py-2 text-sm font-medium rounded-full transition-all min-h-[var(--touch-min)] flex items-center ${
-      router.pathname === path
-        ? 'text-[var(--accent)] bg-[var(--accent)]/10'
-        : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
-    }`;
+  // Memoized nav link class builder
+  const navLinkClass = useCallback(
+    (path: string) => {
+      const active = router.pathname === path;
+      return `relative px-3 py-2 text-sm font-medium transition-all duration-200 min-h-[var(--touch-min)] flex items-center rounded-[var(--radius-sm)] ${
+        active
+          ? 'text-[var(--accent)]'
+          : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
+      }`;
+    },
+    [router.pathname]
+  );
+
+  // Mobile nav link helper
+  const mobileLink = useCallback(
+    (item: NavItem) => {
+      const active = router.pathname === item.href;
+      return (
+        <Link
+          key={item.href}
+          href={item.href}
+          onClick={() => setMobileOpen(false)}
+          className={`flex items-center min-h-12 px-4 rounded-[var(--radius-sm)] font-medium transition-colors ${
+            active ? 'text-[var(--accent)] bg-[var(--accent)]/8' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/6'
+          }`}
+        >
+          {item.label}
+        </Link>
+      );
+    },
+    [router.pathname]
+  );
 
   return (
     <>
@@ -182,40 +221,32 @@ export const Header = () => {
         }}
       >
         <div className="h-full max-w-[var(--content-max-width)] mx-auto px-[var(--content-padding)] flex items-center justify-between gap-4">
-          {/* Logo — left */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
-            <img src="/brand/kogaion-icon.svg" alt="Kogaion" className="w-8 h-8 md:w-9 md:h-9 opacity-95" />
-            <span className="text-lg md:text-xl font-bold text-[var(--text-primary)] tracking-tight">Kogaion</span>
-            <span className="hidden sm:inline text-[10px] font-medium px-1.5 py-0.5 rounded-md bg-[var(--accent)]/20 text-[var(--accent)]">Beta</span>
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
+            <img src="/brand/kogaion-icon.svg" alt="Kogaion" className="w-8 h-8 md:w-9 md:h-9 opacity-95 group-hover:opacity-100 transition-opacity" />
+            <span className="text-lg md:text-xl font-bold font-heading tracking-tight gradient-text">Kogaion</span>
+            <span className="hidden sm:inline text-[10px] font-semibold px-1.5 py-0.5 rounded-md border border-[var(--accent)]/30 text-[var(--accent)]">Beta</span>
           </Link>
 
-          {/* Center — desktop nav */}
-          <nav className="hidden lg:flex items-center gap-0.5 flex-1 justify-center">
-            <Link href="/discover" className={navLinkClass('/discover')}>
-              Discover
-            </Link>
-            <Link href="/create-pool" className={navLinkClass('/create-pool')}>
-              Launch
-            </Link>
+          {/* Desktop nav */}
+          <nav className="hidden lg:flex items-center gap-1 flex-1 justify-center">
+            <Link href="/discover" className={navLinkClass('/discover')}>Discover</Link>
+            <Link href="/create-pool" className={navLinkClass('/create-pool')}>Launch</Link>
             {connected && publicKey && (
-              <Link href="/dashboard" className={navLinkClass('/dashboard')}>
-                Dashboard
-              </Link>
+              <Link href="/dashboard" className={navLinkClass('/dashboard')}>Dashboard</Link>
             )}
-            <Link href="/service-providers" className={navLinkClass('/service-providers')}>
-              Marketplace
-            </Link>
+            <Link href="/service-providers" className={navLinkClass('/service-providers')}>Marketplace</Link>
             <NavDropdown label="More" items={moreNav} isOpen={moreOpen} onOpen={() => setMoreOpen(true)} onClose={() => setMoreOpen(false)} router={router} />
           </nav>
 
-          {/* Right — actions + wallet */}
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+          {/* Right actions */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             <a
               href="https://x.com/KogaionSol"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--accent)] hover:bg-[var(--bg-elevated)] transition-colors"
-              title="X (Twitter)"
+              className="w-9 h-9 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+              aria-label="Follow us on X (Twitter)"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -225,8 +256,8 @@ export const Header = () => {
               href="https://t.me/kogaionpack"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--accent)] hover:bg-[var(--bg-elevated)] transition-colors"
-              title="Telegram"
+              className="w-9 h-9 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+              aria-label="Join our Telegram"
             >
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
@@ -235,8 +266,8 @@ export const Header = () => {
             {address && (
               <button
                 onClick={() => setReferralOpen(true)}
-                className="w-9 h-9 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--accent)] hover:bg-[var(--bg-elevated)] transition-colors"
-                title="Invite"
+                className="w-9 h-9 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+                aria-label="Invite friends"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -247,19 +278,20 @@ export const Header = () => {
               <CreatePoolButton />
             </div>
             {address ? (
-              <Button variant="outline" onClick={() => disconnect()} className="text-sm px-3 py-2 font-mono rounded-full min-h-9">
+              <Button variant="outline" onClick={() => disconnect()} className="text-sm px-3 py-2 font-mono min-h-9">
                 {shortenAddress(address)}
               </Button>
             ) : (
-              <Button variant="primary" onClick={() => setShowModal(true)} className="text-sm px-4 py-2 rounded-full min-h-9">
+              <Button variant="primary" onClick={() => setShowModal(true)} className="text-sm px-5 py-2 min-h-9">
                 Connect
               </Button>
             )}
             <button
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden w-9 h-9 flex items-center justify-center rounded-full text-[var(--text-muted)] hover:text-[var(--accent)] hover:bg-[var(--bg-elevated)] transition-colors"
-              aria-label="Menu"
+              className="lg:hidden w-9 h-9 flex items-center justify-center rounded-[var(--radius-sm)] text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {mobileOpen ? (
@@ -272,7 +304,7 @@ export const Header = () => {
           </div>
         </div>
 
-        {/* Mobile menu — full-width drawer with grouped links */}
+        {/* Mobile menu */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
@@ -281,15 +313,15 @@ export const Header = () => {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
               className="lg:hidden border-t border-[var(--border-default)] flex flex-col max-h-[85vh]"
-              style={{ background: 'var(--bg-elevated)' }}
+              style={{ background: 'var(--bg-layer)' }}
             >
               <nav
                 className="px-4 py-6 flex-1 min-h-0 overflow-y-auto overflow-x-hidden space-y-6 overscroll-contain"
                 style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))', WebkitOverflowScrolling: 'touch' }}
               >
                 <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-2 px-2">Product</div>
-                  <div className="rounded-xl bg-[var(--bg-layer)] p-1 space-y-0.5">
+                  <div className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-2 px-2">Product</div>
+                  <div className="rounded-[var(--radius-md)] bg-[var(--bg-base)]/60 p-1 space-y-0.5">
                     {productNav.map((item) =>
                       item.external ? (
                         <a
@@ -297,117 +329,43 @@ export const Header = () => {
                           href={item.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center min-h-12 px-4 rounded-lg text-[var(--text-primary)] font-medium hover:bg-[var(--accent)]/10"
+                          className="flex items-center min-h-12 px-4 rounded-[var(--radius-sm)] text-[var(--text-primary)] font-medium hover:bg-[var(--accent)]/6"
                         >
                           {item.label}
                         </a>
                       ) : (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setMobileOpen(false);
-                            router.push(item.href);
-                          }}
-                          className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
-                            router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
+                        mobileLink(item)
                       )
                     )}
-                    {connected && publicKey && (
-                      <Link
-                        href="/dashboard"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setMobileOpen(false);
-                          router.push('/dashboard');
-                        }}
-                        className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
-                          router.pathname === '/dashboard' ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
-                        }`}
-                      >
-                        Dashboard
-                      </Link>
-                    )}
+                    {connected && publicKey && mobileLink({ label: 'Dashboard', href: '/dashboard' })}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-2 px-2">Build</div>
-                  <div className="rounded-xl bg-[var(--bg-layer)] p-1 space-y-0.5">
-                    {buildNav.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setMobileOpen(false);
-                          router.push(item.href);
-                        }}
-                        className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
-                          router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                  <div className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-2 px-2">Build</div>
+                  <div className="rounded-[var(--radius-md)] bg-[var(--bg-base)]/60 p-1 space-y-0.5">
+                    {buildNav.map(mobileLink)}
                   </div>
                 </div>
                 <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-2 px-2">Community & Resources</div>
-                  <div className="rounded-xl bg-[var(--bg-layer)] p-1 space-y-0.5">
-                    {communityNav.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setMobileOpen(false);
-                          router.push(item.href);
-                        }}
-                        className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
-                          router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
-                        }`}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                  <div className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-2 px-2">Community & Resources</div>
+                  <div className="rounded-[var(--radius-md)] bg-[var(--bg-base)]/60 p-1 space-y-0.5">
+                    {communityNav.map(mobileLink)}
                     {resourcesNav.map((item) =>
                       item.external ? (
-                        <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="flex items-center min-h-12 px-4 rounded-lg font-medium text-[var(--text-primary)] hover:bg-[var(--accent)]/10">
+                        <a key={item.href} href={item.href} target="_blank" rel="noopener noreferrer" className="flex items-center min-h-12 px-4 rounded-[var(--radius-sm)] font-medium text-[var(--text-primary)] hover:bg-[var(--accent)]/6">
                           {item.label}
                         </a>
                       ) : (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setMobileOpen(false);
-                            router.push(item.href);
-                          }}
-                          className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
-                            router.pathname === item.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
-                          }`}
-                        >
-                          {item.label}
-                        </Link>
+                        mobileLink(item)
                       )
                     )}
                   </div>
                 </div>
                 <Link
                   href="/create-pool"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setMobileOpen(false);
-                    router.push('/create-pool');
-                  }}
-                  className="flex items-center justify-center w-full min-h-12 rounded-xl font-semibold text-[var(--bg-base)] transition-opacity hover:opacity-95"
-                  style={{ background: 'var(--accent)' }}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex items-center justify-center w-full min-h-12 rounded-[var(--radius-md)] font-bold text-[#07090f] transition-opacity hover:opacity-90"
+                  style={{ background: 'var(--gradient-primary)' }}
                 >
                   Launch Token
                 </Link>

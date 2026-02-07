@@ -83,10 +83,10 @@ export default function ServiceProviderRegisterPage() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8"
+              className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8"
             >
               <div className="text-6xl mb-4">✓</div>
-              <h1 className="text-3xl font-heading font-bold text-[var(--accent)] mb-4">
+              <h1 className="text-3xl font-heading font-bold gradient-text mb-4">
                 Verification Complete!
               </h1>
               <p className="text-[var(--text-muted)] mb-6">
@@ -111,7 +111,7 @@ export default function ServiceProviderRegisterPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <h1 className="text-4xl font-heading font-bold text-[var(--accent)] mb-4">
+            <h1 className="text-4xl font-heading font-bold gradient-text mb-4">
               Register as Service Provider
             </h1>
             <p className="text-[var(--text-muted)]">
@@ -121,14 +121,14 @@ export default function ServiceProviderRegisterPage() {
           </motion.div>
 
           {!connected ? (
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8 text-center">
+            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8 text-center">
               <p className="text-[var(--text-muted)] mb-4">
                 Please connect your Solana wallet to continue.
               </p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+              <div className="glass-panel bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6">
                 <h2 className="text-xl font-heading font-bold text-[var(--accent)] mb-4">
                   Basic Information
                 </h2>
@@ -204,7 +204,7 @@ export default function ServiceProviderRegisterPage() {
                 </div>
               </div>
 
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+              <div className="glass-panel bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6">
                 <h2 className="text-xl font-heading font-bold text-[var(--accent)] mb-4">
                   Services & Tags
                 </h2>
@@ -234,7 +234,7 @@ export default function ServiceProviderRegisterPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-8 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6"
+              className="mt-8 glass-panel bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6"
             >
               <h2 className="text-xl font-heading font-bold text-[var(--accent)] mb-4">
                 Verify Your Twitter Account

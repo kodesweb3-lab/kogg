@@ -1,46 +1,83 @@
 /**
- * Kogaion UI — Liquid Glass + Fluent–inspired design system (2026)
- * References: Apple Liquid Glass, Microsoft Fluent Design
+ * Kogaion UI — 2026 Premium Gradient Design System
+ * Gradient-rich, institutional-grade dark theme
+ * Purple (#9945FF) → Green (#14F195) signature gradient
  */
 
 :root {
-  /* —— Fluent: semantic colors —— */
-  --bg-base: #0f1114;
-  --bg-layer: #161a1f;
-  --bg-elevated: #1c2128;
-  --bg-overlay: rgba(22, 26, 31, 0.92);
-  --text-primary: #f0f2f5;
-  --text-secondary: #b4b9c4;
-  --text-muted: #7d8590;
-  --accent: #58a6ff;
-  --accent-hover: #79b8ff;
-  --gradient-hero: linear-gradient(135deg, #58a6ff, #79b8ff);
-  --gradient-hero-alt: linear-gradient(135deg, #79b8ff, #58a6ff);
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-default: rgba(255, 255, 255, 0.12);
+  /* —— Backgrounds —— */
+  --bg-base: #07090f;
+  --bg-layer: #0d1117;
+  --bg-elevated: #151b26;
+  --bg-overlay: rgba(7, 9, 15, 0.92);
+
+  /* —— Text —— */
+  --text-primary: #e6edf3;
+  --text-secondary: #a1aab5;
+  --text-muted: #6e7681;
+
+  /* —— Accents —— */
+  --accent: #14F195;
+  --accent-hover: #3dffa8;
+  --accent-purple: #9945FF;
+  --accent-purple-hover: #b06cff;
+
+  /* —— Gradients —— */
+  --gradient-primary: linear-gradient(135deg, #9945FF, #14F195);
+  --gradient-primary-hover: linear-gradient(135deg, #b06cff, #3dffa8);
+  --gradient-hero: linear-gradient(135deg, #9945FF 0%, #14F195 50%, #58a6ff 100%);
+  --gradient-hero-alt: linear-gradient(135deg, #14F195, #9945FF);
+  --gradient-card: linear-gradient(135deg, rgba(153, 69, 255, 0.06), rgba(20, 241, 149, 0.03));
+  --gradient-card-hover: linear-gradient(135deg, rgba(153, 69, 255, 0.12), rgba(20, 241, 149, 0.06));
+  --gradient-border: linear-gradient(135deg, rgba(153, 69, 255, 0.4), rgba(20, 241, 149, 0.4));
+  --gradient-glow: linear-gradient(135deg, rgba(153, 69, 255, 0.15), rgba(20, 241, 149, 0.1));
+  --gradient-text: linear-gradient(135deg, #9945FF, #14F195);
+  --gradient-mesh: radial-gradient(ellipse at 20% 50%, rgba(153, 69, 255, 0.08) 0%, transparent 50%),
+                   radial-gradient(ellipse at 80% 20%, rgba(20, 241, 149, 0.06) 0%, transparent 50%),
+                   radial-gradient(ellipse at 60% 80%, rgba(88, 166, 255, 0.04) 0%, transparent 50%);
+
+  /* —— Borders —— */
+  --border-subtle: rgba(139, 148, 158, 0.1);
+  --border-default: rgba(139, 148, 158, 0.15);
+
+  /* —— Status —— */
+  --color-success: #3fb950;
+  --color-error: #f85149;
+  --color-warning: #d29922;
+  --color-info: #58a6ff;
+
+  /* —— Glass effects —— */
+  --glass-bg: rgba(13, 17, 23, 0.8);
+  --glass-border: rgba(139, 148, 158, 0.12);
+  --glass-blur: 24px;
+  --glass-blur-strong: 40px;
+
+  /* —— Focus —— */
   --focus-ring: 0 0 0 2px var(--bg-base), 0 0 0 4px var(--accent);
 
-  /* —— Liquid Glass: translucency & blur —— */
-  --glass-bg: rgba(22, 26, 31, 0.72);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-blur: 20px;
-  --glass-blur-strong: 32px;
+  /* —— Shadows (purple/green glow) —— */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 20px rgba(153, 69, 255, 0.15), 0 0 40px rgba(20, 241, 149, 0.08);
+  --shadow-glow-sm: 0 0 12px rgba(153, 69, 255, 0.1), 0 0 24px rgba(20, 241, 149, 0.05);
+  --shadow-glow-accent: 0 0 20px rgba(20, 241, 149, 0.2), 0 0 40px rgba(20, 241, 149, 0.08);
 
-  /* —— Depth & motion (Fluent) —— */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+  /* —— Radius —— */
   --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* —— Transitions —— */
   --transition-fast: 150ms ease;
   --transition-normal: 250ms ease;
+  --transition-slow: 400ms ease;
 
   /* —— Touch & a11y —— */
   --touch-min: 44px;
 
-  /* —— Layout (full redesign) —— */
+  /* —— Layout —— */
   --content-max-width: 1280px;
   --content-narrow: 720px;
   --content-padding: 1.5rem;
@@ -49,40 +86,61 @@
   --section-gap-sm: 2rem;
   --header-height: 4rem;
 
-  /* Compatibility aliases (for gradual migration) */
-  --tech-bg: var(--bg-base);
-  --tech-bg-elevated: var(--bg-elevated);
-  --tech-surface: var(--bg-layer);
-  --tech-surface-elevated: var(--bg-elevated);
-  --tech-accent: var(--accent);
-  --tech-border: var(--border-subtle);
-  --tech-border-elevated: var(--border-default);
+  /* —— Compatibility aliases (minimal set for existing refs) —— */
   --cyber-bg: var(--bg-base);
   --cyber-bg-elevated: var(--bg-elevated);
   --cyber-surface: var(--bg-layer);
   --cyber-accent: var(--accent);
   --cyber-border-elevated: var(--border-default);
   --button-min-height-touch: var(--touch-min);
-  --radius-md: var(--radius-md);
-  --radius-lg: var(--radius-lg);
-
-  /* Legacy aliases (Tailwind theme references these) */
-  --obsidian-base: var(--bg-base);
-  --obsidian-elevated: var(--bg-elevated);
-  --obsidian-surface: var(--bg-layer);
-  --obsidian-border: var(--border-default);
-  --aureate-base: var(--accent);
-  --aureate-light: var(--accent-hover);
-  --aureate-dark: var(--text-muted);
-  --aureate-glow: var(--accent);
-  --wolf-border: var(--border-default);
 }
 
-/* Glass panel utility */
+/* —— Gradient text utility —— */
+.gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* —— Glass panel utility —— */
 .glass-panel {
   background: var(--glass-bg);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
+}
+
+/* —— Gradient border utility (via pseudo-element) —— */
+.gradient-border {
+  position: relative;
+  border: none;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--gradient-border);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* —— Animated mesh background —— */
+.mesh-bg {
+  background-image: var(--gradient-mesh);
+  background-attachment: fixed;
+}
+
+/* —— Glow card hover effect —— */
+.glow-card {
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+.glow-card:hover {
+  box-shadow: var(--shadow-glow-sm);
+  transform: translateY(-1px);
 }

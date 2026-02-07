@@ -82,7 +82,7 @@ export default function ServiceProvidersMarketplacePage() {
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
-                <h1 className="text-4xl font-heading font-bold text-[var(--accent)] mb-2">
+                <h1 className="text-4xl font-heading font-bold gradient-text mb-2">
                   Service Providers Marketplace
                 </h1>
                 <p className="text-[var(--text-muted)]">
@@ -105,7 +105,7 @@ export default function ServiceProvidersMarketplacePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="mb-8 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6"
+            className="mb-8 glass-panel bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6"
           >
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {/* Search */}
@@ -174,11 +174,11 @@ export default function ServiceProvidersMarketplacePage() {
               <p className="text-[var(--text-muted)] mt-4">Loading providers...</p>
             </div>
           ) : error ? (
-            <div className="text-center py-12 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl">
+            <div className="text-center py-12 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)]">
               <p className="text-[var(--text-muted)]">Failed to load service providers.</p>
             </div>
           ) : !data || data.providers.length === 0 ? (
-            <div className="text-center py-12 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl">
+            <div className="text-center py-12 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)]">
               <p className="text-[var(--text-muted)] mb-4">No service providers found.</p>
               <Button onClick={() => router.push('/service-providers/register')}>
                 Be the first to register
@@ -187,7 +187,7 @@ export default function ServiceProvidersMarketplacePage() {
           ) : (
             <>
               {/* Premium Table Layout */}
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl overflow-hidden mb-8">
+              <div className="glass-panel bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] overflow-hidden mb-8">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead className="bg-[var(--bg-elevated)] border-b border-[var(--border-default)]">

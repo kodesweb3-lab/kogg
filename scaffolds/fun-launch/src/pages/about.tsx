@@ -14,7 +14,7 @@ export default function AboutPage() {
 
         <div className="space-y-12">
           <section>
-            <h2 className="text-lg font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2">
+            <h2 className="text-lg font-heading font-semibold gradient-text mb-3 border-b border-[var(--border-default)] pb-2">
               What is Kogaion?
             </h2>
             <p className="text-[var(--text-muted)] leading-relaxed">
@@ -25,7 +25,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2 flex items-center gap-2">
+            <h2 className="text-lg font-heading font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2 flex items-center gap-2">
               <RocketIcon className="w-5 h-5" />
               How it works
             </h2>
@@ -40,7 +40,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2 flex items-center gap-2">
+            <h2 className="text-lg font-heading font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2 flex items-center gap-2">
               <CoinsIcon className="w-5 h-5" />
               Fees and earnings
             </h2>
@@ -55,7 +55,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2 flex items-center gap-2">
+            <h2 className="text-lg font-heading font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2 flex items-center gap-2">
               <ShieldIcon className="w-5 h-5" />
               Security
             </h2>
@@ -67,7 +67,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2 flex items-center gap-2">
+            <h2 className="text-lg font-heading font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2 flex items-center gap-2">
               <DocumentIcon className="w-5 h-5" />
               For developers and agents
             </h2>
@@ -87,7 +87,7 @@ export default function AboutPage() {
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2">
+            <h2 className="text-lg font-heading font-semibold text-[var(--accent)] mb-3 border-b border-[var(--border-default)] pb-2">
               FAQ
             </h2>
             <dl className="space-y-4 text-[var(--text-muted)]">

@@ -32,7 +32,7 @@ export function SearchBar() {
 
   return (
     <div className="space-y-3 mb-4">
-      <div className="flex flex-col sm:flex-row gap-3 p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl">
+      <div className="flex flex-col sm:flex-row gap-3 p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-md)]">
         {/* Search Input */}
         <div className="relative flex-1">
           <svg
@@ -53,7 +53,7 @@ export function SearchBar() {
             placeholder="Search by name, symbol, or asset description..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] font-body"
+            className="w-full pl-10 pr-4 py-2 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:shadow-[0_0_0_3px_rgba(20,241,149,0.15)] font-body"
           />
           {searchQuery && (
             <button
@@ -69,11 +69,11 @@ export function SearchBar() {
 
         {/* Sort Dropdown */}
         <div className="flex items-center gap-2">
-          <span className="text-[var(--text-muted)] text-sm font-body whitespace-nowrap">Sort:</span>
+          <span className="text-[var(--text-muted)] text-sm font-heading whitespace-nowrap">Sort:</span>
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value as SortOption)}
-            className="px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] font-body text-sm"
+            className="px-3 py-2 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] focus:outline-none focus:shadow-[0_0_0_3px_rgba(20,241,149,0.15)] font-body text-sm"
           >
             {SORT_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -85,14 +85,14 @@ export function SearchBar() {
       </div>
 
       {/* Filters Row */}
-      <div className="flex flex-col sm:flex-row gap-3 p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl">
+      <div className="flex flex-col sm:flex-row gap-3 p-4 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-md)]">
         {/* Token Type Filter */}
         <div className="flex items-center gap-2">
-          <span className="text-[var(--text-muted)] text-sm font-body whitespace-nowrap">Type:</span>
+          <span className="text-[var(--text-muted)] text-sm font-heading whitespace-nowrap">Type:</span>
           <select
             value={tokenTypeFilter}
             onChange={(e) => setTokenTypeFilter(e.target.value as 'ALL' | 'MEMECOIN' | 'RWA')}
-            className="px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] font-body text-sm"
+            className="px-3 py-2 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] focus:outline-none focus:shadow-[0_0_0_3px_rgba(20,241,149,0.15)] font-body text-sm"
           >
             <option value="ALL">All Tokens</option>
             <option value="MEMECOIN">Memecoins</option>
@@ -103,11 +103,11 @@ export function SearchBar() {
         {/* Asset Type Filter - Only show when RWA is selected */}
         {tokenTypeFilter === 'RWA' && (
           <div className="flex items-center gap-2">
-            <span className="text-[var(--text-muted)] text-sm font-body whitespace-nowrap">Asset:</span>
+            <span className="text-[var(--text-muted)] text-sm font-heading whitespace-nowrap">Asset:</span>
             <select
               value={assetTypeFilter}
               onChange={(e) => setAssetTypeFilter(e.target.value)}
-              className="px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] font-body text-sm"
+              className="px-3 py-2 bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] focus:outline-none focus:shadow-[0_0_0_3px_rgba(20,241,149,0.15)] font-body text-sm"
             >
               {assetTypes.map((type) => (
                 <option key={type.value} value={type.value}>

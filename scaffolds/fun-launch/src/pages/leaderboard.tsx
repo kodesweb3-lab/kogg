@@ -68,7 +68,7 @@ export default function LeaderboardPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-12"
           >
-            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4 text-[var(--accent)]">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4 gradient-text">
               Pack Leaders
             </h1>
             <p className="text-lg text-[var(--text-primary)]/60 font-body">
@@ -83,13 +83,13 @@ export default function LeaderboardPage() {
             transition={{ delay: 0.1 }}
             className="grid grid-cols-2 gap-4 mb-8"
           >
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 text-center">
+            <div className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 text-center">
               <div className="text-3xl font-heading font-bold text-[var(--accent)]">
                 {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : data?.stats.totalTokens || 0}
               </div>
               <div className="text-sm text-[var(--text-primary)]/60 font-body mt-1">Tokens Summoned</div>
             </div>
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 text-center">
+            <div className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 text-center">
               <div className="text-3xl font-heading font-bold text-[var(--accent)]">
                 {isLoading ? <Skeleton className="h-9 w-16 mx-auto" /> : data?.stats.totalCreators || 0}
               </div>
@@ -102,10 +102,10 @@ export default function LeaderboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl overflow-hidden"
+            className="glass-panel bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] overflow-hidden"
           >
             <div className="px-6 py-4 border-b border-[var(--border-default)]">
-              <h2 className="font-heading font-bold text-xl text-[var(--accent)]">Top Creators</h2>
+              <h2 className="font-heading font-bold text-xl gradient-text">Top Creators</h2>
             </div>
 
             <div className="divide-y divide-[var(--border-default)]">
@@ -194,7 +194,7 @@ export default function LeaderboardPage() {
           >
             <Link
               href="/create-pool"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-heading font-bold rounded-lg transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-heading font-bold rounded-[var(--radius-md)] transition-all"
             >
               Launch Your Token
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

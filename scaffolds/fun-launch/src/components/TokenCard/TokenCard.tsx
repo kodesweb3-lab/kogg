@@ -121,7 +121,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
     <div
       ref={(el) => rowRef(el, pool.id)}
       data-pool-id={pool.id}
-      className="relative flex cursor-pointer items-center border-[var(--border-default)] py-3 pl-1.5 pr-2 text-xs has-hover:hover:bg-[var(--bg-elevated)] [&:nth-child(n+2)]:border-t hover:border-[var(--accent)]/40 transition-all"
+      className="glow-card relative flex cursor-pointer items-center rounded-[var(--radius-md)] border-[var(--border-default)] border-l-2 border-l-transparent hover:border-l-[var(--accent)] py-3 pl-1.5 pr-2 text-xs has-hover:hover:bg-[var(--bg-elevated)] [&:nth-child(n+2)]:border-t hover:border-[var(--accent)]/40 transition-all"
     >
       <div className="shrink-0 pl-2 pr-4">
         <TrenchesPoolTokenIcon width={54} height={54} pool={pool} />
@@ -134,7 +134,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
           <div className="overflow-hidden flex-1">
             <div className="flex items-center gap-0.5 xl:gap-1">
               <div
-                className="whitespace-nowrap text-sm font-semibold"
+                className="whitespace-nowrap text-sm font-heading font-semibold"
                 title={pool.baseAsset.symbol}
               >
                 {pool.baseAsset.symbol}
@@ -185,7 +185,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
                   onClick={(e) => handleQuickBuy(e, amount)}
                   disabled={buyingAmount !== null}
                   className={cn(
-                    "px-2 py-1 text-[10px] font-medium rounded transition-all",
+                    "px-2 py-1 text-[10px] font-medium rounded-[var(--radius-sm)] transition-all",
                     "bg-green-600/80 hover:bg-green-500 text-white",
                     "disabled:opacity-50 disabled:cursor-not-allowed",
                     buyingAmount === amount && "animate-pulse"
@@ -224,7 +224,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
       </div>
 
       <Link
-        className="absolute inset-0 cursor-pointer rounded-lg"
+        className="absolute inset-0 cursor-pointer rounded-[var(--radius-md)]"
         href={`/token/${pool.baseAsset.id}`}
       />
     </div>
@@ -234,7 +234,7 @@ export const TokenCard: React.FC<TokenCardProps> = ({ pool, timeframe, rowRef })
 type TokenCardSkeletonProps = React.ComponentPropsWithoutRef<'div'>;
 
 export const TokenCardSkeleton: React.FC<TokenCardSkeletonProps> = ({ className, ...props }) => (
-  <div className={cn('border-b border-neutral-925 py-3 pl-1.5 pr-2 text-xs', className)} {...props}>
+  <div className={cn('border-b border-[var(--border-subtle)] py-3 pl-1.5 pr-2 text-xs', className)} {...props}>
     <div className="flex items-center">
       {/* Icon */}
       <div className="shrink-0 pl-2 pr-4">

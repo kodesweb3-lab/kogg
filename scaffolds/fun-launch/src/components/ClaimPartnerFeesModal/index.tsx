@@ -135,7 +135,7 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="relative w-full max-w-2xl bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-xl shadow-xl overflow-hidden"
+            className="relative w-full max-w-2xl bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] shadow-glow-sm overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -179,7 +179,7 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
                   <select
                     value={selectedToken}
                     onChange={(e) => setSelectedToken(e.target.value)}
-                    className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+                    className="w-full px-4 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-[var(--radius-md)] text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/30"
                   >
                     <option value="">-- Select a token --</option>
                     {tokens.map((token) => (
@@ -193,7 +193,7 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
 
               {/* Selected Token Info */}
               {selectedTokenData && (
-                <div className="p-4 bg-[var(--bg-elevated)]/80 border border-[var(--accent)]/20 rounded-lg">
+                <div className="p-4 bg-[var(--bg-elevated)]/80 border border-[var(--accent)]/20 rounded-[var(--radius-md)]">
                   <div className="flex items-center gap-3">
                     {selectedTokenData.imageUrl && (
                       <img
@@ -218,7 +218,7 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
               )}
 
               {/* Info */}
-              <div className="p-4 bg-[var(--bg-elevated)]/50 border border-[var(--accent)]/20 rounded-lg">
+              <div className="p-4 bg-[var(--bg-elevated)]/50 border border-[var(--accent)]/20 rounded-[var(--radius-md)]">
                 <p className="text-sm text-[var(--text-muted)]">
                   This will claim all available partner trading fees for the selected token. Fees
                   will be sent to your connected wallet.
@@ -238,7 +238,8 @@ export function ClaimPartnerFeesModal({ isOpen, onClose }: ClaimPartnerFeesModal
               <Button
                 onClick={handleClaim}
                 disabled={!selectedToken || isSending || isLoadingTokens}
-                className="bg-[var(--accent)] hover:opacity-90 text-[var(--bg-base)] font-heading font-bold"
+                className="hover:opacity-90 text-[var(--bg-base)] font-heading font-bold"
+                style={{background:'var(--gradient-primary)'}}
               >
                 {isSending ? 'Claiming...' : 'Claim Fees'}
               </Button>

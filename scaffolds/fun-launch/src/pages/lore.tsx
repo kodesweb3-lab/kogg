@@ -17,7 +17,7 @@ export default function LorePage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-20"
           >
-            <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 text-[var(--accent)] tracking-tight">
+            <h1 className="text-5xl md:text-7xl font-heading font-bold mb-6 gradient-text tracking-tight">
               The Evolution
             </h1>
             <p className="text-xl md:text-2xl text-[var(--text-muted)] font-body italic">
@@ -38,7 +38,7 @@ export default function LorePage() {
               className="relative mb-20 pl-20 md:pl-0 md:pr-1/2 md:w-1/2 md:ml-auto"
             >
               <div className="absolute left-0 md:left-1/2 top-6 w-4 h-4 bg-[var(--accent)] rounded-full border-2 border-[var(--bg-base)] transform -translate-x-1/2 md:translate-x-1/2" />
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8 relative">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8 relative">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="text-[var(--accent)] mt-1">
                     <GearIcon className="w-8 h-8" />
@@ -66,7 +66,7 @@ export default function LorePage() {
               className="relative mb-20 pl-20 md:pl-1/2 md:w-1/2"
             >
               <div className="absolute left-0 md:left-1/2 top-6 w-4 h-4 bg-[var(--accent)] rounded-full border-2 border-[var(--bg-base)] transform -translate-x-1/2 md:-translate-x-1/2" />
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8 relative border-[var(--accent)]/30">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8 relative border-[var(--accent)]/30">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="text-[var(--accent)] mt-1">
                     <BrainIcon className="w-8 h-8" />
@@ -94,7 +94,7 @@ export default function LorePage() {
               className="relative mb-20 pl-20 md:pl-0 md:pr-1/2 md:w-1/2 md:ml-auto"
             >
               <div className="absolute left-0 md:left-1/2 top-6 w-4 h-4 bg-[var(--accent)] rounded-full border-2 border-[var(--bg-base)] transform -translate-x-1/2 md:translate-x-1/2" />
-              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8 relative border-[var(--accent)]/30">
+              <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 md:p-8 relative border-[var(--accent)]/30">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="text-[var(--accent)] mt-1">
                     <RobotIcon className="w-8 h-8" />
@@ -122,7 +122,7 @@ export default function LorePage() {
             transition={{ delay: 0.8 }}
             className="mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-center text-[var(--accent)]">
+            <h2 className="text-3xl md:text-4xl font-heading font-bold mb-8 text-center gradient-text">
               The Three Pillars
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -131,7 +131,7 @@ export default function LorePage() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 relative overflow-hidden"
+                className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-6 relative overflow-hidden"
               >
                 <div className="relative z-10">
                   <div className="mb-4 text-[var(--accent)]">
@@ -157,7 +157,7 @@ export default function LorePage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.1 }}
-                className="bg-[var(--bg-layer)] border border-[var(--accent)]/30 rounded-xl p-6 relative overflow-hidden"
+                className="glow-card bg-[var(--bg-layer)] border border-[var(--accent)]/30 rounded-[var(--radius-lg)] p-6 relative overflow-hidden"
               >
                 <div className="relative z-10">
                   <BrainIcon className="w-12 h-12 mb-4 text-[var(--accent)]" />
@@ -181,7 +181,7 @@ export default function LorePage() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
-                className="bg-[var(--bg-layer)] border border-[var(--accent)]/30 rounded-xl p-6 relative overflow-hidden"
+                className="glow-card bg-[var(--bg-layer)] border border-[var(--accent)]/30 rounded-[var(--radius-lg)] p-6 relative overflow-hidden"
               >
                 <div className="relative z-10">
                   <div className="mb-4 text-[var(--accent)]">

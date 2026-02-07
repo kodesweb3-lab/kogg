@@ -50,7 +50,7 @@ export function LayoutSection({
       {(title || description) && (
         <div className="mb-6">
           {title && (
-            <h2 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] border-b border-[var(--border-default)] pb-3 mb-2">
+            <h2 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] border-b border-[var(--border-default)] pb-3 mb-2 font-heading gradient-text">
               {title}
             </h2>
           )}

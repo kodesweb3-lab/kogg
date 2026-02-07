@@ -32,12 +32,12 @@ const ExploreGrid = ({ className }: ExploreGridProps) => {
       
       <div
         className={cn(
-          'grid grid-cols-1 border-neutral-850 max-lg:grid-rows-[auto_1fr] lg:grid-cols-3 lg:border xl:overflow-hidden rounded-xl flex-1'
+          'grid grid-cols-1 border-[var(--border-default)] max-lg:grid-rows-[auto_1fr] lg:grid-cols-3 lg:border xl:overflow-hidden rounded-[var(--radius-lg)] flex-1'
         )}
       >
         <MobileExploreTabs />
 
-        <div className="contents divide-x divide-neutral-850">
+        <div className="contents divide-x divide-[var(--border-default)]">
           <ExploreColumn tab={isMobile ? mobileTab : ExploreTab.NEW} />
           {!isMobile && <ExploreColumn tab={ExploreTab.GRADUATING} />}
           {!isMobile && <ExploreColumn tab={ExploreTab.GRADUATED} />}

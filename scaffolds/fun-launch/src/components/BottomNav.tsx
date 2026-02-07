@@ -1,9 +1,9 @@
 'use client';
 
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useWallet } from '@jup-ag/wallet-adapter';
-import { useState } from 'react';
 import { SearchIcon, RocketIcon } from '@/components/icons/FeatureIcons';
 import {
   Dialog,
@@ -63,19 +63,21 @@ function MoreIcon({ className }: { className?: string }) {
   );
 }
 
-export function BottomNav() {
+const BottomNavInner = () => {
   const router = useRouter();
   const { connected } = useWallet();
   const [moreOpen, setMoreOpen] = useState(false);
 
+  const handleMoreClose = useCallback(() => setMoreOpen(false), []);
+
   return (
     <>
       <nav
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-[1000] isolate flex items-center justify-around gap-1 px-2 pt-3 pb-[env(safe-area-inset-bottom)] min-h-[64px]"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-[1000] isolate flex items-center justify-around gap-1 px-2 pt-2 pb-[env(safe-area-inset-bottom)] min-h-[64px]"
         style={{
           background: 'var(--glass-bg)',
-          backdropFilter: 'blur(var(--glass-blur))',
-          WebkitBackdropFilter: 'blur(var(--glass-blur))',
+          backdropFilter: 'blur(var(--glass-blur-strong))',
+          WebkitBackdropFilter: 'blur(var(--glass-blur-strong))',
           borderTop: '1px solid var(--glass-border)',
         }}
       >
@@ -90,50 +92,52 @@ export function BottomNav() {
             <Link
               key={item.href}
               href={item.href}
-              onClick={(e) => {
-                e.preventDefault();
-                router.push(item.href);
-              }}
-              className={`relative flex flex-col items-center justify-center gap-1 min-w-[72px] min-h-[52px] rounded-2xl transition-all touch-manipulation active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)] ${
-                isActive ? 'bg-[var(--accent)]/15 text-[var(--accent)]' : 'text-[var(--text-muted)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)]'
+              className={`relative flex flex-col items-center justify-center gap-1 min-w-[72px] min-h-[52px] rounded-[var(--radius-sm)] transition-all touch-manipulation active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
+                isActive ? 'text-[var(--accent)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
               }`}
               aria-current={isActive ? 'page' : undefined}
             >
-              <Icon className="w-6 h-6" />
-              <span className="text-[11px] font-medium">{item.label}</span>
-              {isActive && <span className="absolute bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[var(--accent)]" />}
+              {/* Gradient active indicator line */}
+              {isActive && (
+                <span
+                  className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 rounded-full"
+                  style={{ background: 'var(--gradient-primary)' }}
+                />
+              )}
+              <Icon className="w-5 h-5" />
+              <span className="text-[10px] font-medium">{item.label}</span>
             </Link>
           );
         })}
         <button
           type="button"
           onClick={() => setMoreOpen(true)}
-          className="flex flex-col items-center justify-center gap-1 min-w-[72px] min-h-[52px] rounded-2xl text-[var(--text-muted)] hover:bg-[var(--bg-elevated)] hover:text-[var(--text-primary)] transition-all touch-manipulation active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+          className="flex flex-col items-center justify-center gap-1 min-w-[72px] min-h-[52px] rounded-[var(--radius-sm)] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-all touch-manipulation active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           aria-label="More menu"
         >
-          <MoreIcon className="w-6 h-6" />
-          <span className="text-[11px] font-medium">More</span>
+          <MoreIcon className="w-5 h-5" />
+          <span className="text-[10px] font-medium">More</span>
         </button>
       </nav>
 
       <Dialog open={moreOpen} onOpenChange={setMoreOpen}>
         <DialogContent
-          className="z-[60] !left-0 !right-0 !top-auto !translate-x-0 !translate-y-0 max-w-sm mx-auto rounded-t-3xl rounded-b-none fixed bottom-0 left-0 right-0 p-0 pb-[env(safe-area-inset-bottom)] max-h-[75vh] overflow-hidden flex flex-col border-0"
-          style={{ background: 'var(--bg-elevated)' }}
+          className="z-[1100] !left-0 !right-0 !top-auto !translate-x-0 !translate-y-0 max-w-sm mx-auto rounded-t-[var(--radius-xl)] rounded-b-none fixed bottom-0 left-0 right-0 p-0 pb-[env(safe-area-inset-bottom)] max-h-[75vh] overflow-hidden flex flex-col border-0"
+          style={{ background: 'var(--bg-layer)' }}
           animate={false}
         >
           <DialogTitle className="sr-only">More</DialogTitle>
           <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-[var(--border-default)]">
-            <span className="text-base font-semibold text-[var(--text-primary)]">Menu</span>
+            <span className="text-base font-semibold font-heading text-[var(--text-primary)]">Menu</span>
             <DialogCloseButton />
           </div>
-          <div className="overflow-y-auto py-4 px-3 space-y-6">
+          <div className="overflow-y-auto py-4 px-3 space-y-5">
             {MORE_GROUPS.map((group) => (
               <div key={group.label}>
-                <div className="text-[11px] font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-2 px-3">
+                <div className="text-[10px] font-semibold uppercase tracking-widest text-[var(--text-muted)] mb-2 px-3">
                   {group.label}
                 </div>
-                <div className="rounded-xl bg-[var(--bg-layer)] p-1 space-y-0.5">
+                <div className="rounded-[var(--radius-md)] bg-[var(--bg-base)]/60 p-1 space-y-0.5">
                   {group.links.map((link) =>
                     link.external ? (
                       <a
@@ -141,8 +145,8 @@ export function BottomNav() {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center min-h-12 px-4 rounded-lg text-[var(--text-primary)] font-medium hover:bg-[var(--accent)]/10"
-                        onClick={() => setMoreOpen(false)}
+                        className="flex items-center min-h-12 px-4 rounded-[var(--radius-sm)] text-[var(--text-primary)] font-medium hover:bg-[var(--accent)]/6"
+                        onClick={handleMoreClose}
                       >
                         {link.label}
                       </a>
@@ -150,10 +154,10 @@ export function BottomNav() {
                       <Link
                         key={link.href}
                         href={link.href}
-                        className={`flex items-center min-h-12 px-4 rounded-lg font-medium ${
-                          router.pathname === link.href ? 'bg-[var(--accent)]/10 text-[var(--accent)]' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/10'
+                        className={`flex items-center min-h-12 px-4 rounded-[var(--radius-sm)] font-medium transition-colors ${
+                          router.pathname === link.href ? 'text-[var(--accent)] bg-[var(--accent)]/8' : 'text-[var(--text-primary)] hover:bg-[var(--accent)]/6'
                         }`}
-                        onClick={() => setMoreOpen(false)}
+                        onClick={handleMoreClose}
                       >
                         {link.label}
                       </Link>
@@ -167,6 +171,9 @@ export function BottomNav() {
       </Dialog>
     </>
   );
-}
+};
+
+export const BottomNav = React.memo(BottomNavInner);
+BottomNav.displayName = 'BottomNav';
 
 export default BottomNav;

@@ -88,6 +88,25 @@ POOL_CONFIG_KEY=BySD2vRKkCPmaH5A5MH3k5quRe8V23yhk9cKKTR5sv5t
 
 ---
 
+### `TREASURY_SECRET_KEY` (optional)
+
+**Description**: Base58-encoded secret key for the DBC fee claimer (treasury) wallet (`5hDrp6eTjMKrUFx96wqeQHhXNa7zvp3ba1Z9nTY3tBjA`). Pool creation requires this wallet to sign the transaction; the server adds the signature when sending.
+
+**Type**: String (base58 secret key, 64 bytes decoded)
+
+**Where Used**: Web service (`src/pages/api/send-transaction.ts`) — only when the transaction is a create-pool that needs the treasury signature.
+
+**When to set**: Required for token launch (create pool) to succeed. If not set, users will see "Missing signature for public key [5hDrp...]".
+
+**Example** (do not use in production):
+```bash
+TREASURY_SECRET_KEY=your_base58_secret_key_for_5hDrp_wallet
+```
+
+**Security**: Critical - Never commit. Store in env/secrets only.
+
+---
+
 ### `DATABASE_URL`
 
 **Description**: PostgreSQL connection string.

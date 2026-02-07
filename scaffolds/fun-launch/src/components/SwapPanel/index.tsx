@@ -206,12 +206,12 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
   const outputLabel = mode === 'buy' ? tokenSymbol : 'SOL';
 
   return (
-    <div className="bg-[var(--bg-layer)] rounded-xl p-4 border border-[var(--border-default)]">
+    <div className="glass-panel bg-[var(--bg-layer)] rounded-[var(--radius-md)] p-4 border border-[var(--border-default)]">
       {/* Mode Toggle */}
       <div className="flex gap-2 mb-4">
         <button
           onClick={() => setMode('buy')}
-          className={`flex-1 py-2 px-4 rounded-lg font-heading font-bold transition-all ${
+          className={`flex-1 py-2 px-4 rounded-[var(--radius-sm)] font-heading font-bold transition-all ${
             mode === 'buy'
               ? 'bg-[var(--accent)]/90 text-[var(--bg-base)]'
               : 'bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border-default)]'
@@ -221,7 +221,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
         </button>
         <button
           onClick={() => setMode('sell')}
-          className={`flex-1 py-2 px-4 rounded-lg font-heading font-bold transition-all ${
+          className={`flex-1 py-2 px-4 rounded-[var(--radius-sm)] font-heading font-bold transition-all ${
             mode === 'sell'
               ? 'bg-[var(--accent)]/90 text-[var(--bg-base)]'
               : 'bg-[var(--bg-elevated)] text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border-default)]'
@@ -236,7 +236,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
         <label className="block text-sm font-body text-[var(--text-muted)] mb-1">
           You {mode === 'buy' ? 'pay' : 'sell'}
         </label>
-        <div className="flex items-center gap-2 bg-[var(--bg-elevated)] rounded-lg p-3 border border-[var(--border-default)]">
+        <div className="flex items-center gap-2 bg-[var(--bg-elevated)] rounded-[var(--radius-md)] p-3 border border-[var(--border-default)] focus-within:ring-2 focus-within:ring-[var(--accent)]/30">
           <input
             type="number"
             value={amount}
@@ -255,7 +255,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
               <button
                 key={val}
                 onClick={() => setAmount(val.toString())}
-                className="px-3 py-1 text-xs bg-[var(--bg-elevated)] rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--accent)]/20 border border-[var(--border-default)] transition-all font-body"
+                className="px-3 py-1 text-xs bg-[var(--bg-elevated)] rounded-[var(--radius-sm)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--accent)]/20 border border-[var(--border-default)] transition-all font-body"
               >
                 {val} SOL
               </button>
@@ -283,7 +283,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
                       setAmount(((bal * pct) / 100).toString());
                     }
                   }}
-                  className="px-2 py-1 text-xs bg-[var(--bg-elevated)] rounded-md text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--accent)]/20 border border-[var(--border-default)] transition-all font-body"
+                  className="px-2 py-1 text-xs bg-[var(--bg-elevated)] rounded-[var(--radius-sm)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--accent)]/20 border border-[var(--border-default)] transition-all font-body"
                 >
                   {pct}%
                 </button>
@@ -307,7 +307,7 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
         <label className="block text-sm font-body text-[var(--text-muted)] mb-1">
           You receive (estimate)
         </label>
-        <div className="flex items-center gap-2 bg-[var(--bg-elevated)] rounded-lg p-3 border border-[var(--border-default)]">
+        <div className="flex items-center gap-2 bg-[var(--bg-elevated)] rounded-[var(--radius-md)] p-3 border border-[var(--border-default)] focus-within:ring-2 focus-within:ring-[var(--accent)]/30">
           {isLoadingQuote ? (
             <Skeleton className="h-7 w-32" />
           ) : (
@@ -332,11 +332,8 @@ export function SwapPanel({ mint, tokenSymbol = 'TOKEN' }: SwapPanelProps) {
         <Button
           onClick={handleSwap}
           disabled={isSwapping || !amount || parseFloat(amount) <= 0}
-          className={`w-full py-3 text-lg font-heading ${
-            mode === 'buy' 
-              ? 'bg-[var(--accent)] hover:opacity-90' 
-              : 'bg-[var(--accent)]/80 hover:opacity-90'
-          }`}
+          className="w-full py-3 text-lg font-heading text-[var(--bg-base)] hover:opacity-90"
+          style={{background:'var(--gradient-primary)'}}
         >
           {isSwapping ? (
             <span className="flex items-center gap-2">

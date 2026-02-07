@@ -34,14 +34,14 @@ export const ExploreColumn: React.FC<ExploreColumnProps> = ({ tab }) => {
       {/* Desktop Column Header */}
       <div className="flex items-center justify-between p-3 max-lg:hidden">
         <div className="flex items-center gap-x-2">
-          <h2 className="font-bold text-neutral-300">{ExploreTabTitleMap[tab]}</h2>
+          <h2 className="font-bold text-[var(--text-secondary)] font-heading">{ExploreTabTitleMap[tab]}</h2>
           {isPaused && <PausedIndicator />}
         </div>
       </div>
 
       {/* List */}
-      <div className="relative flex-1 border-neutral-850 text-xs lg:border-t h-full">
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-2 bg-gradient-to-b from-neutral-950 to-transparent" />
+      <div className="relative flex-1 border-[var(--border-default)] text-xs lg:border-t h-full">
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-2 bg-gradient-to-b from-[var(--bg-base)] to-transparent" />
         <TokenCardListContainer
           tab={tab}
           request={request}

@@ -37,8 +37,8 @@ export default function ClaimFeesPage({ isFeeClaimer, walletAddress }: ClaimFees
     <Page>
       <div className="min-h-screen py-8 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8">
-            <h1 className="text-3xl font-heading font-bold text-[var(--accent)] mb-4">
+          <div className="glass-panel bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-xl)] p-8">
+            <h1 className="text-3xl font-heading font-bold gradient-text mb-4">
               Claim Partner Fees
             </h1>
 

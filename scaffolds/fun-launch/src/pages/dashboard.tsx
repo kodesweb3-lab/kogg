@@ -106,7 +106,7 @@ export default function DashboardPage() {
       <Page>
         <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8 text-center">
+            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-8 text-center">
               <h1 className="text-3xl font-heading font-bold mb-4 text-[var(--accent)]">
                 Dashboard
               </h1>
@@ -128,7 +128,7 @@ export default function DashboardPage() {
       <Page>
         <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8 text-center">
+            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-8 text-center">
               <p className="text-[var(--text-primary)]/80 font-body">Loading dashboard...</p>
             </div>
           </div>
@@ -142,7 +142,7 @@ export default function DashboardPage() {
       <Page>
         <div className="min-h-screen text-[var(--text-primary)] py-8 md:py-12 px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-8 text-center">
+            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-8 text-center">
               <h1 className="text-3xl font-heading font-bold mb-4 text-[var(--accent)]">
                 Error
               </h1>
@@ -192,7 +192,7 @@ export default function DashboardPage() {
             transition={{ delay: 0.1 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8"
           >
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+            <div className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6" style={{background:'var(--gradient-card)'}}>
               <div className="text-sm text-[var(--text-muted)] font-body mb-2">Portfolio Value</div>
               <div className="text-3xl font-heading font-bold text-[var(--accent)]">
                 <ReadableNumber format="compact" num={stats.totalMarketCap} prefix="$" />
@@ -202,7 +202,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+            <div className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6" style={{background:'var(--gradient-card)'}}>
               <div className="text-sm text-[var(--text-muted)] font-body mb-2">Total Tokens</div>
               <div className="text-3xl font-heading font-bold text-[var(--accent)]">
                 {stats.totalTokens}
@@ -212,7 +212,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+            <div className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6" style={{background:'var(--gradient-card)'}}>
               <div className="text-sm text-[var(--text-muted)] font-body mb-2">Total Volume</div>
               <div className="text-3xl font-heading font-bold text-[var(--accent)]">
                 <ReadableNumber format="compact" num={stats.totalVolume} prefix="$" />
@@ -222,7 +222,7 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6">
+            <div className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6" style={{background:'var(--gradient-card)'}}>
               <div className="text-sm text-[var(--text-muted)] font-body mb-2">Total Holders</div>
               <div className="text-3xl font-heading font-bold text-[var(--accent)]">
                 <ReadableNumber format="compact" num={stats.totalHolders} />
@@ -240,7 +240,8 @@ export default function DashboardPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8"
+                className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6 md:p-8"
+                style={{background:'var(--gradient-card)'}}
               >
                 <h2 className="text-xl font-heading font-bold mb-4 text-[var(--accent)]">
                   Service Provider
@@ -296,7 +297,8 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8"
+              className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6 md:p-8"
+              style={{background:'var(--gradient-card)'}}
             >
               <h2 className="text-xl font-heading font-bold mb-4 text-[var(--accent)]">
                 Performance Metrics
@@ -328,7 +330,8 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8"
+              className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6 md:p-8"
+              style={{background:'var(--gradient-card)'}}
             >
               <h2 className="text-xl font-heading font-bold mb-4 text-[var(--accent)]">
                 Referral Network
@@ -366,7 +369,8 @@ export default function DashboardPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8"
+            className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6 md:p-8"
+            style={{background:'var(--gradient-card)'}}
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
               <h2 className="text-2xl font-heading font-bold text-[var(--accent)] mb-4 md:mb-0">
@@ -387,7 +391,7 @@ export default function DashboardPage() {
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as 'name' | 'createdAt' | 'type')}
-                    className="px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] text-sm font-body"
+                    className="px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] text-sm font-body"
                   >
                     <option value="createdAt">Sort by Date</option>
                     <option value="name">Sort by Name</option>
@@ -395,7 +399,7 @@ export default function DashboardPage() {
                   </select>
                   <button
                     onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                    className="px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-lg text-[var(--text-primary)] text-sm font-body hover:bg-[var(--bg-layer)] transition-colors"
+                    className="px-3 py-2 bg-[var(--bg-elevated)] border border-[var(--border-default)] rounded-[var(--radius-sm)] text-[var(--text-primary)] text-sm font-body hover:bg-[var(--bg-layer)] transition-colors"
                   >
                     {sortOrder === 'asc' ? '↑' : '↓'}
                   </button>
@@ -427,7 +431,7 @@ export default function DashboardPage() {
                     {sortedTokens.map((token) => (
                       <tr
                         key={token.id}
-                        className="border-b border-[var(--border-default)] hover:bg-[var(--bg-elevated)]/50 transition-colors"
+                        className="border-b border-[var(--border-default)] hover:bg-[var(--bg-elevated)] transition-colors"
                       >
                         <td className="py-4 px-4">
                           <div>
@@ -488,7 +492,8 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-2xl p-6 md:p-8 mt-8"
+              className="glow-card bg-[var(--bg-layer)] border border-[var(--border-default)] rounded-[var(--radius-lg)] p-6 md:p-8 mt-8"
+              style={{background:'var(--gradient-card)'}}
             >
               <h2 className="text-2xl font-heading font-bold mb-6 text-[var(--accent)]">
                 Token Creation Timeline

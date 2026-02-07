@@ -12,7 +12,6 @@ import { useRouter } from 'next/router';
 // SSR-safe ErrorBoundary wrapper - renders children immediately on SSR, wraps with ErrorBoundary on client
 function ErrorBoundaryWrapper({ children }: { children: ReactNode }) {
   const [ErrorBoundary, setErrorBoundary] = useState<React.ComponentType<{ children: ReactNode }> | null>(null);
-  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     // Only load ErrorBoundary on client-side
@@ -142,7 +141,6 @@ export default function App({ Component, pageProps }: AppProps) {
                 url: 'https://kogaion.io',
                 iconUrls: ['/favicon.ico'],
               },
-              // notificationCallback: WalletNotification,
               theme: 'dark',
               lang: 'en',
             }}
@@ -155,7 +153,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
-                style={{ background: 'var(--cyber-bg)' }}
+                style={{ background: 'var(--bg-base)' }}
               >
                 <Component {...pageProps} />
               </motion.div>

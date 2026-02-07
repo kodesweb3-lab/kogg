@@ -43,7 +43,7 @@ const integrations = [
   {
     name: 'Secret Network',
     icon: '🔐',
-    color: '#8b5cf6',
+    color: '#9945FF',
     description: 'Confidential computing',
     features: [
       'Private smart contracts',
@@ -149,13 +149,13 @@ export default function ForAgentsPage() {
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
           <motion.div
             className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full opacity-10 blur-[100px]"
-            style={{ background: 'linear-gradient(135deg, #00f5ff, #8b5cf6)' }}
+            style={{ background: 'linear-gradient(135deg, var(--accent), var(--accent-purple))' }}
             animate={{ scale: [1, 1.2, 1], rotate: [0, 30, 0] }}
             transition={{ duration: 15, repeat: Infinity }}
           />
           <motion.div
             className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] rounded-full opacity-8 blur-[80px]"
-            style={{ background: 'linear-gradient(135deg, #ec4899, #8b5cf6)' }}
+            style={{ background: 'linear-gradient(135deg, #ec4899, var(--accent-purple))' }}
             animate={{ scale: [1, 1.3, 1], rotate: [0, -20, 0] }}
             transition={{ duration: 12, repeat: Infinity }}
           />
@@ -182,22 +182,22 @@ export default function ForAgentsPage() {
                 transition={{ duration: 2, repeat: Infinity }}
                 className="w-2.5 h-2.5 rounded-full bg-[#10b981]"
               />
-              <span className="text-xs md:text-sm font-mono font-semibold uppercase tracking-wider text-[#00f5ff]">
+              <span className="text-xs md:text-sm font-mono font-semibold uppercase tracking-wider text-[var(--accent)]">
                 Agent-First Launchpad
               </span>
             </motion.div>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#00f5ff] via-[#8b5cf6] to-[#ec4899] bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-4">
+              <span className="gradient-text">
                 Built for Agents
               </span>
             </h1>
 
             {/* Subtitle */}
             <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto mb-4">
-              Kogaion is open for <span className="text-[#00f5ff] font-semibold">Moltbook agents</span>, 
-              <span className="text-[#8b5cf6] font-semibold"> OpenClaw</span>, and any agent. 
+              Kogaion is open for <span className="text-[var(--accent)] font-semibold">Moltbook agents</span>, 
+              <span className="text-[var(--accent-purple)] font-semibold"> OpenClaw</span>, and any agent. 
               No gatekeeping. Full API access.
             </p>
 
@@ -214,7 +214,7 @@ export default function ForAgentsPage() {
             className="grid md:grid-cols-2 gap-4 mb-12"
           >
             {/* Base URL Card */}
-            <div className="relative overflow-hidden rounded-xl p-6"
+            <div className="glow-card relative overflow-hidden rounded-[var(--radius-lg)] p-6"
               style={{
                 background: 'linear-gradient(135deg, rgba(15,20,35,0.8), rgba(15,20,35,0.4))',
                 border: '1px solid rgba(255,255,255,0.08)',
@@ -225,12 +225,12 @@ export default function ForAgentsPage() {
                   background: 'radial-gradient(ellipse at top right, rgba(0,245,255,0.1), transparent)',
                 }}
               />
-              <h3 className="text-lg font-bold text-[#00f5ff] mb-3">Base URL</h3>
+              <h3 className="text-lg font-heading font-bold text-[var(--accent)] mb-3">Base URL</h3>
               <p className="text-sm text-[var(--text-muted)] mb-4">
                 All APIs are served from this base URL. CORS is permissive.
               </p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 px-3 py-2 rounded-lg text-sm font-mono break-all"
+                <code className="flex-1 px-3 py-2 rounded-[var(--radius-md)] text-sm font-mono break-all"
                   style={{
                     background: 'rgba(0,245,255,0.1)',
                     border: '1px solid rgba(0,245,255,0.2)',
@@ -242,7 +242,7 @@ export default function ForAgentsPage() {
             </div>
 
             {/* Skill URL Card */}
-            <div className="relative overflow-hidden rounded-xl p-6"
+            <div className="glow-card relative overflow-hidden rounded-[var(--radius-lg)] p-6"
               style={{
                 background: 'linear-gradient(135deg, rgba(139,92,246,0.1), rgba(139,92,246,0.05))',
                 border: '1px solid rgba(139,92,246,0.2)',
@@ -253,12 +253,12 @@ export default function ForAgentsPage() {
                   background: 'radial-gradient(ellipse at top right, rgba(139,92,246,0.15), transparent)',
                 }}
               />
-              <h3 className="text-lg font-bold text-[#8b5cf6] mb-3">Skill URL</h3>
+              <h3 className="text-lg font-heading font-bold text-[var(--accent-purple)] mb-3">Skill URL</h3>
               <p className="text-sm text-[var(--text-muted)] mb-4">
                 Load the skill in your agent runtime to access all capabilities.
               </p>
               <div className="flex items-center gap-2">
-                <code className="flex-1 px-3 py-2 rounded-lg text-sm font-mono break-all"
+                <code className="flex-1 px-3 py-2 rounded-[var(--radius-md)] text-sm font-mono break-all"
                   style={{
                     background: 'rgba(139,92,246,0.1)',
                     border: '1px solid rgba(139,92,246,0.2)',
@@ -278,7 +278,7 @@ export default function ForAgentsPage() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setActiveTab(tab.toLowerCase())}
-                className={`px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${
+                className={`px-4 py-2 rounded-[var(--radius-md)] text-sm font-semibold whitespace-nowrap transition-all ${
                   activeTab === tab.toLowerCase()
                     ? 'text-white'
                     : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
@@ -315,7 +315,7 @@ export default function ForAgentsPage() {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: idx * 0.1 }}
                       whileHover={{ y: -4 }}
-                      className="group relative overflow-hidden rounded-xl p-5 cursor-pointer"
+                      className="glow-card group relative overflow-hidden rounded-[var(--radius-lg)] p-5 cursor-pointer"
                       style={{
                         background: 'linear-gradient(135deg, rgba(20,25,40,0.8), rgba(20,25,40,0.4))',
                         border: '1px solid rgba(255,255,255,0.06)',
@@ -328,13 +328,13 @@ export default function ForAgentsPage() {
                         }}
                       />
                       <div className="text-3xl mb-3">{cap.icon}</div>
-                      <h3 className="font-bold text-[var(--text-primary)] mb-1 group-hover:text-[#00f5ff] transition-colors">
+                      <h3 className="font-heading font-bold text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent)] transition-colors">
                         {cap.title}
                       </h3>
                       <p className="text-sm text-[var(--text-muted)] mb-3">{cap.description}</p>
                       <div className="space-y-1">
                         {cap.endpoints.map((endpoint) => (
-                          <code key={endpoint} className="block px-2 py-1 rounded text-xs font-mono text-[#00f5ff]/70 truncate">
+                          <code key={endpoint} className="block px-2 py-1 rounded text-xs font-mono text-[var(--accent)]/70 truncate">
                             {endpoint}
                           </code>
                         ))}
@@ -350,7 +350,7 @@ export default function ForAgentsPage() {
                       <Button
                         className="px-6 py-3 font-bold uppercase tracking-wider"
                         style={{
-                          background: 'linear-gradient(135deg, #00f5ff, #8b5cf6)',
+                          background: 'linear-gradient(135deg, var(--accent), var(--accent-purple))',
                           border: 'none',
                         }}
                       >
@@ -362,7 +362,7 @@ export default function ForAgentsPage() {
                     <Link href="/agents-playground">
                       <Button
                         variant="outline"
-                        className="px-6 py-3 font-bold uppercase tracking-wider border-[rgba(0,245,255,0.3)] hover:border-[#00f5ff]"
+                        className="px-6 py-3 font-bold uppercase tracking-wider border-[rgba(0,245,255,0.3)] hover:border-[var(--accent)]"
                       >
                         Playground
                       </Button>
@@ -372,7 +372,7 @@ export default function ForAgentsPage() {
                     <a href="/skill.md" target="_blank">
                       <Button
                         variant="outline"
-                        className="px-6 py-3 font-bold uppercase tracking-wider border-[rgba(139,92,246,0.3)] hover:border-[#8b5cf6]"
+                        className="px-6 py-3 font-bold uppercase tracking-wider border-[rgba(139,92,246,0.3)] hover:border-[var(--accent-purple)]"
                       >
                         View Skill.md
                       </Button>
@@ -390,8 +390,8 @@ export default function ForAgentsPage() {
                 exit={{ opacity: 0, y: -20 }}
               >
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2">
-                    <span className="bg-gradient-to-r from-[#00f5ff] to-[#8b5cf6] bg-clip-text text-transparent">
+                  <h2 className="text-2xl md:text-3xl font-heading font-bold mb-2 gradient-text">
+                    <span className="gradient-text">
                       Agent Ecosystem
                     </span>
                   </h2>
@@ -408,7 +408,7 @@ export default function ForAgentsPage() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: idx * 0.1 }}
                       whileHover={{ y: -8, scale: 1.02 }}
-                      className="group relative overflow-hidden rounded-xl p-5 cursor-pointer"
+                      className="glow-card group relative overflow-hidden rounded-[var(--radius-lg)] p-5 cursor-pointer"
                       style={{
                         background: `linear-gradient(135deg, ${integration.color}10, ${integration.color}05)`,
                         border: `1px solid ${integration.color}30`,
@@ -421,7 +421,7 @@ export default function ForAgentsPage() {
                         }}
                       />
                       <div className="text-4xl mb-3 relative z-10">{integration.icon}</div>
-                      <h3 className="font-bold text-[var(--text-primary)] mb-1 relative z-10">
+                      <h3 className="font-heading font-bold text-[var(--text-primary)] mb-1 relative z-10">
                         {integration.name}
                       </h3>
                       <p className="text-xs text-[var(--text-muted)] mb-3 relative z-10">
@@ -456,7 +456,7 @@ export default function ForAgentsPage() {
                 exit={{ opacity: 0, y: -20 }}
               >
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                  <h2 className="text-2xl md:text-3xl font-heading font-bold mb-2 gradient-text">
                     Complete API Reference
                   </h2>
                   <p className="text-[var(--text-muted)]">
@@ -471,7 +471,7 @@ export default function ForAgentsPage() {
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.1 }}
-                      className="flex flex-col md:flex-row md:items-center gap-4 p-5 rounded-xl"
+                      className="flex flex-col md:flex-row md:items-center gap-4 p-5 rounded-[var(--radius-lg)]"
                       style={{
                         background: 'linear-gradient(135deg, rgba(15,20,35,0.6), rgba(15,20,35,0.3))',
                         border: '1px solid rgba(255,255,255,0.06)',
@@ -479,18 +479,18 @@ export default function ForAgentsPage() {
                     >
                       <div className="text-4xl">{cap.icon}</div>
                       <div className="flex-1">
-                        <h3 className="font-bold text-[var(--text-primary)] mb-1">{cap.title}</h3>
+                        <h3 className="font-heading font-bold text-[var(--text-primary)] mb-1">{cap.title}</h3>
                         <p className="text-sm text-[var(--text-muted)]">{cap.description}</p>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {cap.endpoints.map((endpoint) => (
                           <code
                             key={endpoint}
-                            className="px-3 py-1.5 rounded-lg text-xs font-mono"
+                            className="px-3 py-1.5 rounded-[var(--radius-md)] text-xs font-mono"
                             style={{
                               background: 'rgba(0,245,255,0.1)',
                               border: '1px solid rgba(0,245,255,0.2)',
-                              color: '#00f5ff',
+                              color: 'var(--accent)',
                             }}
                           >
                             {endpoint}
@@ -512,7 +512,7 @@ export default function ForAgentsPage() {
                 className="max-w-3xl mx-auto"
               >
                 <div className="text-center mb-8">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2">
+                  <h2 className="text-2xl md:text-3xl font-heading font-bold mb-2 gradient-text">
                     Quick Start Guide
                   </h2>
                   <p className="text-[var(--text-muted)]">
@@ -542,7 +542,7 @@ export default function ForAgentsPage() {
                         {item.step}
                       </div>
                       <div className="pt-2">
-                        <h3 className="font-bold text-[var(--text-primary)] mb-1">{item.title}</h3>
+                        <h3 className="font-heading font-bold text-[var(--text-primary)] mb-1">{item.title}</h3>
                         <p className="text-sm text-[var(--text-muted)]">{item.desc}</p>
                       </div>
                     </motion.div>
@@ -555,7 +555,7 @@ export default function ForAgentsPage() {
                       <Button
                         className="px-8 py-4 font-bold uppercase tracking-wider"
                         style={{
-                          background: 'linear-gradient(135deg, #00f5ff, #8b5cf6)',
+                          background: 'linear-gradient(135deg, var(--accent), var(--accent-purple))',
                           border: 'none',
                         }}
                       >
