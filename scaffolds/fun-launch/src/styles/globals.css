@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 @import './theme.css';
 
 @tailwind base;
@@ -13,7 +13,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-heading: 'Inter', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
@@ -40,6 +40,7 @@ body {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
+
   body {
     min-height: 100dvh;
     overflow-x: hidden;
@@ -51,20 +52,23 @@ body {
   height: 5px;
   width: 5px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   border-radius: 9999px;
   background: rgba(139, 148, 158, 0.2);
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(139, 148, 158, 0.4);
 }
 
-/* Focus ring — accent green */
+/* Focus ring — refined purple */
 *:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-purple);
   outline-offset: 2px;
 }
 
@@ -74,6 +78,7 @@ body {
   left: -9999px;
   z-index: 9999;
 }
+
 .skip-to-content:focus {
   left: 0.5rem;
   top: 0.5rem;
@@ -101,13 +106,15 @@ select {
   font-family: inherit;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
+
 input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(20, 241, 149, 0.15);
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
 }
+
 input::placeholder,
 textarea::placeholder {
   color: var(--text-muted);
@@ -115,7 +122,10 @@ textarea::placeholder {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -136,6 +146,7 @@ textarea::placeholder {
 .shadow-cyber-sm {
   box-shadow: var(--shadow-sm);
 }
+
 .shadow-cyber {
   box-shadow: var(--shadow-md);
 }

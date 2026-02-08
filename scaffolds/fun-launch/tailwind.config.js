@@ -15,19 +15,26 @@ export default {
         xxs: ['0.5rem', { lineHeight: '0.625rem' }],
       },
       fontFamily: {
-        heading: ['Space Grotesk', 'Inter', 'sans-serif'],
-        display: ['Space Grotesk', 'sans-serif'],
+        heading: ['Inter', 'sans-serif'],
+        display: ['Inter', 'sans-serif'],
         body: ['Inter', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       boxShadow: {
-        'glow': '0 0 20px rgba(153, 69, 255, 0.15), 0 0 40px rgba(20, 241, 149, 0.08)',
-        'glow-sm': '0 0 12px rgba(153, 69, 255, 0.1), 0 0 24px rgba(20, 241, 149, 0.05)',
-        'glow-accent': '0 0 20px rgba(20, 241, 149, 0.2), 0 0 40px rgba(20, 241, 149, 0.08)',
-        // Legacy aliases
-        'cyber': '0 0 20px rgba(153, 69, 255, 0.15), 0 0 40px rgba(20, 241, 149, 0.08)',
-        'cyber-sm': '0 0 12px rgba(153, 69, 255, 0.1)',
-        'cyber-inner': 'inset 0 0 20px rgba(153, 69, 255, 0.06)',
+        // Elevation shadows (premium, no glows)
+        'elevation-1': '0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24)',
+        'elevation-2': '0 3px 6px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.12)',
+        'elevation-3': '0 10px 20px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.10)',
+        'elevation-4': '0 15px 25px rgba(0, 0, 0, 0.15), 0 5px 10px rgba(0, 0, 0, 0.05)',
+        // Subtle accent (used sparingly)
+        'accent-subtle': '0 0 20px rgba(139, 92, 246, 0.08), 0 0 40px rgba(16, 185, 129, 0.04)',
+        // Legacy aliases for compatibility
+        'glow': '0 0 20px rgba(139, 92, 246, 0.08), 0 0 40px rgba(16, 185, 129, 0.04)',
+        'glow-sm': '0 0 12px rgba(139, 92, 246, 0.06), 0 0 24px rgba(16, 185, 129, 0.03)',
+        'glow-accent': '0 0 20px rgba(16, 185, 129, 0.1), 0 0 40px rgba(16, 185, 129, 0.05)',
+        'cyber': '0 3px 6px rgba(0, 0, 0, 0.15)',
+        'cyber-sm': '0 1px 3px rgba(0, 0, 0, 0.12)',
+        'cyber-inner': 'inset 0 1px 3px rgba(0, 0, 0, 0.12)',
       },
       letterSpacing: {
         tighter: '-0.05em',

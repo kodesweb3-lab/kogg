@@ -63,12 +63,9 @@ export default function LandingPage() {
       <div className="flex flex-col gap-12 sm:gap-16 lg:gap-20 text-[var(--text-primary)] pb-6">
 
         {/* ── Hero ── */}
-        <section className="relative pt-10 sm:pt-16 md:pt-24 pb-12 sm:pb-16 md:pb-20">
-          {/* Background decorative gradient blobs */}
-          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-            <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full opacity-20 blur-[120px]" style={{ background: 'var(--accent-purple)' }} />
-            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full opacity-15 blur-[120px]" style={{ background: 'var(--accent)' }} />
-          </div>
+        <section className="relative pt-10 sm:pt-16 md:pt-24 pb-12 sm:pb-16 md:pb-20 min-h-[85vh] flex items-center">
+          {/* Subtle gradient mesh background (no glowing blobs) */}
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none mesh-bg" />
 
           <div className="max-w-3xl mx-auto text-center">
             <motion.div
@@ -76,12 +73,12 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent)]/20 bg-[var(--accent)]/5 mb-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[var(--accent-purple)]/20 bg-[var(--accent-purple)]/5 mb-8">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent)] opacity-75 animate-ping" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent)]" />
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--accent-emerald)] opacity-75 animate-ping" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[var(--accent-emerald)]" />
                 </span>
-                <span className="text-xs font-medium text-[var(--accent)]">Live on Solana Mainnet</span>
+                <span className="text-xs font-medium text-[var(--accent-purple)]">Live on Solana Mainnet</span>
               </div>
             </motion.div>
 
@@ -100,7 +97,7 @@ export default function LandingPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="text-lg sm:text-xl md:text-2xl text-[var(--text-secondary)] mb-4 font-heading"
             >
-              The <span className="text-[var(--accent)]">Agent Economy</span> Launchpad
+              The <span className="text-[var(--accent-emerald)]">Agent Economy</span> Launchpad
             </motion.p>
 
             <motion.p
@@ -147,7 +144,7 @@ export default function LandingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className="rounded-[var(--radius-lg)] border border-[var(--border-default)] p-5 text-center glow-card"
+              className="rounded-[var(--radius-lg)] border border-[var(--border-default)] p-5 text-center card-hover elevation-1"
               style={{ background: 'var(--gradient-card)' }}
             >
               <div className="text-2xl md:text-3xl font-bold font-heading gradient-text mb-1">
@@ -168,7 +165,7 @@ export default function LandingPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.06 }}
-                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-layer)] p-6 hover:border-[var(--accent)]/20 transition-all glow-card"
+                className="rounded-[var(--radius-lg)] border border-[var(--border-default)] bg-[var(--bg-layer)] p-6 card-hover elevation-1"
               >
                 <div className="text-3xl mb-3">{f.icon}</div>
                 <h3 className="font-semibold text-[var(--text-primary)] mb-1 font-heading text-sm">{f.title}</h3>
